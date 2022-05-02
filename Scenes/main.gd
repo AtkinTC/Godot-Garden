@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var seeds_list : ItemList = $Control/H/LPanel/SeedsList
+@onready var seeds_list : ItemList = $UI/H/LPanel/SeedsList
 var plant_list_indexes := {}
 
 var step_timer : Timer

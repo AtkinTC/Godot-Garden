@@ -10,6 +10,7 @@ var height: int = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	position = Vector2.ZERO
 	PlantManager.setup_garden_plots(width, height)
 	reset_grid_plots()
 
