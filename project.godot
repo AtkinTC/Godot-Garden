@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Control",
+"class": &"GardenGrid",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/GardenGrid.gd"
+}, {
 "base": "RefCounted",
 "class": &"GardenPlot",
 "language": &"GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[{
 "path": "res://Scenes/Garden/GardenPlotNode.gd"
 }]
 _global_script_class_icons={
+"GardenGrid": "",
 "GardenPlot": "",
 "GardenPlotNode": ""
 }
@@ -30,6 +36,10 @@ config/name="Project"
 run/main_scene="res://Scenes/main.tscn"
 config/icon="res://icon.png"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
+
+[autoload]
+
+PlantManager="*res://Singletons/PlantManager.gd"
 
 [display]
 

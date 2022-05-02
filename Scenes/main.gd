@@ -1,34 +1,28 @@
 extends Node2D
 
-@onready var garden_plot_scene : PackedScene = preload("res://Scenes/Garden/GardenPlotNode.tscn")
-
-@onready var garden_grid : GridContainer = $Control/H/GardenGrid
-
-@export_range(1, 100) var width : int = 10
-@export_range(1, 100) var height : int = 10
+@onready var seeds_list : ItemList = $Control/H/LPanel/SeedsList
+var plant_list_indexes := {}
 
 var step_timer : Timer
 
-var garden_plots := {}
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for child in garden_grid.get_children():
-		child.queue_free()
+	# seeds list
+	seeds_list.clear()
 	
-	garden_grid.set_columns(width)
+	var index := 0
+	for plant_key in PlantManager.get_plant_type_keys():
+		var plant_type : Dictionary = PlantManager.get_plant_type(plant_key)
+		seeds_list.add_item(plant_type["display_name"])
+		plant_list_indexes[index] = plant_key
+		
+		if(index == 0):
+			PlantManager.set_selected_plant_key(plant_key)
+			seeds_list.select(0)
+		
+		index += 1
 	
-	for y in height:
-		for x in width:
-			var garden_plot : GardenPlot = GardenPlot.new()
-			garden_plot.set_coord(Vector2(x,y))
-			garden_plots[Vector2(x,y)] = garden_plot
-			
-			var garden_plot_node : GardenPlotNode = garden_plot_scene.instantiate()
-			garden_plot_node.set_garden_plot(garden_plot)
-			
-			garden_grid.add_child(garden_plot_node)
-	
+	#start step timer
 	step_timer = Timer.new()
 	step_timer.wait_time = 0.1
 	step_timer.one_shot = true
@@ -41,7 +35,9 @@ func _process(_delta):
 	pass
 
 func _on_step_timer_timeout():
-	for coord in garden_plots.keys():
-		(garden_plots[coord] as GardenPlot).step()
+	PlantManager.step_garden_plots()
 	
 	step_timer.start()
+
+func _on_seeds_list_item_selected(index):
+	PlantManager.set_selected_plant_key(plant_list_indexes[index])

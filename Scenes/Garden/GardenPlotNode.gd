@@ -1,7 +1,7 @@
 extends Control
 class_name GardenPlotNode
 
-var garden_plot : GardenPlot
+var plot_coord : Vector2
 
 @onready var coord_label : Label = $V/CoordLabel
 @onready var planted_label : Label = $V/PlantedLabel
@@ -17,14 +17,18 @@ func _ready():
 func _process(delta):
 	update_display()
 
-func set_garden_plot(_garden_plot : GardenPlot) -> void:
-	garden_plot = _garden_plot
+func set_plot_coord(_plot_coord : Vector2) -> void:
+	plot_coord = _plot_coord
 
-func update_display():
+func update_display() -> void:
+	coord_label.text = str(plot_coord)
+	
+	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
 	if(!garden_plot):
 		return
-	coord_label.text = str(garden_plot.get_coord())
-	planted_label.text = "Planted : " + str(garden_plot.is_planted())
+	
+	if(garden_plot.is_planted()):
+		planted_label.text = "Planted : " + str(garden_plot.get_plant_display_name())
 
 	grow_progress_bar.max_value = garden_plot.get_grow_capacity()
 	grow_progress_bar.value = garden_plot.get_grow_progress()
@@ -35,9 +39,13 @@ func update_display():
 	plant_button.disabled = garden_plot.is_planted()
 
 func _on_plant_button_pressed():
-	garden_plot.plant_plot()
+	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	if(garden_plot):
+		garden_plot.plant_plot()
 	update_display()
 
 func _on_water_button_pressed():
-	garden_plot.water_plot()
+	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	if(garden_plot):
+		garden_plot.water_plot()
 	update_display()

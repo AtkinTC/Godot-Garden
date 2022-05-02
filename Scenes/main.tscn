@@ -1,12 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://53bpycblil5h"]
+[gd_scene load_steps=4 format=3 uid="uid://53bpycblil5h"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
+[ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
 [ext_resource type="PackedScene" uid="uid://cuexouewhieoc" path="res://Scenes/Garden/GardenPlotNode.tscn" id="2_klh75"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
-width = 3
-height = 3
 
 [node name="Control" type="Control" parent="."]
 minimum_size = Vector2(1280, 720)
@@ -17,22 +16,83 @@ size_flags_vertical = 3
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Control" type="Control" parent="Control/H"]
+[node name="LPanel" type="Control" parent="Control/H"]
 minimum_size = Vector2(200, 0)
 offset_right = 200.0
 offset_bottom = 720.0
 
-[node name="Panel" type="Panel" parent="Control/H/Control"]
+[node name="Panel" type="Panel" parent="Control/H/LPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="GardenGrid" type="GridContainer" parent="Control/H"]
+[node name="SeedsList" type="ItemList" parent="Control/H/LPanel"]
+anchor_right = 1.0
+allow_reselect = true
+auto_height = true
+item_count = 2
+item_0/text = "TEST_1 : 1"
+item_1/text = "TEST_2 : 1"
+
+[node name="GardenGrid" type="Control" parent="Control/H"]
 offset_left = 204.0
 offset_right = 1280.0
 offset_bottom = 720.0
 size_flags_horizontal = 3
-columns = 3
+script = ExtResource( "2_754aq" )
+
+[node name="UIGrid" type="GridContainer" parent="Control/H/GardenGrid"]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="Grid" type="GridContainer" parent="Control/H/GardenGrid/UIGrid"]
+offset_right = 120.0
+offset_bottom = 135.0
+size_flags_horizontal = 3
+columns = 4
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
-[node name="GardenPlot" parent="Control/H/GardenGrid" instance=ExtResource( "2_klh75" )]
+[node name="GardenPlot" parent="Control/H/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+
+[node name="Right" type="Panel" parent="Control/H/GardenGrid/UIGrid"]
+minimum_size = Vector2(120, 135)
+offset_left = 124.0
+offset_right = 244.0
+offset_bottom = 135.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ExpandRightButton" type="Button" parent="Control/H/GardenGrid/UIGrid/Right"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -15.5
+offset_right = 33.0
+offset_bottom = 15.5
+text = "Expand"
+
+[node name="Down" type="Panel" parent="Control/H/GardenGrid/UIGrid"]
+minimum_size = Vector2(120, 135)
+offset_top = 139.0
+offset_right = 120.0
+offset_bottom = 274.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="ExpandLeftButton" type="Button" parent="Control/H/GardenGrid/UIGrid/Down"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -15.5
+offset_right = 33.0
+offset_bottom = 15.5
+text = "Expand"
+
+[connection signal="item_selected" from="Control/H/LPanel/SeedsList" to="." method="_on_seeds_list_item_selected"]
+[connection signal="pressed" from="Control/H/GardenGrid/UIGrid/Right/ExpandRightButton" to="Control/H/GardenGrid" method="_on_expand_right_button_pressed"]
+[connection signal="pressed" from="Control/H/GardenGrid/UIGrid/Down/ExpandLeftButton" to="Control/H/GardenGrid" method="_on_expand_left_button_pressed"]
