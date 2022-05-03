@@ -62,4 +62,4 @@ func _process(_delta):
 func _input(event):
 	move_direction.x = Input.get_action_strength(right_action) - Input.get_action_strength(left_action)
 	move_direction.y = Input.get_action_strength(down_action) - Input.get_action_strength(up_action)
-	zoom_direction = Input.get_action_strength(zoom_out_action) - Input.get_action_strength(zoom_in_action)
+	zoom_direction = Input.get_action_strength(zoom_in_action) - Input.get_action_strength(zoom_out_action)
