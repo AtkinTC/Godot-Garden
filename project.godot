@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/ActionsMenu.gd"
 }, {
+"base": "Camera2D",
+"class": &"CustCamera2D",
+"language": &"GDScript",
+"path": "res://Scripts/Camera.gd"
+}, {
 "base": "Control",
 "class": &"GardenGrid",
 "language": &"GDScript",
@@ -36,6 +41,7 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionsMenu": "",
+"CustCamera2D": "",
 "GardenGrid": "",
 "GardenPlot": "",
 "GardenPlotNode": "",
@@ -53,6 +59,7 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 
 PlantManager="*res://Singletons/PlantManager.gd"
 ActionManager="*res://Singletons/ActionManager.gd"
+CameraManager="*res://Singletons/CameraManager.gd"
 
 [display]
 

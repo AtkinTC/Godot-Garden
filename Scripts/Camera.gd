@@ -1,4 +1,5 @@
 extends Camera2D
+class_name CustCamera2D
 
 @export var left_action : String = "ui_left"
 @export var right_action : String = "ui_right"
@@ -27,7 +28,7 @@ var zoom_speed := 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	CameraManager.connect_camera(self)
 
 func _process(_delta):
 	var adj_max_speed = max_speed / zoom_level
@@ -57,9 +58,11 @@ func _process(_delta):
 	
 	zoom_level = clamp(zoom_level + zoom_speed, min_zoom, max_zoom)
 	set_zoom(Vector2(zoom_level, zoom_level))
-	
 
 func _input(event):
 	move_direction.x = Input.get_action_strength(right_action) - Input.get_action_strength(left_action)
 	move_direction.y = Input.get_action_strength(down_action) - Input.get_action_strength(up_action)
 	zoom_direction = Input.get_action_strength(zoom_in_action) - Input.get_action_strength(zoom_out_action)
+
+func get_zoom_level() -> float:
+	return zoom_level
