@@ -28,15 +28,15 @@ func update_display() -> void:
 		return
 	
 	if(garden_plot.is_planted()):
-		planted_label.text = "Planted : " + str(garden_plot.get_plant_display_name())
+		planted_label.text = str(garden_plot.get_plant_display_name())
+	else:
+		planted_label.text = "Empty"
 
 	grow_progress_bar.max_value = garden_plot.get_grow_capacity()
 	grow_progress_bar.value = garden_plot.get_grow_progress()
 	
 	water_progress_bar.max_value = garden_plot.get_water_capacity()
 	water_progress_bar.value = garden_plot.get_water_level()
-	
-	plant_button.disabled = garden_plot.is_planted()
 
 func _on_plant_button_pressed():
 	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
@@ -49,3 +49,7 @@ func _on_water_button_pressed():
 	if(garden_plot):
 		garden_plot.water_plot()
 	update_display()
+
+func _on_plot_button_pressed():
+	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	ActionManager.apply_current_action_to_garden_plot(garden_plot)

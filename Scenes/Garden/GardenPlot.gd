@@ -24,6 +24,9 @@ func set_coord(_coord : Vector2):
 	coord = _coord
   
 func plant_plot(_plant_key : String= ""):
+	if(planted):
+		return false
+	
 	if(_plant_key == ""):
 		plant_key = PlantManager.selected_plant_key
 	else:
@@ -35,6 +38,7 @@ func plant_plot(_plant_key : String= ""):
 		return
 		
 	planted = true
+	grow_progress = 0
 	grow_capacity = plant_type[PlantManager.GROW_CAPACITY]
 	grow_speed_unsatisfied = plant_type[PlantManager.GROW_SPEED_UNSATISFIED]
 	grow_speed_satisfied = plant_type[PlantManager.GROW_SPEED_SATISFIED]

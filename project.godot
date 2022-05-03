@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "ItemList",
+"class": &"ActionsMenu",
+"language": &"GDScript",
+"path": "res://Scripts/ActionsMenu.gd"
+}, {
 "base": "Control",
 "class": &"GardenGrid",
 "language": &"GDScript",
@@ -23,11 +28,18 @@ _global_script_classes=[{
 "class": &"GardenPlotNode",
 "language": &"GDScript",
 "path": "res://Scenes/Garden/GardenPlotNode.gd"
+}, {
+"base": "ItemList",
+"class": &"SeedsMenu",
+"language": &"GDScript",
+"path": "res://Scripts/SeedsMenu.gd"
 }]
 _global_script_class_icons={
+"ActionsMenu": "",
 "GardenGrid": "",
 "GardenPlot": "",
-"GardenPlotNode": ""
+"GardenPlotNode": "",
+"SeedsMenu": ""
 }
 
 [application]
@@ -40,6 +52,7 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 [autoload]
 
 PlantManager="*res://Singletons/PlantManager.gd"
+ActionManager="*res://Singletons/ActionManager.gd"
 
 [display]
 
@@ -48,6 +61,34 @@ window/size/viewport_height=720
 
 [input]
 
+ui_left={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":16777231,"physical_keycode":0,"unicode":16777231,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"unicode":0,"echo":false,"script":null)
+]
+}
+ui_right={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":16777233,"physical_keycode":0,"unicode":16777233,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"unicode":0,"echo":false,"script":null)
+]
+}
+ui_up={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":16777232,"physical_keycode":0,"unicode":16777232,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"unicode":0,"echo":false,"script":null)
+]
+}
+ui_down={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":16777234,"physical_keycode":0,"unicode":16777234,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":12,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"unicode":0,"echo":false,"script":null)
+]
+}
 zoom_in={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"button_mask":8,"position":Vector2(174, 92),"global_position":Vector2(174, 92),"factor":1.0,"button_index":4,"pressed":true,"double_click":false,"script":null)

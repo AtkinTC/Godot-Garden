@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://53bpycblil5h"]
+[gd_scene load_steps=7 format=3 uid="uid://53bpycblil5h"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
+[ext_resource type="Script" path="res://Scripts/SeedsMenu.gd" id="2_jvrrg"]
 [ext_resource type="PackedScene" uid="uid://cuexouewhieoc" path="res://Scenes/Garden/GardenPlotNode.tscn" id="2_klh75"]
+[ext_resource type="Script" path="res://Scripts/ActionsMenu.gd" id="3_7s5ky"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 
 [node name="Main" type="Node2D"]
@@ -24,13 +26,30 @@ offset_bottom = 720.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="SeedsList" type="ItemList" parent="UI/H/LPanel"]
+[node name="V" type="VBoxContainer" parent="UI/H/LPanel"]
 anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="SeedsMenu" type="ItemList" parent="UI/H/LPanel/V"]
+offset_right = 200.0
+offset_bottom = 62.0
 allow_reselect = true
 auto_height = true
 item_count = 2
-item_0/text = "TEST_1 : 1"
-item_1/text = "TEST_2 : 1"
+item_0/text = "SEED_1"
+item_1/text = "SEED_2"
+script = ExtResource( "2_jvrrg" )
+
+[node name="ActionsMenu" type="ItemList" parent="UI/H/LPanel/V"]
+offset_top = 66.0
+offset_right = 200.0
+offset_bottom = 128.0
+allow_reselect = true
+auto_height = true
+item_count = 2
+item_0/text = "ACTION_1"
+item_1/text = "ACTION_2"
+script = ExtResource( "3_7s5ky" )
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)
@@ -101,9 +120,11 @@ text = "Expand"
 position = Vector2(640, 360)
 current = true
 script = ExtResource( "4_sbgaj" )
+acceleration = 0.1
 min_zoom = 0.25
 max_zoom = 1.0
 
-[connection signal="item_selected" from="UI/H/LPanel/SeedsList" to="." method="_on_seeds_list_item_selected"]
+[connection signal="item_selected" from="UI/H/LPanel/V/SeedsMenu" to="UI/H/LPanel/V/SeedsMenu" method="_on_seeds_menu_item_selected"]
+[connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]
 [connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Right/ExpandRightButton" to="GardenNode/GardenGrid" method="_on_expand_right_button_pressed"]
 [connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Down/ExpandLeftButton" to="GardenNode/GardenGrid" method="_on_expand_left_button_pressed"]
