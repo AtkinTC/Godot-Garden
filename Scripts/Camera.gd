@@ -34,10 +34,10 @@ func _process(_delta):
 	var adj_max_speed = max_speed / zoom_level
 	
 	##Camera Movement
-	var offset = adj_max_speed * acceleration * move_direction
+	var speed_offset = adj_max_speed * acceleration * move_direction
 	
-	move_speed.x = clamp(move_speed.x + offset.x, -adj_max_speed, adj_max_speed)
-	move_speed.y = clamp(move_speed.y + offset.y, -adj_max_speed, adj_max_speed)
+	move_speed.x = clamp(move_speed.x + speed_offset.x, -adj_max_speed, adj_max_speed)
+	move_speed.y = clamp(move_speed.y + speed_offset.y, -adj_max_speed, adj_max_speed)
 	
 	if move_direction.x == 0:
 		move_speed.x *= (1.0 - deceleration)
@@ -59,7 +59,7 @@ func _process(_delta):
 	zoom_level = clamp(zoom_level + zoom_speed, min_zoom, max_zoom)
 	set_zoom(Vector2(zoom_level, zoom_level))
 
-func _input(event):
+func _input(_event):
 	move_direction.x = Input.get_action_strength(right_action) - Input.get_action_strength(left_action)
 	move_direction.y = Input.get_action_strength(down_action) - Input.get_action_strength(up_action)
 	zoom_direction = Input.get_action_strength(zoom_in_action) - Input.get_action_strength(zoom_out_action)

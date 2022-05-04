@@ -15,7 +15,7 @@ func _ready():
 	update_values()
 	update_display()
 
-func _process(delta):
+func _process(_delta):
 	if(!passive):
 		update_values()
 	update_display()

@@ -10,21 +10,16 @@ var plot_coord : Vector2
 
 @onready var body : Control = $V
 
-@onready var body_min : Control = $VMin
-
 @onready var coord_label : Label = $V/CoordLabel
 @onready var planted_label : Label = $V/PlantedLabel
 @onready var grow_progress_bar : TextureProgressBar = $V/GrowProgressBar
 @onready var water_progress_bar : TextureProgressBar = $V/WaterProgressBar
 
-@onready var plant_button : Button = $V/PlantButton
-@onready var water_button : Button = $V/WaterButton
-
 func _ready():
 	update_display()
 	update_zoom_state()
 
-func _process(delta):
+func _process(_delta):
 	update_display()
 	update_zoom_state()
 
