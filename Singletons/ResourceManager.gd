@@ -7,7 +7,7 @@ const AMOUNT := "amount"
 var resource_types := {
 	"MONEY" : {
 		"display_name" : "money",
-		"initial_amount" : 100.00
+		"initial_amount" : 1.00
 	},
 	"RESOURCE_1" : {
 		"display_name" : "test",

@@ -63,21 +63,25 @@ func water_plot(water_amount : int = -1, override_capacity : bool = false):
 	
 	water_level = new_water_level
 
-func sell_plant():
+func complete_plant_growth():
+	if(grow_progress < grow_capacity):
+		return
+	
 	if(plant_key == null || plant_key == ""):
 		return
 	
+	# gain resources from 'selling' the grown plant
 	var sell_price : Dictionary = PlantManager.get_plant_type_attribute(plant_key, PlantManager.SELL_PRICE)
 	for resource_key in sell_price:
 		var current_amount = ResourceManager.get_resource_attribute(resource_key, ResourceManager.AMOUNT)
 		ResourceManager.set_resource_attribute(resource_key, ResourceManager.AMOUNT, current_amount + sell_price[resource_key])
 	
-	planted = false
+	# reset growth progress 
 	grow_progress = 0
 
 func step(step_time : float):
 	if(grow_progress >= grow_capacity):
-		sell_plant()
+		complete_plant_growth()
 	
 	if(planted):
 		if water_level >= water_consumption:

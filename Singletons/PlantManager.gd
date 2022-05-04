@@ -11,7 +11,7 @@ const SELL_PRICE = "sell_price"
 var plant_types := {
 	"TULIP" : {
 		"display_name" : "tulip",
-		"grow_capacity" : 30,
+		"grow_capacity" : 15,
 		"grow_speed_unsatisfied" : 1,
 		"grow_speed_satisfied" : 2,
 		"water_consumption" : 1,
@@ -24,9 +24,9 @@ var plant_types := {
 	},
 	"ROSE" : {
 		"display_name" : "rose",
-		"grow_capacity" : 90,
+		"grow_capacity" : 60,
 		"grow_speed_unsatisfied" : 1,
-		"grow_speed_satisfied" : 3,
+		"grow_speed_satisfied" : 2,
 		"water_consumption" : 1,
 		"purchase_price" : {
 			"MONEY" : 5
@@ -38,9 +38,9 @@ var plant_types := {
 	"ORCHID" : {
 		"display_name" : "orchid",
 		"grow_capacity" : 120,
-		"grow_speed_unsatisfied" : 0,
+		"grow_speed_unsatisfied" : 0.1,
 		"grow_speed_satisfied" : 1,
-		"water_consumption" : 3,
+		"water_consumption" : 2,
 		"purchase_price" : {
 			"MONEY" : 20
 		},
