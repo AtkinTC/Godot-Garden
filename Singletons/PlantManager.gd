@@ -11,7 +11,7 @@ const SELL_PRICE = "sell_price"
 var plant_types := {
 	"TULIP" : {
 		"display_name" : "tulip",
-		"grow_capacity" : 1000,
+		"grow_capacity" : 30,
 		"grow_speed_unsatisfied" : 1,
 		"grow_speed_satisfied" : 2,
 		"water_consumption" : 1,
@@ -24,7 +24,7 @@ var plant_types := {
 	},
 	"ROSE" : {
 		"display_name" : "rose",
-		"grow_capacity" : 2000,
+		"grow_capacity" : 90,
 		"grow_speed_unsatisfied" : 1,
 		"grow_speed_satisfied" : 3,
 		"water_consumption" : 1,
@@ -37,7 +37,7 @@ var plant_types := {
 	},
 	"ORCHID" : {
 		"display_name" : "orchid",
-		"grow_capacity" : 2000,
+		"grow_capacity" : 120,
 		"grow_speed_unsatisfied" : 0,
 		"grow_speed_satisfied" : 1,
 		"water_consumption" : 3,
@@ -63,9 +63,9 @@ func setup_garden_plots(width: int, height: int):
 				garden_plot.set_coord(coord)
 				set_garden_plot(coord, garden_plot)
 
-func step_garden_plots():
+func step_garden_plots(step_time : float):
 	for coord in garden_plots.keys():
-		(garden_plots[coord] as GardenPlot).step()
+		(garden_plots[coord] as GardenPlot).step(step_time)
 
 func get_plant_type_keys() -> Array:
 	return plant_types.keys()

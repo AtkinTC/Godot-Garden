@@ -4,15 +4,15 @@ var coord : Vector2 = Vector2.ZERO
 
 var plant_key : String
 var planted : bool = false
-var grow_progress : int = 0
-var grow_capacity : int = 1000
+var grow_progress : float = 0
+var grow_capacity : float = 1000
 
-var water_capacity : int = 500
-var water_level : int = 0
+var water_capacity : float = 60
+var water_level : float = 0
 
-var grow_speed_unsatisfied : int = 1
-var grow_speed_satisfied : int = 1
-var water_consumption : int = 1
+var grow_speed_unsatisfied : float = 1
+var grow_speed_satisfied : float = 1
+var water_consumption : float = 1
 
 var plant_display_name : String
 
@@ -75,15 +75,18 @@ func sell_plant():
 	planted = false
 	grow_progress = 0
 
-func step():
+func step(step_time : float):
 	if(grow_progress >= grow_capacity):
 		sell_plant()
 	
 	if(planted):
-		grow_progress += grow_speed_satisfied if water_level >= water_consumption else grow_speed_unsatisfied
+		if water_level >= water_consumption:
+			grow_progress += (grow_speed_satisfied * step_time)
+		else:
+			grow_progress += (grow_speed_unsatisfied * step_time)
 	
 	if(water_level > 0 && planted):
-		water_level = max(0, water_level - water_consumption)
+		water_level = max(0, water_level - (water_consumption * step_time))
 
 func get_coord() -> Vector2:
 	return coord
@@ -94,21 +97,21 @@ func is_planted() -> bool:
 func get_plant_display_name() -> String:
 	return plant_display_name
 
-func get_water_level() -> int:
+func get_water_level() -> float:
 	return water_level
 
-func get_water_capacity() -> int:
+func get_water_capacity() -> float:
 	return water_capacity
 
-func get_grow_speed_unsatisfied() -> int:
+func get_grow_speed_unsatisfied() -> float:
 	return grow_speed_unsatisfied
 
-func get_grow_speed_satisfied() -> int:
+func get_grow_speed_satisfied() -> float:
 	return grow_speed_satisfied
 
-func get_grow_progress() -> int:
+func get_grow_progress() -> float:
 	return grow_progress
 
-func get_grow_capacity() -> int:
+func get_grow_capacity() -> float:
 	return grow_capacity
 	
