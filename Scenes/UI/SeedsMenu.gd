@@ -20,3 +20,4 @@ func _ready():
 
 func _on_seeds_menu_item_selected(index):
 	PlantManager.set_selected_plant_key(plant_list_indexes[index])
+	ActionManager.set_selected_action_key("PLANT")

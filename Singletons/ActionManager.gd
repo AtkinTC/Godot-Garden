@@ -1,5 +1,7 @@
 extends Node
 
+signal action_selected(action_key:String)
+
 const DISPLAY_NAME := "display_name"
 const TARGET_TYPE := "target_type"
 const FUNC_NAME := "func_name"
@@ -42,6 +44,10 @@ func get_action_type(action_type_key : String) -> Dictionary:
 
 func set_selected_action_key(action_type_key : String):
 	selected_action_key = action_type_key
+	action_selected.emit(selected_action_key)
 
 func get_selected_action_key() -> String:
 	return selected_action_key
+
+func connect_action_selected(reciever):
+	action_selected.connect(reciever._on_action_selected)
