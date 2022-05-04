@@ -14,6 +14,8 @@ var plot_coord : Vector2
 @onready var planted_label : Label = $V/PlantedLabel
 @onready var grow_progress_bar : TextureProgressBar = $V/GrowProgressBar
 @onready var water_progress_bar : TextureProgressBar = $V/WaterProgressBar
+@onready var grow_progress_label : Label = $V/GrowProgressBar/Label
+@onready var water_progress_label : Label = $V/WaterProgressBar/Label
 
 func _ready():
 	update_display()
@@ -39,9 +41,11 @@ func update_display() -> void:
 
 	grow_progress_bar.max_value = garden_plot.get_grow_capacity()
 	grow_progress_bar.value = garden_plot.get_grow_progress()
+	grow_progress_label.text = str(garden_plot.get_grow_progress() * 100.0 / garden_plot.get_grow_capacity()) + "%"
 	
 	water_progress_bar.max_value = garden_plot.get_water_capacity()
 	water_progress_bar.value = garden_plot.get_water_level()
+	water_progress_label.text = str(garden_plot.get_water_level() * 100.0 / garden_plot.get_water_capacity()) + "%"
 
 func update_zoom_state() -> void:
 	var zoom_level = CameraManager.get_camera_zoom_level()
@@ -62,14 +66,16 @@ func set_zoom_state(_zoom_state):
 		grow_progress_bar.minimum_size.y = 30
 		water_progress_bar.size.y = 30
 		water_progress_bar.minimum_size.y = 30
-		return
-	if(zoom_state == ZOOM_STATES.ZOOMED_IN):
+		grow_progress_label.visible = false
+		water_progress_label.visible = false
+	elif(zoom_state == ZOOM_STATES.ZOOMED_IN):
 		coord_label.visible = true
 		grow_progress_bar.size.y = 20
 		grow_progress_bar.minimum_size.y = 20
 		water_progress_bar.size.y = 20
 		water_progress_bar.minimum_size.y = 20
-		return
+		grow_progress_label.visible = true
+		water_progress_label.visible = true
 
 func _on_plant_button_pressed():
 	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
