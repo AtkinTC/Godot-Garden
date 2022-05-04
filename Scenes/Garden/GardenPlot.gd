@@ -36,7 +36,12 @@ func plant_plot(_plant_key : String= ""):
 	
 	if(plant_type == null || plant_type.size() == 0):
 		return
-		
+	
+	var purchase_price : Dictionary = plant_type[PlantManager.PURCHASE_PRICE]
+	if(!PurchaseManager.can_afford(purchase_price)):
+		return
+	PurchaseManager.spend(purchase_price)
+	
 	planted = true
 	grow_progress = 0
 	grow_capacity = plant_type[PlantManager.GROW_CAPACITY]
@@ -58,16 +63,27 @@ func water_plot(water_amount : int = -1, override_capacity : bool = false):
 	
 	water_level = new_water_level
 
+func sell_plant():
+	if(plant_key == null || plant_key == ""):
+		return
+	
+	var sell_price : Dictionary = PlantManager.get_plant_type_attribute(plant_key, PlantManager.SELL_PRICE)
+	for resource_key in sell_price:
+		var current_amount = ResourceManager.get_resource_attribute(resource_key, ResourceManager.AMOUNT)
+		ResourceManager.set_resource_attribute(resource_key, ResourceManager.AMOUNT, current_amount + sell_price[resource_key])
+	
+	planted = false
+	grow_progress = 0
+
 func step():
 	if(grow_progress >= grow_capacity):
-		planted = false
-		grow_progress = 0
+		sell_plant()
 	
 	if(planted):
 		grow_progress += grow_speed_satisfied if water_level >= water_consumption else grow_speed_unsatisfied
 	
 	if(water_level > 0 && planted):
-		water_level -= water_consumption
+		water_level = max(0, water_level - water_consumption)
 
 func get_coord() -> Vector2:
 	return coord

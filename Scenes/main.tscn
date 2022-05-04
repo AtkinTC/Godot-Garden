@@ -107,7 +107,8 @@ offset_right = 33.0
 offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Expand"
+text = "Expand
+($100)"
 metadata/_edit_use_custom_anchors = false
 
 [node name="Down" type="Panel" parent="GardenNode/GardenGrid/UIGrid"]
@@ -118,7 +119,7 @@ offset_bottom = 204.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
-[node name="ExpandLeftButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Down"]
+[node name="ExpandDownButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Down"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -129,7 +130,8 @@ offset_right = 33.0
 offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Expand"
+text = "Expand
+($100)"
 metadata/_edit_use_custom_anchors = false
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -143,4 +145,4 @@ max_zoom = 1.0
 [connection signal="item_selected" from="UI/H/LPanel/V/SeedsMenu" to="UI/H/LPanel/V/SeedsMenu" method="_on_seeds_menu_item_selected"]
 [connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]
 [connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Right/ExpandRightButton" to="GardenNode/GardenGrid" method="_on_expand_right_button_pressed"]
-[connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Down/ExpandLeftButton" to="GardenNode/GardenGrid" method="_on_expand_left_button_pressed"]
+[connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Down/ExpandDownButton" to="GardenNode/GardenGrid" method="_on_expand_left_button_pressed"]

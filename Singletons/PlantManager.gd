@@ -5,6 +5,8 @@ const GROW_CAPACITY := "grow_capacity"
 const GROW_SPEED_UNSATISFIED = "grow_speed_unsatisfied"
 const GROW_SPEED_SATISFIED = "grow_speed_satisfied"
 const WATER_CONSUMPTION = "water_consumption"
+const PURCHASE_PRICE = "purchase_price"
+const SELL_PRICE = "sell_price"
 
 var plant_types := {
 	"TULIP" : {
@@ -12,21 +14,39 @@ var plant_types := {
 		"grow_capacity" : 1000,
 		"grow_speed_unsatisfied" : 1,
 		"grow_speed_satisfied" : 2,
-		"water_consumption" : 1
+		"water_consumption" : 1,
+		"purchase_price" : {
+			"MONEY" : 1
+		},
+		"sell_price" : {
+			"MONEY" : 2
+		}
 	},
 	"ROSE" : {
 		"display_name" : "rose",
 		"grow_capacity" : 2000,
 		"grow_speed_unsatisfied" : 1,
-		"grow_speed_satisfied" : 4,
-		"water_consumption" : 2
+		"grow_speed_satisfied" : 3,
+		"water_consumption" : 1,
+		"purchase_price" : {
+			"MONEY" : 5
+		},
+		"sell_price" : {
+			"MONEY" : 10
+		}
 	},
 	"ORCHID" : {
 		"display_name" : "orchid",
 		"grow_capacity" : 2000,
 		"grow_speed_unsatisfied" : 0,
 		"grow_speed_satisfied" : 1,
-		"water_consumption" : 4
+		"water_consumption" : 3,
+		"purchase_price" : {
+			"MONEY" : 20
+		},
+		"sell_price" : {
+			"MONEY" : 100
+		}
 	}
 }
 
@@ -52,6 +72,9 @@ func get_plant_type_keys() -> Array:
 
 func get_plant_type(plant_type_key : String) -> Dictionary:
 	return plant_types.get(plant_type_key, {})
+
+func get_plant_type_attribute(plant_type_key : String, attribute_key : String):
+	return plant_types.get(plant_type_key, {}).get(attribute_key, null)
 
 func set_garden_plot(coord : Vector2, garden_plot : GardenPlot):
 	garden_plots[coord] = garden_plot

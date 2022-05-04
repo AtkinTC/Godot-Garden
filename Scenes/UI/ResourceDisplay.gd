@@ -40,9 +40,9 @@ func set_display_amount(_display_amount : String):
 
 func set_amount(_amount : float):
 	amount = _amount
-	set_display_amount(format_comma_seperated(amount))
+	set_display_amount(format_comma_seperated("%.2f" % amount))
 	
-func format_comma_seperated(number : float) -> String:
+func format_comma_seperated(number : String) -> String:
 	var number_string = str(number)
 	var parts := number_string.split(".")
 	

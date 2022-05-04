@@ -41,11 +41,11 @@ func update_display() -> void:
 
 	grow_progress_bar.max_value = garden_plot.get_grow_capacity()
 	grow_progress_bar.value = garden_plot.get_grow_progress()
-	grow_progress_label.text = str(garden_plot.get_grow_progress() * 100.0 / garden_plot.get_grow_capacity()) + "%"
+	grow_progress_label.text = "%.1f%%" % (garden_plot.get_grow_progress() * 100.0 / garden_plot.get_grow_capacity())
 	
 	water_progress_bar.max_value = garden_plot.get_water_capacity()
 	water_progress_bar.value = garden_plot.get_water_level()
-	water_progress_label.text = str(garden_plot.get_water_level() * 100.0 / garden_plot.get_water_capacity()) + "%"
+	water_progress_label.text = "%.1f%%" % (garden_plot.get_water_level() * 100.0 / garden_plot.get_water_capacity())
 
 func update_zoom_state() -> void:
 	var zoom_level = CameraManager.get_camera_zoom_level()

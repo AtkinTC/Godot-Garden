@@ -73,6 +73,7 @@ PlantManager="*res://Singletons/PlantManager.gd"
 ActionManager="*res://Singletons/ActionManager.gd"
 CameraManager="*res://Singletons/CameraManager.gd"
 ResourceManager="*res://Singletons/ResourceManager.gd"
+PurchaseManager="*res://Singletons/PurchaseManager.gd"
 
 [display]
 

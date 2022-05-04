@@ -28,7 +28,7 @@ func get_resource_keys() -> Array:
 
 func set_resource_attribute(resource_key : String, attribute_key : String, value : Variant):
 	var dict = resources.get(resource_key, null)
-	if(!dict):
+	if(dict == null || dict.size() == 0):
 		return
 	dict[attribute_key] = value
 

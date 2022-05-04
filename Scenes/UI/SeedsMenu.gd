@@ -9,7 +9,7 @@ func _ready():
 	var index := 0
 	for plant_key in PlantManager.get_plant_type_keys():
 		var plant_type : Dictionary = PlantManager.get_plant_type(plant_key)
-		add_item(plant_type[PlantManager.DISPLAY_NAME])
+		add_item(str(plant_type[PlantManager.DISPLAY_NAME]) + " : " + str(plant_type[PlantManager.PURCHASE_PRICE].get("MONEY")))
 		plant_list_indexes[index] = plant_key
 		
 		if(index == 0):
