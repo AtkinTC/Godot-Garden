@@ -31,6 +31,7 @@ metadata/_edit_use_custom_anchors = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme_override_constants/separation = 0
 
 [node name="CoordLabel" type="Label" parent="V"]
 offset_right = 100.0
@@ -39,18 +40,18 @@ theme_override_font_sizes/font_size = 10
 text = "(XX,YY)"
 
 [node name="PlantedLabel" type="Label" parent="V"]
-offset_top = 21.0
+offset_top = 17.0
 offset_right = 100.0
-offset_bottom = 44.0
+offset_bottom = 40.0
 theme_override_font_sizes/font_size = 14
 text = "PLANTED
 "
 
 [node name="GrowProgressBar" type="TextureProgressBar" parent="V"]
 minimum_size = Vector2(50, 20)
-offset_top = 48.0
+offset_top = 40.0
 offset_right = 100.0
-offset_bottom = 68.0
+offset_bottom = 60.0
 mouse_filter = 2
 value = 50.0
 nine_patch_stretch = true
@@ -67,11 +68,18 @@ horizontal_alignment = 1
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
+[node name="Filler" type="Control" parent="V"]
+minimum_size = Vector2(0, 5)
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 65.0
+mouse_filter = 2
+
 [node name="WaterProgressBar" type="TextureProgressBar" parent="V"]
 minimum_size = Vector2(50, 20)
-offset_top = 72.0
+offset_top = 65.0
 offset_right = 100.0
-offset_bottom = 92.0
+offset_bottom = 85.0
 mouse_filter = 2
 value = 50.0
 nine_patch_stretch = true
