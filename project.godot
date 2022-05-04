@@ -12,7 +12,7 @@ _global_script_classes=[{
 "base": "ItemList",
 "class": &"ActionsMenu",
 "language": &"GDScript",
-"path": "res://Scripts/ActionsMenu.gd"
+"path": "res://Scenes/UI/ActionsMenu.gd"
 }, {
 "base": "Camera2D",
 "class": &"CustCamera2D",
@@ -34,10 +34,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/GardenPlotNode.gd"
 }, {
+"base": "Node",
+"class": &"ResourceDisplay",
+"language": &"GDScript",
+"path": "res://Scenes/UI/ResourceDisplay.gd"
+}, {
+"base": "VBoxContainer",
+"class": &"ResourceDisplayBox",
+"language": &"GDScript",
+"path": "res://Scenes/UI/ResourceDisplayBox.gd"
+}, {
 "base": "ItemList",
 "class": &"SeedsMenu",
 "language": &"GDScript",
-"path": "res://Scripts/SeedsMenu.gd"
+"path": "res://Scenes/UI/SeedsMenu.gd"
 }]
 _global_script_class_icons={
 "ActionsMenu": "",
@@ -45,6 +55,8 @@ _global_script_class_icons={
 "GardenGrid": "",
 "GardenPlot": "",
 "GardenPlotNode": "",
+"ResourceDisplay": "",
+"ResourceDisplayBox": "",
 "SeedsMenu": ""
 }
 
@@ -60,6 +72,7 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 PlantManager="*res://Singletons/PlantManager.gd"
 ActionManager="*res://Singletons/ActionManager.gd"
 CameraManager="*res://Singletons/CameraManager.gd"
+ResourceManager="*res://Singletons/ResourceManager.gd"
 
 [display]
 
