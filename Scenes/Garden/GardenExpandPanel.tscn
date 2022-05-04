@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1f4uahxtegx1"]
+
+[ext_resource type="Script" path="res://Scenes/Garden/GardenExpandPanel.gd" id="1_tnc7q"]
+
+[node name="ExpandPanel" type="Panel"]
+minimum_size = Vector2(100, 100)
+offset_left = 208.0
+offset_right = 308.0
+offset_bottom = 100.0
+script = ExtResource( "1_tnc7q" )
+
+[node name="ExpandButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -15.5
+offset_right = 33.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Expand
+($100)"
+metadata/_edit_use_custom_anchors = false
+
+[connection signal="pressed" from="ExpandButton" to="." method="_on_expand_button_pressed"]

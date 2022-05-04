@@ -25,6 +25,11 @@ _global_script_classes=[{
 "path": "res://Scripts/Camera.gd"
 }, {
 "base": "Control",
+"class": &"GardenExpandPanel",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/GardenExpandPanel.gd"
+}, {
+"base": "Control",
 "class": &"GardenGrid",
 "language": &"GDScript",
 "path": "res://Scenes/Garden/GardenGrid.gd"
@@ -58,6 +63,7 @@ _global_script_class_icons={
 "ActionsMenu": "",
 "Array2D": "",
 "CustCamera2D": "",
+"GardenExpandPanel": "",
 "GardenGrid": "",
 "GardenPlot": "",
 "GardenPlotNode": "",

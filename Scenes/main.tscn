@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c46q15c8qw6m1"]
+[gd_scene load_steps=10 format=3 uid="uid://bow5hhnl77ja8"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/ResourceDisplayBox.gd" id="4_b13kc"]
 [ext_resource type="PackedScene" uid="uid://cgvrlmebsl31q" path="res://Scenes/UI/ResourceDisplay.tscn" id="4_c7a2p"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
+[ext_resource type="PackedScene" uid="uid://d1f4uahxtegx1" path="res://Scenes/Garden/GardenExpandPanel.tscn" id="7_rejdf"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -65,8 +66,8 @@ script = ExtResource( "4_b13kc" )
 position = Vector2(205, 5)
 
 [node name="GardenGrid" type="Control" parent="GardenNode"]
-offset_right = 121.0
-offset_bottom = 135.0
+offset_right = 320.0
+offset_bottom = 317.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -76,63 +77,106 @@ metadata/_edit_use_custom_anchors = false
 [node name="UIGrid" type="GridContainer" parent="GardenNode/GardenGrid"]
 offset_right = 40.0
 offset_bottom = 40.0
-columns = 2
+columns = 3
 
-[node name="Grid" type="GridContainer" parent="GardenNode/GardenGrid/UIGrid"]
+[node name="Filler" type="Control" parent="GardenNode/GardenGrid/UIGrid"]
+minimum_size = Vector2(100, 100)
 offset_right = 100.0
 offset_bottom = 100.0
+
+[node name="ExpandPanelNorth" parent="GardenNode/GardenGrid/UIGrid" instance=ExtResource( "7_rejdf" )]
+offset_left = 104.0
+offset_right = 412.0
+expand_v = Vector2(0, -1)
+garden_path = NodePath("../..")
+
+[node name="Filler2" type="Control" parent="GardenNode/GardenGrid/UIGrid"]
+minimum_size = Vector2(100, 100)
+offset_left = 416.0
+offset_right = 516.0
+offset_bottom = 100.0
+
+[node name="ExpandPanelWest" parent="GardenNode/GardenGrid/UIGrid" instance=ExtResource( "7_rejdf" )]
+offset_left = 0.0
+offset_top = 104.0
+offset_right = 100.0
+offset_bottom = 412.0
+expand_v = Vector2(-1, 0)
+garden_path = NodePath("../..")
+
+[node name="Grid" type="GridContainer" parent="GardenNode/GardenGrid/UIGrid"]
+offset_left = 104.0
+offset_top = 104.0
+offset_right = 412.0
+offset_bottom = 412.0
 size_flags_horizontal = 3
-columns = 4
+columns = 3
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
 [node name="GardenPlot" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
 
-[node name="Right" type="Panel" parent="GardenNode/GardenGrid/UIGrid"]
-minimum_size = Vector2(100, 100)
+[node name="GardenPlot2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
 offset_left = 104.0
 offset_right = 204.0
-offset_bottom = 100.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
 
-[node name="ExpandRightButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Right"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -15.5
-offset_right = 33.0
-offset_bottom = 15.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Expand
-($100)"
-metadata/_edit_use_custom_anchors = false
+[node name="GardenPlot3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_left = 208.0
+offset_right = 308.0
 
-[node name="Down" type="Panel" parent="GardenNode/GardenGrid/UIGrid"]
-minimum_size = Vector2(100, 100)
+[node name="GardenPlot4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
 offset_top = 104.0
-offset_right = 100.0
 offset_bottom = 204.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
 
-[node name="ExpandDownButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Down"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -15.5
-offset_right = 33.0
-offset_bottom = 15.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Expand
-($100)"
-metadata/_edit_use_custom_anchors = false
+[node name="GardenPlot5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_left = 104.0
+offset_top = 104.0
+offset_right = 204.0
+offset_bottom = 204.0
+
+[node name="GardenPlot6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_left = 208.0
+offset_top = 104.0
+offset_right = 308.0
+offset_bottom = 204.0
+
+[node name="GardenPlot7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_top = 208.0
+offset_bottom = 308.0
+
+[node name="GardenPlot8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_left = 104.0
+offset_top = 208.0
+offset_right = 204.0
+offset_bottom = 308.0
+
+[node name="GardenPlot9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+offset_left = 208.0
+offset_top = 208.0
+offset_right = 308.0
+offset_bottom = 308.0
+
+[node name="ExpandPanelEast" parent="GardenNode/GardenGrid/UIGrid" instance=ExtResource( "7_rejdf" )]
+offset_left = 416.0
+offset_top = 104.0
+offset_right = 516.0
+offset_bottom = 412.0
+expand_v = Vector2(1, 0)
+garden_path = NodePath("../..")
+
+[node name="Filler3" type="Control" parent="GardenNode/GardenGrid/UIGrid"]
+minimum_size = Vector2(100, 100)
+offset_top = 416.0
+offset_right = 100.0
+offset_bottom = 516.0
+
+[node name="ExpandPanelSouth" parent="GardenNode/GardenGrid/UIGrid" instance=ExtResource( "7_rejdf" )]
+offset_left = 104.0
+offset_top = 416.0
+offset_right = 412.0
+offset_bottom = 516.0
+expand_v = Vector2(0, 1)
+garden_path = NodePath("../..")
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(640, 360)
@@ -144,5 +188,3 @@ max_zoom = 1.0
 
 [connection signal="item_selected" from="UI/H/LPanel/V/SeedsMenu" to="UI/H/LPanel/V/SeedsMenu" method="_on_seeds_menu_item_selected"]
 [connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]
-[connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Right/ExpandRightButton" to="GardenNode/GardenGrid" method="_on_expand_right_button_pressed"]
-[connection signal="pressed" from="GardenNode/GardenGrid/UIGrid/Down/ExpandDownButton" to="GardenNode/GardenGrid" method="_on_expand_left_button_pressed"]
