@@ -30,7 +30,7 @@ func set_plot_coord(_plot_coord : Vector2) -> void:
 
 func update_display() -> void:
 	coord_label.text = str(plot_coord)
-	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	var garden_plot : GardenPlot = GardenManager.get_garden_plot(plot_coord)
 	if(!garden_plot):
 		return
 	
@@ -78,17 +78,17 @@ func set_zoom_state(_zoom_state):
 		water_progress_label.visible = true
 
 func _on_plant_button_pressed():
-	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	var garden_plot : GardenPlot = GardenManager.get_garden_plot(plot_coord)
 	if(garden_plot):
 		garden_plot.plant_plot()
 	update_display()
 
 func _on_water_button_pressed():
-	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	var garden_plot : GardenPlot = GardenManager.get_garden_plot(plot_coord)
 	if(garden_plot):
 		garden_plot.water_plot()
 	update_display()
 
 func _on_plot_button_pressed():
-	var garden_plot : GardenPlot = PlantManager.get_garden_plot(plot_coord)
+	var garden_plot : GardenPlot = GardenManager.get_garden_plot(plot_coord)
 	ActionManager.apply_current_action_to_garden_plot(garden_plot)

@@ -8,7 +8,7 @@ func _ready():
 	clear()
 	
 	# connect to action_selected signal for automatic updates
-	ActionManager.connect_action_selected(self)
+	ActionManager.connect_action_selected(_on_action_selected)
 	
 	var index := 0
 	for action_key in ActionManager.get_action_type_keys():

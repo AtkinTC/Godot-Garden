@@ -49,5 +49,5 @@ func set_selected_action_key(action_type_key : String):
 func get_selected_action_key() -> String:
 	return selected_action_key
 
-func connect_action_selected(reciever):
-	action_selected.connect(reciever._on_action_selected)
+func connect_action_selected(reciever_method : Callable):
+	action_selected.connect(reciever_method)

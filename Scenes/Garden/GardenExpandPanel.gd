@@ -17,14 +17,14 @@ func _ready():
 	
 	update_display_price()
 	
-func _process(delta):
+func _process(_delta):
 	update_display_price()
 
 func update_display_price():
 	if(parent_garden == null):
 		return
 	
-	var price := parent_garden.get_expansion_price(expand_v)
+	var price := GardenManager.get_garden_expansion_price(expand_v)
 	button.text = "Expand\n($%.2f)" % price
 
 func _on_expand_button_pressed():

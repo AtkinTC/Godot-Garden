@@ -9,12 +9,12 @@ func _init(_size : Vector2 = Vector2.ZERO, _offset : Vector2 = Vector2.ZERO):
 	offset = _offset
 	
 	var col_0 := []
-	col_0.resize(size.y)
+	col_0.resize(size.y as int)
 	for y in range(col_0.size()):
 		col_0[y] = null
 	
 	array = []
-	array.resize(size.x)
+	array.resize(size.x as int)
 	for x in range(array.size()):
 		array[x] = col_0.duplicate()
 
