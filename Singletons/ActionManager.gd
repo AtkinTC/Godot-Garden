@@ -9,31 +9,31 @@ const FUNC_NAME := "func_name"
 var selected_action_key : String
 
 var action_types := {
-	"PLANT" : {
-		"display_name" : "Plant Seed",
-		"target_type" : "GardenPlot",
-		"func_name" : "plant_plot"
+	"SET_OBJECT" : {
+		"display_name" : "Build",
+		"target_type" : "Plot",
+		"func_name" : "insert_object"
 	},
-	"WATER_BASIC" : {
-		"display_name" : "Water",
-		"target_type" : "GardenPlot",
-		"func_name" : "water_plot"
-	}
+	"UNSET_OBJECT" : {
+		"display_name" : "Delete",
+		"target_type" : "Plot",
+		"func_name" : "remove_object"
+	},
 }
 
-func apply_current_action_to_garden_plot(garden_plot : GardenPlot):
-	apply_action_to_garden_plot(selected_action_key, garden_plot)
+func apply_current_action_to_plot(plot : Plot):
+	apply_action_to_plot(selected_action_key, plot)
 
-func apply_action_to_garden_plot(action_key : String, garden_plot : GardenPlot):
+func apply_action_to_plot(action_key : String, plot : Plot):
 	var action_dict = action_types.get(action_key)
 	if(action_dict == null || action_dict.size() == 0):
 		return false
-	if(action_dict.get(TARGET_TYPE, "") != "GardenPlot"):
+	if(action_dict.get(TARGET_TYPE, "") != "Plot"):
 		return false
-	if(!garden_plot.has_method(action_dict.get(FUNC_NAME, ""))):
+	if(!plot.has_method(action_dict.get(FUNC_NAME, ""))):
 		return false
 	
-	garden_plot.call(action_dict.get(FUNC_NAME))
+	plot.call(action_dict.get(FUNC_NAME))
 	return true
 
 func get_action_type_keys() -> Array:

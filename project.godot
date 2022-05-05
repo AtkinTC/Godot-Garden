@@ -34,15 +34,40 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/GardenGrid.gd"
 }, {
-"base": "RefCounted",
-"class": &"GardenPlot",
+"base": "PlotComponent",
+"class": &"JobPlotComponent",
 "language": &"GDScript",
-"path": "res://Scenes/Garden/GardenPlot.gd"
+"path": "res://Scripts/Plot/JobPlotComponent.gd"
+}, {
+"base": "PlotContent",
+"class": &"JobPlotContent",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/JobPlotContent.gd"
+}, {
+"base": "RefCounted",
+"class": &"Plot",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/Plot.gd"
+}, {
+"base": "RefCounted",
+"class": &"PlotComponent",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/PlotComponent.gd"
 }, {
 "base": "Control",
-"class": &"GardenPlotNode",
+"class": &"PlotContent",
 "language": &"GDScript",
-"path": "res://Scenes/Garden/GardenPlotNode.gd"
+"path": "res://Scenes/Garden/PlotNode/PlotContent.gd"
+}, {
+"base": "Control",
+"class": &"PlotNode",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/PlotNode.gd"
+}, {
+"base": "ItemList",
+"class": &"PurchaseMenu",
+"language": &"GDScript",
+"path": "res://Scenes/UI/PurchaseMenu.gd"
 }, {
 "base": "Node",
 "class": &"ResourceDisplay",
@@ -53,11 +78,6 @@ _global_script_classes=[{
 "class": &"ResourceDisplayBox",
 "language": &"GDScript",
 "path": "res://Scenes/UI/ResourceDisplayBox.gd"
-}, {
-"base": "ItemList",
-"class": &"SeedsMenu",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SeedsMenu.gd"
 }]
 _global_script_class_icons={
 "ActionsMenu": "",
@@ -65,11 +85,15 @@ _global_script_class_icons={
 "CustCamera2D": "",
 "GardenExpandPanel": "",
 "GardenGrid": "",
-"GardenPlot": "",
-"GardenPlotNode": "",
+"JobPlotComponent": "",
+"JobPlotContent": "",
+"Plot": "",
+"PlotComponent": "",
+"PlotContent": "",
+"PlotNode": "",
+"PurchaseMenu": "",
 "ResourceDisplay": "",
-"ResourceDisplayBox": "",
-"SeedsMenu": ""
+"ResourceDisplayBox": ""
 }
 
 [application]
@@ -81,12 +105,12 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 
 [autoload]
 
-PlantManager="*res://Singletons/PlantManager.gd"
 ActionManager="*res://Singletons/ActionManager.gd"
 CameraManager="*res://Singletons/CameraManager.gd"
 ResourceManager="*res://Singletons/ResourceManager.gd"
 PurchaseManager="*res://Singletons/PurchaseManager.gd"
 GardenManager="*res://Singletons/GardenManager.gd"
+ObjectsManager="*res://Singletons/ObjectsManager.gd"
 
 [display]
 

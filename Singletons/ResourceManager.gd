@@ -9,10 +9,22 @@ var resource_types := {
 		"display_name" : "money",
 		"initial_amount" : 1.00
 	},
-	"RESOURCE_1" : {
+	"TEST_1" : {
 		"display_name" : "test",
 		"initial_amount" : 99999.99
-	}
+	},
+	"AIR_ESS" : {
+		DISPLAY_NAME : "essence of air"
+	},
+	"EARTH_ESS" : {
+		DISPLAY_NAME : "essence of earth"
+	},
+	"FIRE_ESS" : {
+		DISPLAY_NAME : "essence of fire"
+	},
+	"WATER_ESS" : {
+		DISPLAY_NAME : "essence of water"
+	},
 }
 
 var resources := {}

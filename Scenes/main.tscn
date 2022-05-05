@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
-[ext_resource type="Script" path="res://Scenes/UI/SeedsMenu.gd" id="2_jvrrg"]
-[ext_resource type="PackedScene" uid="uid://cuexouewhieoc" path="res://Scenes/Garden/GardenPlotNode.tscn" id="2_klh75"]
 [ext_resource type="Script" path="res://Scenes/UI/ActionsMenu.gd" id="3_7s5ky"]
 [ext_resource type="Script" path="res://Scenes/UI/ResourceDisplayBox.gd" id="4_b13kc"]
 [ext_resource type="PackedScene" uid="uid://cgvrlmebsl31q" path="res://Scenes/UI/ResourceDisplay.tscn" id="4_c7a2p"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
+[ext_resource type="Script" path="res://Scenes/UI/PurchaseMenu.gd" id="6_lher3"]
 [ext_resource type="PackedScene" uid="uid://d1f4uahxtegx1" path="res://Scenes/Garden/GardenExpandPanel.tscn" id="7_rejdf"]
+[ext_resource type="PackedScene" uid="uid://c5ximap3xiwp2" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -33,15 +33,15 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="SeedsMenu" type="ItemList" parent="UI/H/LPanel/V"]
+[node name="PurchaseMenu" type="ItemList" parent="UI/H/LPanel/V"]
 offset_right = 200.0
 offset_bottom = 62.0
 allow_reselect = true
 auto_height = true
 item_count = 2
-item_0/text = "SEED_1"
-item_1/text = "SEED_2"
-script = ExtResource( "2_jvrrg" )
+item_0/text = "OBJECT_1"
+item_1/text = "OBJECT_2"
+script = ExtResource( "6_lher3" )
 
 [node name="ActionsMenu" type="ItemList" parent="UI/H/LPanel/V"]
 offset_top = 66.0
@@ -114,43 +114,43 @@ columns = 3
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
-[node name="GardenPlot" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode1" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 
-[node name="GardenPlot2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 104.0
 offset_right = 204.0
 
-[node name="GardenPlot3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 208.0
 offset_right = 308.0
 
-[node name="GardenPlot4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_top = 104.0
 offset_bottom = 204.0
 
-[node name="GardenPlot5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 104.0
 offset_top = 104.0
 offset_right = 204.0
 offset_bottom = 204.0
 
-[node name="GardenPlot6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 208.0
 offset_top = 104.0
 offset_right = 308.0
 offset_bottom = 204.0
 
-[node name="GardenPlot7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_top = 208.0
 offset_bottom = 308.0
 
-[node name="GardenPlot8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 104.0
 offset_top = 208.0
 offset_right = 204.0
 offset_bottom = 308.0
 
-[node name="GardenPlot9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "2_klh75" )]
+[node name="PlotNode9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
 offset_left = 208.0
 offset_top = 208.0
 offset_right = 308.0
@@ -186,5 +186,5 @@ acceleration = 0.1
 min_zoom = 0.25
 max_zoom = 1.0
 
-[connection signal="item_selected" from="UI/H/LPanel/V/SeedsMenu" to="UI/H/LPanel/V/SeedsMenu" method="_on_seeds_menu_item_selected"]
+[connection signal="item_selected" from="UI/H/LPanel/V/PurchaseMenu" to="UI/H/LPanel/V/PurchaseMenu" method="_on_purchase_menu_item_selected"]
 [connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]

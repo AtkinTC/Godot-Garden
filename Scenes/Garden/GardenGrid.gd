@@ -1,7 +1,7 @@
 extends Control
 class_name GardenGrid
 
-@onready var garden_plot_node_scene : PackedScene = preload("res://Scenes/Garden/GardenPlotNode.tscn")
+@onready var base_plot_node_scene : PackedScene = preload("res://Scenes/Garden/PlotNode/PlotNode.tscn")
 
 @onready var grid : GridContainer = $UIGrid/Grid
 
@@ -24,7 +24,7 @@ func reset_grid_plots():
 	
 	for y in range(_offset.y, _offset.y + _size.y):
 		for x in range(_offset.x, _offset.x + _size.x):
-			var garden_plot_node : GardenPlotNode = garden_plot_node_scene.instantiate()
+			var garden_plot_node : PlotNode = base_plot_node_scene.instantiate()
 			garden_plot_node.set_plot_coord(Vector2(x,y))
 			grid.add_child(garden_plot_node)
 

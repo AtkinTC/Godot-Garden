@@ -2,43 +2,46 @@ extends Node
 
 signal garden_resized()
 
-var garden_plots : Array2D
+var plots : Array2D
 var garden_rect := Rect2(-1, -1, 3, 3)
 
 var plot_base_price : float = (100.0/3)
 var min_garden_size : int = 9
 
 func _ready():
-	setup_garden_plots()
+	setup_plots()
 
 # rebuild garden plots array based on current sizing
-func setup_garden_plots():
-	var old := garden_plots
-	garden_plots = Array2D.new(garden_rect.size, garden_rect.position)
+func setup_plots():
+	var old := plots
+	plots = Array2D.new(garden_rect.size, garden_rect.position)
 	
 	if(old != null):
-		garden_plots.insert(old)
+		plots.insert(old)
 	
-	for x in garden_plots.range_x():
-		for y in garden_plots.range_y():
+	for x in plots.range_x():
+		for y in plots.range_y():
 			var coord := Vector2(x,y)
 			if(old == null || !(x in old.range_x()) || !(y in old.range_y())):
-				var garden_plot : GardenPlot = GardenPlot.new()
-				garden_plot.set_coord(coord)
-				set_garden_plot(coord, garden_plot)
+				var plot : Plot = Plot.new()
+				plot.set_coord(coord)
+				set_plot(coord, plot)
+	
+	var center_plot : Plot = plots.get_at(Vector2(0,0))
+	center_plot.insert_object("FOCUS_BASIC")
 
 # process step time for all garden plots
-func step_garden_plots(step_time : float):
-	for x in garden_plots.range_x():
-		for y in garden_plots.range_y():
-			(garden_plots.get_at(Vector2(x,y)) as GardenPlot).step(step_time)
+func step_plots(step_time : float):
+	for x in plots.range_x():
+		for y in plots.range_y():
+			(plots.get_at(Vector2(x,y)) as Plot).step(step_time)
 
 # calculate price for an expansion based on current garden size
 func get_garden_expansion_price(exp_v : Vector2) -> float:
-	var new_width : int = garden_plots.get_size().x + abs(exp_v.x)
-	var new_height : int = garden_plots.get_size().y + abs(exp_v.y)
+	var new_width : int = plots.get_size().x + abs(exp_v.x)
+	var new_height : int = plots.get_size().y + abs(exp_v.y)
 	
-	var current_plots := garden_plots.get_size().x * garden_plots.get_size().y
+	var current_plots := plots.get_size().x * plots.get_size().y
 	var new_plots := (new_width * new_height) - current_plots
 	
 	return plot_base_price * new_plots * (current_plots * 1.0 / min_garden_size)
@@ -62,19 +65,19 @@ func expand_garden(exp_v : Vector2):
 
 func set_garden_rect(_garden_rect : Rect2):
 	garden_rect = _garden_rect
-	setup_garden_plots()
+	setup_plots()
 	garden_resized.emit()
 
 func get_garden_rect() -> Rect2:
 	return garden_rect
 
-func set_garden_plot(coord : Vector2, garden_plot : GardenPlot):
-	garden_plots.set_at(coord, garden_plot)
+func set_plot(coord : Vector2, plot : Plot):
+	plots.set_at(coord, plot)
 
-func get_garden_plot(coord : Vector2):
-	if(garden_plots == null):
+func get_plot(coord : Vector2):
+	if(plots == null):
 		return null
-	return garden_plots.get_at(coord)
+	return plots.get_at(coord)
 
 func connect_garden_resized(reciever_method : Callable):
 	garden_resized.connect(reciever_method)
