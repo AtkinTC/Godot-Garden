@@ -69,15 +69,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/PurchaseMenu.gd"
 }, {
-"base": "Node",
+"base": "Control",
 "class": &"ResourceDisplay",
 "language": &"GDScript",
 "path": "res://Scenes/UI/ResourceDisplay.gd"
 }, {
 "base": "VBoxContainer",
-"class": &"ResourceDisplayBox",
+"class": &"ResourceDisplayContainer",
 "language": &"GDScript",
-"path": "res://Scenes/UI/ResourceDisplayBox.gd"
+"path": "res://Scenes/UI/ResourceDisplayContainer.gd"
+}, {
+"base": "RefCounted",
+"class": &"Utils",
+"language": &"GDScript",
+"path": "res://Scripts/Utils.gd"
 }]
 _global_script_class_icons={
 "ActionsMenu": "",
@@ -93,7 +98,8 @@ _global_script_class_icons={
 "PlotNode": "",
 "PurchaseMenu": "",
 "ResourceDisplay": "",
-"ResourceDisplayBox": ""
+"ResourceDisplayContainer": "",
+"Utils": ""
 }
 
 [application]

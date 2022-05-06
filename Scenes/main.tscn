@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
 [ext_resource type="Script" path="res://Scenes/UI/ActionsMenu.gd" id="3_7s5ky"]
-[ext_resource type="Script" path="res://Scenes/UI/ResourceDisplayBox.gd" id="4_b13kc"]
+[ext_resource type="Script" path="res://Scenes/UI/ResourceDisplayContainer.gd" id="4_1tjr6"]
 [ext_resource type="PackedScene" uid="uid://cgvrlmebsl31q" path="res://Scenes/UI/ResourceDisplay.tscn" id="4_c7a2p"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="Script" path="res://Scenes/UI/PurchaseMenu.gd" id="6_lher3"]
@@ -54,13 +54,16 @@ item_0/text = "ACTION_1"
 item_1/text = "ACTION_2"
 script = ExtResource( "3_7s5ky" )
 
-[node name="ResourceDisplayBox" type="VBoxContainer" parent="UI/H/LPanel/V"]
+[node name="ResourceDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
 offset_top = 132.0
 offset_right = 200.0
-offset_bottom = 158.0
-script = ExtResource( "4_b13kc" )
+offset_bottom = 157.0
+script = ExtResource( "4_1tjr6" )
 
-[node name="ResourceDisplay" parent="UI/H/LPanel/V/ResourceDisplayBox" instance=ExtResource( "4_c7a2p" )]
+[node name="ResourceDisplay" parent="UI/H/LPanel/V/ResourceDisplayContainer" instance=ExtResource( "4_c7a2p" )]
+anchor_right = 0.0
+offset_right = 200.0
+offset_bottom = 25.0
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)
