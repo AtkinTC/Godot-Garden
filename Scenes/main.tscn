@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bow5hhnl77ja8"]
+[gd_scene load_steps=13 format=3 uid="uid://bow5hhnl77ja8"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://Scenes/UI/PurchaseMenu.gd" id="6_lher3"]
 [ext_resource type="PackedScene" uid="uid://d1f4uahxtegx1" path="res://Scenes/Garden/GardenExpandPanel.tscn" id="7_rejdf"]
 [ext_resource type="PackedScene" uid="uid://c5ximap3xiwp2" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
+[ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="9_yicj4"]
+[ext_resource type="PackedScene" uid="uid://dpm053sedixgx" path="res://Scenes/Garden/PlotNode/PassivePlotContent.tscn" id="10_4fsx6"]
+[ext_resource type="PackedScene" uid="uid://epbsp14dypr7" path="res://Scenes/Garden/PlotNode/JobPlotContent.tscn" id="10_pugr3"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -147,17 +150,107 @@ offset_bottom = 204.0
 offset_top = 208.0
 offset_bottom = 308.0
 
-[node name="PlotNode8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotNode8" type="Control" parent="GardenNode/GardenGrid/UIGrid/Grid"]
+minimum_size = Vector2(100, 100)
 offset_left = 104.0
 offset_top = 208.0
 offset_right = 204.0
 offset_bottom = 308.0
+script = ExtResource( "9_yicj4" )
 
-[node name="PlotNode9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="Panel" type="Panel" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="PlotButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="V" type="VBoxContainer" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="CoordLabel" type="Label" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8/V"]
+offset_right = 100.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 10
+text = "(XX,YY)"
+
+[node name="DisplayLabel" type="Label" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8/V"]
+offset_top = 21.0
+offset_right = 100.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 14
+text = "Empty
+"
+
+[node name="JobPlotContent" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode8/V" instance=ExtResource( "10_pugr3" )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 48.0
+offset_right = 100.0
+offset_bottom = 68.0
+
+[node name="PlotNode9" type="Control" parent="GardenNode/GardenGrid/UIGrid/Grid"]
+minimum_size = Vector2(100, 100)
 offset_left = 208.0
 offset_top = 208.0
 offset_right = 308.0
 offset_bottom = 308.0
+script = ExtResource( "9_yicj4" )
+
+[node name="Panel" type="Panel" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="PlotButton" type="Button" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="V" type="VBoxContainer" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="CoordLabel" type="Label" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9/V"]
+offset_right = 100.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 10
+text = "(XX,YY)"
+
+[node name="DisplayLabel" type="Label" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9/V"]
+offset_top = 21.0
+offset_right = 100.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 14
+text = "Empty
+"
+
+[node name="PassivePlotContent" parent="GardenNode/GardenGrid/UIGrid/Grid/PlotNode9/V" instance=ExtResource( "10_4fsx6" )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 48.0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="ExpandPanelEast" parent="GardenNode/GardenGrid/UIGrid" instance=ExtResource( "7_rejdf" )]
 offset_left = 416.0

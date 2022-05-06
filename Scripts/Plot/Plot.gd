@@ -21,8 +21,10 @@ func insert_object(_object_key : String = ""):
 #	PurchaseManager.spend(purchase_price)
 	
 	components = {}
-	
-	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
+	if(object_type.get(ObjectsManager.PASSIVE_RESOURCE_GAIN, null) != null):
+		var job_comp := PassivePlotComponent.new(object_key)
+		components["PASSIVE"] = job_comp
+	elif(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
 		var job_comp := JobPlotComponent.new(object_key)
 		components["JOB"] = job_comp
 

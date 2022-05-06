@@ -2,6 +2,7 @@ extends Control
 class_name PlotNode
 
 @onready var job_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/JobPlotContent.tscn")
+@onready var passive_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/PassivePlotContent.tscn")
 
 var plot_coord : Vector2
 
@@ -35,9 +36,14 @@ func update_display() -> void:
 		display_label.text = "Empty"
 	
 	if(plot.get_object_key() != "" && plot_content == null):
-		plot_content = job_plot_content_scene.instantiate() as PlotContent
-		plot_content.set_plot_coord(plot_coord)
-		body.add_child(plot_content)
+		if(plot.get_component("PASSIVE")):
+			plot_content = passive_plot_content_scene.instantiate() as PlotContent
+			plot_content.set_plot_coord(plot_coord)
+			body.add_child(plot_content)
+		if(plot.get_component("JOB")):
+			plot_content = job_plot_content_scene.instantiate() as PlotContent
+			plot_content.set_plot_coord(plot_coord)
+			body.add_child(plot_content)
 
 func _on_plot_button_pressed():
 	var plot : Plot = GardenManager.get_plot(plot_coord)

@@ -44,6 +44,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/PlotNode/JobPlotContent.gd"
 }, {
+"base": "PlotComponent",
+"class": &"PassivePlotComponent",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/PassivePlotComponent.gd"
+}, {
+"base": "PlotContent",
+"class": &"PassivePlotContent",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/PassivePlotContent.gd"
+}, {
 "base": "RefCounted",
 "class": &"Plot",
 "language": &"GDScript",
@@ -92,6 +102,8 @@ _global_script_class_icons={
 "GardenGrid": "",
 "JobPlotComponent": "",
 "JobPlotContent": "",
+"PassivePlotComponent": "",
+"PassivePlotContent": "",
 "Plot": "",
 "PlotComponent": "",
 "PlotContent": "",

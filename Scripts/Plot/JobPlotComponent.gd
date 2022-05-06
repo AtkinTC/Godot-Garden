@@ -6,8 +6,6 @@ var object_key : String
 var job_progress : float
 var job_running : bool
 
-var plant_display_name : String
-
 func _init(_object_key : String):
 	object_key = _object_key
 	
