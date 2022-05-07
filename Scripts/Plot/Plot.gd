@@ -32,7 +32,7 @@ func insert_object(_object_key : String = ""):
 	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
 		var job_comp := JobPlotComponent.new(coord, object_key)
 		components["JOB"] = job_comp
-	if(object_type.get(ObjectsManager.SUPPLY_CAPACITY, null) != null):
+	if(object_type.get(ObjectsManager.CAPACITY, null) != null):
 		var job_comp := CapacityPlotComponent.new(coord, object_key)
 		components["CAPACITY"] = job_comp
 	

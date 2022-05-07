@@ -1,7 +1,7 @@
 extends PlotContent
 class_name PassivePlotContent
 
-@export var supply_keys : Array = ["AIR_ESS", "FIRE_ESS", "WATER_ESS", "EARTH_ESS",]
+@export var supply_keys : Array = ["EARTH_ESS", "AIR_ESS", "WATER_ESS", "FIRE_ESS"]
 
 var labels : Array = []
 var backgrounds : Array = []

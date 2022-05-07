@@ -8,7 +8,7 @@ var garden_rect := Rect2(-1, -1, 3, 3)
 var plot_base_price : float = (100.0/3)
 var min_garden_size : int = 9
 
-func _ready():
+func initialize():
 	setup_plots()
 
 # rebuild garden plots array based on current sizing

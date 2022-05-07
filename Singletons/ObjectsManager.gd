@@ -5,6 +5,11 @@ const DISPLAY_NAME := "display_name"
 const PURCHASABLE := "purchasable"
 const PURCHASE_BASE_COST := "purchase_base_cost"
 
+const BUILD := "build"
+const BUILD_LENGTH := "build_length"
+const BUILD_COST := "build_cost"
+
+const JOB := "job"
 const JOB_LENGTH := "job_length"
 const JOB_REQUIREMENTS := "job_requirements"
 const JOB_COST := "job_cost"
@@ -14,8 +19,9 @@ const JOB_SPEED_SATISFIED := "job_speed_satisfied"
 const JOB_SPEED_UNSATISFIED := "job_speed_unsatisfied"
 const JOB_COMPLETION_REWARD := "job_completion_reward"
 
-const SUPPLY_CAPACITY := "supply_capacity"
+const CAPACITY := "capacity"
 
+const PASSIVE := "passive"
 const PASSIVE_GAIN := "passive_gain"
 
 var object_types := {
@@ -27,6 +33,12 @@ var object_types := {
 			"EARTH_ESS" : 1,
 			"FIRE_ESS" : 1,
 			"WATER_ESS" : 1
+		},
+		CAPACITY : {
+			"AIR_ESS" : 10,
+			"EARTH_ESS" : 10,
+			"FIRE_ESS" : 10,
+			"WATER_ESS" : 10
 		}
 	},
 	"WATER_SOURCE_BASIC" : {
@@ -62,7 +74,7 @@ var object_types := {
 			"EARTH_ESS" : 10,
 			"WATER_ESS" : 10
 		},
-		SUPPLY_CAPACITY : {
+		CAPACITY : {
 			"WATER_ESS" : 10
 		}
 	},

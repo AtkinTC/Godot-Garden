@@ -33,13 +33,13 @@ var supply_types := {
 
 var supplies := {}
 
-func _ready():
+func initialize():
 	supplies = {}
 	for key in supply_types.keys():
 		var dict : Dictionary = supply_types.get(key, {})
 		var supply := Supply.new(key, dict)
 		supplies[key] = supply
-
+		
 func get_supply_type_keys() -> Array:
 	return supplies.keys()
 
