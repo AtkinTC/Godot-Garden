@@ -37,18 +37,23 @@ func step_plots(step_time : float):
 			(plots.get_at(Vector2(x,y)) as Plot).step(step_time)
 
 # calculate price for an expansion based on current garden size
-func get_garden_expansion_price(exp_v : Vector2) -> float:
+func get_garden_expansion_price(exp_v : Vector2) -> Dictionary:
 	var new_width : int = plots.get_size().x + abs(exp_v.x)
 	var new_height : int = plots.get_size().y + abs(exp_v.y)
 	
 	var current_plots := plots.get_size().x * plots.get_size().y
 	var new_plots := (new_width * new_height) - current_plots
 	
-	return plot_base_price * new_plots * (current_plots * 1.0 / min_garden_size)
+	var alignment := get_direction_alignment(exp_v)
+	var price_dict := {}
+	for key in alignment.keys():
+		price_dict[key] = alignment[key] * plot_base_price * new_plots * (current_plots * 1.0 / min_garden_size)
+	
+	return price_dict
 
 # expend resources to purchase expansion and apply resize to garden
 func purchase_expansion(exp_v : Vector2):
-	var total_cost := {"MONEY": get_garden_expansion_price(exp_v)}
+	var total_cost := get_garden_expansion_price(exp_v)
 	if(!PurchaseManager.can_afford(total_cost)):
 		return
 		
@@ -81,3 +86,15 @@ func get_plot(coord : Vector2):
 
 func connect_garden_resized(reciever_method : Callable):
 	garden_resized.connect(reciever_method)
+
+func get_direction_alignment(dir : Vector2) -> Dictionary:
+	var alignment := {}
+	if(dir.x > 0):
+		alignment["AIR_ESS"] = abs(dir.x)
+	elif(dir.x < 0):
+		alignment["WATER_ESS"] = abs(dir.x)
+	if(dir.y > 0):
+		alignment["FIRE_ESS"] = abs(dir.y)
+	elif(dir.y < 0):
+		alignment["EARTH_ESS"] = abs(dir.y)
+	return alignment

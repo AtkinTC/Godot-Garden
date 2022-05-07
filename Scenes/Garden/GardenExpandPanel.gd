@@ -3,7 +3,9 @@ class_name GardenExpandPanel
 
 signal expand_panel_pressed(exp_v : Vector2)
 
-@onready var button : Button = $ExpandButton
+@onready var button : Button = $Margin/ExpandButton
+@onready var labels_container : Control = $Margin/V/H
+@onready var price_labels : Array = [$Margin/V/H/Control]
 
 @export var expand_v : Vector2 = Vector2.ZERO
 @export_node_path var garden_path : NodePath
@@ -25,7 +27,20 @@ func update_display_price():
 		return
 	
 	var price := GardenManager.get_garden_expansion_price(expand_v)
-	button.text = "Expand\n($%.2f)" % price
+	
+	for i in price.size():
+		var resource_key = price.keys()[i]
+		if(i >= price_labels.size()):
+			price_labels.append((price_labels[0] as Control).duplicate())
+			labels_container.add_child(price_labels[i])
+		(price_labels[i].get_node("Label") as Label).text = "%.2f" % price[resource_key]
+		var display_colors = ResourceManager.get_resource_attribute(resource_key, ResourceManager.DISPLAY_COLORS, [])
+		if(display_colors.size() > 0):
+			(price_labels[i].get_node("Label") as Label).modulate = display_colors[0] as Color
+		if(display_colors.size() > 1):
+			(price_labels[i].get_node("ColorRect") as ColorRect).color = display_colors[1] as Color
+		
+	
 
 func _on_expand_button_pressed():
 	expand_panel_pressed.emit(expand_v)

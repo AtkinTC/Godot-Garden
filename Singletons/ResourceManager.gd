@@ -11,11 +11,6 @@ const CAPACITY := "capacity"
 const DISPLAY_COLORS := "display_colors"
 
 var resource_types := {
-	"MONEY" : {
-		DISPLAY_NAME : "money",
-		CAPACITY_BASE : 20,
-		QUANTITY_BASE : 1.00
-	},
 	"AIR_ESS" : {
 		DISPLAY_NAME : "essence of air",
 		CAPACITY_BASE : 10,
