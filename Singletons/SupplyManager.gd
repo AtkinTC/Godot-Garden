@@ -50,3 +50,8 @@ func connect_to_supply_quantity_changed(_key : String, _callable : Callable):
 	var supply : Supply = supplies.get(_key)
 	if(supply):
 		supply.supply_quantity_changed.connect(_callable)
+		
+func connect_to_supply_capacity_changed(_key : String, _callable : Callable):
+	var supply : Supply = supplies.get(_key)
+	if(supply):
+		supply.supply_capacity_changed.connect(_callable)

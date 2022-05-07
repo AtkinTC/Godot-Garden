@@ -14,7 +14,7 @@ const JOB_SPEED_SATISFIED := "job_speed_satisfied"
 const JOB_SPEED_UNSATISFIED := "job_speed_unsatisfied"
 const JOB_COMPLETION_REWARD := "job_completion_reward"
 
-const STORAGE := "storage"
+const SUPPLY_CAPACITY := "supply_capacity"
 
 const PASSIVE_GAIN := "passive_gain"
 
@@ -56,13 +56,13 @@ var object_types := {
 		}
 	},
 	"WATER_STORAGE_BASIC" : {
-		DISPLAY_NAME : "simple well",
+		DISPLAY_NAME : "water storage",
 		PURCHASABLE : true,
 		PURCHASE_BASE_COST : {
 			"EARTH_ESS" : 10,
 			"WATER_ESS" : 10
 		},
-		STORAGE : {
+		SUPPLY_CAPACITY : {
 			"WATER_ESS" : 10
 		}
 	},

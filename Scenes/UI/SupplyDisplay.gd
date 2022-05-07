@@ -26,6 +26,7 @@ func setup():
 		return
 	
 	SupplyManager.connect_to_supply_quantity_changed(key, _on_supply_quantity_changed)
+	SupplyManager.connect_to_supply_capacity_changed(key, _on_supply_capacity_changed)
 	
 	var supply : Supply = SupplyManager.get_supply(key)
 	
@@ -65,8 +66,14 @@ func set_quantity(_quantity : float):
 func set_capacity(_capacity : float):
 	capacity = _capacity
 
-# trigger amount update and recalculate display when supply updates
+# trigger quantity update and recalculate display when supply updates
 func _on_supply_quantity_changed(_key : String, _old_quantity : float, _new_quantity : float):
 	if(key == _key):
 		set_quantity(_new_quantity)
+		update_display()
+
+# trigger capacity update and recalculate display when supply updates
+func _on_supply_capacity_changed(_key : String, _old_capacity : float, _new_capacity : float):
+	if(key == _key):
+		set_capacity(_new_capacity)
 		update_display()

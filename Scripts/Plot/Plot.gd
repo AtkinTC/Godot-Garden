@@ -22,28 +22,21 @@ func insert_object(_object_key : String = ""):
 #		return
 #	PurchaseManager.spend(purchase_price)
 	
+	for comp in components.values():
+		comp.cleanup_before_delete()
+	
 	components = {}
 	if(object_type.get(ObjectsManager.PASSIVE_GAIN, null) != null):
-		var job_comp := PassivePlotComponent.new(object_key)
+		var job_comp := PassivePlotComponent.new(coord, object_key)
 		components["PASSIVE"] = job_comp
-	elif(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
-		var job_comp := JobPlotComponent.new(object_key)
+	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
+		var job_comp := JobPlotComponent.new(coord, object_key)
 		components["JOB"] = job_comp
+	if(object_type.get(ObjectsManager.SUPPLY_CAPACITY, null) != null):
+		var job_comp := CapacityPlotComponent.new(coord, object_key)
+		components["CAPACITY"] = job_comp
 	
 	plot_object_changed.emit()
-
-#func water_plot(water_amount : int = -1, override_capacity : bool = false):
-#	var new_water_level = water_level
-#	if(water_amount == -1):
-#		## fills to capacity, or doesn't change if already above capacity
-#		new_water_level = max(water_capacity, water_level)
-#	else:
-#		new_water_level = water_level + water_amount
-#		if(!override_capacity):
-#			## increase is capped by water_capacity, but doesn't change if already above capacity
-#			new_water_level = max(water_level, min(new_water_level, water_capacity))
-#
-#	water_level = new_water_level
 
 func step(_delta : float):
 	for comp_key in components.keys():

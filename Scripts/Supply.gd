@@ -1,6 +1,7 @@
 class_name Supply
 
 signal supply_quantity_changed(key : String, old_quantity : float, new_quantity : float)
+signal supply_capacity_changed(key : String, old_capacity : float, new_capacity : float)
 
 var key : String
 
@@ -9,18 +10,25 @@ var quantity : float
 var base_capacity : float
 var display_colors : Array
 
+var capacity_sources : Dictionary
+
 func _init(_key : String, _supply_def : Dictionary):
 	key = _key
 	display_name = _supply_def.get(SupplyManager.DISPLAY_NAME, key)
 	quantity = _supply_def.get(SupplyManager.QUANTITY_BASE, 0.00)
 	base_capacity = _supply_def.get(SupplyManager.CAPACITY_BASE, -1)
 	display_colors = _supply_def.get(SupplyManager.DISPLAY_COLORS, [])
+	capacity_sources = {}
 
 func get_display_name() -> String:
 	return display_name
 
 func get_capacity() -> float:
-	return base_capacity
+	var total_capacity = base_capacity
+	for capacity in capacity_sources.values():
+		total_capacity += capacity
+	
+	return total_capacity
 
 func get_quantity() -> float:
 	return quantity
@@ -47,3 +55,19 @@ func set_quantity(_quantity: float):
 			var old_quantity := quantity
 			quantity = new_quantity
 			supply_quantity_changed.emit(key, old_quantity, new_quantity)
+
+func set_capacity_source(_id : String, _capacity : float):
+	var old_capacity := get_capacity()
+	capacity_sources[_id] = _capacity
+	var new_capacity := get_capacity()
+	
+	if(new_capacity != old_capacity):
+		supply_capacity_changed.emit(key, old_capacity, new_capacity)
+
+func remove_capacity_source(_id : String):
+	var old_capacity := get_capacity()
+	capacity_sources.erase(_id)
+	var new_capacity := get_capacity()
+	
+	if(new_capacity != old_capacity):
+		supply_capacity_changed.emit(key, old_capacity, new_capacity)
