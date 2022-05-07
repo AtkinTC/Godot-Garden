@@ -36,11 +36,8 @@ func complete_job():
 	
 	var reward_dict : Dictionary = get_object_attribute(ObjectsManager.JOB_COMPLETION_REWARD, {})
 	
-	for resource_key in reward_dict:
-		ResourceManager.change_resource_quantity(resource_key, reward_dict[resource_key])
-		#var current_amount = ResourceManager.get_resource_attribute(resource_key, ResourceManager.AMOUNT)
-		#var new_amount = current_amount + reward_dict[resource_key]
-		#ResourceManager.set_resource_attribute(resource_key, ResourceManager.AMOUNT, new_amount)
+	for key in reward_dict:
+		SupplyManager.get_supply(key).change_quantity(reward_dict[key])
 		
 	# reset job progress 
 	job_progress = 0.0

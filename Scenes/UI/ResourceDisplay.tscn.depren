@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay.gd" id="1_l7mov"]
+[ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="3_n8sck"]
+
+[node name="ResourceDisplay" type="Control"]
+minimum_size = Vector2(0, 25)
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource( "1_l7mov" )
+metadata/_edit_use_custom_anchors = false
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource( "3_n8sck" )
+texture_progress = ExtResource( "3_n8sck" )
+tint_under = Color(0, 0, 0, 1)
+tint_progress = Color(0.351563, 0.351563, 0.351563, 1)
+
+[node name="H" type="HBoxContainer" parent="."]
+offset_right = 200.0
+offset_bottom = 26.0
+
+[node name="NameLabel" type="Label" parent="H"]
+offset_right = 82.0
+offset_bottom = 26.0
+text = "RESOURCE"
+
+[node name="Spacer" type="Label" parent="H"]
+offset_left = 86.0
+offset_right = 91.0
+offset_bottom = 26.0
+text = ":"
+
+[node name="AmountLabel" type="Label" parent="H"]
+offset_left = 95.0
+offset_right = 200.0
+offset_bottom = 26.0
+size_flags_horizontal = 3
+text = "999999999"
+horizontal_alignment = 2

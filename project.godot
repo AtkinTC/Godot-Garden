@@ -79,15 +79,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/PurchaseMenu.gd"
 }, {
-"base": "Control",
-"class": &"ResourceDisplay",
+"base": "RefCounted",
+"class": &"Supply",
 "language": &"GDScript",
-"path": "res://Scenes/UI/ResourceDisplay.gd"
+"path": "res://Scripts/Supply.gd"
+}, {
+"base": "Control",
+"class": &"SupplyDisplay",
+"language": &"GDScript",
+"path": "res://Scenes/UI/SupplyDisplay.gd"
 }, {
 "base": "VBoxContainer",
-"class": &"ResourceDisplayContainer",
+"class": &"SupplyDisplayContainer",
 "language": &"GDScript",
-"path": "res://Scenes/UI/ResourceDisplayContainer.gd"
+"path": "res://Scenes/UI/SupplyDisplayContainer.gd"
 }, {
 "base": "RefCounted",
 "class": &"Utils",
@@ -109,8 +114,9 @@ _global_script_class_icons={
 "PlotContent": "",
 "PlotNode": "",
 "PurchaseMenu": "",
-"ResourceDisplay": "",
-"ResourceDisplayContainer": "",
+"Supply": "",
+"SupplyDisplay": "",
+"SupplyDisplayContainer": "",
 "Utils": ""
 }
 
@@ -125,10 +131,10 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 
 ActionManager="*res://Singletons/ActionManager.gd"
 CameraManager="*res://Singletons/CameraManager.gd"
-ResourceManager="*res://Singletons/ResourceManager.gd"
 PurchaseManager="*res://Singletons/PurchaseManager.gd"
 GardenManager="*res://Singletons/GardenManager.gd"
 ObjectsManager="*res://Singletons/ObjectsManager.gd"
+SupplyManager="*res://Singletons/SupplyManager.gd"
 
 [display]
 

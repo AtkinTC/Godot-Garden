@@ -5,21 +5,22 @@ func can_afford(total_cost : Dictionary) -> bool:
 		# no total cost
 		return true
 	
-	for resource_key in total_cost.keys():
-		var res_cost = total_cost[resource_key]
-		if(!res_cost || res_cost <= 0):
-			#no resource cost
+	for key in total_cost.keys():
+		var cost = total_cost[key]
+		if(!cost || cost <= 0):
+			#no cost
 			continue
 		
-		var res_amount = ResourceManager.get_resource_attribute(resource_key, ResourceManager.QUANTITY)
-		if(!res_amount || res_amount < res_cost):
-			#insufficient resource
+		var quantity = SupplyManager.get_supply(key).get_quantity()
+		if(!quantity || quantity < cost):
+			#insufficient supply
 			return false
 		
 	return true
 
 func spend(total_cost : Dictionary):
-	for resource_key in total_cost.keys():
-		var res_cost = total_cost[resource_key]
-		var res_amount = ResourceManager.get_resource_attribute(resource_key, ResourceManager.QUANTITY)
-		ResourceManager.change_resource_quantity(resource_key, -res_cost)
+	for key in total_cost.keys():
+		var cost = total_cost[key]
+		var supply : Supply = SupplyManager.get_supply(key)
+		var quantity = supply.get_quantity()
+		supply.change_quantity(-cost)

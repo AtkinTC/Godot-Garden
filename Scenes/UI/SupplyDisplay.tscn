@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgvrlmebsl31q"]
+[gd_scene load_steps=3 format=3 uid="uid://dxv4pu5x3t8rx"]
 
-[ext_resource type="Script" path="res://Scenes/UI/ResourceDisplay.gd" id="1_l7mov"]
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay.gd" id="1_2qgu8"]
 [ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="3_n8sck"]
 
-[node name="ResourceDisplay" type="Control"]
+[node name="SupplyDisplay" type="Control"]
 minimum_size = Vector2(0, 25)
 anchor_right = 1.0
 grow_horizontal = 2
-script = ExtResource( "1_l7mov" )
+script = ExtResource( "1_2qgu8" )
 metadata/_edit_use_custom_anchors = false
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]

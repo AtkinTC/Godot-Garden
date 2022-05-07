@@ -29,18 +29,16 @@ func update_display_price():
 	var price := GardenManager.get_garden_expansion_price(expand_v)
 	
 	for i in price.size():
-		var resource_key = price.keys()[i]
+		var key = price.keys()[i]
 		if(i >= price_labels.size()):
 			price_labels.append((price_labels[0] as Control).duplicate())
 			labels_container.add_child(price_labels[i])
-		(price_labels[i].get_node("Label") as Label).text = "%.2f" % price[resource_key]
-		var display_colors = ResourceManager.get_resource_attribute(resource_key, ResourceManager.DISPLAY_COLORS, [])
-		if(display_colors.size() > 0):
-			(price_labels[i].get_node("Label") as Label).modulate = display_colors[0] as Color
-		if(display_colors.size() > 1):
-			(price_labels[i].get_node("ColorRect") as ColorRect).color = display_colors[1] as Color
-		
-	
+			
+		var price_label : Label = price_labels[i].get_node("Label")
+		var background : ColorRect = price_labels[i].get_node("ColorRect")
+		price_label.text = "%.2f" % price[key]
+		price_label.modulate = SupplyManager.get_supply(key).get_display_color(0, price_label.modulate)
+		background.color = SupplyManager.get_supply(key).get_display_color(1, background.color)
 
 func _on_expand_button_pressed():
 	expand_panel_pressed.emit(expand_v)

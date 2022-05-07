@@ -1,7 +1,7 @@
 extends PlotContent
 class_name PassivePlotContent
 
-@export var resource_keys : Array = ["AIR_ESS", "EARTH_ESS", "FIRE_ESS", "WATER_ESS"]
+@export var supply_keys : Array = ["AIR_ESS", "FIRE_ESS", "WATER_ESS", "EARTH_ESS",]
 
 var labels : Array = []
 var backgrounds : Array = []
@@ -31,26 +31,22 @@ func update_display() -> void:
 	if(!passive_component):
 		return
 	
-	var passive_resource_gains = passive_component.get_passive_resource_gains()
-	
 	for i in range(labels.size()):
-		var resource_key = resource_keys[i]
+		var key = supply_keys[i]
 		
-		var gains_amount = passive_component.get_passive_resource_gains().get(resource_key, null)
+		var gains_quantity = passive_component.get_gains().get(key, null)
 		
-		if(gains_amount == null):
+		if(gains_quantity == null):
 			(labels[i] as Label).text = ""
 		else:
-			var display_colors = ResourceManager.get_resource_attribute(resource_key, ResourceManager.DISPLAY_COLORS, [])
-			if(display_colors.size() > 0):
-				(labels[i] as Label).modulate = display_colors[0] as Color
-			if(display_colors.size() > 1):
-				(backgrounds[i] as ColorRect).color = display_colors[1] as Color
-			if(gains_amount > 0):
+			(labels[i] as Label).modulate = SupplyManager.get_supply(key).get_display_color(0, (labels[i] as Label).modulate)
+			(backgrounds[i] as ColorRect).color = SupplyManager.get_supply(key).get_display_color(1, (backgrounds[i] as ColorRect).color)
+			
+			if(gains_quantity > 0):
 				(labels[i] as Label).text = "+ "
-			elif(gains_amount > 0):
+			elif(gains_quantity > 0):
 				(labels[i] as Label).text = "- "
 			else:
 				(labels[i] as Label).text = ""
 			
-			(labels[i] as Label).text += str(gains_amount)
+			(labels[i] as Label).text += str(gains_quantity)

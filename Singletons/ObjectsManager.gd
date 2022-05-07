@@ -7,22 +7,22 @@ const PURCHASE_BASE_COST := "purchase_base_cost"
 
 const JOB_LENGTH := "job_length"
 const JOB_REQUIREMENTS := "job_requirements"
-const JOB_RESOURCE_COST := "job_resource_cost"
-const JOB_RESOURCE_CONSUMPTION := "job_resource_consumption"
+const JOB_COST := "job_cost"
+const JOB_CONSUMPTION := "job_consumption"
 const JOB_SATISFACTION_NEEDS := "job_satisfaction_need"
 const JOB_SPEED_SATISFIED := "job_speed_satisfied"
 const JOB_SPEED_UNSATISFIED := "job_speed_unsatisfied"
 const JOB_COMPLETION_REWARD := "job_completion_reward"
 
-const PASSIVE_RESOURCE_GAIN := "passive_resource_gain"
+const STORAGE := "storage"
+
+const PASSIVE_GAIN := "passive_gain"
 
 var object_types := {
 	"FOCUS_BASIC" : {
 		DISPLAY_NAME : "focus",
 		PURCHASABLE : false,
-		JOB_LENGTH : 15,
-		JOB_SPEED_SATISFIED : 1,
-		PASSIVE_RESOURCE_GAIN : {
+		PASSIVE_GAIN : {
 			"AIR_ESS" : 1,
 			"EARTH_ESS" : 1,
 			"FIRE_ESS" : 1,
@@ -55,7 +55,17 @@ var object_types := {
 			"FIRE_ESS" : 1
 		}
 	},
-	
+	"WATER_STORAGE_BASIC" : {
+		DISPLAY_NAME : "simple well",
+		PURCHASABLE : true,
+		PURCHASE_BASE_COST : {
+			"EARTH_ESS" : 10,
+			"WATER_ESS" : 10
+		},
+		STORAGE : {
+			"WATER_ESS" : 10
+		}
+	},
 }
 
 var selected_object_key: String

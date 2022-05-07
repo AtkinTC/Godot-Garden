@@ -51,7 +51,7 @@ func get_garden_expansion_price(exp_v : Vector2) -> Dictionary:
 	
 	return price_dict
 
-# expend resources to purchase expansion and apply resize to garden
+# expend supplies to purchase expansion and apply resize to garden
 func purchase_expansion(exp_v : Vector2):
 	var total_cost := get_garden_expansion_price(exp_v)
 	if(!PurchaseManager.can_afford(total_cost)):
