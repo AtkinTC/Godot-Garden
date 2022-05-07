@@ -58,8 +58,16 @@ func change_resource_quantity(_resource_key: String, _change: float):
 	var old_quantity = get_resource_attribute(_resource_key, QUANTITY, 0.0)
 	set_resource_quantity(_resource_key, old_quantity + _change)
 
+func get_resource_capacity(_resource_key : String) -> float:
+	var dict : Dictionary = resource_types.get(_resource_key, {})
+	return dict.get(CAPACITY, -1.00)
+
 func set_resource_quantity(_resource_key: String, _quantity: float):
-	var old_quantity = get_resource_attribute(_resource_key, QUANTITY, 0.0)
+	var old_quantity : float = get_resource_attribute(_resource_key, QUANTITY, 0.0)
 	if(_quantity != old_quantity):
-		set_resource_attribute(_resource_key, QUANTITY, _quantity)
-		resource_quantity_changed.emit(_resource_key, old_quantity, _quantity)
+		var new_quantity : float = _quantity
+		var capacity := get_resource_capacity(_resource_key)
+		if(capacity >= 0):
+			new_quantity = min(new_quantity, capacity)
+		set_resource_attribute(_resource_key, QUANTITY, new_quantity)
+		resource_quantity_changed.emit(_resource_key, old_quantity, new_quantity)
