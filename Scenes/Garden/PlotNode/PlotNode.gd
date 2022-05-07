@@ -16,10 +16,12 @@ var plot_content : PlotContent
 
 func _ready():
 	plot_button.pressed.connect(_on_plot_button_pressed)
+	if(plot_coord != null):
+		GardenManager.get_plot(plot_coord).plot_object_changed.connect(_on_plot_object_changed)
 	update_display()
 
-func _process(_delta):
-	update_display()
+#func _process(_delta):
+#	update_display()
 
 func set_plot_coord(_plot_coord : Vector2) -> void:
 	plot_coord = _plot_coord
@@ -35,12 +37,14 @@ func update_display() -> void:
 	else:
 		display_label.text = "Empty"
 	
-	if(plot.get_object_key() != "" && plot_content == null):
+	if(plot.get_object_key() != ""):
+		if(plot_content):
+			plot_content.queue_free()
 		if(plot.get_component("PASSIVE")):
 			plot_content = passive_plot_content_scene.instantiate() as PlotContent
 			plot_content.set_plot_coord(plot_coord)
 			body.add_child(plot_content)
-		if(plot.get_component("JOB")):
+		elif(plot.get_component("JOB")):
 			plot_content = job_plot_content_scene.instantiate() as PlotContent
 			plot_content.set_plot_coord(plot_coord)
 			body.add_child(plot_content)
@@ -48,3 +52,6 @@ func update_display() -> void:
 func _on_plot_button_pressed():
 	var plot : Plot = GardenManager.get_plot(plot_coord)
 	ActionManager.apply_current_action_to_plot(plot)
+
+func _on_plot_object_changed():
+	update_display()

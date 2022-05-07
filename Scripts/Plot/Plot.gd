@@ -1,5 +1,7 @@
 class_name Plot
 
+signal plot_object_changed()
+
 var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
@@ -27,6 +29,8 @@ func insert_object(_object_key : String = ""):
 	elif(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
 		var job_comp := JobPlotComponent.new(object_key)
 		components["JOB"] = job_comp
+	
+	plot_object_changed.emit()
 
 #func water_plot(water_amount : int = -1, override_capacity : bool = false):
 #	var new_water_level = water_level
