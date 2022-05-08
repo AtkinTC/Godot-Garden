@@ -2,18 +2,21 @@ extends Control
 class_name SupplyDisplay
 
 @onready var progress_bar : TextureProgressBar = $ProgressBar
-@onready var name_label : Label = $H/NameLabel
-@onready var quantity_label : Label = $H/AmountLabel
+@onready var name_label : Label = $LabelsContainer/NameLabel
+@onready var quantity_label : Label = $LabelsContainer/H/QuantityLabel
+@onready var capacity_label : Label = $LabelsContainer/H/CapacityLabel
 
 var key : String
 
 @onready var progress_bar_tint := progress_bar.tint_progress
 @onready var progress_bar_tint_back := progress_bar.tint_under
 
-var display_name : String = ""
-var display_quantity : String = ""
 var quantity : float = 0.00
 var capacity : float = -1.0
+
+var display_name : String = ""
+var display_quantity : String = ""
+var display_capacity : String = ""
 
 func _ready():
 	setup()
@@ -41,8 +44,10 @@ func setup():
 func update_display():
 	name_label.text = display_name
 	
-	set_display_quantity(Utils.format_comma_seperated("%.2f" % quantity))
+	set_display_quantity(Utils.format_comma_seperated("%.1f" % quantity))
+	set_display_capacity(Utils.format_comma_seperated("%.0f" % capacity))
 	quantity_label.text = display_quantity
+	capacity_label.text = display_capacity
 	
 	if(key):
 		progress_bar.max_value = 100.00
@@ -62,6 +67,9 @@ func set_display_quantity(_display_quantity : String):
 
 func set_quantity(_quantity : float):
 	quantity = _quantity
+
+func set_display_capacity(_display_capacity : String):
+	display_capacity = _display_capacity
 
 func set_capacity(_capacity : float):
 	capacity = _capacity

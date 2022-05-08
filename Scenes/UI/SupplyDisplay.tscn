@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="3_n8sck"]
 
 [node name="SupplyDisplay" type="Control"]
-minimum_size = Vector2(0, 25)
+minimum_size = Vector2(0, 38)
 anchor_right = 1.0
+offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource( "1_2qgu8" )
 metadata/_edit_use_custom_anchors = false
@@ -20,25 +21,44 @@ texture_progress = ExtResource( "3_n8sck" )
 tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(0.351563, 0.351563, 0.351563, 1)
 
-[node name="H" type="HBoxContainer" parent="."]
-offset_right = 200.0
-offset_bottom = 26.0
+[node name="LabelsContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 0
+metadata/_edit_layout_mode = 0
+metadata/_edit_use_custom_anchors = false
 
-[node name="NameLabel" type="Label" parent="H"]
-offset_right = 82.0
-offset_bottom = 26.0
+[node name="NameLabel" type="Label" parent="LabelsContainer"]
+offset_right = 1280.0
+offset_bottom = 20.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 14
 text = "RESOURCE"
 
-[node name="Spacer" type="Label" parent="H"]
-offset_left = 86.0
-offset_right = 91.0
-offset_bottom = 26.0
-text = ":"
+[node name="H" type="HBoxContainer" parent="LabelsContainer"]
+offset_top = 20.0
+offset_right = 1280.0
+offset_bottom = 37.0
 
-[node name="AmountLabel" type="Label" parent="H"]
-offset_left = 95.0
-offset_right = 200.0
-offset_bottom = 26.0
-size_flags_horizontal = 3
+[node name="QuantityLabel" type="Label" parent="LabelsContainer/H"]
+offset_right = 62.0
+offset_bottom = 17.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
 text = "999999999"
-horizontal_alignment = 2
+
+[node name="Divider" type="Label" parent="LabelsContainer/H"]
+offset_left = 66.0
+offset_right = 71.0
+offset_bottom = 17.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "/"
+
+[node name="CapacityLabel" type="Label" parent="LabelsContainer/H"]
+offset_left = 75.0
+offset_right = 137.0
+offset_bottom = 17.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "999999999"
