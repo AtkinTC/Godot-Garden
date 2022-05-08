@@ -10,7 +10,7 @@ func _ready():
 	for child in get_children():
 		child.queue_free()
 
-	for key in SupplyManager.get_supply_type_keys():
+	for key in SupplyManager.get_visible_supply_type_keys():
 		add_supply_display(key)
 
 # create display scene for a supply if it hasn't already been added
