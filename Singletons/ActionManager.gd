@@ -14,11 +14,16 @@ var action_types := {
 		TARGET_TYPE : "Plot",
 		FUNC_NAME : "purchase_object"
 	},
+	"UPGRADE_PLOT_OBJECT" : {
+		DISPLAY_NAME : "Upgrade",
+		TARGET_TYPE : "Plot",
+		FUNC_NAME : "upgrade_object"
+	},
 	"REMOVE_PLOT_OBJECT" : {
 		DISPLAY_NAME : "Remove",
 		TARGET_TYPE : "Plot",
 		FUNC_NAME : "remove_object"
-	},
+	}
 }
 
 func apply_current_action_to_plot(plot : Plot):

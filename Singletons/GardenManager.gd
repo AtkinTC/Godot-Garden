@@ -26,9 +26,6 @@ func setup_plots():
 				var plot : Plot = Plot.new()
 				plot.set_coord(coord)
 				set_plot(coord, plot)
-	
-	var center_plot : Plot = plots.get_at(Vector2(0,0))
-	center_plot.insert_object("FOCUS_BASIC")
 
 # process step time for all garden plots
 func step_plots(step_time : float):

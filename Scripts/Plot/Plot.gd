@@ -10,6 +10,9 @@ var build_progress : float
 
 #purchase and insert object to the plot
 func purchase_object(_object_key : String = ""):
+	if(!get_object_type().get(ObjectsManager.REMOVABLE, true)):
+		return false
+	
 	if(_object_key == ""):
 		object_key = ObjectsManager.selected_object_key
 	else:
@@ -81,6 +84,27 @@ func setup_components(build_complete : bool = false):
 		var comp := CapacityPlotComponent.new(coord, object_key)
 		components["CAPACITY"] = comp
 
+#apply upgrade action to plot object
+func upgrade_object():
+	var upgrade_key : String = get_object_type().get(ObjectsManager.UPGRADE_OBJECT, "")
+	if(upgrade_key == ""):
+		return false
+	
+	var upgrade_instant : bool = (get_object_type().get(ObjectsManager.UPGRADE_LENGTH, 0) <= 0)
+	
+	if(upgrade_instant):
+		#apply upgrade immediatly
+		insert_object(upgrade_key)
+	else:
+		#setup upgrade component progress upgrade job
+		var comp := UpgradePlotComponent.new(coord, object_key)
+		comp.upgrade_complete.connect(_on_upgrade_complete)
+		components["UPGRADE"] = comp
+		
+		plot_object_changed.emit()
+	
+	return true
+	
 func remove_object():
 	var object_type := get_object_type()
 	
@@ -116,3 +140,6 @@ func _on_build_complete():
 	clear_components()
 	setup_components(true)
 	plot_object_changed.emit()
+
+func _on_upgrade_complete():
+	insert_object(get_object_type().get(ObjectsManager.UPGRADE_OBJECT))

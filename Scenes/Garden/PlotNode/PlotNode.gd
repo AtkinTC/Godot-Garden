@@ -2,6 +2,7 @@ extends Control
 class_name PlotNode
 
 @onready var build_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/BuildPlotContent.tscn")
+@onready var upgrade_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/UpgradePlotContent.tscn")
 @onready var job_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/JobPlotContent.tscn")
 @onready var passive_plot_content_scene : PackedScene = load("res://Scenes/Garden/PlotNode/PassivePlotContent.tscn")
 
@@ -43,6 +44,8 @@ func update_display() -> void:
 	plot_content = null
 	if(plot.get_component("BUILD")):
 		plot_content = build_plot_content_scene.instantiate() as PlotContent
+	elif(plot.get_component("UPGRADE")):
+		plot_content = upgrade_plot_content_scene.instantiate() as PlotContent
 	elif(plot.get_component("PASSIVE")):
 		plot_content = passive_plot_content_scene.instantiate() as PlotContent
 	elif(plot.get_component("JOB")):

@@ -27,9 +27,14 @@ const CAPACITY := "capacity"
 const PASSIVE := "passive"
 const PASSIVE_GAIN := "passive_gain"
 
+const UPGRADE := "upgrade"
+const UPGRADE_OBJECT := "upgrade_object"
+const UPGRADE_LENGTH := "upgrade_length"
+const UPGRADE_COST := "upgrade_cost"
+
 var object_types := {
 	"FOCUS_BASIC" : {
-		DISPLAY_NAME : "focus",
+		DISPLAY_NAME : "focus lv.1",
 		PURCHASABLE : false,
 		REMOVABLE : false,
 		PASSIVE_GAIN : {
@@ -43,6 +48,32 @@ var object_types := {
 			"EARTH_ESS" : 10,
 			"FIRE_ESS" : 10,
 			"WATER_ESS" : 10
+		},
+		UPGRADE_OBJECT : "FOCUS_BASIC_LV2",
+		UPGRADE_LENGTH : 10,
+		UPGRADE_COST : {
+			"AIR_ESS" : 20,
+			"EARTH_ESS" : 20,
+			"FIRE_ESS" : 20,
+			"WATER_ESS" : 20
+		},
+		
+	},
+	"FOCUS_BASIC_LV2" : {
+		DISPLAY_NAME : "focus lv.2",
+		PURCHASABLE : false,
+		REMOVABLE : false,
+		PASSIVE_GAIN : {
+			"AIR_ESS" : 2,
+			"EARTH_ESS" : 2,
+			"FIRE_ESS" : 2,
+			"WATER_ESS" : 2
+		},
+		CAPACITY : {
+			"AIR_ESS" : 25,
+			"EARTH_ESS" : 25,
+			"FIRE_ESS" : 25,
+			"WATER_ESS" : 25
 		}
 	},
 	"AIR_SOURCE_BASIC" : {

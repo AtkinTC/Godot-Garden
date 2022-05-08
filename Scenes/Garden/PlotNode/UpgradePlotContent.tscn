@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwd56fegu0yk6"]
+
+[ext_resource type="Script" path="res://Scenes/Garden/PlotNode/UpgradePlotContent.gd" id="1_sjsrj"]
+[ext_resource type="Texture2D" uid="uid://bt1s107tbjm4m" path="res://Assets/UI/bar_background.png" id="2_unygi"]
+[ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="3_jbiyu"]
+
+[node name="UpgradePlotContent" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1180.0
+offset_bottom = -620.0
+mouse_filter = 2
+script = ExtResource( "1_sjsrj" )
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+minimum_size = Vector2(50, 20)
+offset_right = 100.0
+offset_bottom = 20.0
+mouse_filter = 2
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource( "2_unygi" )
+texture_progress = ExtResource( "3_jbiyu" )
+tint_progress = Color(0.390625, 0.390625, 0.390625, 1)
+
+[node name="Label" type="Label" parent="ProgressBar"]
+offset_right = 100.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 14
+text = "50%"
+horizontal_alignment = 1
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="Label" type="Label" parent="."]
+offset_top = 24.0
+offset_right = 100.0
+offset_bottom = 50.0
+text = "Upgrading"
+horizontal_alignment = 1

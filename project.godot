@@ -109,6 +109,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyDisplayContainer.gd"
 }, {
+"base": "PlotComponent",
+"class": &"UpgradePlotComponent",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/UpgradePlotComponent.gd"
+}, {
+"base": "PlotContent",
+"class": &"UpgradePlotContent",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/UpgradePlotContent.gd"
+}, {
 "base": "RefCounted",
 "class": &"Utils",
 "language": &"GDScript",
@@ -135,6 +145,8 @@ _global_script_class_icons={
 "Supply": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
+"UpgradePlotComponent": "",
+"UpgradePlotContent": "",
 "Utils": ""
 }
 
