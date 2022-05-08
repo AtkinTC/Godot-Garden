@@ -38,20 +38,19 @@ func update_display() -> void:
 	else:
 		display_label.text = "Empty"
 	
-	if(plot.get_object_key() != ""):
-		if(plot_content):
-			plot_content.queue_free()
-		plot_content = null
-		if(plot.get_component("BUILD")):
-			plot_content = build_plot_content_scene.instantiate() as PlotContent
-		elif(plot.get_component("PASSIVE")):
-			plot_content = passive_plot_content_scene.instantiate() as PlotContent
-		elif(plot.get_component("JOB")):
-			plot_content = job_plot_content_scene.instantiate() as PlotContent
-		
-		if(plot_content):
-			plot_content.set_plot_coord(plot_coord)
-			body.add_child(plot_content)
+	if(plot_content):
+		plot_content.queue_free()
+	plot_content = null
+	if(plot.get_component("BUILD")):
+		plot_content = build_plot_content_scene.instantiate() as PlotContent
+	elif(plot.get_component("PASSIVE")):
+		plot_content = passive_plot_content_scene.instantiate() as PlotContent
+	elif(plot.get_component("JOB")):
+		plot_content = job_plot_content_scene.instantiate() as PlotContent
+	
+	if(plot_content):
+		plot_content.set_plot_coord(plot_coord)
+		body.add_child(plot_content)
 
 func _on_plot_button_pressed():
 	var plot : Plot = GardenManager.get_plot(plot_coord)

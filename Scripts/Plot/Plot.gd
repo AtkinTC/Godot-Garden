@@ -81,6 +81,18 @@ func setup_components(build_complete : bool = false):
 		var comp := CapacityPlotComponent.new(coord, object_key)
 		components["CAPACITY"] = comp
 
+func remove_object():
+	var object_type := get_object_type()
+	
+	if(!object_type.get(ObjectsManager.REMOVABLE, true)):
+		return false
+	
+	object_key = ""
+	
+	clear_components()
+	
+	plot_object_changed.emit()
+
 func step(_delta : float):
 	for comp_key in components.keys():
 		(components[comp_key] as PlotComponent).step(_delta)

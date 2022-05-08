@@ -15,7 +15,7 @@ var action_types := {
 		FUNC_NAME : "purchase_object"
 	},
 	"REMOVE_PLOT_OBJECT" : {
-		DISPLAY_NAME : "Delete",
+		DISPLAY_NAME : "Remove",
 		TARGET_TYPE : "Plot",
 		FUNC_NAME : "remove_object"
 	},
