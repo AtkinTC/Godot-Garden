@@ -45,13 +45,12 @@ var object_types := {
 	"WATER_SOURCE_BASIC" : {
 		DISPLAY_NAME : "simple well",
 		PURCHASABLE : true,
-		PURCHASE_COST : {
+		BUILD_COST : {
 			"EARTH_ESS" : 10,
 			"WATER_ESS" : 10
 		},
-		JOB_LENGTH : 15,
-		JOB_SPEED_SATISFIED : 1,
-		JOB_COMPLETION_REWARD : {
+		BUILD_LENGTH : 5,
+		PASSIVE_GAIN : {
 			"WATER_ESS" : 1
 		}
 	},
@@ -62,9 +61,8 @@ var object_types := {
 			"AIR_ESS" : 10,
 			"FIRE_ESS" : 10
 		},
-		JOB_LENGTH : 20,
-		JOB_SPEED_SATISFIED : 1,
-		JOB_COMPLETION_REWARD : {
+		BUILD_LENGTH : 5,
+		PASSIVE_GAIN : {
 			"FIRE_ESS" : 1
 		}
 	},
@@ -72,11 +70,22 @@ var object_types := {
 		DISPLAY_NAME : "water storage",
 		PURCHASABLE : true,
 		PURCHASE_COST : {
-			"EARTH_ESS" : 10,
-			"WATER_ESS" : 10
+			"EARTH_ESS" : 10
 		},
+		BUILD_LENGTH : 10,
 		CAPACITY : {
-			"WATER_ESS" : 10
+			"WATER_ESS" : 20
+		}
+	},
+	"EARTH_STORAGE_BASIC" : {
+		DISPLAY_NAME : "earth storage",
+		PURCHASABLE : true,
+		PURCHASE_COST : {
+			"EARTH_ESS" : 10
+		},
+		BUILD_LENGTH : 10,
+		CAPACITY : {
+			"EARTH_ESS" : 20
 		}
 	},
 }

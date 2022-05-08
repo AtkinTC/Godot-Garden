@@ -22,6 +22,7 @@ script = ExtResource( "1_83mxw" )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="LPanel" type="Control" parent="UI/H"]
 minimum_size = Vector2(200, 0)

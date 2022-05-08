@@ -20,6 +20,16 @@ _global_script_classes=[{
 "path": "res://Scripts/Array2D.gd"
 }, {
 "base": "PlotComponent",
+"class": &"BuildPlotComponent",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/BuildPlotComponent.gd"
+}, {
+"base": "PlotContent",
+"class": &"BuildPlotContent",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/BuildPlotContent.gd"
+}, {
+"base": "PlotComponent",
 "class": &"CapacityPlotComponent",
 "language": &"GDScript",
 "path": "res://Scripts/Plot/CapacityPlotComponent.gd"
@@ -107,6 +117,8 @@ _global_script_classes=[{
 _global_script_class_icons={
 "ActionsMenu": "",
 "Array2D": "",
+"BuildPlotComponent": "",
+"BuildPlotContent": "",
 "CapacityPlotComponent": "",
 "CustCamera2D": "",
 "GardenExpandPanel": "",

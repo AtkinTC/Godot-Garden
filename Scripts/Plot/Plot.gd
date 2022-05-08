@@ -6,6 +6,8 @@ var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
 
+var build_progress : float
+
 #purchase and insert object to the plot
 func purchase_object(_object_key : String = ""):
 	if(_object_key == ""):
@@ -49,21 +51,35 @@ func insert_object(_object_key : String = ""):
 
 #reset the plot components for the currently applied object type
 func apply_set_object():
+	clear_components()
+	setup_components()
+	
+	plot_object_changed.emit()
+
+func clear_components():
 	for comp in components.values():
 		comp.cleanup_before_delete()
 	components = {}
+
+func setup_components(build_complete : bool = false):
 	var object_type := get_object_type()
-	if(object_type.get(ObjectsManager.PASSIVE_GAIN, null) != null):
-		var job_comp := PassivePlotComponent.new(coord, object_key)
-		components["PASSIVE"] = job_comp
-	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
-		var job_comp := JobPlotComponent.new(coord, object_key)
-		components["JOB"] = job_comp
-	if(object_type.get(ObjectsManager.CAPACITY, null) != null):
-		var job_comp := CapacityPlotComponent.new(coord, object_key)
-		components["CAPACITY"] = job_comp
 	
-	plot_object_changed.emit()
+	#if object needs to be built, then only setup BuildPlotComponent
+	if(!build_complete && object_type.get(ObjectsManager.BUILD_LENGTH, null) != null):
+		var comp := BuildPlotComponent.new(coord, object_key)
+		comp.build_complete.connect(_on_build_complete)
+		components["BUILD"] = comp
+		return
+	
+	if(object_type.get(ObjectsManager.PASSIVE_GAIN, null) != null):
+		var comp := PassivePlotComponent.new(coord, object_key)
+		components["PASSIVE"] = comp
+	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
+		var comp := JobPlotComponent.new(coord, object_key)
+		components["JOB"] = comp
+	if(object_type.get(ObjectsManager.CAPACITY, null) != null):
+		var comp := CapacityPlotComponent.new(coord, object_key)
+		components["CAPACITY"] = comp
 
 func step(_delta : float):
 	for comp_key in components.keys():
@@ -83,3 +99,8 @@ func get_object_key() -> String:
 
 func get_object_type() -> Dictionary:
 	return ObjectsManager.get_object_type(object_key)
+
+func _on_build_complete():
+	clear_components()
+	setup_components(true)
+	plot_object_changed.emit()
