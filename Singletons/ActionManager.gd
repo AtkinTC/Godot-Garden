@@ -9,15 +9,15 @@ const FUNC_NAME := "func_name"
 var selected_action_key : String
 
 var action_types := {
-	"SET_OBJECT" : {
-		"display_name" : "Build",
-		"target_type" : "Plot",
-		"func_name" : "insert_object"
+	"PURCHASE_PLOT_OBJECT" : {
+		DISPLAY_NAME : "Build",
+		TARGET_TYPE : "Plot",
+		FUNC_NAME : "purchase_object"
 	},
-	"UNSET_OBJECT" : {
-		"display_name" : "Delete",
-		"target_type" : "Plot",
-		"func_name" : "remove_object"
+	"REMOVE_PLOT_OBJECT" : {
+		DISPLAY_NAME : "Delete",
+		TARGET_TYPE : "Plot",
+		FUNC_NAME : "remove_object"
 	},
 }
 

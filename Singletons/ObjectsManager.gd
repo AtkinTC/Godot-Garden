@@ -2,8 +2,9 @@ extends Node
 
 const DISPLAY_NAME := "display_name"
 
+
 const PURCHASABLE := "purchasable"
-const PURCHASE_BASE_COST := "purchase_base_cost"
+const PURCHASE_COST := "purchase_cost"
 
 const BUILD := "build"
 const BUILD_LENGTH := "build_length"
@@ -44,7 +45,7 @@ var object_types := {
 	"WATER_SOURCE_BASIC" : {
 		DISPLAY_NAME : "simple well",
 		PURCHASABLE : true,
-		PURCHASE_BASE_COST : {
+		PURCHASE_COST : {
 			"EARTH_ESS" : 10,
 			"WATER_ESS" : 10
 		},
@@ -57,7 +58,7 @@ var object_types := {
 	"FIRE_SOURCE_BASIC" : {
 		DISPLAY_NAME : "small fire",
 		PURCHASABLE : true,
-		PURCHASE_BASE_COST : {
+		PURCHASE_COST : {
 			"AIR_ESS" : 10,
 			"FIRE_ESS" : 10
 		},
@@ -70,7 +71,7 @@ var object_types := {
 	"WATER_STORAGE_BASIC" : {
 		DISPLAY_NAME : "water storage",
 		PURCHASABLE : true,
-		PURCHASE_BASE_COST : {
+		PURCHASE_COST : {
 			"EARTH_ESS" : 10,
 			"WATER_ESS" : 10
 		},

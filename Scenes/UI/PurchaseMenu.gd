@@ -20,4 +20,4 @@ func _ready():
 
 func _on_purchase_menu_item_selected(index):
 	ObjectsManager.set_selected_object_key(objects_list_indexes[index])
-	ActionManager.set_selected_action_key("SET_OBJECT")
+	ActionManager.set_selected_action_key("PURCHASE_PLOT_OBJECT")

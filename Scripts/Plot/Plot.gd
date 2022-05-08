@@ -6,6 +6,30 @@ var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
 
+#purchase and insert object to the plot
+func purchase_object(_object_key : String = ""):
+	if(_object_key == ""):
+		object_key = ObjectsManager.selected_object_key
+	else:
+		object_key = _object_key
+	
+	var object_type := get_object_type()
+	
+	if(object_type == null || object_type.size() == 0):
+		return false
+		
+	var purchase_price : Dictionary = object_type.get(ObjectsManager.PURCHASE_COST, {})
+	if(!PurchaseManager.can_afford(purchase_price)):
+		return false
+	PurchaseManager.spend(purchase_price)
+	
+	apply_set_object()
+	
+	plot_object_changed.emit()
+	
+	return true
+
+#insert object to the plot
 func insert_object(_object_key : String = ""):
 	if(_object_key == ""):
 		object_key = ObjectsManager.selected_object_key
@@ -15,17 +39,20 @@ func insert_object(_object_key : String = ""):
 	var object_type := get_object_type()
 	
 	if(object_type == null || object_type.size() == 0):
-		return
+		return false
 	
-#	var purchase_price : Dictionary = plant_type[PlantManager.PURCHASE_PRICE]
-#	if(!PurchaseManager.can_afford(purchase_price)):
-#		return
-#	PurchaseManager.spend(purchase_price)
+	apply_set_object()
 	
+	plot_object_changed.emit()
+	
+	return true
+
+#reset the plot components for the currently applied object type
+func apply_set_object():
 	for comp in components.values():
 		comp.cleanup_before_delete()
-	
 	components = {}
+	var object_type := get_object_type()
 	if(object_type.get(ObjectsManager.PASSIVE_GAIN, null) != null):
 		var job_comp := PassivePlotComponent.new(coord, object_key)
 		components["PASSIVE"] = job_comp
