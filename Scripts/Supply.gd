@@ -16,7 +16,7 @@ func _init(_key : String, _supply_def : Dictionary):
 	key = _key
 	display_name = _supply_def.get(SupplyManager.DISPLAY_NAME, key)
 	quantity = _supply_def.get(SupplyManager.QUANTITY_BASE, 0.00)
-	base_capacity = _supply_def.get(SupplyManager.CAPACITY_BASE, -1)
+	base_capacity = _supply_def.get(SupplyManager.CAPACITY_BASE, 0.00)
 	display_colors = _supply_def.get(SupplyManager.DISPLAY_COLORS, [])
 	capacity_sources = {}
 
@@ -24,6 +24,9 @@ func get_display_name() -> String:
 	return display_name
 
 func get_capacity() -> float:
+	if(base_capacity < 0):
+		return -1.0
+	
 	var total_capacity = base_capacity
 	for capacity in capacity_sources.values():
 		total_capacity += capacity

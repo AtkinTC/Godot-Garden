@@ -11,22 +11,18 @@ const DISPLAY_COLORS := "display_colors"
 var supply_types := {
 	"AIR_ESS" : {
 		DISPLAY_NAME : "essence of air",
-		CAPACITY_BASE : 10,
 		DISPLAY_COLORS : [Color(0.45, 0.6, 0.7), Color(0.3, 0.4, 0.4)]
 	},
 	"EARTH_ESS" : {
 		DISPLAY_NAME : "essence of earth",
-		CAPACITY_BASE : 10,
 		DISPLAY_COLORS : [Color(0.7, 0.6, 0.5), Color(0.3, 0.2, 0.15)]
 	},
 	"FIRE_ESS" : {
 		DISPLAY_NAME : "essence of fire",
-		CAPACITY_BASE : 10,
 		DISPLAY_COLORS : [Color(0.7, 0.4, 0.0), Color(0.3, 0.0, 0.0)]
 	},
 	"WATER_ESS" : {
 		DISPLAY_NAME : "essence of water",
-		CAPACITY_BASE : 10,
 		DISPLAY_COLORS : [Color(0.0, 0.0, 0.6), Color(0.0, 0.0, 0.2)]
 	},
 }
