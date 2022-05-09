@@ -12,10 +12,6 @@ func _ready():
 		add_item(str(object_type[ObjectsManager.DISPLAY_NAME]))
 		objects_list_indexes[index] = object_key
 		
-		if(index == 0):
-			ObjectsManager.set_selected_object_key(object_key)
-			select(0)
-		
 		index += 1
 
 func _on_purchase_menu_item_selected(index):

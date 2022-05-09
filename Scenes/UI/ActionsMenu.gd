@@ -17,8 +17,6 @@ func _ready():
 		action_list_indexes[index] = action_key
 		
 		index += 1
-	
-	select_action(0)
 
 # send selected action to ActionManager
 func select_action(index : int):
