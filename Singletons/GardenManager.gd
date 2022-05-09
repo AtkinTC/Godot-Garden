@@ -5,9 +5,10 @@ signal garden_resized()
 var plots : Array2D
 var garden_rect := Rect2(-1, -1, 3, 3)
 
-var plot_base_price : float = (100.0/3)
+var plot_base_price : float = (40.0/3)
 var min_garden_size : int = 9
 
+# setup initial state of the garden
 func initialize():
 	setup_plots()
 

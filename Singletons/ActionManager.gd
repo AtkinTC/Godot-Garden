@@ -6,8 +6,6 @@ const DISPLAY_NAME := "display_name"
 const TARGET_TYPE := "target_type"
 const FUNC_NAME := "func_name"
 
-var selected_action_key : String
-
 var action_types := {
 	"PURCHASE_PLOT_OBJECT" : {
 		DISPLAY_NAME : "Build",
@@ -25,6 +23,8 @@ var action_types := {
 		FUNC_NAME : "remove_object"
 	}
 }
+
+var selected_action_key : String
 
 func apply_current_action_to_plot(plot : Plot):
 	apply_action_to_plot(selected_action_key, plot)

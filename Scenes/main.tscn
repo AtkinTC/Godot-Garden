@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cto1wj2nvg42j"]
+[gd_scene load_steps=14 format=3 uid="uid://cto1wj2nvg42j"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay.tscn" id="5_cff8l"]
 [ext_resource type="Script" path="res://Scenes/UI/PurchaseMenu.gd" id="6_lher3"]
+[ext_resource type="Script" path="res://Scenes/UI/UpgradeMenu.gd" id="6_xci84"]
 [ext_resource type="PackedScene" uid="uid://d1f4uahxtegx1" path="res://Scenes/Garden/GardenExpandPanel.tscn" id="7_rejdf"]
 [ext_resource type="PackedScene" uid="uid://c5ximap3xiwp2" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
 [ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="9_yicj4"]
@@ -61,13 +62,24 @@ script = ExtResource( "3_7s5ky" )
 [node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
 offset_top = 132.0
 offset_right = 200.0
-offset_bottom = 157.0
+offset_bottom = 170.0
 script = ExtResource( "4_ajn05" )
 
 [node name="SupplyDisplay" parent="UI/H/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "5_cff8l" )]
 anchor_right = 0.0
 offset_right = 200.0
-offset_bottom = 25.0
+offset_bottom = 38.0
+
+[node name="UpgradeMenu" type="ItemList" parent="UI/H/LPanel/V"]
+offset_top = 174.0
+offset_right = 200.0
+offset_bottom = 236.0
+allow_reselect = true
+auto_height = true
+item_count = 2
+item_0/text = "UPGRADE_1"
+item_1/text = "UPGRADE_2"
+script = ExtResource( "6_xci84" )
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)
@@ -285,3 +297,4 @@ max_zoom = 1.0
 
 [connection signal="item_selected" from="UI/H/LPanel/V/PurchaseMenu" to="UI/H/LPanel/V/PurchaseMenu" method="_on_purchase_menu_item_selected"]
 [connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]
+[connection signal="item_selected" from="UI/H/LPanel/V/UpgradeMenu" to="UI/H/LPanel/V/UpgradeMenu" method="_on_upgrade_menu_item_selected"]

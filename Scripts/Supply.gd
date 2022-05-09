@@ -10,7 +10,7 @@ var quantity : float
 var base_capacity : float
 var display_colors : Array
 
-var visible : bool
+var locked : bool
 
 var capacity_sources : Dictionary
 
@@ -20,7 +20,7 @@ func _init(_key : String, _supply_def : Dictionary):
 	quantity = _supply_def.get(SupplyManager.QUANTITY_BASE, 0.00)
 	base_capacity = _supply_def.get(SupplyManager.CAPACITY_BASE, 0.00)
 	display_colors = _supply_def.get(SupplyManager.DISPLAY_COLORS, [])
-	visible = _supply_def.get(SupplyManager.VISIBLE, false)
+	locked = _supply_def.get(SupplyManager.LOCKED, false)
 	capacity_sources = {}
 
 func get_display_name() -> String:
@@ -48,11 +48,11 @@ func get_display_color(index : int, default = null):
 	
 	return display_colors[index]
 
-func is_visible() -> bool:
-	return visible
+func is_locked() -> bool:
+	return locked
 
-func set_visible(_visible : bool):
-	visible = _visible
+func set_locked(_locked : bool):
+	locked = _locked
 
 func change_quantity(_change: float):
 	set_quantity(quantity + _change)
