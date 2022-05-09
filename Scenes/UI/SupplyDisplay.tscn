@@ -9,6 +9,11 @@ anchor_right = 1.0
 offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource( "1_2qgu8" )
+progress_bar_path = NodePath("ProgressBar")
+name_label_path = NodePath("LabelsContainer/NameLabel")
+quantity_label_path = NodePath("LabelsContainer/H/QuantityLabel")
+capacity_label_path = NodePath("LabelsContainer/H/CapacityLabel")
+gain_label_path = NodePath("LabelsContainer/H/GainLabel")
 metadata/_edit_use_custom_anchors = false
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
@@ -47,18 +52,18 @@ theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 12
 text = "999999999"
 
-[node name="Divider" type="Label" parent="LabelsContainer/H"]
-offset_left = 66.0
-offset_right = 71.0
-offset_bottom = 17.0
-theme_override_constants/line_spacing = 0
-theme_override_font_sizes/font_size = 12
-text = "/"
-
 [node name="CapacityLabel" type="Label" parent="LabelsContainer/H"]
-offset_left = 75.0
-offset_right = 137.0
+offset_left = 66.0
+offset_right = 136.0
 offset_bottom = 17.0
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 12
-text = "999999999"
+text = "/ 999999999"
+
+[node name="GainLabel" type="Label" parent="LabelsContainer/H"]
+offset_left = 140.0
+offset_right = 217.0
+offset_bottom = 17.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 12
+text = "(+999999999)"

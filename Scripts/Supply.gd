@@ -2,6 +2,7 @@ class_name Supply
 
 signal supply_quantity_changed(key : String, old_quantity : float, new_quantity : float)
 signal supply_capacity_changed(key : String, old_capacity : float, new_capacity : float)
+signal supply_gain_changed(key : String, old_gain : float, new_gain : float)
 
 var key : String
 

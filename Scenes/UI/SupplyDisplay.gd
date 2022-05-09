@@ -1,22 +1,33 @@
 extends Control
 class_name SupplyDisplay
 
-@onready var progress_bar : TextureProgressBar = $ProgressBar
-@onready var name_label : Label = $LabelsContainer/NameLabel
-@onready var quantity_label : Label = $LabelsContainer/H/QuantityLabel
-@onready var capacity_label : Label = $LabelsContainer/H/CapacityLabel
+@export_node_path(TextureProgressBar) var progress_bar_path
+@onready var progress_bar : TextureProgressBar = get_node(progress_bar_path) if progress_bar_path else null
+
+@export_node_path(Label) var name_label_path
+@onready var name_label : Label = get_node(name_label_path) if name_label_path else null
+
+@export_node_path(Label) var quantity_label_path
+@onready var quantity_label : Label = get_node(quantity_label_path) if quantity_label_path else null
+
+@export_node_path(Label) var capacity_label_path
+@onready var capacity_label : Label = get_node(capacity_label_path) if capacity_label_path else null
+
+@export_node_path(Label) var gain_label_path
+@onready var gain_label : Label = get_node(gain_label_path) if gain_label_path else null
 
 var key : String
 
-@onready var progress_bar_tint := progress_bar.tint_progress
-@onready var progress_bar_tint_back := progress_bar.tint_under
-
 var quantity : float = 0.00
 var capacity : float = -1.0
+var gain : float = 0.00
 
 var display_name : String = ""
 var display_quantity : String = ""
 var display_capacity : String = ""
+var display_gain : String = ""
+
+var need_update : bool = true
 
 func _ready():
 	setup()
@@ -37,19 +48,38 @@ func setup():
 	set_quantity(supply.get_quantity())
 	set_capacity(supply.get_capacity())
 	
-	progress_bar.tint_progress = supply.get_display_color(0, progress_bar.tint_progress)
-	progress_bar.tint_under = supply.get_display_color(1, progress_bar.tint_under)
+	if(progress_bar):
+		progress_bar.tint_progress = supply.get_display_color(0, progress_bar.tint_progress)
+		progress_bar.tint_under = supply.get_display_color(1, progress_bar.tint_under)
+
+func _process(_delta):
+	if(need_update):
+		update_display()
+		need_update = false
 
 # update the display based on current values
 func update_display():
 	name_label.text = display_name
 	
-	set_display_quantity(Utils.format_comma_seperated("%.1f" % quantity))
-	set_display_capacity(Utils.format_comma_seperated("%.0f" % capacity))
-	quantity_label.text = display_quantity
-	capacity_label.text = display_capacity
+	if(quantity_label):
+		set_display_quantity(Utils.format_comma_seperated("%.1f" % quantity))
+		quantity_label.text = display_quantity
 	
-	if(key):
+	if(capacity_label):
+		if(capacity > 0):
+			set_display_capacity("/ " + Utils.format_comma_seperated("%.0f" % capacity))
+		else:
+			set_display_capacity("")
+		capacity_label.text = display_capacity
+	
+	if(gain_label):
+		if(gain == 0):
+			set_display_gain("")
+		else:
+			set_display_gain("(" + ("+" if gain > 0 else "-") + Utils.format_comma_seperated("%.1f" % gain) + ")")
+		gain_label.text = display_gain
+	
+	if(progress_bar):
 		progress_bar.max_value = 100.00
 		if(capacity > 0):
 			progress_bar.value = quantity * 100.0 / capacity
@@ -62,26 +92,37 @@ func set_key(_key):
 func set_display_name(_display_name : String):
 	display_name = _display_name
 
+func set_quantity(_quantity : float):
+	quantity = _quantity
+	
 func set_display_quantity(_display_quantity : String):
 	display_quantity = _display_quantity
 
-func set_quantity(_quantity : float):
-	quantity = _quantity
-
+func set_capacity(_capacity : float):
+	capacity = _capacity
+	
 func set_display_capacity(_display_capacity : String):
 	display_capacity = _display_capacity
 
-func set_capacity(_capacity : float):
-	capacity = _capacity
+func set_gain(_gain : float):
+	gain = _gain
+
+func set_display_gain(_display_gain : String):
+	display_gain = _display_gain
 
 # trigger quantity update and recalculate display when supply updates
 func _on_supply_quantity_changed(_key : String, _old_quantity : float, _new_quantity : float):
 	if(key == _key):
 		set_quantity(_new_quantity)
-		update_display()
+		need_update = true
 
 # trigger capacity update and recalculate display when supply updates
 func _on_supply_capacity_changed(_key : String, _old_capacity : float, _new_capacity : float):
 	if(key == _key):
 		set_capacity(_new_capacity)
-		update_display()
+		need_update = true
+
+func _on_supply_gain_changed(_key : String, _old_gain : float, _new_gain : float):
+	if(key == _key):
+		set_gain(_new_gain)
+		need_update = true
