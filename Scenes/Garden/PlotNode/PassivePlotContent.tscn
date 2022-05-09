@@ -18,6 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
+mouse_filter = 2
 columns = 2
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
@@ -27,12 +28,14 @@ offset_right = 48.0
 offset_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="Grid/Control1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="Grid/Control1"]
@@ -54,12 +57,14 @@ offset_right = 100.0
 offset_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="Grid/Control2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="Grid/Control2"]
@@ -81,12 +86,14 @@ offset_right = 48.0
 offset_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="Grid/Control3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="Grid/Control3"]
@@ -109,12 +116,14 @@ offset_right = 100.0
 offset_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="Grid/Control4"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="Grid/Control4"]
