@@ -2,7 +2,7 @@ class_name Supply
 
 signal supply_quantity_changed(key : String, old_quantity : float, new_quantity : float)
 signal supply_capacity_changed(key : String, old_capacity : float, new_capacity : float)
-signal supply_gain_changed(key : String, old_gain : float, new_gain : float)
+signal supply_gain_changed(key : String, new_gain : float)
 
 var key : String
 
@@ -14,6 +14,7 @@ var display_colors : Array
 var locked : bool
 
 var capacity_sources : Dictionary
+var gain_sources : Dictionary
 
 func _init(_key : String, _supply_def : Dictionary):
 	key = _key
@@ -23,6 +24,10 @@ func _init(_key : String, _supply_def : Dictionary):
 	display_colors = _supply_def.get(Const.DISPLAY_COLORS, [])
 	locked = _supply_def.get(Const.LOCKED, false)
 	capacity_sources = {}
+	gain_sources = {}
+
+func step(_delta : float):
+	change_quantity(get_gain() * _delta)
 
 func get_display_name() -> String:
 	return display_name
@@ -36,6 +41,14 @@ func get_capacity() -> float:
 		total_capacity += capacity
 	
 	return total_capacity
+
+func get_gain() -> float:
+	var total_gain = 0.0
+	
+	for gain in gain_sources.values():
+		total_gain += gain
+	
+	return total_gain
 
 func get_quantity() -> float:
 	return quantity
@@ -84,3 +97,15 @@ func remove_capacity_source(_id : String):
 	
 	if(new_capacity != old_capacity):
 		supply_capacity_changed.emit(key, old_capacity, new_capacity)
+
+func set_gain_source(_id : String, _gain : float):
+	var changed : bool = (gain_sources.get(_id, 0) != _gain)
+	gain_sources[_id] = _gain
+	
+	if(changed):
+		supply_gain_changed.emit(key, get_gain())
+
+func remove_gain_source(_id : String):
+	if(gain_sources.has(_id)):
+		gain_sources.erase(_id)
+		supply_gain_changed.emit(key, get_gain())

@@ -41,12 +41,14 @@ func setup():
 	
 	SupplyManager.connect_to_supply_quantity_changed(key, _on_supply_quantity_changed)
 	SupplyManager.connect_to_supply_capacity_changed(key, _on_supply_capacity_changed)
+	SupplyManager.connect_to_supply_gain_changed(key, _on_supply_gain_changed)
 	
 	var supply : Supply = SupplyManager.get_supply(key)
 	
 	set_display_name(supply.get_display_name())
 	set_quantity(supply.get_quantity())
 	set_capacity(supply.get_capacity())
+	set_gain(supply.get_gain())
 	
 	if(progress_bar):
 		progress_bar.tint_progress = supply.get_display_color(0, progress_bar.tint_progress)
@@ -122,7 +124,7 @@ func _on_supply_capacity_changed(_key : String, _old_capacity : float, _new_capa
 		set_capacity(_new_capacity)
 		need_update = true
 
-func _on_supply_gain_changed(_key : String, _old_gain : float, _new_gain : float):
+func _on_supply_gain_changed(_key : String, _new_gain : float):
 	if(key == _key):
 		set_gain(_new_gain)
 		need_update = true

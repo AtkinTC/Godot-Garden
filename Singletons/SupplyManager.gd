@@ -11,7 +11,11 @@ func initialize():
 		var dict : Dictionary = SupplyData.supply_types.get(key, {})
 		var supply := Supply.new(key, dict)
 		supplies[key] = supply
-		
+
+func step(_delta):
+	for supply in supplies.values():
+		(supply as Supply).step(_delta)
+
 func get_supply_type_keys() -> Array:
 	return supplies.keys()
 
@@ -38,3 +42,8 @@ func connect_to_supply_capacity_changed(_key : String, _callable : Callable):
 	var supply : Supply = supplies.get(_key)
 	if(supply):
 		supply.supply_capacity_changed.connect(_callable)
+
+func connect_to_supply_gain_changed(_key : String, _callable : Callable):
+	var supply : Supply = supplies.get(_key)
+	if(supply):
+		supply.supply_gain_changed.connect(_callable)
