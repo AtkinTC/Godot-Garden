@@ -15,7 +15,7 @@ func reset_menu():
 	var index := 0
 	for object_key in ObjectsManager.get_available_object_keys():
 		var object_type : Dictionary = ObjectsManager.get_object_type(object_key)
-		add_item(str(object_type[ObjectsManager.DISPLAY_NAME]))
+		add_item(str(object_type[Const.DISPLAY_NAME]))
 		objects_list_indexes[index] = object_key
 		
 		index += 1

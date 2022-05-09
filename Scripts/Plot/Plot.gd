@@ -10,7 +10,7 @@ var build_progress : float
 
 #purchase and insert object to the plot
 func purchase_object(_object_key : String = ""):
-	if(!get_object_type().get(ObjectsManager.REMOVABLE, true)):
+	if(!get_object_type().get(Const.REMOVABLE, true)):
 		return false
 	
 	if(_object_key == ""):
@@ -23,7 +23,7 @@ func purchase_object(_object_key : String = ""):
 	if(object_type == null || object_type.size() == 0):
 		return false
 		
-	var purchase_price : Dictionary = object_type.get(ObjectsManager.PURCHASE_COST, {})
+	var purchase_price : Dictionary = object_type.get(Const.PURCHASE_COST, {})
 	if(!PurchaseManager.can_afford(purchase_price)):
 		return false
 	PurchaseManager.spend(purchase_price)
@@ -37,7 +37,7 @@ func purchase_object(_object_key : String = ""):
 #insert object to the plot
 func insert_object(_object_key : String = ""):
 	if(_object_key == ""):
-		object_key = ObjectsManager.selected_object_key
+		object_key = ObjectsManager.get_selected_object_key()
 	else:
 		object_key = _object_key
 	
@@ -68,29 +68,29 @@ func setup_components(build_complete : bool = false):
 	var object_type := get_object_type()
 	
 	#if object needs to be built, then only setup BuildPlotComponent
-	if(!build_complete && object_type.get(ObjectsManager.BUILD_LENGTH, null) != null):
+	if(!build_complete && object_type.get(Const.BUILD_LENGTH, null) != null):
 		var comp := BuildPlotComponent.new(coord, object_key)
 		comp.build_complete.connect(_on_build_complete)
-		components["BUILD"] = comp
+		components[Const.BUILD] = comp
 		return
 	
-	if(object_type.get(ObjectsManager.PASSIVE_GAIN, null) != null):
+	if(object_type.get(Const.PASSIVE_GAIN, null) != null):
 		var comp := PassivePlotComponent.new(coord, object_key)
-		components["PASSIVE"] = comp
-	if(object_type.get(ObjectsManager.JOB_LENGTH, null) != null):
+		components[Const.PASSIVE] = comp
+	if(object_type.get(Const.JOB_LENGTH, null) != null):
 		var comp := JobPlotComponent.new(coord, object_key)
-		components["JOB"] = comp
-	if(object_type.get(ObjectsManager.CAPACITY, null) != null):
+		components[Const.JOB] = comp
+	if(object_type.get(Const.CAPACITY, null) != null):
 		var comp := CapacityPlotComponent.new(coord, object_key)
-		components["CAPACITY"] = comp
+		components[Const.CAPACITY] = comp
 
 #apply upgrade action to plot object
 func upgrade_object():
-	var upgrade_key : String = get_object_type().get(ObjectsManager.UPGRADE_OBJECT, "")
+	var upgrade_key : String = get_object_type().get(Const.UPGRADE_OBJECT, "")
 	if(upgrade_key == ""):
 		return false
 	
-	var upgrade_instant : bool = (get_object_type().get(ObjectsManager.UPGRADE_LENGTH, 0) <= 0)
+	var upgrade_instant : bool = (get_object_type().get(Const.UPGRADE_LENGTH, 0) <= 0)
 	
 	if(upgrade_instant):
 		#apply upgrade immediatly
@@ -99,7 +99,7 @@ func upgrade_object():
 		#setup upgrade component progress upgrade job
 		var comp := UpgradePlotComponent.new(coord, object_key)
 		comp.upgrade_complete.connect(_on_upgrade_complete)
-		components["UPGRADE"] = comp
+		components[Const.UPGRADE] = comp
 		
 		plot_object_changed.emit()
 	
@@ -108,7 +108,7 @@ func upgrade_object():
 func remove_object():
 	var object_type := get_object_type()
 	
-	if(!object_type.get(ObjectsManager.REMOVABLE, true)):
+	if(!object_type.get(Const.REMOVABLE, true)):
 		return false
 	
 	object_key = ""
@@ -142,4 +142,4 @@ func _on_build_complete():
 	plot_object_changed.emit()
 
 func _on_upgrade_complete():
-	insert_object(get_object_type().get(ObjectsManager.UPGRADE_OBJECT))
+	insert_object(get_object_type().get(Const.UPGRADE_OBJECT))

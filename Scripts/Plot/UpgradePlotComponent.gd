@@ -14,9 +14,9 @@ func _init(_coord : Vector2, _object_key : String):
 	object_key = _object_key
 	
 	var object_type := ObjectsManager.get_object_type(_object_key)
-	upgrade_length = object_type.get(ObjectsManager.UPGRADE_LENGTH, -1.0)
+	upgrade_length = object_type.get(Const.UPGRADE_LENGTH, -1.0)
 	upgrade_progress = 0.0
-	upgrade_cost = object_type.get(ObjectsManager.UPGRADE_COST, {})
+	upgrade_cost = object_type.get(Const.UPGRADE_COST, {})
 		
 	upgrade_running = true
 

@@ -15,7 +15,7 @@ func reset_menu():
 	var index := 0
 	for key in UpgradeManager.get_available_upgrade_keys():
 		var upgrade_type : Dictionary = UpgradeManager.get_upgrade_type(key)
-		add_item(str(upgrade_type[UpgradeManager.DISPLAY_NAME]))
+		add_item(str(upgrade_type[Const.DISPLAY_NAME]))
 		upgrade_list_indexes[index] = key
 		
 		index += 1

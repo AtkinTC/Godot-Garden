@@ -13,7 +13,7 @@ func _ready():
 	var index := 0
 	for action_key in ActionManager.get_action_type_keys():
 		var action_type : Dictionary = ActionManager.get_action_type(action_key)
-		add_item(action_type[ActionManager.DISPLAY_NAME])
+		add_item(action_type[Const.DISPLAY_NAME])
 		action_list_indexes[index] = action_key
 		
 		index += 1

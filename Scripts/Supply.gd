@@ -16,11 +16,11 @@ var capacity_sources : Dictionary
 
 func _init(_key : String, _supply_def : Dictionary):
 	key = _key
-	display_name = _supply_def.get(SupplyManager.DISPLAY_NAME, key)
-	quantity = _supply_def.get(SupplyManager.QUANTITY_BASE, 0.00)
-	base_capacity = _supply_def.get(SupplyManager.CAPACITY_BASE, 0.00)
-	display_colors = _supply_def.get(SupplyManager.DISPLAY_COLORS, [])
-	locked = _supply_def.get(SupplyManager.LOCKED, false)
+	display_name = _supply_def.get(Const.DISPLAY_NAME, key)
+	quantity = _supply_def.get(Const.QUANTITY_BASE, 0.00)
+	base_capacity = _supply_def.get(Const.CAPACITY_BASE, 0.00)
+	display_colors = _supply_def.get(Const.DISPLAY_COLORS, [])
+	locked = _supply_def.get(Const.LOCKED, false)
 	capacity_sources = {}
 
 func get_display_name() -> String:

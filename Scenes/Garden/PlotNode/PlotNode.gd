@@ -35,20 +35,20 @@ func update_display() -> void:
 		return
 	
 	if(plot.get_object_key()):
-		display_label.text = plot.get_object_type()[ObjectsManager.DISPLAY_NAME]
+		display_label.text = plot.get_object_type()[Const.DISPLAY_NAME]
 	else:
 		display_label.text = "Empty"
 	
 	if(plot_content):
 		plot_content.queue_free()
 	plot_content = null
-	if(plot.get_component("BUILD")):
+	if(plot.get_component(Const.BUILD)):
 		plot_content = build_plot_content_scene.instantiate() as PlotContent
-	elif(plot.get_component("UPGRADE")):
+	elif(plot.get_component(Const.UPGRADE)):
 		plot_content = upgrade_plot_content_scene.instantiate() as PlotContent
-	elif(plot.get_component("PASSIVE")):
+	elif(plot.get_component(Const.PASSIVE)):
 		plot_content = passive_plot_content_scene.instantiate() as PlotContent
-	elif(plot.get_component("JOB")):
+	elif(plot.get_component(Const.JOB)):
 		plot_content = job_plot_content_scene.instantiate() as PlotContent
 	
 	if(plot_content):

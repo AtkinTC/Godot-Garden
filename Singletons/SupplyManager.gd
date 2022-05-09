@@ -2,51 +2,13 @@ extends Node
 
 signal supplies_status_updated()
 
-const DISPLAY_NAME := "display_name"
-const QUANTITY_BASE := "quantity_base"
-const QUANTITY := "quantity"
-const CAPACITY_BASE := "base_capacity"
-const CAPACITY := "capacity"
-
-const DISPLAY_COLORS := "display_colors"
-
-const LOCKED := "locked"
-
-var supply_types := {
-	"AIR_ESS" : {
-		DISPLAY_NAME : "essence of air",
-		DISPLAY_COLORS : [Color(0.45, 0.6, 0.7), Color(0.3, 0.4, 0.4)],
-		CAPACITY_BASE : 10,
-	},
-	"EARTH_ESS" : {
-		DISPLAY_NAME : "essence of earth",
-		DISPLAY_COLORS : [Color(0.7, 0.6, 0.5), Color(0.3, 0.2, 0.15)],
-		CAPACITY_BASE : 10,
-	},
-	"FIRE_ESS" : {
-		DISPLAY_NAME : "essence of fire",
-		DISPLAY_COLORS : [Color(0.7, 0.4, 0.0), Color(0.3, 0.0, 0.0)],
-		CAPACITY_BASE : 10,
-	},
-	"WATER_ESS" : {
-		DISPLAY_NAME : "essence of water",
-		DISPLAY_COLORS : [Color(0.0, 0.0, 0.6), Color(0.0, 0.0, 0.2)],
-		CAPACITY_BASE : 10,
-	},
-	"MIND_ESS" : {
-		DISPLAY_NAME : "essence of the mind",
-		LOCKED : true,
-		CAPACITY_BASE : 10
-	}
-}
-
 var supplies := {}
 
 # setup initial state of supplies
 func initialize():
 	supplies = {}
-	for key in supply_types.keys():
-		var dict : Dictionary = supply_types.get(key, {})
+	for key in  SupplyData.supply_types.keys():
+		var dict : Dictionary = SupplyData.supply_types.get(key, {})
 		var supply := Supply.new(key, dict)
 		supplies[key] = supply
 		

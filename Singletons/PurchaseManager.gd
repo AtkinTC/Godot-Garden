@@ -22,5 +22,4 @@ func spend(total_cost : Dictionary):
 	for key in total_cost.keys():
 		var cost = total_cost[key]
 		var supply : Supply = SupplyManager.get_supply(key)
-		var quantity = supply.get_quantity()
 		supply.change_quantity(-cost)
