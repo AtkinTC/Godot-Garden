@@ -11,8 +11,8 @@ const PURCHASABLE := "purchasable"
 const PURCHASE_COST := "purchase_cost"
 
 ## OBJECT ##
-const OBJECT := "object
-"
+const OBJECT := "OBJECT"
+
 const REMOVABLE := "removable"
 
 const BUILD := "BUILD"
