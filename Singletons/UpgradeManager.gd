@@ -8,6 +8,7 @@ var upgrade_types : Dictionary
 func initialize():
 	upgrade_types = UpgradeData.upgrade_types
 	for key in upgrade_types.keys():
+		upgrade_types[key][Const.LEVEL] = upgrade_types[key].get(Const.LEVEL, 0)
 		upgrade_types[key][Const.LOCKED] = upgrade_types[key].get(Const.LOCKED, false)
 		upgrade_types[key][Const.DISABLED] = upgrade_types[key].get(Const.DISABLED, false)
 
@@ -34,10 +35,21 @@ func get_upgrade_type_attribute(upgrade_key : String, attribute_key : String, de
 # purchase an upgrade, spending the required resources and then applying it
 func purchase_upgrade(key : String) -> bool:
 	var purchase_cost : Dictionary = upgrade_types[key].get(Const.PURCHASE_COST, {})
-	if(!PurchaseManager.can_afford(purchase_cost)):
+	var price_modifier := 1.0
+	
+	if(upgrade_types[key][Const.LEVEL] > 0):
+		# rebuying a multi-level upgrade
+		if(!upgrade_types[key].has(Const.REBUY)):
+			return false
+		var rebuy : Dictionary = upgrade_types[key].get(Const.REBUY)
+		var price_modifier_type : String = rebuy[Const.REBUY_PRICE_MODIFIER_TYPE]
+		if(price_modifier_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
+			price_modifier = upgrade_types[key][Const.LEVEL] + 1
+	
+	if(!PurchaseManager.can_afford(purchase_cost, price_modifier)):
 		return false
 	
-	PurchaseManager.spend(purchase_cost)
+	PurchaseManager.spend(purchase_cost, price_modifier)
 	apply_upgrade(key)
 	return true
 
@@ -51,6 +63,8 @@ func disable_upgrade(_key : String):
 
 # apply the selected upgrade
 func apply_upgrade(key : String):
+	upgrade_types[key][Const.LEVEL] = upgrade_types[key][Const.LEVEL] + 1
+	
 	if(upgrade_types[key].has(Const.UNLOCK)):
 		var unlocks : Array = upgrade_types[key][Const.UNLOCK]
 		for unlock in unlocks:
@@ -63,6 +77,11 @@ func apply_upgrade(key : String):
 	
 	if(upgrade_types[key].has(Const.MODIFIER)):
 		var modifiers : Array = upgrade_types[key][Const.MODIFIER]
+		for mod in modifiers:
+			mod[Const.LEVEL] = upgrade_types[key][Const.LEVEL]
 		ModifiersManager.set_modifier_source(key, modifiers)
-		
-	disable_upgrade(key)
+	
+	if(!upgrade_types[key].has(Const.REBUY)):
+		disable_upgrade(key)
+	else:
+		refresh_upgrades()

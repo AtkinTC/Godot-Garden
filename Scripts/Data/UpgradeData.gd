@@ -4,10 +4,13 @@ const upgrade_types := {
 	"ENHANCE_ELEMENTS" : {
 		Const.DISPLAY_NAME : "elemental focus",
 		Const.PURCHASE_COST : {
-			"AIR_ESS" : 5,
-			"EARTH_ESS" : 5,
-			"FIRE_ESS" : 5,
-			"WATER_ESS" : 5
+			"AIR_ESS" : 15,
+			"EARTH_ESS" : 15,
+			"FIRE_ESS" : 15,
+			"WATER_ESS" : 15
+		},
+		Const.REBUY : {
+			Const.REBUY_PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		},
 		Const.MODIFIER : [
 			{

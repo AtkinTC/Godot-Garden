@@ -9,12 +9,15 @@ func initialize():
 	recalculate_modifiers()
 
 func recalculate_modifiers():
+	modifier_combined = {}
 	for source_key in modifier_source.keys():
 		var source : Array = modifier_source[source_key]
 		for mod in source:
 			assert(mod.has(Const.MODIFIER_TARGET_CATEGORY))
 			assert(mod.has(Const.MODIFIER_TARGET_KEY) || mod.has(Const.MODIFIER_TARGET_KEYS))
 			assert(mod.has(Const.MODIFIER_TYPE) || mod.has(Const.MODIFIER))
+			
+			var level : int = mod.get(Const.LEVEL, 1)
 			
 			var target_cat : String = mod.get(Const.MODIFIER_TARGET_CATEGORY)
 			var cat_dict = modifier_combined.get(target_cat, {})
@@ -33,7 +36,7 @@ func recalculate_modifiers():
 				if(mod.has(Const.MODIFIER_TYPE)):
 					var mod_type : String = mod.get(Const.MODIFIER_TYPE)
 					var type_dict = target_dict.get(mod_type, {})
-					type_dict[Const.MODIFIER_SCALE] = type_dict.get(Const.MODIFIER_SCALE, 1.0) + mod.get(Const.MODIFIER_SCALE, 0)
+					type_dict[Const.MODIFIER_SCALE] = type_dict.get(Const.MODIFIER_SCALE, 1.0) + mod.get(Const.MODIFIER_SCALE, 0) * level
 					target_dict[mod_type] = type_dict
 				
 				# modify multiple attributes
@@ -41,7 +44,7 @@ func recalculate_modifiers():
 					for attr in mod.get(Const.MODIFIER):
 						var mod_type : String = attr.get(Const.MODIFIER_TYPE)
 						var type_dict = target_dict.get(mod_type, {})
-						type_dict[Const.MODIFIER_SCALE] = type_dict.get(Const.MODIFIER_SCALE, 1.0) + attr.get(Const.MODIFIER_SCALE, 0)
+						type_dict[Const.MODIFIER_SCALE] = type_dict.get(Const.MODIFIER_SCALE, 1.0) + attr.get(Const.MODIFIER_SCALE, 0) * level
 						target_dict[mod_type] = type_dict
 				
 				cat_dict[target_key] = target_dict

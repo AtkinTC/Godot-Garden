@@ -19,6 +19,10 @@ const BUILD := "BUILD"
 const BUILD_LENGTH := "build_length"
 const BUILD_COST := "build_cost"
 
+const UPGRADE_OBJECT := "upgrade_object"
+const UPGRADE_LENGTH := "upgrade_length"
+const UPGRADE_COST := "upgrade_cost"
+
 const JOB := "JOB"
 const JOB_LENGTH := "job_length"
 const JOB_REQUIREMENTS := "job_requirements"
@@ -34,9 +38,12 @@ const PASSIVE_GAIN := "passive_gain"
 
 ## UPGRADE ##
 const UPGRADE := "UPGRADE"
-const UPGRADE_OBJECT := "upgrade_object"
-const UPGRADE_LENGTH := "upgrade_length"
-const UPGRADE_COST := "upgrade_cost"
+
+const LEVEL := "level"
+
+const REBUY := "rebuy"
+const REBUY_PRICE_MODIFIER_TYPE := "rebuy_price_modifier_type"
+const PRICE_MODIFIER_FLAT_LEVEL := "flat_level"
 
 const UNLOCK := "unlock"
 const UNLOCK_KEY := "unlock_key"
