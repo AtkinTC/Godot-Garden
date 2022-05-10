@@ -2,24 +2,21 @@ extends PlotComponent
 class_name JobPlotComponent
 
 var job_progress : float
-var job_running : bool
 var level : int
 
 func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 	coord = _coord
 	object_key = _object_key
 	level = _level
-	
 	job_progress = 0.0
-	job_running = true
 
 func step(_delta : float):
-	if(!job_running):
+	if(!running):
 		return
 		
 	complete_job()
 	
-	if(!job_running):
+	if(!running):
 		return
 	
 	job_progress += ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.JOB_SPEED_SATISFIED, 0.0) * _delta

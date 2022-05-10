@@ -8,12 +8,13 @@ var upgrade_length : float
 var upgrade_cost : Dictionary
 var current_level : int
 
-var upgrade_running : bool
+var completed : bool
 
 func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
 	coord = _coord
 	object_key = _object_key
 	current_level = _current_level
+	completed = false
 	
 	var object_type := ObjectsManager.get_object_type(_object_key)
 	var upgrade_dict : Dictionary = object_type.get(Const.UPGRADE)
@@ -31,16 +32,15 @@ func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
 		upgrade_cost = upgrade_dict.get(Const.UPGRADE_COST, {})
 	else:
 		upgrade_cost = object_type.get(Const.BUILD_COST, {})
-	
-	upgrade_running = true
 
 func step(_delta : float):
-	if(!upgrade_running):
+	if(!running || completed):
+		running = false
 		return
 		
 	complete_upgrade()
 	
-	if(!upgrade_running):
+	if(!running):
 		return
 	
 	var upgrade_cost_delta = {}
@@ -58,7 +58,8 @@ func complete_upgrade():
 	if(upgrade_length > 0 && upgrade_progress < (upgrade_length * current_level)):
 		return
 	upgrade_complete.emit()
-	upgrade_running = false
+	running = false
+	completed = true
 
 func get_progress() -> float:
 	return upgrade_progress

@@ -7,6 +7,8 @@ var object_key : String = ""
 var components : Dictionary = {}
 var level : int = 0
 
+var paused : bool = false
+
 var under_construction : bool = false
 
 #purchase and insert object to the plot
@@ -127,7 +129,8 @@ func upgrade_object():
 		plot_object_changed.emit()
 	
 	return true
-	
+
+#remove object from plot
 func remove_object():
 	var object_type := get_object_type()
 	
@@ -139,6 +142,17 @@ func remove_object():
 	clear_components()
 	
 	plot_object_changed.emit()
+
+func toggle_pause():
+	pause_object(!paused)
+
+func pause_object(_paused: bool = true):
+	if(object_key == null || object_key == ""):
+		return
+		
+	paused = _paused
+	for comp_key in components.keys():
+		(components[comp_key] as PlotComponent).set_running(!paused)
 
 func step(_delta : float):
 	for comp_key in components.keys():

@@ -15,5 +15,10 @@ const action_types := {
 		Const.DISPLAY_NAME : "Remove",
 		Const.TARGET_TYPE : "Plot",
 		Const.FUNC_NAME : "remove_object"
+	},
+	"PAUSE_PLOT_OBJECT" : {
+		Const.DISPLAY_NAME : "Pause/Unpause",
+		Const.TARGET_TYPE : "Plot",
+		Const.FUNC_NAME : "toggle_pause"
 	}
 }

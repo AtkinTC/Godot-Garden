@@ -6,27 +6,26 @@ signal build_complete()
 var build_progress : float
 var build_length : float
 var build_cost : Dictionary
-
-var build_running : bool
+var completed : bool
 
 func _init(_coord : Vector2, _object_key : String):
 	coord = _coord
 	object_key = _object_key
+	completed = false
 	
 	var object_type := ObjectsManager.get_object_type(_object_key)
 	build_length = object_type.get(Const.BUILD_LENGTH, -1.0)
 	build_progress = 0.0
 	build_cost = object_type.get(Const.BUILD_COST, {})
-		
-	build_running = true
 
 func step(_delta : float):
-	if(!build_running):
+	if(!running || completed):
+		running = false
 		return
 		
 	complete_build()
 	
-	if(!build_running):
+	if(!running):
 		return
 	
 	var build_cost_delta = {}
@@ -43,10 +42,9 @@ func step(_delta : float):
 func complete_build():
 	if(build_length > 0 && build_progress < build_length):
 		return
-	
 	build_complete.emit()
-		
-	build_running = false
+	running = false
+	completed = true
 
 func get_build_progress() -> float:
 	return build_progress
