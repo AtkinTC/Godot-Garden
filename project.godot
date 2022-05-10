@@ -202,6 +202,7 @@ GardenManager="*res://Singletons/GardenManager.gd"
 ObjectsManager="*res://Singletons/ObjectsManager.gd"
 SupplyManager="*res://Singletons/SupplyManager.gd"
 UpgradeManager="*res://Singletons/UpgradeManager.gd"
+ModifiersManager="*res://Singletons/ModifiersManager.gd"
 
 [display]
 

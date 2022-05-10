@@ -1,6 +1,7 @@
 extends Node2D
 
 func _init():
+	ModifiersManager.initialize()
 	ActionManager.initialize()
 	SupplyManager.initialize()
 	ObjectsManager.initialize()

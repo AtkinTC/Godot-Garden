@@ -113,13 +113,13 @@ func set_display_gain(_display_gain : String):
 	display_gain = _display_gain
 
 # trigger quantity update and recalculate display when supply updates
-func _on_supply_quantity_changed(_key : String, _old_quantity : float, _new_quantity : float):
+func _on_supply_quantity_changed(_key : String, _new_quantity : float):
 	if(key == _key):
 		set_quantity(_new_quantity)
 		need_update = true
 
 # trigger capacity update and recalculate display when supply updates
-func _on_supply_capacity_changed(_key : String, _old_capacity : float, _new_capacity : float):
+func _on_supply_capacity_changed(_key : String, _new_capacity : float):
 	if(key == _key):
 		set_capacity(_new_capacity)
 		need_update = true

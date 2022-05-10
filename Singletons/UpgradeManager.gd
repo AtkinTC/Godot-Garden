@@ -61,4 +61,8 @@ func apply_upgrade(key : String):
 			if(unlock[Const.UNLOCK_TYPE] == Const.UPGRADE):
 				UpgradeManager.unlock_upgrade(unlock[Const.UNLOCK_KEY])
 	
+	if(upgrade_types[key].has(Const.MODIFIER)):
+		var modifiers : Array = upgrade_types[key][Const.MODIFIER]
+		ModifiersManager.set_modifier_source(key, modifiers)
+		
 	disable_upgrade(key)

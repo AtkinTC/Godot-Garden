@@ -42,11 +42,18 @@ const UNLOCK := "unlock"
 const UNLOCK_KEY := "unlock_key"
 const UNLOCK_TYPE := "unlock_type"
 
+const MODIFIER := "modifier"
+const MODIFIER_TARGET_KEY := "modifier_target_key"
+const MODIFIER_TARGET_KEYS := "modifier_target_keys"
+const MODIFIER_TARGET_CATEGORY := "modifier_target_category"
+const MODIFIER_TYPE := "modifier_type"
+const MODIFIER_SCALE := "modifier_scale"
+
 ## SUPPLY ##
 const SUPPLY := "SUPPLY"
 const QUANTITY_BASE := "quantity_base"
 const QUANTITY := "quantity"
 const CAPACITY_BASE := "base_capacity"
 const CAPACITY := "CAPACITY"
-
+const GAIN := "GAIN"
 const DISPLAY_COLORS := "display_colors"

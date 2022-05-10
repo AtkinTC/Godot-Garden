@@ -1,6 +1,31 @@
 class_name UpgradeData
 
 const upgrade_types := {
+	"ENHANCE_ELEMENTS" : {
+		Const.DISPLAY_NAME : "elemental focus",
+		Const.PURCHASE_COST : {
+			"AIR_ESS" : 5,
+			"EARTH_ESS" : 5,
+			"FIRE_ESS" : 5,
+			"WATER_ESS" : 5
+		},
+		Const.MODIFIER : [
+			{
+				Const.MODIFIER_TARGET_CATEGORY : Const.SUPPLY,
+				Const.MODIFIER_TARGET_KEYS : ["AIR_ESS", "EARTH_ESS", "FIRE_ESS", "WATER_ESS"],
+				Const.MODIFIER : [
+					{
+						Const.MODIFIER_TYPE : Const.GAIN,
+						Const.MODIFIER_SCALE : 0.1
+					},
+					{
+						Const.MODIFIER_TYPE : Const.CAPACITY,
+						Const.MODIFIER_SCALE : 0.1
+					}
+				]
+			}
+		]
+	},
 	"UNLOCK_MIND" : {
 		Const.DISPLAY_NAME : "path of the mind",
 		Const.PURCHASE_COST : {
@@ -12,15 +37,15 @@ const upgrade_types := {
 		Const.UNLOCK : [
 			{
 				Const.UNLOCK_KEY : "MIND_ESS",
-				Const.UNLOCK_TYPE : "SUPPLY"
+				Const.UNLOCK_TYPE : Const.SUPPLY
 			},
 			{
 				Const.UNLOCK_KEY : "MIND_SOURCE_BASIC",
-				Const.UNLOCK_TYPE : "OBJECT"
+				Const.UNLOCK_TYPE : Const.OBJECT
 			},
 			{
 				Const.UNLOCK_KEY : "ENHANCE_MIND_001",
-				Const.UNLOCK_TYPE : "UPGRADE"
+				Const.UNLOCK_TYPE : Const.UPGRADE
 			}
 		]
 	},
