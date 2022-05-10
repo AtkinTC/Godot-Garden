@@ -9,6 +9,7 @@ var selected_object_key: String
 func initialize():
 	object_types = ObjectData.object_types
 	for key in object_types.keys():
+		object_types[key][Const.LEVEL] = object_types[key].get(Const.LEVEL, 0)
 		object_types[key][Const.PURCHASABLE] = object_types[key].get(Const.PURCHASABLE, false)
 		object_types[key][Const.LOCKED] = object_types[key].get(Const.LOCKED, false)
 		object_types[key][Const.DISABLED] = object_types[key].get(Const.DISABLED, false)

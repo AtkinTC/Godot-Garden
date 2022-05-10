@@ -10,7 +10,7 @@ const upgrade_types := {
 			"WATER_ESS" : 15
 		},
 		Const.REBUY : {
-			Const.REBUY_PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		},
 		Const.MODIFIER : [
 			{

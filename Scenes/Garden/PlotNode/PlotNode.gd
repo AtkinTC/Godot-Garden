@@ -35,7 +35,10 @@ func update_display() -> void:
 		return
 	
 	if(plot.get_object_key()):
-		display_label.text = plot.get_object_type()[Const.DISPLAY_NAME]
+		var display_name := str(plot.get_object_type()[Const.DISPLAY_NAME])
+		if(plot.level > 1):
+			display_name += " " + str(plot.level)
+		display_label.text = display_name
 	else:
 		display_label.text = "Empty"
 	

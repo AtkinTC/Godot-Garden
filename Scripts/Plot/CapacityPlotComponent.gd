@@ -2,11 +2,17 @@ extends PlotComponent
 class_name CapacityPlotComponent
 
 var base_capacity: Dictionary
+var level : int
 
-func _init(_coord : Vector2, _object_key : String):
+func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 	coord = _coord
 	object_key = _object_key
-	base_capacity = ObjectsManager.get_object_type_attribute(object_key, Const.CAPACITY, {})
+	level = _level
+
+	# multiply capacity values by level
+	base_capacity = ObjectsManager.get_object_type_attribute(object_key, Const.CAPACITY, {}).duplicate()
+	for key in base_capacity:
+		base_capacity[key] = base_capacity[key] * level
 	
 	for supply_key in base_capacity.keys():
 		SupplyManager.get_supply(supply_key).set_capacity_source(str(coord), base_capacity[supply_key])	
@@ -14,6 +20,7 @@ func _init(_coord : Vector2, _object_key : String):
 func get_capacity() -> Dictionary:
 	return base_capacity
 
+# perform needed cleanup, to be called before this component would be deleted
 func cleanup_before_delete():
 	for supply_key in base_capacity.keys():
 		SupplyManager.get_supply(supply_key).remove_capacity_source(str(coord))

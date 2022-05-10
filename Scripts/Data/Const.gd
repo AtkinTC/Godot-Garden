@@ -42,8 +42,9 @@ const UPGRADE := "UPGRADE"
 const LEVEL := "level"
 
 const REBUY := "rebuy"
-const REBUY_PRICE_MODIFIER_TYPE := "rebuy_price_modifier_type"
+const PRICE_MODIFIER_TYPE := "price_modifier_type"
 const PRICE_MODIFIER_FLAT_LEVEL := "flat_level"
+const PRICE_MODIFIER_EXP_LEVEL := "exp_level"
 
 const UNLOCK := "unlock"
 const UNLOCK_KEY := "unlock_key"

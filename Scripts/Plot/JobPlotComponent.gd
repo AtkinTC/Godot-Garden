@@ -3,10 +3,12 @@ class_name JobPlotComponent
 
 var job_progress : float
 var job_running : bool
+var level : int
 
-func _init(_coord : Vector2, _object_key : String):
+func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 	coord = _coord
 	object_key = _object_key
+	level = _level
 	
 	job_progress = 0.0
 	job_running = true

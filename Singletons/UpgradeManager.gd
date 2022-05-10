@@ -42,7 +42,7 @@ func purchase_upgrade(key : String) -> bool:
 		if(!upgrade_types[key].has(Const.REBUY)):
 			return false
 		var rebuy : Dictionary = upgrade_types[key].get(Const.REBUY)
-		var price_modifier_type : String = rebuy[Const.REBUY_PRICE_MODIFIER_TYPE]
+		var price_modifier_type : String = rebuy[Const.PRICE_MODIFIER_TYPE]
 		if(price_modifier_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
 			price_modifier = upgrade_types[key][Const.LEVEL] + 1
 	
