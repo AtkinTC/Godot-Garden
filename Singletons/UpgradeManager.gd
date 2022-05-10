@@ -65,8 +65,11 @@ func disable_upgrade(_key : String):
 func apply_upgrade(key : String):
 	upgrade_types[key][Const.LEVEL] = upgrade_types[key][Const.LEVEL] + 1
 	
-	if(upgrade_types[key].has(Const.UNLOCK)):
-		var unlocks : Array = upgrade_types[key][Const.UNLOCK]
+	var upgrade_type : Dictionary = upgrade_types[key] 
+	
+	#apply upgrade unlocks
+	if(upgrade_type.has(Const.UNLOCK)):
+		var unlocks : Array = upgrade_type[Const.UNLOCK]
 		for unlock in unlocks:
 			if(unlock[Const.UNLOCK_TYPE] == Const.SUPPLY):
 				SupplyManager.unlock_supply(unlock[Const.UNLOCK_KEY])
@@ -75,10 +78,23 @@ func apply_upgrade(key : String):
 			if(unlock[Const.UNLOCK_TYPE] == Const.UPGRADE):
 				UpgradeManager.unlock_upgrade(unlock[Const.UNLOCK_KEY])
 	
-	if(upgrade_types[key].has(Const.MODIFIER)):
-		var modifiers : Array = upgrade_types[key][Const.MODIFIER]
+	#setup upgrade supply source attributes (gain and capacity values)
+	if(upgrade_type.has(Const.SOURCE)):
+		var source : Dictionary = upgrade_type[Const.SOURCE]
+		if(source.has(Const.GAIN)):
+			var gain = source.get(Const.GAIN)
+			for supply_key in gain.keys():
+				SupplyManager.get_supply(supply_key).set_gain_source(str(key), gain[supply_key] * upgrade_type[Const.LEVEL])
+		if(source.has(Const.CAPACITY)):
+			var capacity = source.get(Const.CAPACITY)
+			for supply_key in capacity.keys():
+				SupplyManager.get_supply(supply_key).set_capacity_source(str(key), capacity[supply_key] * upgrade_type[Const.LEVEL])
+	
+	#setup upgrade modifier values
+	if(upgrade_type.has(Const.MODIFIER)):
+		var modifiers : Array = upgrade_type[Const.MODIFIER]
 		for mod in modifiers:
-			mod[Const.LEVEL] = upgrade_types[key][Const.LEVEL]
+			mod[Const.LEVEL] = upgrade_type[Const.LEVEL]
 		ModifiersManager.set_modifier_source(key, modifiers)
 	
 	if(!upgrade_types[key].has(Const.REBUY)):

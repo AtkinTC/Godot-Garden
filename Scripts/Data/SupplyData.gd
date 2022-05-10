@@ -23,7 +23,6 @@ const supply_types := {
 	},
 	"MIND_ESS" : {
 		Const.DISPLAY_NAME : "essence of the mind",
-		Const.LOCKED : true,
-		Const.CAPACITY_BASE : 10
+		Const.LOCKED : true
 	}
 }

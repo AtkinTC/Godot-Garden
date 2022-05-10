@@ -57,6 +57,8 @@ const MODIFIER_TARGET_CATEGORY := "modifier_target_category"
 const MODIFIER_TYPE := "modifier_type"
 const MODIFIER_SCALE := "modifier_scale"
 
+const SOURCE := "source"
+
 ## SUPPLY ##
 const SUPPLY := "SUPPLY"
 const QUANTITY_BASE := "quantity_base"

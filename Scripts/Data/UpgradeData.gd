@@ -37,6 +37,14 @@ const upgrade_types := {
 			"FIRE_ESS" : 10,
 			"WATER_ESS" : 10
 		},
+		Const.SOURCE : {
+			Const.GAIN : {
+				"MIND_ESS" : 0.1
+			},
+			Const.CAPACITY : {
+				"MIND_ESS" : 100
+			}
+		},
 		Const.UNLOCK : [
 			{
 				Const.UNLOCK_KEY : "MIND_ESS",
@@ -47,12 +55,12 @@ const upgrade_types := {
 				Const.UNLOCK_TYPE : Const.OBJECT
 			},
 			{
-				Const.UNLOCK_KEY : "ENHANCE_MIND_001",
+				Const.UNLOCK_KEY : "ENHANCE_MIND",
 				Const.UNLOCK_TYPE : Const.UPGRADE
 			}
 		]
 	},
-	"ENHANCE_MIND_001" : {
+	"ENHANCE_MIND" : {
 		Const.DISPLAY_NAME : "enhance mind",
 		Const.LOCKED : true,
 		Const.PURCHASE_COST : {
@@ -60,6 +68,30 @@ const upgrade_types := {
 			"EARTH_ESS" : 10,
 			"FIRE_ESS" : 10,
 			"WATER_ESS" : 10
-		}
+		},
+		Const.REBUY : {
+			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+		},
+		Const.SOURCE : {
+			Const.GAIN : {
+				"MIND_ESS" : 0.1
+			}
+		},
+		Const.MODIFIER : [
+			{
+				Const.MODIFIER_TARGET_CATEGORY : Const.SUPPLY,
+				Const.MODIFIER_TARGET_KEYS : ["MIND_ESS"],
+				Const.MODIFIER : [
+					{
+						Const.MODIFIER_TYPE : Const.GAIN,
+						Const.MODIFIER_SCALE : 0.1
+					},
+					{
+						Const.MODIFIER_TYPE : Const.CAPACITY,
+						Const.MODIFIER_SCALE : 0.1
+					}
+				]
+			}
+		]
 	}
 }
