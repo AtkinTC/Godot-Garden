@@ -5,58 +5,100 @@ signal garden_resized()
 var plots : Array2D
 var garden_rect := Rect2(-1, -1, 3, 3)
 
-var plot_base_price : float = (40.0/3)
-var min_garden_size : int = 9
+var plot_base_price : float = 5.0
+var min_garden_size : int 
+
+var owned_plots : int = 0
 
 # setup initial state of the garden
 func initialize():
-	setup_plots()
+	min_garden_size = int(garden_rect.size.x * garden_rect.size.y)
+	setup_plots(true)
+	add_available_plots()
 
 # rebuild garden plots array based on current sizing
-func setup_plots():
+func setup_plots(owned : bool = false):
 	var old := plots
 	plots = Array2D.new(garden_rect.size, garden_rect.position)
 	
+	# insert existing plots into new garden
 	if(old != null):
 		plots.insert(old)
 	
+	# create new plots to fill in the garden
 	for x in plots.range_x():
 		for y in plots.range_y():
 			var coord := Vector2(x,y)
 			if(old == null || !(x in old.range_x()) || !(y in old.range_y())):
 				var plot : Plot = Plot.new()
 				plot.set_coord(coord)
+				if(owned):
+					plot.set_owned(owned)
+				plot.plot_ownership_changed.connect(count_owned_plots)
 				set_plot(coord, plot)
+	
+	# update plot availability based on neighbors
+	for x in plots.range_x():
+		for y in plots.range_y():
+			for coord in [Vector2(-1,0), Vector2(1,0), Vector2(0,-1), Vector2(0,1)]:
+				var neighbor = plots.get_at(Vector2(x,y) + coord)
+				if(neighbor != null && neighbor.is_owned()):
+					plots.get_at(Vector2(x,y)).set_available(true)
+					break
+	
+	count_owned_plots()
 
+# increase garden size if any outer edge plots are owned to allow further expansion
+func add_available_plots():
+	var exp_n := false
+	var exp_s := false
+	var exp_e := false
+	var exp_w := false
+	
+	for x in plots.range_x():
+		if(plots.get_at(Vector2(x, plots.min_y())).is_owned()):
+			exp_n = true
+		if(plots.get_at(Vector2(x, plots.max_y())).is_owned()):
+			exp_s = true
+		if(exp_n && exp_s):
+			break
+	
+	for y in plots.range_y():
+		if(plots.get_at(Vector2(plots.min_x(), y)).is_owned()):
+			exp_w = true
+		if(plots.get_at(Vector2(plots.max_x(), y)).is_owned()):
+			exp_e = true
+		if(exp_w && exp_e):
+			break
+			
+	var position : Vector2 = garden_rect.position + Vector2(-int(exp_w), -int(exp_n))
+	var size : Vector2 = garden_rect.size + Vector2(int(exp_w) + int(exp_e), int(exp_n) + int(exp_s))
+	
+	set_garden_rect(Rect2(position, size))
+
+# count all owned plots in the garden
+func count_owned_plots():
+	owned_plots = 0
+	for x in plots.range_x():
+		for y in plots.range_y():
+			owned_plots += int(plots.get_at(Vector2(x,y)).is_owned())
+					
 # process step time for all garden plots
 func step_plots(step_time : float):
 	for x in plots.range_x():
 		for y in plots.range_y():
 			(plots.get_at(Vector2(x,y)) as Plot).step(step_time)
 
-# calculate price for an expansion based on current garden size
-func get_garden_expansion_price(exp_v : Vector2) -> Dictionary:
-	var new_width : int = plots.get_size().x + abs(exp_v.x)
-	var new_height : int = plots.get_size().y + abs(exp_v.y)
+# calculate price of purchasing a single garden plot
+func get_plot_purchase_price(coord : Vector2) -> Dictionary:
+	var alignment := get_direction_alignment(coord.normalized())
 	
-	var current_plots := plots.get_size().x * plots.get_size().y
-	var new_plots := (new_width * new_height) - current_plots
-	
-	var alignment := get_direction_alignment(exp_v)
 	var price_dict := {}
 	for key in alignment.keys():
-		price_dict[key] = alignment[key] * plot_base_price * new_plots * (current_plots * 1.0 / min_garden_size)
+		price_dict[key] = alignment[key] * plot_base_price * (owned_plots - min_garden_size + 1)
+		price_dict[key] *= coord.length_squared()
 	
 	return price_dict
-
-# expend supplies to purchase expansion and apply resize to garden
-func purchase_expansion(exp_v : Vector2):
-	var total_cost := get_garden_expansion_price(exp_v)
-	if(!PurchaseManager.can_afford(total_cost)):
-		return
-		
-	PurchaseManager.spend(total_cost)
-	expand_garden(exp_v)
 
 # expand the size of the garden based on a provided expansion vector
 # only expands, negative value will expand in the negative direction
@@ -66,6 +108,7 @@ func expand_garden(exp_v : Vector2):
 	
 	set_garden_rect(Rect2(_offset, _size))
 
+# set the rectangle size of the garden
 func set_garden_rect(_garden_rect : Rect2):
 	garden_rect = _garden_rect
 	setup_plots()

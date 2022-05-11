@@ -1,7 +1,10 @@
 class_name Plot
 
 signal plot_object_changed()
+signal plot_ownership_changed()
 
+var owned : bool = false
+var available : bool = false
 var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
@@ -11,8 +14,27 @@ var paused : bool = false
 
 var under_construction : bool = false
 
+func purchase_plot():
+	if(owned || !available):
+		return
+	
+	# check if can afford to purchase plot
+	var total_cost := GardenManager.get_plot_purchase_price(coord)
+	if(!PurchaseManager.can_afford(total_cost)):
+		return
+		
+	# subtract spent resources
+	PurchaseManager.spend(total_cost)
+	
+	# purchase plot
+	owned = true
+	plot_ownership_changed.emit()
+	GardenManager.add_available_plots()
+
 #purchase and insert object to the plot
 func purchase_object(_object_key : String = "", _level : int = 1):
+	if(!owned):
+		return false
 	if(!get_object_type().get(Const.REMOVABLE, true) || under_construction):
 		return false
 	
@@ -94,6 +116,8 @@ func setup_components(build_complete : bool = false):
 
 #apply upgrade action to plot object
 func upgrade_object():
+	if(!owned):
+		return false
 	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
 		return false
 	
@@ -132,8 +156,10 @@ func upgrade_object():
 
 #remove object from plot
 func remove_object():
+	if(!owned):
+		return false
+		
 	var object_type := get_object_type()
-	
 	if(!object_type.get(Const.REMOVABLE, true)):
 		return false
 	
@@ -173,8 +199,20 @@ func get_object_key() -> String:
 func get_object_type() -> Dictionary:
 	return ObjectsManager.get_object_type(object_key)
 
-func get_level () -> int:
+func get_level() -> int:
 	return level
+
+func set_available(_available : bool):
+	available = _available
+
+func is_available() -> bool:
+	return available
+
+func set_owned(_owned : bool):
+	owned = _owned
+
+func is_owned() -> bool:
+	return owned
 
 func _on_build_complete():
 	clear_components()

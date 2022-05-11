@@ -15,7 +15,7 @@ func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 		base_gains[key] = base_gains[key] * level
 	
 	for supply_key in base_gains.keys():
-		SupplyManager.get_supply(supply_key).set_gain_source(str(coord), base_gains[supply_key])	
+		SupplyManager.get_supply(supply_key).set_gain_source(str(coord), base_gains[supply_key])
 		
 func get_gains() -> Dictionary:
 	return base_gains

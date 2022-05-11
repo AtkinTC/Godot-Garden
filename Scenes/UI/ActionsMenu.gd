@@ -11,7 +11,7 @@ func _ready():
 	ActionManager.connect_action_selected(_on_action_selected)
 	
 	var index := 0
-	for action_key in ActionManager.get_action_type_keys():
+	for action_key in ActionManager.get_available_action_keys():
 		var action_type : Dictionary = ActionManager.get_action_type(action_key)
 		add_item(action_type[Const.DISPLAY_NAME])
 		action_list_indexes[index] = action_key

@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq2yfpehob08s"]
+
+[ext_resource type="Script" path="res://Scenes/Garden/PlotNode/AvailablePlotContent.gd" id="1_rrg55"]
+
+[node name="AvailablePlotContent" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1180.0
+offset_bottom = -620.0
+mouse_filter = 2
+script = ExtResource( "1_rrg55" )
+labels_container_path = NodePath("H")
+price_label_path = NodePath("H/Control")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 100.0
+offset_bottom = 26.0
+size_flags_vertical = 0
+text = "Expand"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="H" type="HBoxContainer" parent="."]
+minimum_size = Vector2(0, 20)
+offset_top = 30.0
+offset_right = 100.0
+offset_bottom = 50.0
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="H"]
+minimum_size = Vector2(0, 20)
+offset_right = 100.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="H/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="H/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 12
+text = "100
+"
+horizontal_alignment = 1
+vertical_alignment = 1

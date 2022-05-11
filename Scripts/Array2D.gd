@@ -45,6 +45,18 @@ func get_at(_coord : Vector2):
 	
 	return array[adj_coord.x][adj_coord.y]
 
+func min_x() -> int:
+	return offset.x as int
+
+func max_x() -> int:
+	return offset.x + size.x - 1 as int
+
+func min_y() -> int:
+	return offset.y as int
+
+func max_y() -> int:
+	return offset.y + size.y - 1 as int
+
 func range_x() -> Array:
 	return range(offset.x, size.x + offset.x)
 

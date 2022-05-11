@@ -7,6 +7,10 @@ minimum_size = Vector2(100, 100)
 offset_right = 100.0
 offset_bottom = 100.0
 script = ExtResource( "1_idrgo" )
+body_path = NodePath("V")
+coord_label_path = NodePath("V/CoordLabel")
+display_label_path = NodePath("V/DisplayLabel")
+plot_button_path = NodePath("PlotButton")
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0

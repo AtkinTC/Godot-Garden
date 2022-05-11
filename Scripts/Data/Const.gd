@@ -1,5 +1,6 @@
 class_name Const
 
+const DISPLAY := "display"
 const DISPLAY_NAME := "display_name"
 const TARGET_TYPE := "target_type"
 const FUNC_NAME := "func_name"

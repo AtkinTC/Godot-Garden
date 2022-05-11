@@ -24,6 +24,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Array2D.gd"
 }, {
+"base": "PlotContent",
+"class": &"AvailablePlotContent",
+"language": &"GDScript",
+"path": "res://Scenes/Garden/PlotNode/AvailablePlotContent.gd"
+}, {
 "base": "PlotComponent",
 "class": &"BuildPlotComponent",
 "language": &"GDScript",
@@ -48,11 +53,6 @@ _global_script_classes=[{
 "class": &"CustCamera2D",
 "language": &"GDScript",
 "path": "res://Scripts/Camera.gd"
-}, {
-"base": "Control",
-"class": &"GardenExpandPanel",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/GardenExpandPanel.gd"
 }, {
 "base": "Control",
 "class": &"GardenGrid",
@@ -158,12 +158,12 @@ _global_script_class_icons={
 "ActionData": "",
 "ActionsMenu": "",
 "Array2D": "",
+"AvailablePlotContent": "",
 "BuildPlotComponent": "",
 "BuildPlotContent": "",
 "CapacityPlotComponent": "",
 "Const": "",
 "CustCamera2D": "",
-"GardenExpandPanel": "",
 "GardenGrid": "",
 "JobPlotComponent": "",
 "JobPlotContent": "",
