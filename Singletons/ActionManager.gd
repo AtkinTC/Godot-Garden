@@ -1,6 +1,7 @@
 extends Node
 
-signal action_selected(action_key:String)
+signal actions_status_updated()
+signal selected_action_changed()
 
 var action_types : Dictionary
 var selected_action_key : String
@@ -46,10 +47,7 @@ func get_action_type(action_type_key : String) -> Dictionary:
 
 func set_selected_action_key(action_type_key : String):
 	selected_action_key = action_type_key
-	action_selected.emit(selected_action_key)
+	selected_action_changed.emit()
 
 func get_selected_action_key() -> String:
 	return selected_action_key
-
-func connect_action_selected(reciever_method : Callable):
-	action_selected.connect(reciever_method)

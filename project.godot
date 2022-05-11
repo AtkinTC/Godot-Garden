@@ -14,11 +14,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
-"base": "ItemList",
-"class": &"ActionsMenu",
-"language": &"GDScript",
-"path": "res://Scenes/UI/ActionsMenu.gd"
-}, {
 "base": "RefCounted",
 "class": &"Array2D",
 "language": &"GDScript",
@@ -104,10 +99,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/PlotNode/PlotNode.gd"
 }, {
-"base": "ItemList",
-"class": &"PurchaseMenu",
+"base": "Control",
+"class": &"SelectMenu",
 "language": &"GDScript",
-"path": "res://Scenes/UI/PurchaseMenu.gd"
+"path": "res://Scenes/UI/SelectMenu.gd"
 }, {
 "base": "RefCounted",
 "class": &"Supply",
@@ -134,11 +129,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/UpgradeData.gd"
 }, {
-"base": "ItemList",
-"class": &"UpgradeMenu",
-"language": &"GDScript",
-"path": "res://Scenes/UI/UpgradeMenu.gd"
-}, {
 "base": "PlotComponent",
 "class": &"UpgradePlotComponent",
 "language": &"GDScript",
@@ -156,7 +146,6 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionData": "",
-"ActionsMenu": "",
 "Array2D": "",
 "AvailablePlotContent": "",
 "BuildPlotComponent": "",
@@ -174,13 +163,12 @@ _global_script_class_icons={
 "PlotComponent": "",
 "PlotContent": "",
 "PlotNode": "",
-"PurchaseMenu": "",
+"SelectMenu": "",
 "Supply": "",
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
 "UpgradeData": "",
-"UpgradeMenu": "",
 "UpgradePlotComponent": "",
 "UpgradePlotContent": "",
 "Utils": ""

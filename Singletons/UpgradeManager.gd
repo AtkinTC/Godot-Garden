@@ -1,8 +1,10 @@
 extends Node
 
 signal upgrades_status_updated()
+signal selected_upgrade_changed()
 
 var upgrade_types : Dictionary
+var selected_upgrade_key : String
 
 # setup initial state of upgrades
 func initialize():
@@ -32,10 +34,19 @@ func get_upgrade_type(upgrade_key : String) -> Dictionary:
 func get_upgrade_type_attribute(upgrade_key : String, attribute_key : String, default = null):
 	return upgrade_types.get(upgrade_key, {}).get(attribute_key, default)
 
+func set_selected_upgrade_key(upgrade_key : String):
+	selected_upgrade_key = upgrade_key
+	selected_upgrade_changed.emit()
+
+func get_selected_upgrade_key() -> String:
+	return selected_upgrade_key
+
 # purchase an upgrade, spending the required resources and then applying it
 func purchase_upgrade(key : String) -> bool:
 	var purchase_cost : Dictionary = upgrade_types[key].get(Const.PURCHASE_COST, {})
 	var price_modifier := 1.0
+	
+	set_selected_upgrade_key(key)
 	
 	if(upgrade_types[key][Const.LEVEL] > 0):
 		# rebuying a multi-level upgrade

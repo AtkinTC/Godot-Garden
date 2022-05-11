@@ -1,13 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cto1wj2nvg42j"]
+[gd_scene load_steps=8 format=3 uid="uid://cto1wj2nvg42j"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
-[ext_resource type="Script" path="res://Scenes/UI/ActionsMenu.gd" id="3_7s5ky"]
+[ext_resource type="Script" path="res://Scenes/UI/SelectMenu.gd" id="3_6ld0l"]
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay.tscn" id="5_cff8l"]
-[ext_resource type="Script" path="res://Scenes/UI/PurchaseMenu.gd" id="6_lher3"]
-[ext_resource type="Script" path="res://Scenes/UI/UpgradeMenu.gd" id="6_xci84"]
 [ext_resource type="PackedScene" uid="uid://c5ximap3xiwp2" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
 
 [node name="Main" type="Node2D"]
@@ -34,51 +32,110 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="PurchaseMenu" type="ItemList" parent="UI/H/LPanel/V"]
+[node name="ObjectsSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
 offset_right = 200.0
-offset_bottom = 62.0
-mouse_default_cursor_shape = 2
-allow_reselect = true
-auto_height = true
-item_count = 2
-item_0/text = "OBJECT_1"
-item_1/text = "OBJECT_2"
-script = ExtResource( "6_lher3" )
+offset_bottom = 94.0
+script = ExtResource( "3_6ld0l" )
+buttons_container_path = NodePath("ButtonsContainer")
 
-[node name="ActionsMenu" type="ItemList" parent="UI/H/LPanel/V"]
-offset_top = 66.0
+[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/ObjectsSelectMenu"]
 offset_right = 200.0
-offset_bottom = 128.0
-mouse_default_cursor_shape = 2
-allow_reselect = true
-auto_height = true
-item_count = 2
-item_0/text = "ACTION_1"
-item_1/text = "ACTION_2"
-script = ExtResource( "3_7s5ky" )
+offset_bottom = 26.0
+text = "Structures"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/ObjectsSelectMenu"]
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 94.0
+theme_override_constants/separation = 2
+
+[node name="Button1" type="Button" parent="UI/H/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
+offset_right = 200.0
+offset_bottom = 31.0
+text = "OBJECT_1"
+
+[node name="Button2" type="Button" parent="UI/H/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
+offset_top = 33.0
+offset_right = 200.0
+offset_bottom = 64.0
+text = "OBJECT_1"
+
+[node name="ActionsSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
+offset_top = 98.0
+offset_right = 200.0
+offset_bottom = 192.0
+script = ExtResource( "3_6ld0l" )
+buttons_container_path = NodePath("ButtonsContainer")
+menu_type = 1
+
+[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/ActionsSelectMenu"]
+offset_right = 200.0
+offset_bottom = 26.0
+text = "Actions"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/ActionsSelectMenu"]
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 94.0
+theme_override_constants/separation = 2
+
+[node name="Button1" type="Button" parent="UI/H/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
+offset_right = 200.0
+offset_bottom = 31.0
+text = "ACTION_1"
+
+[node name="Button2" type="Button" parent="UI/H/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
+offset_top = 33.0
+offset_right = 200.0
+offset_bottom = 64.0
+text = "ACTION_1"
+
+[node name="UpgradeSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
+offset_top = 196.0
+offset_right = 200.0
+offset_bottom = 290.0
+script = ExtResource( "3_6ld0l" )
+buttons_container_path = NodePath("ButtonsContainer")
+menu_type = 2
+
+[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/UpgradeSelectMenu"]
+offset_right = 200.0
+offset_bottom = 26.0
+text = "Upgrades"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/UpgradeSelectMenu"]
+offset_top = 30.0
+offset_right = 200.0
+offset_bottom = 94.0
+theme_override_constants/separation = 2
+
+[node name="Button1" type="Button" parent="UI/H/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
+offset_right = 200.0
+offset_bottom = 31.0
+text = "UPGRADE_1"
+
+[node name="Button2" type="Button" parent="UI/H/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
+offset_top = 33.0
+offset_right = 200.0
+offset_bottom = 64.0
+text = "UPGRADE_2"
+
+[node name="SupplyTitle" type="Label" parent="UI/H/LPanel/V"]
+offset_top = 294.0
+offset_right = 200.0
+offset_bottom = 320.0
+text = "Resources"
 
 [node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
-offset_top = 132.0
+offset_top = 324.0
 offset_right = 200.0
-offset_bottom = 170.0
+offset_bottom = 362.0
 script = ExtResource( "4_ajn05" )
 
 [node name="SupplyDisplay" parent="UI/H/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "5_cff8l" )]
 anchor_right = 0.0
 offset_right = 200.0
 offset_bottom = 38.0
-
-[node name="UpgradeMenu" type="ItemList" parent="UI/H/LPanel/V"]
-offset_top = 174.0
-offset_right = 200.0
-offset_bottom = 236.0
-mouse_default_cursor_shape = 2
-allow_reselect = true
-auto_height = true
-item_count = 2
-item_0/text = "UPGRADE_1"
-item_1/text = "UPGRADE_2"
-script = ExtResource( "6_xci84" )
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)
@@ -154,7 +211,3 @@ script = ExtResource( "4_sbgaj" )
 acceleration = 0.1
 min_zoom = 0.25
 max_zoom = 1.0
-
-[connection signal="item_selected" from="UI/H/LPanel/V/PurchaseMenu" to="UI/H/LPanel/V/PurchaseMenu" method="_on_purchase_menu_item_selected"]
-[connection signal="item_selected" from="UI/H/LPanel/V/ActionsMenu" to="UI/H/LPanel/V/ActionsMenu" method="_on_actions_menu_item_selected"]
-[connection signal="item_selected" from="UI/H/LPanel/V/UpgradeMenu" to="UI/H/LPanel/V/UpgradeMenu" method="_on_upgrade_menu_item_selected"]

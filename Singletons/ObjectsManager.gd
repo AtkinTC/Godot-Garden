@@ -1,6 +1,7 @@
 extends Node
 
 signal objects_status_updated()
+signal selected_object_changed()
 
 var object_types : Dictionary
 var selected_object_key: String
@@ -40,6 +41,7 @@ func get_object_type_attribute(object_type_key : String, attribute_key : String,
 
 func set_selected_object_key(object_key : String):
 	selected_object_key = object_key
+	selected_object_changed.emit()
 
 func get_selected_object_key() -> String:
 	return selected_object_key
