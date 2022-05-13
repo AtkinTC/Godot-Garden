@@ -20,9 +20,9 @@ static func is_purchasable(category : String, key : String):
 		return false
 	elif(purchase.get(Const.PURCHASE_LIMIT, -1) == -1):
 		return true
-	else:
-		# TODO: check purchase limit against current count
+	elif(purchase.get(Const.PURCHASE_LIMIT, -1) > Database.get_entry_attr(category, key, Const.COUNT, 0)):
 		return true
+	return false
 
 static func can_afford_purchase(category : String, key : String, cost_modifier : float = 1.0) -> bool:
 	var base_cost = get_purchase_data(category, key).get(Const.PRICE)

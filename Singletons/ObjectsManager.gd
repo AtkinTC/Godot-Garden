@@ -42,8 +42,16 @@ func get_selected_object_key() -> String:
 	return selected_object_key
 
 func disable_object(key : String):
-	Database.set_entry_attr(Const.Object, key, Const.DISABlED, true)
+	Database.set_entry_attr(Const.OBJECT, key, Const.DISABLED, true)
 	refresh_objects()
+
+func set_object_count(key : String, count : int):
+	Database.set_entry_attr(Const.OBJECT, key, Const.COUNT, count)
+	refresh_objects()
+
+func adjust_object_count(key : String, adj : int):
+	var count : int = Database.get_entry_attr(Const.OBJECT, key, Const.COUNT, 0)
+	set_object_count(key, count + adj)
 
 func _on_locked_status_changed(category : String, key : String):
 	if(category == Const.OBJECT):

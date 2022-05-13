@@ -53,12 +53,7 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 		return false
 	PurchaseUtil.spend(purchase_price)
 	
-	level = _level
-	apply_set_object()
-	
-	plot_object_changed.emit()
-	
-	return true
+	insert_object(_object_key, _level)
 
 #insert object to the plot
 func insert_object(_object_key : String = "", _level : int = 1, skip_build : bool = false):
@@ -73,6 +68,7 @@ func insert_object(_object_key : String = "", _level : int = 1, skip_build : boo
 		return false
 	
 	level = _level
+	ObjectsManager.adjust_object_count(object_key, 1)
 	apply_set_object(skip_build)
 	
 	plot_object_changed.emit()
@@ -167,8 +163,8 @@ func remove_object():
 	if(!object_type.get(Const.REMOVABLE, true)):
 		return false
 	
+	ObjectsManager.adjust_object_count(object_key, -1)
 	object_key = ""
-	
 	clear_components()
 	
 	plot_object_changed.emit()

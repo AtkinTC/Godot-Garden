@@ -12,6 +12,7 @@ const PURCHASE := "PURCHASE"
 const PURCHASABLE := "purchasable" 
 const PURCHASE_COST := "purchase_cost"
 const PURCHASE_LIMIT := "purchase_limit"
+const COUNT := "count"
 
 const PRICE := "price"
 
