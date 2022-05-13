@@ -47,7 +47,7 @@ func step(_delta : float):
 	for key in upgrade_cost.keys():
 		upgrade_cost_delta[key] = upgrade_cost[key] * current_level * _delta / upgrade_length
 	
-	if(PurchaseManager.can_afford(upgrade_cost_delta)):
+	if(PurchaseUtil.can_afford(upgrade_cost_delta)):
 		for key in upgrade_cost_delta.keys():
 			SupplyManager.get_supply(key).change_quantity(-upgrade_cost_delta[key])
 		

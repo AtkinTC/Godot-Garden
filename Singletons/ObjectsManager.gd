@@ -3,26 +3,24 @@ extends Node
 signal objects_status_updated()
 signal selected_object_changed()
 
-var object_types : Dictionary
 var selected_object_key: String
 
 # setup initial state of objects
 func initialize():
-	LockStatusManager.locked_status_changed.connect(_on_locked_status_changed)
-	object_types = ObjectData.object_types
-	for key in object_types.keys():
-		object_types[key][Const.LEVEL] = object_types[key].get(Const.LEVEL, 0)
-		object_types[key][Const.PURCHASABLE] = object_types[key].get(Const.PURCHASABLE, false)
-		object_types[key][Const.DISABLED] = object_types[key].get(Const.DISABLED, false)
+	SignalBus.locked_status_changed.connect(_on_locked_status_changed)
+	selected_object_key = ""
+
+func is_disabled(key : String) -> bool:
+	return Database.get_entry_attr(Const.OBJECT, key, Const.DISABLED, false)
 
 # get keys of all objects that are available for direct purchase
 func get_available_object_keys() -> Array:
 	var available_keys = []
-	for object_key in object_types.keys():
-		if(object_types[object_key].get(Const.PURCHASABLE, false) 
-		&& !object_types[object_key].get(Const.DISABLED, false)
-		&& !LockStatusManager.is_locked(object_key, Const.OBJECT)):
-			available_keys.append(object_key)
+	for key in Database.get_keys(Const.OBJECT):
+		if(PurchaseUtil.is_purchasable(Const.OBJECT, key)
+		&& !is_disabled(key)
+		&& !LockUtil.is_locked(Const.OBJECT, key)):
+			available_keys.append(key)
 	return available_keys
 
 func refresh_objects():
@@ -30,14 +28,11 @@ func refresh_objects():
 		selected_object_key = ""
 	objects_status_updated.emit()
 
-func get_object_type_keys() -> Array:
-	return object_types.keys()
-
-func get_object_type(object_type_key : String) -> Dictionary:
-	return object_types.get(object_type_key, {})
+func get_object_type(key : String) -> Dictionary:
+	return Database.get_entry(Const.OBJECT, key)
 
 func get_object_type_attribute(object_type_key : String, attribute_key : String, default = null):
-	return object_types.get(object_type_key, {}).get(attribute_key, default)
+	return Database.get_entry_attr(Const.OBJECT, object_type_key, attribute_key, default)
 
 func set_selected_object_key(object_key : String):
 	selected_object_key = object_key
@@ -46,10 +41,10 @@ func set_selected_object_key(object_key : String):
 func get_selected_object_key() -> String:
 	return selected_object_key
 
-func disable_object(_key : String):
-	object_types[_key][Const.DISABLED] = true
+func disable_object(key : String):
+	Database.set_entry_attr(Const.Object, key, Const.DISABlED, true)
 	refresh_objects()
 
-func _on_locked_status_changed(key : String, category : String):
+func _on_locked_status_changed(category : String, key : String):
 	if(category == Const.OBJECT):
 		refresh_objects()

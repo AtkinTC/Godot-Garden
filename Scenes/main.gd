@@ -1,7 +1,7 @@
 extends Node2D
 
 func _init():
-	LockStatusManager.initialize()
+	Database.initialize()
 	ModifiersManager.initialize()
 	ActionManager.initialize()
 	SupplyManager.initialize()

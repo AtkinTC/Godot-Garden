@@ -8,8 +8,12 @@ const FUNC_NAME := "func_name"
 const LOCKED := "locked"
 const DISABLED := "disabled"
 
+const PURCHASE := "PURCHASE"
 const PURCHASABLE := "purchasable" 
 const PURCHASE_COST := "purchase_cost"
+const PURCHASE_LIMIT := "purchase_limit"
+
+const PRICE := "price"
 
 const ACTION := "ACTION"
 
@@ -19,6 +23,7 @@ const OBJECT := "OBJECT"
 const REMOVABLE := "removable"
 
 const BUILD := "BUILD"
+const LENGTH := "length"
 const BUILD_LENGTH := "build_length"
 const BUILD_COST := "build_cost"
 

@@ -65,6 +65,11 @@ _global_script_classes=[{
 "path": "res://Scenes/Garden/PlotNode/JobPlotContent.gd"
 }, {
 "base": "RefCounted",
+"class": &"LockUtil",
+"language": &"GDScript",
+"path": "res://Scripts/LockUtil.gd"
+}, {
+"base": "RefCounted",
 "class": &"ObjectData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/ObjectData.gd"
@@ -98,6 +103,11 @@ _global_script_classes=[{
 "class": &"PlotNode",
 "language": &"GDScript",
 "path": "res://Scenes/Garden/PlotNode/PlotNode.gd"
+}, {
+"base": "RefCounted",
+"class": &"PurchaseUtil",
+"language": &"GDScript",
+"path": "res://Scripts/PurchaseUtil.gd"
 }, {
 "base": "Control",
 "class": &"SelectMenu",
@@ -161,6 +171,7 @@ _global_script_class_icons={
 "GardenGrid": "",
 "JobPlotComponent": "",
 "JobPlotContent": "",
+"LockUtil": "",
 "ObjectData": "",
 "PassivePlotComponent": "",
 "PassivePlotContent": "",
@@ -168,6 +179,7 @@ _global_script_class_icons={
 "PlotComponent": "",
 "PlotContent": "",
 "PlotNode": "",
+"PurchaseUtil": "",
 "SelectMenu": "",
 "SimpleSupplyDisplay": "",
 "Supply": "",
@@ -190,14 +202,13 @@ config/features=PackedStringArray("4.0", "Vulkan Mobile")
 [autoload]
 
 ActionManager="*res://Singletons/ActionManager.gd"
-CameraManager="*res://Singletons/CameraManager.gd"
-PurchaseManager="*res://Singletons/PurchaseManager.gd"
 GardenManager="*res://Singletons/GardenManager.gd"
 ObjectsManager="*res://Singletons/ObjectsManager.gd"
 SupplyManager="*res://Singletons/SupplyManager.gd"
 UpgradeManager="*res://Singletons/UpgradeManager.gd"
 ModifiersManager="*res://Singletons/ModifiersManager.gd"
-LockStatusManager="*res://Singletons/LockStatusManager.gd"
+Database="*res://Singletons/Database.gd"
+SignalBus="*res://Singletons/SignalBus.gd"
 
 [display]
 

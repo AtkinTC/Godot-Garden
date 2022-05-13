@@ -32,7 +32,7 @@ func step(_delta : float):
 	for key in build_cost.keys():
 		build_cost_delta[key] = build_cost[key]  * _delta / build_length
 	
-	if(PurchaseManager.can_afford(build_cost_delta)):
+	if(PurchaseUtil.can_afford(build_cost_delta)):
 		for key in build_cost_delta.keys():
 			SupplyManager.get_supply(key).change_quantity(-build_cost_delta[key])
 		

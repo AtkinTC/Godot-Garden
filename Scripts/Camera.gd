@@ -26,10 +26,6 @@ var move_speed = Vector2.ZERO
 var zoom_direction := 0.0
 var zoom_speed := 0.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	CameraManager.connect_camera(self)
-
 func _process(_delta):
 	var adj_max_speed = max_speed / zoom_level
 	

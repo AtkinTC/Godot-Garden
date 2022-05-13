@@ -6,7 +6,7 @@ var supplies := {}
 
 # setup initial state of supplies
 func initialize():
-	LockStatusManager.locked_status_changed.connect(_on_locked_status_changed)
+	SignalBus.locked_status_changed.connect(_on_locked_status_changed)
 	supplies = {}
 	for key in  SupplyData.supply_types.keys():
 		var dict : Dictionary = SupplyData.supply_types.get(key, {})
@@ -23,7 +23,7 @@ func get_supply_type_keys() -> Array:
 func get_visible_supply_type_keys() -> Array:
 	var visible_keys = []
 	for key in supplies.keys():
-		if(!LockStatusManager.is_locked(key, Const.SUPPLY)):
+		if(!LockUtil.is_locked(Const.SUPPLY, key)):
 			visible_keys.append(key)
 	return visible_keys
 
@@ -45,6 +45,6 @@ func connect_to_supply_gain_changed(_key : String, _callable : Callable):
 	if(supply):
 		supply.supply_gain_changed.connect(_callable)
 
-func _on_locked_status_changed(key : String, category : String):
+func _on_locked_status_changed(category : String, key : String):
 	if(category == Const.SUPPLY):
 		supplies_status_updated.emit()

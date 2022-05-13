@@ -20,11 +20,11 @@ func purchase_plot():
 	
 	# check if can afford to purchase plot
 	var total_cost := GardenManager.get_plot_purchase_price(coord)
-	if(!PurchaseManager.can_afford(total_cost)):
+	if(!PurchaseUtil.can_afford(total_cost)):
 		return
 		
 	# subtract spent resources
-	PurchaseManager.spend(total_cost)
+	PurchaseUtil.spend(total_cost)
 	
 	# purchase plot
 	owned = true
@@ -47,11 +47,11 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 	
 	if(object_type == null || object_type.size() == 0):
 		return false
-		
-	var purchase_price : Dictionary = object_type.get(Const.PURCHASE_COST, {})
-	if(!PurchaseManager.can_afford(purchase_price)):
+	
+	var purchase_price : Dictionary = PurchaseUtil.get_purchase_price(object_key, Const.OBJECT)
+	if(!PurchaseUtil.can_afford_purchase(Const.OBJECT, object_key)):
 		return false
-	PurchaseManager.spend(purchase_price)
+	PurchaseUtil.spend(purchase_price)
 	
 	level = _level
 	apply_set_object()
@@ -104,7 +104,7 @@ func setup_components(build_complete : bool = false):
 	
 	if(object_type.has(Const.UNLOCK)):
 		for unlock in object_type[Const.UNLOCK]:
-			LockStatusManager.set_locked(unlock[Const.UNLOCK_KEY], unlock[Const.UNLOCK_TYPE], false)
+			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
 	
 	if(object_type.get(Const.PASSIVE_GAIN, null) != null):
 		var comp := PassivePlotComponent.new(coord, object_key, level)
