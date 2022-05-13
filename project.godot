@@ -197,6 +197,7 @@ ObjectsManager="*res://Singletons/ObjectsManager.gd"
 SupplyManager="*res://Singletons/SupplyManager.gd"
 UpgradeManager="*res://Singletons/UpgradeManager.gd"
 ModifiersManager="*res://Singletons/ModifiersManager.gd"
+LockStatusManager="*res://Singletons/LockStatusManager.gd"
 
 [display]
 

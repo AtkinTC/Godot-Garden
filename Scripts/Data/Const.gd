@@ -11,6 +11,8 @@ const DISABLED := "disabled"
 const PURCHASABLE := "purchasable" 
 const PURCHASE_COST := "purchase_cost"
 
+const ACTION := "ACTION"
+
 ## OBJECT ##
 const OBJECT := "OBJECT"
 

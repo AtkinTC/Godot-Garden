@@ -1,6 +1,7 @@
 extends Node2D
 
 func _init():
+	LockStatusManager.initialize()
 	ModifiersManager.initialize()
 	ActionManager.initialize()
 	SupplyManager.initialize()
@@ -8,7 +9,7 @@ func _init():
 	UpgradeManager.initialize()
 	GardenManager.initialize()
 	
-	GardenManager.get_plot(Vector2(0,0)).insert_object("FOCUS_BASIC")
+	GardenManager.get_plot(Vector2(0,0)).insert_object("COTTAGE")
 
 func _process(_delta):
 	SupplyManager.step(_delta)

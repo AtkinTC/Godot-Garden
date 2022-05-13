@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="1_idrgo"]
 
 [node name="PlotNode" type="Control"]
-minimum_size = Vector2(100, 100)
+minimum_size = Vector2(120, 120)
 offset_right = 100.0
 offset_bottom = 100.0
 script = ExtResource( "1_idrgo" )
@@ -35,14 +35,14 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="CoordLabel" type="Label" parent="V"]
-offset_right = 100.0
+offset_right = 120.0
 offset_bottom = 17.0
 theme_override_font_sizes/font_size = 10
 text = "(XX,YY)"
 
 [node name="DisplayLabel" type="Label" parent="V"]
 offset_top = 21.0
-offset_right = 100.0
+offset_right = 120.0
 offset_bottom = 44.0
 theme_override_font_sizes/font_size = 14
 text = "Empty

@@ -3,6 +3,7 @@ class_name UpgradeData
 const upgrade_types := {
 	"ENHANCE_ELEMENTS" : {
 		Const.DISPLAY_NAME : "elemental focus",
+		Const.LOCKED : false,
 		Const.PURCHASE_COST : {
 			"AIR_ESS" : 15,
 			"EARTH_ESS" : 15,
@@ -31,6 +32,7 @@ const upgrade_types := {
 	},
 	"UNLOCK_MIND" : {
 		Const.DISPLAY_NAME : "path of the mind",
+		Const.LOCKED : false,
 		Const.PURCHASE_COST : {
 			"AIR_ESS" : 10,
 			"EARTH_ESS" : 10,

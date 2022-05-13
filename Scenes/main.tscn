@@ -155,54 +155,60 @@ offset_bottom = 40.0
 columns = 3
 
 [node name="Grid" type="GridContainer" parent="GardenNode/GardenGrid/UIGrid"]
-offset_right = 308.0
-offset_bottom = 308.0
+offset_right = 368.0
+offset_bottom = 368.0
 size_flags_horizontal = 3
 columns = 3
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
 [node name="PlotNode1" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+offset_right = 120.0
+offset_bottom = 120.0
 
 [node name="PlotNode2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 104.0
-offset_right = 204.0
+offset_left = 124.0
+offset_right = 244.0
+offset_bottom = 120.0
 
 [node name="PlotNode3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 208.0
-offset_right = 308.0
+offset_left = 248.0
+offset_right = 368.0
+offset_bottom = 120.0
 
 [node name="PlotNode4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_top = 104.0
-offset_bottom = 204.0
+offset_top = 124.0
+offset_right = 120.0
+offset_bottom = 244.0
 
 [node name="PlotNode5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 104.0
-offset_top = 104.0
-offset_right = 204.0
-offset_bottom = 204.0
+offset_left = 124.0
+offset_top = 124.0
+offset_right = 244.0
+offset_bottom = 244.0
 
 [node name="PlotNode6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 208.0
-offset_top = 104.0
-offset_right = 308.0
-offset_bottom = 204.0
+offset_left = 248.0
+offset_top = 124.0
+offset_right = 368.0
+offset_bottom = 244.0
 
 [node name="PlotNode7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_top = 208.0
-offset_bottom = 308.0
+offset_top = 248.0
+offset_right = 120.0
+offset_bottom = 368.0
 
 [node name="PlotNode8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 104.0
-offset_top = 208.0
-offset_right = 204.0
-offset_bottom = 308.0
+offset_left = 124.0
+offset_top = 248.0
+offset_right = 244.0
+offset_bottom = 368.0
 
 [node name="PlotNode9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
-offset_left = 208.0
-offset_top = 208.0
-offset_right = 308.0
-offset_bottom = 308.0
+offset_left = 248.0
+offset_top = 248.0
+offset_right = 368.0
+offset_bottom = 368.0
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(640, 360)

@@ -11,7 +11,6 @@ func initialize():
 	upgrade_types = UpgradeData.upgrade_types
 	for key in upgrade_types.keys():
 		upgrade_types[key][Const.LEVEL] = upgrade_types[key].get(Const.LEVEL, 0)
-		upgrade_types[key][Const.LOCKED] = upgrade_types[key].get(Const.LOCKED, false)
 		upgrade_types[key][Const.DISABLED] = upgrade_types[key].get(Const.DISABLED, false)
 
 func get_upgrade_keys() -> Array:
@@ -21,7 +20,7 @@ func get_upgrade_keys() -> Array:
 func get_available_upgrade_keys() -> Array:
 	var available_keys = []
 	for key in upgrade_types.keys():
-		if(!upgrade_types[key].get(Const.LOCKED, false) && !upgrade_types[key].get(Const.DISABLED, false)):
+		if(!LockStatusManager.is_locked(key, Const.UPGRADE) && !upgrade_types[key].get(Const.DISABLED, false)):
 			available_keys.append(key)
 	return available_keys
 
@@ -64,10 +63,6 @@ func purchase_upgrade(key : String) -> bool:
 	apply_upgrade(key)
 	return true
 
-func unlock_upgrade(_key : String):
-	upgrade_types[_key][Const.LOCKED] = false
-	refresh_upgrades()
-
 func disable_upgrade(_key : String):
 	upgrade_types[_key][Const.DISABLED] = true
 	refresh_upgrades()
@@ -80,14 +75,8 @@ func apply_upgrade(key : String):
 	
 	#apply upgrade unlocks
 	if(upgrade_type.has(Const.UNLOCK)):
-		var unlocks : Array = upgrade_type[Const.UNLOCK]
-		for unlock in unlocks:
-			if(unlock[Const.UNLOCK_TYPE] == Const.SUPPLY):
-				SupplyManager.unlock_supply(unlock[Const.UNLOCK_KEY])
-			if(unlock[Const.UNLOCK_TYPE] == Const.OBJECT):
-				ObjectsManager.unlock_object(unlock[Const.UNLOCK_KEY])
-			if(unlock[Const.UNLOCK_TYPE] == Const.UPGRADE):
-				UpgradeManager.unlock_upgrade(unlock[Const.UNLOCK_KEY])
+		for unlock in upgrade_type[Const.UNLOCK]:
+			LockStatusManager.set_locked(unlock[Const.UNLOCK_KEY], unlock[Const.UNLOCK_TYPE], false)
 	
 	#setup upgrade supply source attributes (gain and capacity values)
 	if(upgrade_type.has(Const.SOURCE)):
@@ -111,4 +100,8 @@ func apply_upgrade(key : String):
 	if(!upgrade_types[key].has(Const.REBUY)):
 		disable_upgrade(key)
 	else:
+		refresh_upgrades()
+
+func _on_locked_status_changed(key : String, category : String):
+	if(category == Const.UPGRADE):
 		refresh_upgrades()

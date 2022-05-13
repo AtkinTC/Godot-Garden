@@ -102,6 +102,10 @@ func setup_components(build_complete : bool = false):
 		under_construction = true
 		return
 	
+	if(object_type.has(Const.UNLOCK)):
+		for unlock in object_type[Const.UNLOCK]:
+			LockStatusManager.set_locked(unlock[Const.UNLOCK_KEY], unlock[Const.UNLOCK_TYPE], false)
+	
 	if(object_type.get(Const.PASSIVE_GAIN, null) != null):
 		var comp := PassivePlotComponent.new(coord, object_key, level)
 		components[Const.PASSIVE] = comp
