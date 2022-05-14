@@ -38,22 +38,17 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 	if(!get_object_type().get(Const.REMOVABLE, true) || under_construction):
 		return false
 	
+	var temp_object_key
 	if(_object_key == ""):
-		object_key = ObjectsManager.selected_object_key
+		temp_object_key = ObjectsManager.selected_object_key
 	else:
-		object_key = _object_key
+		temp_object_key = _object_key
 	
-	var object_type := get_object_type()
-	
-	if(object_type == null || object_type.size() == 0):
-		return false
-	
-	var purchase_price : Dictionary = PurchaseUtil.get_purchase_price(object_key, Const.OBJECT)
-	if(!PurchaseUtil.can_afford_purchase(Const.OBJECT, object_key)):
-		return false
-	PurchaseUtil.spend(purchase_price)
-	
-	insert_object(_object_key, _level)
+	var purchase_properties := {Const.LEVEL : _level}
+	if(!PurchaseUtil.make_purchase(Const.OBJECT, temp_object_key, purchase_properties)):
+		return
+			
+	insert_object(temp_object_key, _level)
 
 #insert object to the plot
 func insert_object(_object_key : String = "", _level : int = 1, skip_build : bool = false):

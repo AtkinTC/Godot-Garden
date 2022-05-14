@@ -12,6 +12,7 @@ const PURCHASE := "PURCHASE"
 const PURCHASABLE := "purchasable" 
 const PURCHASE_COST := "purchase_cost"
 const PURCHASE_LIMIT := "purchase_limit"
+const LIMIT := "limit"
 const COUNT := "count"
 
 const PRICE := "price"
@@ -51,9 +52,15 @@ const UPGRADE := "UPGRADE"
 const LEVEL := "level"
 
 const REBUY := "rebuy"
-const PRICE_MODIFIER_TYPE := "price_modifier_type"
 const PRICE_MODIFIER_FLAT_LEVEL := "flat_level"
 const PRICE_MODIFIER_EXP_LEVEL := "exp_level"
+
+const PRICE_MODIFIER := "price_modifier"
+const PRICE_MODIFIER_TARGET := "target"
+const PRICE_MODIFIER_TYPE := "type"
+const TYPE_LIN := "linear"
+const TYPE_EXP := "exp"
+const SCALE := "scale"
 
 const UNLOCK := "unlock"
 const UNLOCK_KEY := "unlock_key"
@@ -61,10 +68,10 @@ const UNLOCK_TYPE := "unlock_type"
 
 const MODIFIER := "modifier"
 const MODIFIER_TARGET_KEY := "modifier_target_key"
-const MODIFIER_TARGET_KEYS := "modifier_target_keys"
 const MODIFIER_TARGET_CATEGORY := "modifier_target_category"
 const MODIFIER_TYPE := "modifier_type"
 const MODIFIER_SCALE := "modifier_scale"
+const MODIFIER_COMPOUND := "modifier_compound"
 
 const SOURCE := "source"
 

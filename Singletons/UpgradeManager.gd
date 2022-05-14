@@ -14,8 +14,9 @@ func initialize():
 func get_available_upgrade_keys() -> Array:
 	var available_keys = []
 	for key in Database.get_keys(Const.UPGRADE):
-		if(!LockUtil.is_locked(Const.UPGRADE, key)
-		&& !Database.get_entry_attr(Const.UPGRADE, key, Const.DISABLED, false)):
+		if(PurchaseUtil.is_purchasable(Const.UPGRADE, key)
+		&& !is_disabled(key)
+		&& !LockUtil.is_locked(Const.UPGRADE, key)):
 			available_keys.append(key)
 	return available_keys
 
@@ -37,24 +38,11 @@ func get_selected_upgrade_key() -> String:
 
 # purchase an upgrade, spending the required resources and then applying it
 func purchase_upgrade(key : String) -> bool:
-	var price_multiplier := 1.0
-	
 	set_selected_upgrade_key(key)
 	
-	if(Database.get_entry_attr(Const.UPGRADE, key, Const.LEVEL, 0) > 0):
-		# rebuying a multi-level upgrade
-		if(Database.get_entry_attr(Const.UPGRADE, key, Const.REBUY, null) == null):
-			return false
-		var rebuy : Dictionary = Database.get_entry_attr(Const.Upgrade, key, Const.REBUY, {})
-		var price_modifier_type : String = rebuy[Const.PRICE_MODIFIER_TYPE]
-		if(price_modifier_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
-			price_multiplier = Database.get_entry_attr(Const.UPGRADE, key, Const.LEVEL, 0) + 1
-	
-	if(!PurchaseUtil.can_afford_purchase(Const.UPGRADE, key, price_multiplier)):
+	if(!PurchaseUtil.make_purchase(Const.UPGRADE, key)):
 		return false
-	
-	var purchase_cost : Dictionary = Database.get_entry_attr(Const.UPGRADE, key, Const.PURCHASE_COST, {})
-	PurchaseUtil.spend(purchase_cost, price_multiplier)
+		
 	apply_upgrade(key)
 	return true
 
@@ -93,10 +81,20 @@ func apply_upgrade(key : String):
 			mod[Const.LEVEL] = upgrade_type[Const.LEVEL]
 		ModifiersManager.set_modifier_source(key, modifiers)
 	
-	if(Database.get_entry_attr(Const.UPGRADE, key, Const.REBUY, null) == null):
-		disable_upgrade(key)
-	else:
-		refresh_upgrades()
+	adjust_upgrade_count(key, 1)
+	
+	refresh_upgrades()
+
+func set_upgrade_count(key : String, count : int):
+	Database.set_entry_attr(Const.UPGRADE, key, Const.COUNT, count)
+	refresh_upgrades()
+
+func adjust_upgrade_count(key : String, adj : int):
+	var count : int = Database.get_entry_attr(Const.UPGRADE, key, Const.COUNT, 0)
+	set_upgrade_count(key, count + adj)
+
+func is_disabled(key : String) -> bool:
+	return Database.get_entry_attr(Const.UPGRADE, key, Const.DISABLED, false)
 
 func _on_locked_status_changed(category : String, key : String):
 	if(category == Const.UPGRADE):
