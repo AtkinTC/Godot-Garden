@@ -97,15 +97,18 @@ func setup_components(build_complete : bool = false):
 		for unlock in object_type[Const.UNLOCK]:
 			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
 	
-	if(object_type.get(Const.PASSIVE_GAIN, null) != null):
-		var comp := PassivePlotComponent.new(coord, object_key, level)
-		components[Const.PASSIVE] = comp
+	if(object_type.has(Const.SOURCE)):
+		var source : Dictionary = object_type[Const.SOURCE]
+		if(source.has(Const.GAIN)):
+			var comp := PassivePlotComponent.new(coord, object_key, level)
+			components[Const.PASSIVE] = comp
+		if(source.has(Const.CAPACITY)):
+			var comp := CapacityPlotComponent.new(coord, object_key, level)
+			components[Const.CAPACITY] = comp
+	
 	if(object_type.get(Const.JOB_LENGTH, null) != null):
 		var comp := JobPlotComponent.new(coord, object_key, level)
 		components[Const.JOB] = comp
-	if(object_type.get(Const.CAPACITY, null) != null):
-		var comp := CapacityPlotComponent.new(coord, object_key, level)
-		components[Const.CAPACITY] = comp
 	
 	under_construction = false
 
@@ -132,9 +135,9 @@ func upgrade_object():
 			insert_object(upgrade_key, 1, true)
 		else:
 			var price_modifier := 1.0
-			if(upgrade.has(Const.PRICE_MODIFIER_TYPE)):
-				var price_modifier_type : String = upgrade.get(Const.PRICE_MODIFIER_TYPE)
-				if(price_modifier_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
+			if(upgrade.has(Const.PRICE_MOD_TYPE)):
+				var price_mod_type : String = upgrade.get(Const.PRICE_MOD_TYPE)
+				if(price_mod_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
 					price_modifier = level + 1
 			
 			insert_object(object_key, level + 1, true)

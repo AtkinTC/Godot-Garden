@@ -10,14 +10,16 @@ const COTTAGE := {
 			},
 			Const.PURCHASE_LIMIT : 1
 		},
-		Const.PASSIVE_GAIN : {
-			"RAW_ESS" : 1,
-		},
-		Const.CAPACITY : {
-			"RAW_ESS" : 10,
+		Const.SOURCE : {
+			Const.GAIN : {
+				"RAW_ESS" : 1,
+			},
+			Const.CAPACITY : {
+				"RAW_ESS" : 10,
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
 			Const.UPGRADE_LENGTH : 10,
 			Const.UPGRADE_COST : {
 				"WOOD" : 20
@@ -30,26 +32,32 @@ const COTTAGE := {
 			}
 		]
 	}
-const FORREST := {
+const FOREST := {
 		Const.DISPLAY_NAME : "small forest",
 		Const.LOCKED : true,
 		Const.REMOVABLE : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
 				"RAW_ESS" : 10,
+			},
+			Const.PRICE_MODIFIER : {
+				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
+				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
 			}
 		},
 		Const.BUILD : {
 			Const.LENGTH : 5,
 		},
-		Const.PASSIVE_GAIN : {
-			"WOOD" : 1,
-		},
-		Const.CAPACITY : {
-			"WOOD" : 10,
+		Const.SOURCE : {
+			Const.GAIN : {
+				"WOOD" : 1,
+			},
+			Const.CAPACITY : {
+				"WOOD" : 10,
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
 			Const.UPGRADE_LENGTH : 10,
 			Const.UPGRADE_COST : {
 				"WOOD" : 20,
@@ -73,14 +81,16 @@ const AIR_SOURCE_BASIC := {
 			}
 		},
 		Const.BUILD_LENGTH : 5,
-		Const.PASSIVE_GAIN : {
-			"AIR_ESS" : 1
-		},
-		Const.CAPACITY : {
-			"AIR_ESS" : 10
+		Const.SOURCE : {
+			Const.GAIN : {
+				"AIR_ESS" : 1
+			},
+			Const.CAPACITY : {
+				"AIR_ESS" : 10
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const EARTH_SOURCE_BASIC := {
@@ -92,14 +102,16 @@ const EARTH_SOURCE_BASIC := {
 			}
 		},
 		Const.BUILD_LENGTH : 5,
-		Const.PASSIVE_GAIN : {
-			"EARTH_ESS" : 1
-		},
-		Const.CAPACITY : {
-			"EARTH_ESS" : 10
+		Const.SOURCE : {
+			Const.GAIN : {
+				"EARTH_ESS" : 1
+			},
+			Const.CAPACITY : {
+				"EARTH_ESS" : 10
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const FIRE_SOURCE_BASIC := {
@@ -112,14 +124,16 @@ const FIRE_SOURCE_BASIC := {
 			}
 		},
 		Const.BUILD_LENGTH : 5,
-		Const.PASSIVE_GAIN : {
-			"FIRE_ESS" : 1
-		},
-		Const.CAPACITY : {
-			"FIRE_ESS" : 10
+		Const.SOURCE : {
+			Const.GAIN : {
+				"FIRE_ESS" : 1
+			},
+			Const.CAPACITY : {
+				"FIRE_ESS" : 10
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const WATER_SOURCE_BASIC := {
@@ -132,14 +146,16 @@ const WATER_SOURCE_BASIC := {
 			}
 		},
 		Const.BUILD_LENGTH : 5,
-		Const.PASSIVE_GAIN : {
-			"WATER_ESS" : 1
-		},
-		Const.CAPACITY : {
-			"WATER_ESS" : 10
+		Const.SOURCE : {
+			Const.GAIN : {
+				"WATER_ESS" : 1
+			},
+			Const.CAPACITY : {
+				"WATER_ESS" : 10
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const MIND_SOURCE_BASIC := {
@@ -153,25 +169,29 @@ const MIND_SOURCE_BASIC := {
 			}
 		},
 		Const.BUILD_LENGTH : 5,
-		Const.PASSIVE_GAIN : {
-			"MIND_ESS" : 1
-		},
-		Const.CAPACITY : {
-			"MIND_ESS" : 10
+		Const.SOURCE : {
+			Const.GAIN : {
+				"MIND_ESS" : 1
+			},
+			Const.CAPACITY : {
+				"MIND_ESS" : 10
+			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MODIFIER_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const FOCUS_BASIC := {
 		Const.DISPLAY_NAME : "basic focus",
 		Const.LOCKED : false,
 		Const.REMOVABLE : false,
-		Const.PASSIVE_GAIN : {
-			"AIR_ESS" : 1,
-			"EARTH_ESS" : 1,
-			"FIRE_ESS" : 1,
-			"WATER_ESS" : 1
+		Const.SOURCE : {
+			Const.GAIN : {
+				"AIR_ESS" : 1,
+				"EARTH_ESS" : 1,
+				"FIRE_ESS" : 1,
+				"WATER_ESS" : 1
+			}
 		},
 		Const.UPGRADE : {
 			Const.UPGRADE_OBJECT : "FOCUS_BASIC_LV2",
@@ -189,17 +209,19 @@ const FOCUS_BASIC_LV2 := {
 		Const.DISPLAY_NAME : "focus",
 		Const.LOCKED : false,
 		Const.REMOVABLE : false,
-		Const.PASSIVE_GAIN : {
-			"AIR_ESS" : 2,
-			"EARTH_ESS" : 2,
-			"FIRE_ESS" : 2,
-			"WATER_ESS" : 2
-		},
-		Const.CAPACITY : {
-			"AIR_ESS" : 30,
-			"EARTH_ESS" : 30,
-			"FIRE_ESS" : 30,
-			"WATER_ESS" : 30
+		Const.SOURCE : {
+			Const.GAIN : {
+				"AIR_ESS" : 2,
+				"EARTH_ESS" : 2,
+				"FIRE_ESS" : 2,
+				"WATER_ESS" : 2
+			},
+			Const.CAPACITY : {
+				"AIR_ESS" : 30,
+				"EARTH_ESS" : 30,
+				"FIRE_ESS" : 30,
+				"WATER_ESS" : 30
+			}
 		},
 		Const.UPGRADE : {
 			Const.UPGRADE_OBJECT : "FOCUS_BASIC_LV3",
@@ -216,23 +238,25 @@ const FOCUS_BASIC_LV3 := {
 		Const.DISPLAY_NAME : "adv. focus",
 		Const.LOCKED : false,
 		Const.REMOVABLE : false,
-		Const.PASSIVE_GAIN : {
-			"AIR_ESS" : 4,
-			"EARTH_ESS" : 4,
-			"FIRE_ESS" : 4,
-			"WATER_ESS" : 4
-		},
-		Const.CAPACITY : {
-			"AIR_ESS" : 60,
-			"EARTH_ESS" : 60,
-			"FIRE_ESS" : 60,
-			"WATER_ESS" : 60
+		Const.SOURCE : {
+			Const.GAIN : {
+				"AIR_ESS" : 4,
+				"EARTH_ESS" : 4,
+				"FIRE_ESS" : 4,
+				"WATER_ESS" : 4
+			},
+			Const.CAPACITY : {
+				"AIR_ESS" : 60,
+				"EARTH_ESS" : 60,
+				"FIRE_ESS" : 60,
+				"WATER_ESS" : 60
+			}
 		}
 	}
 
 const object_types := {
 	"COTTAGE" : COTTAGE,
-	"FOREST" : FORREST,
+	"FOREST" : FOREST,
 	"FOCUS_BASIC" : FOCUS_BASIC,
 	"FOCUS_BASIC_LV2" : FOCUS_BASIC_LV2,
 	"FOCUS_BASIC_LV3" : FOCUS_BASIC_LV3,

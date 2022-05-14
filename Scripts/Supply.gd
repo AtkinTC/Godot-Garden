@@ -59,9 +59,9 @@ func recalculate_capacity():
 		unmodified_capacity += capacity
 	
 	var mod_prop := {
-		Const.MODIFIER_TARGET_CATEGORY : Const.SUPPLY,
-		Const.MODIFIER_TARGET_KEY : key,
-		Const.MODIFIER_TYPE : Const.CAPACITY
+		Const.MOD_TARGET_CAT : Const.SUPPLY,
+		Const.MOD_TARGET_KEY : key,
+		Const.MOD_TYPE : Const.CAPACITY
 	}
 	
 	final_capacity =  ModifiersManager.apply_modifier(unmodified_capacity, mod_prop)
@@ -79,9 +79,9 @@ func recalculate_gain():
 		unmodified_gain += gain
 	
 	var mod_prop := {
-		Const.MODIFIER_TARGET_CATEGORY : Const.SUPPLY,
-		Const.MODIFIER_TARGET_KEY : key,
-		Const.MODIFIER_TYPE : Const.GAIN
+		Const.MOD_TARGET_CAT : Const.SUPPLY,
+		Const.MOD_TARGET_KEY : key,
+		Const.MOD_TYPE : Const.GAIN
 	}
 	
 	final_gain = ModifiersManager.apply_modifier(unmodified_gain, mod_prop)

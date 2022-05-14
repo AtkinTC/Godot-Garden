@@ -44,7 +44,6 @@ const JOB_SPEED_UNSATISFIED := "job_speed_unsatisfied"
 const JOB_COMPLETION_REWARD := "job_completion_reward"
 
 const PASSIVE := "PASSIVE"
-const PASSIVE_GAIN := "passive_gain"
 
 ## UPGRADE ##
 const UPGRADE := "UPGRADE"
@@ -57,7 +56,7 @@ const PRICE_MODIFIER_EXP_LEVEL := "exp_level"
 
 const PRICE_MODIFIER := "price_modifier"
 const PRICE_MODIFIER_TARGET := "target"
-const PRICE_MODIFIER_TYPE := "type"
+const PRICE_MOD_TYPE := "type"
 const TYPE_LIN := "linear"
 const TYPE_EXP := "exp"
 const SCALE := "scale"
@@ -66,12 +65,14 @@ const UNLOCK := "unlock"
 const UNLOCK_KEY := "unlock_key"
 const UNLOCK_TYPE := "unlock_type"
 
+## MODIFIER ##
 const MODIFIER := "modifier"
-const MODIFIER_TARGET_KEY := "modifier_target_key"
-const MODIFIER_TARGET_CATEGORY := "modifier_target_category"
-const MODIFIER_TYPE := "modifier_type"
-const MODIFIER_SCALE := "modifier_scale"
-const MODIFIER_COMPOUND := "modifier_compound"
+const MOD_TARGET_KEY := "MOD_TARGET_KEY"
+const MOD_TARGET_CAT := "MOD_TARGET_CAT"
+const MOD_TYPE := "MOD_TYPE"
+const MOD_SCALE := "modifier_scale"
+const MOD_COMPOUNDING := "compounding"
+const MOD_NONCOMPOUNDING := "non-compounding"
 
 const SOURCE := "source"
 

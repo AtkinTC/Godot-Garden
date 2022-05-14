@@ -10,7 +10,8 @@ func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 	level = _level
 
 	# multiply capacity values by level
-	base_capacity = ObjectsManager.get_object_type_attribute(object_key, Const.CAPACITY, {}).duplicate()
+	var source : Dictionary = ObjectsManager.get_object_type_attribute(object_key, Const.SOURCE, {}).duplicate()
+	base_capacity = source.get(Const.CAPACITY)
 	for key in base_capacity:
 		base_capacity[key] = base_capacity[key] * level
 	

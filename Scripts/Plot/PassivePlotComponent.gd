@@ -10,7 +10,8 @@ func _init(_coord : Vector2, _object_key : String, _level : int = 1):
 	level = _level
 	
 	# multiply gains values by level
-	base_gains = ObjectsManager.get_object_type_attribute(object_key, Const.PASSIVE_GAIN, {}).duplicate()
+	var source : Dictionary = ObjectsManager.get_object_type_attribute(object_key, Const.SOURCE, {}).duplicate()
+	base_gains = source.get(Const.GAIN)
 	for key in base_gains:
 		base_gains[key] = base_gains[key] * level
 	
