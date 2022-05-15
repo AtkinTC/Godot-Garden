@@ -20,16 +20,16 @@ const FOREST_BUFF := {
 			Const.PRICE : {
 				"RAW_ESS" : 10
 			},
-			Const.PRICE_MODIFIER : {
+			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
 				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
-			}
+			}]
 		},
-		Const.MODIFIER : [
+		Const.MODIFIERS : [
 			{
 				Const.MOD_TARGET_CAT : Const.OBJECT,
 				Const.MOD_TARGET_KEY : ["FOREST"],
-				Const.MODIFIER : [
+				Const.MOD_EFFECT : [
 					{
 						Const.MOD_TYPE : Const.PRICE,
 						Const.MOD_SCALE : -0.1,
@@ -55,7 +55,7 @@ const UNLOCK_AIR := {
 				"AIR_ESS" : 100
 			}
 		},
-		Const.UNLOCK : [
+		Const.UNLOCKS : [
 			{
 				Const.UNLOCK_KEY : "AIR_ESS",
 				Const.UNLOCK_TYPE : Const.SUPPLY
@@ -80,16 +80,16 @@ const ENHANCE_ELEMENTS := {
 				"FIRE_ESS" : 15,
 				"WATER_ESS" : 15
 			},
-			Const.PRICE_MODIFIER : {
+			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
 				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
-			}
+			}]
 		},
-		Const.MODIFIER : [
+		Const.MODIFIERS : [
 			{
 				Const.MOD_TARGET_CAT : Const.SUPPLY,
 				Const.MOD_TARGET_KEY : ["AIR_ESS", "EARTH_ESS", "FIRE_ESS", "WATER_ESS"],
-				Const.MODIFIER : [
+				Const.MOD_EFFECT : [
 					{
 						Const.MOD_TYPE : Const.GAIN,
 						Const.MOD_SCALE : 0.1
@@ -106,13 +106,13 @@ const UNLOCK_MIND := {
 		Const.DISPLAY_NAME : "path of the mind",
 		Const.LOCKED : false,
 		Const.PURCHASE : {
-			Const.PURCHASE_COST : {
+			Const.PRICE : {
 				"AIR_ESS" : 10,
 				"EARTH_ESS" : 10,
 				"FIRE_ESS" : 10,
 				"WATER_ESS" : 10
 			},
-			Const.PURCHASE_LIMIT : 1
+			Const.LIMIT : 1
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
@@ -122,7 +122,7 @@ const UNLOCK_MIND := {
 				"MIND_ESS" : 100
 			}
 		},
-		Const.UNLOCK : [
+		Const.UNLOCKS : [
 			{
 				Const.UNLOCK_KEY : "MIND_ESS",
 				Const.UNLOCK_TYPE : Const.SUPPLY
@@ -141,27 +141,27 @@ const ENHANCE_MIND := {
 		Const.DISPLAY_NAME : "enhance mind",
 		Const.LOCKED : true,
 		Const.PURCHASE : {
-			Const.PURCHASE_COST : {
+			Const.PRICE : {
 				"AIR_ESS" : 10,
 				"EARTH_ESS" : 10,
 				"FIRE_ESS" : 10,
 				"WATER_ESS" : 10
 			},
-			Const.PRICE_MODIFIER : {
+			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
 				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
-			}
+			}]
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"MIND_ESS" : 0.1
 			}
 		},
-		Const.MODIFIER : [
+		Const.MODIFIERS : [
 			{
 				Const.MOD_TARGET_CAT : Const.SUPPLY,
 				Const.MOD_TARGET_KEY : ["MIND_ESS"],
-				Const.MODIFIER : [
+				Const.MOD_EFFECT : [
 					{
 						Const.MOD_TYPE : Const.GAIN,
 						Const.MOD_SCALE : 0.1

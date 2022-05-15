@@ -8,7 +8,7 @@ const COTTAGE := {
 			Const.PRICE : {
 				"RAW_ESS" : 10,
 			},
-			Const.PURCHASE_LIMIT : 1
+			Const.LIMIT : 1
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
@@ -20,12 +20,12 @@ const COTTAGE := {
 		},
 		Const.UPGRADE : {
 			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
-			Const.UPGRADE_LENGTH : 10,
-			Const.UPGRADE_COST : {
+			Const.LENGTH : 10,
+			Const.PRICE : {
 				"WOOD" : 20
 			}
 		},
-		Const.UNLOCK : [
+		Const.UNLOCKS : [
 			{
 				Const.UNLOCK_KEY : "FOREST",
 				Const.UNLOCK_TYPE : Const.OBJECT
@@ -40,10 +40,10 @@ const FOREST := {
 			Const.PRICE : {
 				"RAW_ESS" : 10,
 			},
-			Const.PRICE_MODIFIER : {
+			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
 				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
-			}
+			}]
 		},
 		Const.BUILD : {
 			Const.LENGTH : 5,
@@ -58,13 +58,13 @@ const FOREST := {
 		},
 		Const.UPGRADE : {
 			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
-			Const.UPGRADE_LENGTH : 10,
-			Const.UPGRADE_COST : {
+			Const.LENGTH : 10,
+			Const.PRICE : {
 				"WOOD" : 20,
 				"RAW_ESS" : 20,
 			}
 		},
-		Const.UNLOCK : [
+		Const.UNLOCKS : [
 			{
 				Const.UNLOCK_KEY : "WOOD",
 				Const.UNLOCK_TYPE : Const.SUPPLY
@@ -80,7 +80,7 @@ const AIR_SOURCE_BASIC := {
 				"AIR_ESS" : 10
 			}
 		},
-		Const.BUILD_LENGTH : 5,
+		Const.LENGTH : 5,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"AIR_ESS" : 1
@@ -101,7 +101,7 @@ const EARTH_SOURCE_BASIC := {
 				"EARTH_ESS" : 10
 			}
 		},
-		Const.BUILD_LENGTH : 5,
+		Const.LENGTH : 5,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"EARTH_ESS" : 1
@@ -123,7 +123,7 @@ const FIRE_SOURCE_BASIC := {
 				"FIRE_ESS" : 10
 			}
 		},
-		Const.BUILD_LENGTH : 5,
+		Const.LENGTH : 5,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"FIRE_ESS" : 1
@@ -145,7 +145,7 @@ const WATER_SOURCE_BASIC := {
 				"WATER_ESS" : 10
 			}
 		},
-		Const.BUILD_LENGTH : 5,
+		Const.LENGTH : 5,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"WATER_ESS" : 1
@@ -168,7 +168,7 @@ const MIND_SOURCE_BASIC := {
 				"EARTH_ESS" : 10
 			}
 		},
-		Const.BUILD_LENGTH : 5,
+		Const.LENGTH : 5,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"MIND_ESS" : 1
@@ -195,8 +195,8 @@ const FOCUS_BASIC := {
 		},
 		Const.UPGRADE : {
 			Const.UPGRADE_OBJECT : "FOCUS_BASIC_LV2",
-			Const.UPGRADE_LENGTH : 10,
-			Const.UPGRADE_COST : {
+			Const.LENGTH : 10,
+			Const.PRICE : {
 				"AIR_ESS" : 30,
 				"EARTH_ESS" : 30,
 				"FIRE_ESS" : 30,
@@ -225,8 +225,8 @@ const FOCUS_BASIC_LV2 := {
 		},
 		Const.UPGRADE : {
 			Const.UPGRADE_OBJECT : "FOCUS_BASIC_LV3",
-			Const.UPGRADE_LENGTH : 20,
-			Const.UPGRADE_COST : {
+			Const.LENGTH : 20,
+			Const.PRICE : {
 				"AIR_ESS" : 120,
 				"EARTH_ESS" : 120,
 				"FIRE_ESS" : 120,

@@ -19,19 +19,19 @@ func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
 	var object_type := ObjectsManager.get_object_type(_object_key)
 	var upgrade_dict : Dictionary = object_type.get(Const.UPGRADE)
 	
-	# fall back on the BUILD_LENGTH if no UPGRADE_LENGTH set
-	if(upgrade_dict.has(Const.UPGRADE_LENGTH)):
-		upgrade_length = upgrade_dict.get(Const.UPGRADE_LENGTH, -1.0)
+	# fall back on the LENGTH if no LENGTH set
+	if(upgrade_dict.has(Const.LENGTH)):
+		upgrade_length = upgrade_dict.get(Const.LENGTH, -1.0)
 	else:
-		upgrade_length = object_type.get(Const.BUILD_LENGTH, -1.0)
+		upgrade_length = object_type.get(Const.LENGTH, -1.0)
 		
 	upgrade_progress = 0.0
 	
-	# fall back on the BUILD_COST if no UPGRADE_COST set
-	if(upgrade_dict.has(Const.UPGRADE_COST)):
-		upgrade_cost = upgrade_dict.get(Const.UPGRADE_COST, {})
+	# fall back on the PRICE if no PRICE set
+	if(upgrade_dict.has(Const.PRICE)):
+		upgrade_cost = upgrade_dict.get(Const.PRICE, {})
 	else:
-		upgrade_cost = object_type.get(Const.BUILD_COST, {})
+		upgrade_cost = object_type.get(Const.PRICE, {})
 
 func step(_delta : float):
 	if(!running || completed):

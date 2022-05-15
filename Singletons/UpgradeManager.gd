@@ -58,8 +58,8 @@ func apply_upgrade(key : String):
 	var upgrade_type : Dictionary = Database.get_entry(Const.UPGRADE, key)
 	
 	#apply upgrade unlocks
-	if(upgrade_type.has(Const.UNLOCK)):
-		for unlock in upgrade_type[Const.UNLOCK]:
+	if(upgrade_type.has(Const.UNLOCKS)):
+		for unlock in upgrade_type[Const.UNLOCKS]:
 			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
 	
 	#setup upgrade supply source attributes (gain and capacity values)
@@ -75,8 +75,8 @@ func apply_upgrade(key : String):
 				SupplyManager.get_supply(supply_key).set_capacity_source(str(key), capacity[supply_key] * upgrade_type[Const.LEVEL])
 	
 	#setup upgrade modifier values
-	if(upgrade_type.has(Const.MODIFIER)):
-		var modifiers : Array = upgrade_type[Const.MODIFIER]
+	if(upgrade_type.has(Const.MODIFIERS)):
+		var modifiers : Array = upgrade_type[Const.MODIFIERS]
 		for mod in modifiers:
 			mod[Const.LEVEL] = upgrade_type[Const.LEVEL]
 		ModifiersManager.set_modifier_source(key, modifiers)

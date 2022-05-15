@@ -14,9 +14,9 @@ func _init(_coord : Vector2, _object_key : String):
 	completed = false
 	
 	var object_type := ObjectsManager.get_object_type(_object_key)
-	build_length = object_type.get(Const.BUILD_LENGTH, -1.0)
+	build_length = object_type.get(Const.BUILD, {}).get(Const.LENGTH, -1)
 	build_progress = 0.0
-	build_cost = object_type.get(Const.BUILD_COST, {})
+	build_cost = object_type.get(Const.PRICE, {})
 
 func step(_delta : float):
 	if(!running || completed):

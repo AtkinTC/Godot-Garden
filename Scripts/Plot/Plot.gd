@@ -86,15 +86,15 @@ func setup_components(build_complete : bool = false):
 	var object_type := get_object_type()
 	
 	#if object needs to be built, then only setup BuildPlotComponent
-	if(!build_complete && object_type.get(Const.BUILD_LENGTH, null) != null):
+	if(!build_complete && object_type.get(Const.BUILD, null) != null && object_type.get(Const.BUILD, {}).get(Const.LENGTH, 0) > 0):
 		var comp := BuildPlotComponent.new(coord, object_key)
 		comp.build_complete.connect(_on_build_complete)
 		components[Const.BUILD] = comp
 		under_construction = true
 		return
 	
-	if(object_type.has(Const.UNLOCK)):
-		for unlock in object_type[Const.UNLOCK]:
+	if(object_type.has(Const.UNLOCKS)):
+		for unlock in object_type[Const.UNLOCKS]:
 			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
 	
 	if(object_type.has(Const.SOURCE)):
@@ -106,7 +106,7 @@ func setup_components(build_complete : bool = false):
 			var comp := CapacityPlotComponent.new(coord, object_key, level)
 			components[Const.CAPACITY] = comp
 	
-	if(object_type.get(Const.JOB_LENGTH, null) != null):
+	if(object_type.get(Const.LENGTH, null) != null):
 		var comp := JobPlotComponent.new(coord, object_key, level)
 		components[Const.JOB] = comp
 	
@@ -122,10 +122,10 @@ func upgrade_object():
 	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
 	
 	var upgrade_instant : bool
-	if(upgrade.has(Const.UPGRADE_LENGTH)):
-		upgrade_instant = (upgrade.get(Const.UPGRADE_LENGTH) <= 0)
+	if(upgrade.has(Const.LENGTH)):
+		upgrade_instant = (upgrade.get(Const.LENGTH) <= 0)
 	else:
-		upgrade_instant = (get_object_type().get(Const.BUILD_LENGTH, 0) <= 0)
+		upgrade_instant = (get_object_type().get(Const.LENGTH, 0) <= 0)
 	
 	if(upgrade_instant):
 		#apply upgrade immediatly

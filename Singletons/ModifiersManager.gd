@@ -15,40 +15,26 @@ func recalculate_modifiers():
 		for mod in source:
 			assert(mod.has(Const.MOD_TARGET_CAT))
 			assert(mod.has(Const.MOD_TARGET_KEY))
-			assert(mod.has(Const.MODIFIER))
+			assert(mod.has(Const.MOD_EFFECT))
 			
 			var level : int = mod.get(Const.LEVEL, 1)
 			
 			var target_cat : String = mod.get(Const.MOD_TARGET_CAT)
 			var cat_dict = modifier_combined.get(target_cat, {})
 			
-			# TARGET_KEY value can contain either one key or an array of keys
-			var target_keys : Array
-			if(mod.get(Const.MOD_TARGET_KEY) is Array):
-				target_keys = mod.get(Const.MOD_TARGET_KEY)
-			else:
-				target_keys = [mod.get(Const.MOD_TARGET_KEY)]
-			
 			# apply modifier attributes to all target_keys
-			for target_key in target_keys:
+			for target_key in mod.get(Const.MOD_TARGET_KEY):
 				var target_dict = cat_dict.get(target_key, {})
 				
-				# MODIFIER value can contain either one modifer or an array of modifiers
-				var modifiers : Array
-				if(mod.get(Const.MODIFIER) is Array):
-					modifiers = mod.get(Const.MODIFIER)
-				else:
-					modifiers = [mod.get(Const.MODIFIER)]
-				
-				for attr in modifiers:
-					var mod_type : String = attr.get(Const.MOD_TYPE)
+				for mod_effect in mod.get(Const.MOD_EFFECT):
+					var mod_type : String = mod_effect.get(Const.MOD_TYPE)
 					var type_dict = target_dict.get(mod_type, {})
-					if(attr.get(Const.MOD_COMPOUNDING, false)):
+					if(mod_effect.get(Const.MOD_COMPOUNDING, false)):
 						#multiply compounding values together
-						type_dict[Const.MOD_COMPOUNDING] = type_dict.get(Const.MOD_COMPOUNDING, 1.0) * pow(1 + attr.get(Const.MOD_SCALE, 0), level)
+						type_dict[Const.MOD_COMPOUNDING] = type_dict.get(Const.MOD_COMPOUNDING, 1.0) * pow(1 + mod_effect.get(Const.MOD_SCALE, 0), level)
 					else:
 						#add non-compounding values together
-						type_dict[Const.MOD_NONCOMPOUNDING] = type_dict.get(Const.MOD_NONCOMPOUNDING, 1.0) + attr.get(Const.MOD_SCALE, 0) * level
+						type_dict[Const.MOD_NONCOMPOUNDING] = type_dict.get(Const.MOD_NONCOMPOUNDING, 1.0) + mod_effect.get(Const.MOD_SCALE, 0) * level
 					
 					type_dict[Const.MOD_SCALE] = type_dict.get(Const.MOD_COMPOUNDING, 1.0) * type_dict.get(Const.MOD_NONCOMPOUNDING, 1.0)
 					target_dict[mod_type] = type_dict

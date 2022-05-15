@@ -7,7 +7,7 @@ static func get_purchase_data(category : String, key : String) -> Dictionary:
 	return Database.get_entry_attr(category, key, Const.PURCHASE, {})
 
 static func get_purchase_limit(key : String, category : String) -> int:
-	return get_purchase_data(category, key).get(Const.PURCHASE_LIMIT, -1)
+	return get_purchase_data(category, key).get(Const.LIMIT, -1)
 
 static func get_purchase_price(category : String, key : String) -> Dictionary:
 	return get_purchase_data(category, key).get(Const.PRICE, {})
@@ -21,11 +21,11 @@ static func is_purchasable(category : String, key : String):
 #	checks if the target is valid for purchase based on the targets purchase limit and current count
 static func has_available_purchase_limit(category : String, key : String) -> bool:
 	var purchase : Dictionary = PurchaseUtil.get_purchase_data(category, key)
-	if(purchase.get(Const.PURCHASE_LIMIT, -1) == 0):
+	if(purchase.get(Const.LIMIT, -1) == 0):
 		return false
-	elif(purchase.get(Const.PURCHASE_LIMIT, -1) == -1):
+	elif(purchase.get(Const.LIMIT, -1) == -1):
 		return true
-	return purchase.get(Const.PURCHASE_LIMIT, -1) > Database.get_entry_attr(category, key, Const.COUNT, 0)
+	return purchase.get(Const.LIMIT, -1) > Database.get_entry_attr(category, key, Const.COUNT, 0)
 
 # make_purchase(category : String, key : String, _props : Dictionary = {})
 #	subtracts the calculated purchase cost (spend) from applicable supplies
@@ -103,15 +103,9 @@ static func get_modified_purchase_price(category : String, key : String, _props 
 # calculate the price modifier based on the local PURCHASE[PRICE_MODIFIER] entry
 static func get_local_price_modifier(category : String, key : String, props : Dictionary):
 	var purchase = get_purchase_data(category, key)
-	if(!purchase.has(Const.PRICE_MODIFIER)):
+	if(!purchase.has(Const.PRICE_MODIFIERS)):
 		return 1.0
-	var modifier_data = purchase.get(Const.PRICE_MODIFIER)
-	
-	var modifiers : Array
-	if(modifier_data is Dictionary):
-		modifiers = [modifier_data]
-	elif(modifier_data is Array):
-		modifiers = modifier_data
+	var modifiers = purchase.get(Const.PRICE_MODIFIERS)
 	
 	if(modifiers == null || modifiers.size() == 0):
 		return 1.0

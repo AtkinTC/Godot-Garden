@@ -23,7 +23,7 @@ func step(_delta : float):
 
 # complete the current job
 func complete_job():
-	if(job_progress < ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.JOB_LENGTH, 0.0)):
+	if(job_progress < ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.LENGTH, 0.0)):
 		return
 	
 	var reward_dict : Dictionary = ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.JOB_COMPLETION_REWARD, {})
@@ -38,7 +38,7 @@ func get_job_progress() -> float:
 	return job_progress
 
 func get_job_progress_percent() -> float:
-	var job_length : float =  ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.JOB_LENGTH, 0.0)
+	var job_length : float =  ObjectsManager.get_object_type_attribute(object_key, ObjectsManager.LENGTH, 0.0)
 	if(job_length <= 0):
 		return -1.0
 	return job_progress * 100.0 / job_length
