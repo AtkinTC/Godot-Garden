@@ -4,6 +4,7 @@ const BASE_STAT := {
 		Const.DISPLAY_NAME : "base stats",
 		Const.LOCKED : false,
 		Const.DISABLED : true,
+		Const.AUTO : true,
 		Const.SOURCE : {
 			Const.GAIN : {
 				"RAW_MEMORY" : 1,

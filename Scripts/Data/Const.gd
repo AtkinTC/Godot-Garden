@@ -39,6 +39,7 @@ const PASSIVE := "PASSIVE"
 ## ENHANCEMENT ##
 const ENHANCEMENT := "ENHANCEMENT"
 const UPGRADE := "UPGRADE"
+const AUTO := "automatic"
 
 const LEVEL := "level"
 

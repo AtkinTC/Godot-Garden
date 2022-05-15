@@ -10,6 +10,10 @@ func initialize():
 	SignalBus.locked_status_changed.connect(_on_locked_status_changed)
 	selected_enhancement_key = ""
 	
+	for key in Database.get_keys(Const.ENHANCEMENT):
+		if(get_enhancement_type_attribute(key, Const.AUTO, false)):
+			apply_enhancement(key)
+	
 # get keys of all enhancements that are available for purchase
 func get_available_enhancement_keys() -> Array:
 	var available_keys = []

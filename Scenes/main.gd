@@ -14,8 +14,6 @@ func _init():
 	ObjectsManager.initialize()
 	EnhancementManager.initialize()
 	GardenManager.initialize()
-	
-	GardenManager.get_plot(Vector2(0,0)).insert_object("COTTAGE")
 
 func _process(_delta):
 	SupplyManager.step(_delta)
