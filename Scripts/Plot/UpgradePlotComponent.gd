@@ -27,11 +27,8 @@ func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
 		
 	upgrade_progress = 0.0
 	
-	# fall back on the PRICE if no PRICE set
-	if(upgrade_dict.has(Const.PRICE)):
-		upgrade_cost = upgrade_dict.get(Const.PRICE, {})
-	else:
-		upgrade_cost = object_type.get(Const.PRICE, {})
+	upgrade_cost = upgrade_dict.get(Const.PRICE, {})
+
 
 func step(_delta : float):
 	if(!running || completed):
