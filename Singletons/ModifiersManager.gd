@@ -48,7 +48,7 @@ func set_modifier_source(_key : String, _modifiers: Array):
 	modifier_source[_key] = _modifiers
 	recalculate_modifiers()
 
-func apply_modifier(unmodified_value : float, properties : Dictionary) -> float:
+func get_modifier_scale(properties : Dictionary) -> float:
 	assert(properties.has(Const.MOD_TARGET_CAT))
 	assert(properties.has(Const.MOD_TARGET_KEY))
 	assert(properties.has(Const.MOD_TYPE))
@@ -59,7 +59,4 @@ func apply_modifier(unmodified_value : float, properties : Dictionary) -> float:
 	
 	var mod_scale = modifier_combined.get(target_cat, {}).get(target_key, {}).get(mod_type, {}).get(Const.MOD_SCALE, 1.0)
 	
-	var modified_value = unmodified_value * mod_scale
-	
-	return modified_value
-	
+	return mod_scale

@@ -119,8 +119,11 @@ func upgrade_object():
 	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
 		return false
 	
-	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
+	var purchase_properties := {Const.MOD_TYPE : Const.UPGRADE, Const.LEVEL : level}
+	if(!PurchaseUtil.make_purchase(Const.OBJECT, object_key, purchase_properties)):
+		return false
 	
+	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
 	var upgrade_instant : bool
 	if(upgrade.has(Const.LENGTH)):
 		upgrade_instant = (upgrade.get(Const.LENGTH) <= 0)
@@ -129,7 +132,6 @@ func upgrade_object():
 	
 	if(upgrade_instant):
 		#apply upgrade immediatly
-		#TODO: spend purchase/upgrade cost to perform instant upgrade
 		if(get_object_type().has(Const.UPGRADE_OBJECT)):
 			var upgrade_key : String = upgrade.get(Const.UPGRADE_OBJECT)
 			insert_object(upgrade_key, 1, true)

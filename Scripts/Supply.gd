@@ -64,7 +64,7 @@ func recalculate_capacity():
 		Const.MOD_TYPE : Const.CAPACITY
 	}
 	
-	final_capacity =  ModifiersManager.apply_modifier(unmodified_capacity, mod_prop)
+	final_capacity = unmodified_capacity * ModifiersManager.get_modifier_scale(mod_prop)
 	
 	if(final_capacity != old_capacity):
 		supply_capacity_changed.emit(key, final_capacity)
@@ -84,7 +84,7 @@ func recalculate_gain():
 		Const.MOD_TYPE : Const.GAIN
 	}
 	
-	final_gain = ModifiersManager.apply_modifier(unmodified_gain, mod_prop)
+	final_gain = unmodified_gain * ModifiersManager.get_modifier_scale(mod_prop)
 	
 	if(final_gain != old_gain):
 		supply_gain_changed.emit(key, final_gain)

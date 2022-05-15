@@ -5,7 +5,6 @@ signal upgrade_complete()
 
 var upgrade_progress : float
 var upgrade_length : float
-var upgrade_cost : Dictionary
 var current_level : int
 
 var completed : bool
@@ -26,8 +25,6 @@ func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
 		upgrade_length = object_type.get(Const.LENGTH, -1.0)
 		
 	upgrade_progress = 0.0
-	
-	upgrade_cost = upgrade_dict.get(Const.PRICE, {})
 
 
 func step(_delta : float):
@@ -39,16 +36,8 @@ func step(_delta : float):
 	
 	if(!running):
 		return
-	
-	var upgrade_cost_delta = {}
-	for key in upgrade_cost.keys():
-		upgrade_cost_delta[key] = upgrade_cost[key] * current_level * _delta / upgrade_length
-	
-	if(PurchaseUtil.can_afford(upgrade_cost_delta)):
-		for key in upgrade_cost_delta.keys():
-			SupplyManager.get_supply(key).change_quantity(-upgrade_cost_delta[key])
 		
-		upgrade_progress += _delta
+	upgrade_progress += _delta
 
 # complete the current job
 func complete_upgrade():

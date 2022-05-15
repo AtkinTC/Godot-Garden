@@ -19,11 +19,15 @@ const STARTER := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
-			Const.LENGTH : 10,
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
 			Const.PRICE : {
-				"RAW_ESS" : 20
-			}
+				"RAW_ESS" : 1
+			},
+			Const.PRICE_MODIFIERS : [{
+				Const.PRICE_MODIFIER_TARGET : Const.LEVEL,
+				Const.PRICE_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		},
 		Const.UNLOCKS : [
 			{
@@ -42,7 +46,7 @@ const FOREST := {
 		Const.REMOVABLE : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"RAW_ESS" : 10,
+				"RAW_ESS" : 1,
 			},
 			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
@@ -61,12 +65,15 @@ const FOREST := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
 			Const.LENGTH : 10,
 			Const.PRICE : {
-				"WOOD" : 20,
-				"RAW_ESS" : 20,
-			}
+				"WOOD" : 1,
+				"RAW_ESS" : 1,
+			},
+			Const.PRICE_MODIFIERS : [{
+				Const.PRICE_MODIFIER_TARGET : Const.LEVEL,
+				Const.PRICE_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		},
 		Const.UNLOCKS : [
 			{

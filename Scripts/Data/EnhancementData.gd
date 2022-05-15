@@ -20,7 +20,7 @@ const FOREST_BUFF := {
 		Const.LOCKED : false,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"RAW_ESS" : 10
+				"RAW_ESS" : 1
 			},
 			Const.PRICE_MODIFIERS : [{
 				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
@@ -33,7 +33,7 @@ const FOREST_BUFF := {
 				Const.MOD_TARGET_KEY : ["FOREST"],
 				Const.MOD_EFFECT : [
 					{
-						Const.MOD_TYPE : Const.PRICE,
+						Const.MOD_TYPE : Const.PURCHASE,
 						Const.MOD_SCALE : -0.1,
 						Const.MOD_COMPOUNDING : true
 					},
