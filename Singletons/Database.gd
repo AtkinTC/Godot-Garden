@@ -9,13 +9,16 @@ func initialize():
 	database[Const.ACTION] = ActionData.action_types.duplicate(true)
 	database[Const.OBJECT] = ObjectData.object_types.duplicate(true)
 	database[Const.SUPPLY] = SupplyData.supply_types.duplicate(true)
-	database[Const.UPGRADE] = UpgradeData.upgrade_types.duplicate(true)
+	database[Const.ENHANCEMENT] = EnhancementData.upgrade_types.duplicate(true)
+
+func get_category(category : String):
+	return database.get(category, {})
 
 func get_keys(category : String) -> Array:
-	return database.get(category, {}).keys()
+	return get_category(category).keys()
 
 func get_entry(category : String, key : String) -> Dictionary:
-	return database.get(category, {}).get(key, {})
+	return get_category(category).get(key, {})
 
 func get_entry_attr(category : String, key : String, attr : String, default = {}):
 	return get_entry(category, key).get(attr, default)

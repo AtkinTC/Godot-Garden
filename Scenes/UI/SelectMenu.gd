@@ -8,7 +8,7 @@ class_name SelectMenu
 
 var buttons : Dictionary
 
-enum MenuTypeEnum {OBJECTS, ACTIONS, UPGRADES}
+enum MenuTypeEnum {OBJECTS, ACTIONS, ENHANCEMENT}
 @export var menu_type: MenuTypeEnum = MenuTypeEnum.OBJECTS
 
 func _ready():
@@ -18,9 +18,9 @@ func _ready():
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		ActionManager.actions_status_updated.connect(_on_status_updated)
 		ActionManager.selected_action_changed.connect(_on_selected_changed)
-	elif(menu_type == MenuTypeEnum.UPGRADES):
-		UpgradeManager.upgrades_status_updated.connect(_on_status_updated)
-		UpgradeManager.selected_upgrade_changed.connect(_on_selected_changed)
+	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
+		EnhancementManager.enhancements_status_updated.connect(_on_status_updated)
+		EnhancementManager.selected_enhancement_changed.connect(_on_selected_changed)
 	
 	reset()
 
@@ -53,8 +53,8 @@ func get_keys() -> Array:
 		return ObjectsManager.get_available_object_keys()
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_available_action_keys()
-	elif(menu_type == MenuTypeEnum.UPGRADES):
-		return UpgradeManager.get_available_upgrade_keys()
+	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
+		return EnhancementManager.get_available_enhancement_keys()
 	else:
 		return []
 
@@ -63,8 +63,8 @@ func get_type(key : String) -> Dictionary:
 		return ObjectsManager.get_object_type(key)
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_action_type(key)
-	elif(menu_type == MenuTypeEnum.UPGRADES):
-		return UpgradeManager.get_upgrade_type(key)
+	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
+		return EnhancementManager.get_enhancement_type(key)
 	else:
 		return {}
 
@@ -73,8 +73,8 @@ func get_selected_key() -> String:
 		return ObjectsManager.get_selected_object_key()
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_selected_action_key()
-	elif(menu_type == MenuTypeEnum.UPGRADES):
-		return UpgradeManager.get_selected_upgrade_key()
+	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
+		return EnhancementManager.get_selected_enhancement_key()
 	else:
 		return ""
 
@@ -92,8 +92,8 @@ func _on_button_pressed(key : String = ""):
 		ActionManager.set_selected_action_key("PURCHASE_PLOT_OBJECT")
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		ActionManager.set_selected_action_key(key)
-	elif(menu_type == MenuTypeEnum.UPGRADES):
-		UpgradeManager.purchase_upgrade(key)
+	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
+		EnhancementManager.purchase_enhancement(key)
 	else:
 		return
 

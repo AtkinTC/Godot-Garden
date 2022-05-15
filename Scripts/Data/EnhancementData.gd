@@ -1,4 +1,4 @@
-class_name UpgradeData
+class_name EnhancementData
 
 const BASE_STAT := {
 		Const.DISPLAY_NAME : "base stats",

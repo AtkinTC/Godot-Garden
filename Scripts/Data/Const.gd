@@ -36,7 +36,8 @@ const JOB_COMPLETION_REWARD := "job_completion_reward"
 
 const PASSIVE := "PASSIVE"
 
-## UPGRADE ##
+## ENHANCEMENT ##
+const ENHANCEMENT := "ENHANCEMENT"
 const UPGRADE := "UPGRADE"
 
 const LEVEL := "level"

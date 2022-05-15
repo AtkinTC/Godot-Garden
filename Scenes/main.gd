@@ -6,7 +6,7 @@ func _init():
 	ActionManager.initialize()
 	SupplyManager.initialize()
 	ObjectsManager.initialize()
-	UpgradeManager.initialize()
+	EnhancementManager.initialize()
 	GardenManager.initialize()
 	
 	GardenManager.get_plot(Vector2(0,0)).insert_object("COTTAGE")

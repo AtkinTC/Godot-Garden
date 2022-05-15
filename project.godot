@@ -49,6 +49,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Camera.gd"
 }, {
+"base": "RefCounted",
+"class": &"EnhancementData",
+"language": &"GDScript",
+"path": "res://Scripts/Data/EnhancementData.gd"
+}, {
 "base": "Control",
 "class": &"GardenGrid",
 "language": &"GDScript",
@@ -139,11 +144,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyDisplayContainer.gd"
 }, {
-"base": "RefCounted",
-"class": &"UpgradeData",
-"language": &"GDScript",
-"path": "res://Scripts/Data/UpgradeData.gd"
-}, {
 "base": "PlotComponent",
 "class": &"UpgradePlotComponent",
 "language": &"GDScript",
@@ -168,6 +168,7 @@ _global_script_class_icons={
 "CapacityPlotComponent": "",
 "Const": "",
 "CustCamera2D": "",
+"EnhancementData": "",
 "GardenGrid": "",
 "JobPlotComponent": "",
 "JobPlotContent": "",
@@ -186,7 +187,6 @@ _global_script_class_icons={
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
-"UpgradeData": "",
 "UpgradePlotComponent": "",
 "UpgradePlotContent": "",
 "Utils": ""
@@ -205,10 +205,10 @@ ActionManager="*res://Singletons/ActionManager.gd"
 GardenManager="*res://Singletons/GardenManager.gd"
 ObjectsManager="*res://Singletons/ObjectsManager.gd"
 SupplyManager="*res://Singletons/SupplyManager.gd"
-UpgradeManager="*res://Singletons/UpgradeManager.gd"
 ModifiersManager="*res://Singletons/ModifiersManager.gd"
 Database="*res://Singletons/Database.gd"
 SignalBus="*res://Singletons/SignalBus.gd"
+EnhancementManager="*res://Singletons/EnhancementManager.gd"
 
 [display]
 
