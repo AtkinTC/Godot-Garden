@@ -12,13 +12,13 @@ func initialize():
 	database[Const.ENHANCEMENT] = EnhancementData.upgrade_types.duplicate(true)
 
 func get_category(category : String):
-	return database.get(category, {})
+	return database.get(category, {}).duplicate(true)
 
 func get_keys(category : String) -> Array:
 	return get_category(category).keys()
 
 func get_entry(category : String, key : String) -> Dictionary:
-	return get_category(category).get(key, {})
+	return get_category(category).get(key, {}).duplicate(true)
 
 func get_entry_attr(category : String, key : String, attr : String, default = {}):
 	return get_entry(category, key).get(attr, default)
