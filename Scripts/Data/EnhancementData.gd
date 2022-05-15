@@ -6,9 +6,11 @@ const BASE_STAT := {
 		Const.DISABLED : true,
 		Const.SOURCE : {
 			Const.GAIN : {
+				"RAW_MEMORY" : 1,
 				"RAW_ESS" : 1
 			},
 			Const.CAPACITY : {
+				"RAW_MEMORY" : 100,
 				"RAW_ESS" : 10
 			}
 		},

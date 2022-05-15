@@ -1,12 +1,12 @@
 class_name ObjectData
 
-const COTTAGE := {
-		Const.DISPLAY_NAME : "small cottage",
+const STARTER := {
+		Const.DISPLAY_NAME : "small hearth",
 		Const.LOCKED : false,
 		Const.REMOVABLE : false,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"RAW_ESS" : 10,
+				"RAW_MEMORY" : 5
 			},
 			Const.LIMIT : 1
 		},
@@ -22,10 +22,14 @@ const COTTAGE := {
 			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL,
 			Const.LENGTH : 10,
 			Const.PRICE : {
-				"WOOD" : 20
+				"RAW_ESS" : 20
 			}
 		},
 		Const.UNLOCKS : [
+			{
+				Const.UNLOCK_KEY : "RAW_ESS",
+				Const.UNLOCK_TYPE : Const.SUPPLY
+			},
 			{
 				Const.UNLOCK_KEY : "FOREST",
 				Const.UNLOCK_TYPE : Const.OBJECT
@@ -76,11 +80,12 @@ const AIR_SOURCE_BASIC := {
 		Const.LOCKED : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"EARTH_ESS" : 10,
-				"AIR_ESS" : 10
+				"RAW_ESS" : 10
 			}
 		},
-		Const.LENGTH : 5,
+		Const.BUILD : {
+			Const.LENGTH : 5,
+		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"AIR_ESS" : 1
@@ -98,10 +103,12 @@ const EARTH_SOURCE_BASIC := {
 		Const.LOCKED : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"EARTH_ESS" : 10
+				"RAW_ESS" : 10
 			}
 		},
-		Const.LENGTH : 5,
+		Const.BUILD : {
+			Const.LENGTH : 5,
+		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"EARTH_ESS" : 1
@@ -119,11 +126,12 @@ const FIRE_SOURCE_BASIC := {
 		Const.LOCKED : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"AIR_ESS" : 10,
-				"FIRE_ESS" : 10
+				"RAW_ESS" : 10
 			}
 		},
-		Const.LENGTH : 5,
+		Const.BUILD : {
+			Const.LENGTH : 5,
+		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"FIRE_ESS" : 1
@@ -141,11 +149,12 @@ const WATER_SOURCE_BASIC := {
 		Const.LOCKED : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
-				"EARTH_ESS" : 10,
-				"WATER_ESS" : 10
+				"RAW_ESS" : 10
 			}
 		},
-		Const.LENGTH : 5,
+		Const.BUILD : {
+			Const.LENGTH : 5,
+		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"WATER_ESS" : 1
@@ -161,14 +170,15 @@ const WATER_SOURCE_BASIC := {
 const MIND_SOURCE_BASIC := {
 		Const.DISPLAY_NAME : "mind rune",
 		Const.LOCKED : true,
-		Const.PURCHASABLE : true,
 		Const.PURCHASE : {
 			Const.PRICE : {
 				"AIR_ESS" : 10,
 				"EARTH_ESS" : 10
 			}
 		},
-		Const.LENGTH : 5,
+		Const.BUILD : {
+			Const.LENGTH : 5,
+		},
 		Const.SOURCE : {
 			Const.GAIN : {
 				"MIND_ESS" : 1
@@ -255,7 +265,7 @@ const FOCUS_BASIC_LV3 := {
 	}
 
 const object_types := {
-	"COTTAGE" : COTTAGE,
+	"STARTER" : STARTER,
 	"FOREST" : FOREST,
 	"FOCUS_BASIC" : FOCUS_BASIC,
 	"FOCUS_BASIC_LV2" : FOCUS_BASIC_LV2,

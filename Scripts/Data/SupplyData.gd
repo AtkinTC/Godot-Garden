@@ -1,10 +1,15 @@
 class_name SupplyData
 
 const supply_types := {
+	"RAW_MEMORY" : {
+		Const.DISPLAY_NAME : "memory essence",
+		Const.DISPLAY_COLORS : [Color(0.6, 0.6, 0.7), Color(0.2, 0.2, 0.25)],
+		Const.LOCKED : false
+	},
 	"RAW_ESS" : {
 		Const.DISPLAY_NAME : "raw essence",
 		Const.DISPLAY_COLORS : [Color(0.7, 0.7, 0.7), Color(0.2, 0.2, 0.2)],
-		Const.LOCKED : false
+		Const.LOCKED : true
 	},
 	"WOOD" : {
 		Const.DISPLAY_NAME : "wood",
