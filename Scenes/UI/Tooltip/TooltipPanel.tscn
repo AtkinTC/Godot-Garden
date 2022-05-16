@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://biqr3s8cydewr"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Tooltip/TooltipPanel.gd" id="1_5e2vi"]
+
+[node name="TooltipPanel" type="PanelContainer"]
+top_level = true
+offset_right = 181.0
+offset_bottom = 211.0
+script = ExtResource( "1_5e2vi" )
+close_button_path = NodePath("MarginContainer/V/Header/CloseButton")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 181.0
+offset_bottom = 211.0
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 181.0
+offset_bottom = 211.0
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="V" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 179.0
+offset_bottom = 209.0
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/V"]
+offset_right = 177.0
+offset_bottom = 26.0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/V/Header"]
+offset_top = 1.0
+offset_right = 148.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "TOOLTIP_TITLE"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="MarginContainer/V/Header"]
+minimum_size = Vector2(25, 0)
+offset_left = 152.0
+offset_right = 177.0
+offset_bottom = 26.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 13
+text = "X"

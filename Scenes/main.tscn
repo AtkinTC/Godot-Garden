@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay.tscn" id="5_cff8l"]
-[ext_resource type="PackedScene" uid="uid://c5ximap3xiwp2" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
+[ext_resource type="PackedScene" uid="uid://dy0kddxcd45bs" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )

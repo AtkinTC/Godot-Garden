@@ -39,7 +39,8 @@ func update_display() -> void:
 	# hide plot if not owned and not available
 	if(!plot.is_owned() && !plot.is_available()):
 		for child in get_children():
-			child.visible = false
+			if(child.has_method("set_visible")):
+				child.set_visible(false)
 		return
 	
 	# set plot display label

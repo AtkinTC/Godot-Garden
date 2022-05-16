@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5ximap3xiwp2"]
+[gd_scene load_steps=4 format=3 uid="uid://dy0kddxcd45bs"]
 
 [ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="1_idrgo"]
+[ext_resource type="Script" path="res://Scenes/UI/Tooltip/TooltipHost.gd" id="2_cxgph"]
+[ext_resource type="PackedScene" uid="uid://biqr3s8cydewr" path="res://Scenes/UI/Tooltip/TooltipPanel.tscn" id="3_sc42v"]
 
 [node name="PlotNode" type="Control"]
 minimum_size = Vector2(120, 120)
@@ -25,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 mouse_default_cursor_shape = 2
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
@@ -48,3 +51,15 @@ theme_override_font_sizes/font_size = 14
 text = "Empty
 "
 clip_text = true
+
+[node name="TooltipHost" type="Node" parent="."]
+script = ExtResource( "2_cxgph" )
+alignment = 4
+canvas_layer_path = "/root/Main/UI"
+tooltip_scene = ExtResource( "3_sc42v" )
+owner_path = NodePath("..")
+follow_mouse = false
+offset_x = 10.0
+offset_y = 0.0
+padding_x = 10.0
+padding_y = 10.0

@@ -149,6 +149,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyDisplayContainer.gd"
 }, {
+"base": "Node",
+"class": &"TooltipHost",
+"language": &"GDScript",
+"path": "res://Scenes/UI/Tooltip/TooltipHost.gd"
+}, {
+"base": "PanelContainer",
+"class": &"TooltipPanel",
+"language": &"GDScript",
+"path": "res://Scenes/UI/Tooltip/TooltipPanel.gd"
+}, {
 "base": "PlotComponent",
 "class": &"UpgradePlotComponent",
 "language": &"GDScript",
@@ -193,6 +203,8 @@ _global_script_class_icons={
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
+"TooltipHost": "",
+"TooltipPanel": "",
 "UpgradePlotComponent": "",
 "UpgradePlotContent": "",
 "Utils": ""
