@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="1_idrgo"]
+[ext_resource type="Script" path="res://Scenes/UI/TooltipHost.gd" id="2_ixp8q"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/TooltipPanel.tscn" id="3_d8rxc"]
+
+[node name="PlotNode" type="Control"]
+minimum_size = Vector2(120, 120)
+offset_right = 100.0
+offset_bottom = 100.0
+mouse_filter = 1
+script = ExtResource( "1_idrgo" )
+body_path = NodePath("V")
+coord_label_path = NodePath("V/CoordLabel")
+display_label_path = NodePath("V/DisplayLabel")
+plot_button_path = NodePath("PlotButton")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="PlotButton" type="Button" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="V" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="CoordLabel" type="Label" parent="V"]
+offset_right = 120.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 10
+text = "(XX,YY)"
+
+[node name="DisplayLabel" type="Label" parent="V"]
+offset_top = 21.0
+offset_right = 120.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 14
+text = "Empty
+"
+clip_text = true
+
+[node name="TooltipHost" type="Node" parent="."]
+script = ExtResource( "2_ixp8q" )
+alignment = 4
+visuals_res = ExtResource( "3_d8rxc" )
+owner_path = NodePath("..")
+follow_mouse = false
+padding_x = 0.0
+padding_y = 0.0
