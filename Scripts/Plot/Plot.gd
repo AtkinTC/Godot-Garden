@@ -141,33 +141,14 @@ func upgrade_object():
 		return false
 	
 	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
-	var upgrade_instant : bool
-	if(upgrade.has(Const.LENGTH)):
-		upgrade_instant = (upgrade.get(Const.LENGTH) <= 0)
-	else:
-		upgrade_instant = (get_object_type().get(Const.LENGTH, 0) <= 0)
 	
-	if(upgrade_instant):
-		#apply upgrade immediatly
-		if(get_object_type().has(Const.UPGRADE_OBJECT)):
-			var upgrade_key : String = upgrade.get(Const.UPGRADE_OBJECT)
-			insert_object(upgrade_key, 1, true)
-		else:
-			var price_modifier := 1.0
-			if(upgrade.has(Const.PRICE_MOD_TYPE)):
-				var price_mod_type : String = upgrade.get(Const.PRICE_MOD_TYPE)
-				if(price_mod_type == Const.PRICE_MODIFIER_FLAT_LEVEL):
-					price_modifier = level + 1
-			
-			insert_object(object_key, level + 1, true)
-	else:
-		#setup upgrade component progress upgrade job
-		var comp := UpgradePlotComponent.new(coord, object_key, level)
-		comp.upgrade_complete.connect(_on_upgrade_complete)
-		components[Const.UPGRADE] = comp
-		under_construction = true
-		
-		plot_object_changed.emit()
+	#setup upgrade component progress upgrade job
+	var comp := UpgradePlotComponent.new(coord, object_key, level)
+	comp.upgrade_complete.connect(_on_upgrade_complete)
+	components[Const.UPGRADE] = comp
+	under_construction = true
+	
+	plot_object_changed.emit()
 	
 	return true
 
