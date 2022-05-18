@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Garden/PlotNode/PlotNode.gd" id="1_idrgo"]
 [ext_resource type="Script" path="res://Scenes/UI/Tooltip/TooltipHost.gd" id="2_cxgph"]
-[ext_resource type="PackedScene" uid="uid://biqr3s8cydewr" path="res://Scenes/UI/Tooltip/TooltipPanel.tscn" id="3_sc42v"]
+[ext_resource type="PackedScene" uid="uid://c7tnwkweokk65" path="res://Scenes/UI/Tooltip/PlotTooltipPanel.tscn" id="3_spq1y"]
 
 [node name="PlotNode" type="Control"]
 minimum_size = Vector2(120, 120)
@@ -56,7 +56,7 @@ clip_text = true
 script = ExtResource( "2_cxgph" )
 alignment = 4
 canvas_layer_path = "/root/Main/UI"
-tooltip_scene = ExtResource( "3_sc42v" )
+tooltip_scene = ExtResource( "3_spq1y" )
 owner_path = NodePath("..")
 follow_mouse = false
 offset_x = 10.0

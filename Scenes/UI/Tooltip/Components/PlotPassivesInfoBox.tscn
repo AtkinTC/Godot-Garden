@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddjevcurea7ws"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Tooltip/Components/PlotPassivesInfoBox.gd" id="1_rjfrt"]
+[ext_resource type="PackedScene" uid="uid://cuq7jvicl8wb8" path="res://Scenes/UI/SupplyLineDisplay.tscn" id="2_to6x7"]
+
+[node name="PlotPassivesInfoBox" type="PanelContainer"]
+offset_right = 177.0
+offset_bottom = 44.0
+mouse_filter = 1
+script = ExtResource( "1_rjfrt" )
+supply_display_scene = ExtResource( "2_to6x7" )
+supply_container_path = NodePath("V/Supply")
+
+[node name="V" type="VBoxContainer" parent="."]
+offset_right = 177.0
+offset_bottom = 44.0
+
+[node name="PassiveTitle" type="Label" parent="V"]
+offset_right = 177.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 12
+text = "Passive Supply"
+
+[node name="Supply" type="VBoxContainer" parent="V"]
+offset_top = 24.0
+offset_right = 177.0
+offset_bottom = 44.0
+
+[node name="SupplyLineDisplay" parent="V/Supply" instance=ExtResource( "2_to6x7" )]

@@ -112,6 +112,13 @@ func setup_components(build_complete : bool = false):
 	
 	under_construction = false
 
+func is_ready_for_upgrade() -> bool:
+	if(!owned):
+		return false
+	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
+		return false
+	return true
+
 #apply upgrade action to plot object
 func upgrade_object():
 	if(!owned):

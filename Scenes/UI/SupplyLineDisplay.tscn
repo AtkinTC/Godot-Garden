@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuq7jvicl8wb8"]
+
+[ext_resource type="Script" path="res://Scenes/UI/SupplyLineDisplay.gd" id="1_mabtq"]
+
+[node name="SupplyLineDisplay" type="HBoxContainer"]
+offset_right = 177.0
+offset_bottom = 20.0
+script = ExtResource( "1_mabtq" )
+supply_name_label_path = NodePath("SupplyNameLabel")
+quantity_label_path = NodePath("QuantityLabel")
+
+[node name="SupplyNameLabel" type="Label" parent="."]
+offset_top = 1.0
+offset_right = 37.0
+offset_bottom = 18.0
+theme_override_font_sizes/font_size = 10
+text = "SUPPLY"
+
+[node name="Divider" type="Label" parent="."]
+offset_left = 41.0
+offset_right = 57.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 12
+text = "  :  "
+
+[node name="QuantityLabel" type="Label" parent="."]
+offset_left = 61.0
+offset_top = 1.0
+offset_right = 177.0
+offset_bottom = 18.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+text = "999
+"
+horizontal_alignment = 2

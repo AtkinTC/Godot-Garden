@@ -30,6 +30,9 @@ func _ready():
 func set_plot_coord(_plot_coord : Vector2) -> void:
 	plot_coord = _plot_coord
 
+func get_plot_coord() -> Vector2:
+	return plot_coord
+
 func update_display() -> void:
 	coord_label.text = str(plot_coord)
 	var plot : Plot = GardenManager.get_plot(plot_coord)

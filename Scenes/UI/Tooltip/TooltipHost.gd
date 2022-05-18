@@ -31,8 +31,14 @@ var _force_open : bool
 @onready var padding: Vector2 = Vector2(padding_x, padding_y)
 
 func _ready() -> void:
+	if(owner_node == null):
+		owner_node = get_parent()
+	
 	# create the visuals
 	_tooltip = tooltip_scene.instantiate()
+	
+	if(_tooltip.has_method("set_owner_node")):
+		_tooltip.set_owner_node(owner_node)
 	
 	#add _tooltip to the ui canvas layer
 	#	fallback to owner node if no canvas layer
@@ -40,9 +46,6 @@ func _ready() -> void:
 		canvas_layer.add_child(_tooltip)
 	else:
 		add_child(_tooltip)
-	
-	if(owner_node == null):
-		owner_node = get_parent()
 	
 	# connect signals
 	owner_node.mouse_entered.connect(_on_mouse_entered_owner)
@@ -181,6 +184,8 @@ func calculate_tooltip_position() -> Vector2:
 	return aligned_pos
 
 func open_tooltip() -> void:
+	if(_tooltip.has_method("_on_tooltip_open")):
+		_tooltip._on_tooltip_open()
 	_timer.stop()
 	_tooltip.show()
 	_mouseover_updated = false
@@ -188,6 +193,8 @@ func open_tooltip() -> void:
 	_force_close = false
 
 func close_tooltip() -> void:
+	if(_tooltip.has_method("_on_tooltip_close")):
+		_tooltip._on_tooltip_close()
 	_timer.stop()
 	_tooltip.hide()
 	_mouseover_updated = false
