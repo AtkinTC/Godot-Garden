@@ -18,7 +18,12 @@ func initialize():
 func get_available_enhancement_keys() -> Array:
 	var available_keys = []
 	for key in Database.get_keys(Const.ENHANCEMENT):
-		if(PurchaseUtil.is_purchasable(Const.ENHANCEMENT, key)
+		var purchase_props := {
+			Const.MOD_TARGET_CAT : Const.ENHANCEMENT,
+			Const.MOD_TARGET_KEY : key,
+			Const.MOD_TYPE : Const.PURCHASE
+		}
+		if(PurchaseUtil.is_purchasable(purchase_props)
 		&& !is_disabled(key)
 		&& !LockUtil.is_locked(Const.ENHANCEMENT, key)):
 			available_keys.append(key)
@@ -44,7 +49,14 @@ func get_selected_enhancement_key() -> String:
 func purchase_enhancement(key : String) -> bool:
 	set_selected_enhancement_key(key)
 	
-	if(!PurchaseUtil.make_purchase(Const.ENHANCEMENT, key)):
+	var upgrade_props := {
+		Const.MOD_TARGET_CAT : Const.ENHANCEMENT,
+		Const.MOD_TARGET_KEY : key,
+		Const.MOD_TYPE : Const.PURCHASE,
+		Const.COUNT : Database.get_entry_attr(Const.ENHANCEMENT, key, Const.COUNT, 0),
+	}
+	
+	if(!PurchaseUtil.make_purchase(upgrade_props)):
 		return false
 		
 	apply_enhancement(key)

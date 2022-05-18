@@ -24,9 +24,9 @@ const STARTER := {
 			Const.PRICE : {
 				"RAW_ESS" : 1
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.LEVEL,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN,
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
 			}]
 		},
 		Const.UNLOCKS : [
@@ -48,9 +48,9 @@ const FOREST := {
 			Const.PRICE : {
 				"RAW_ESS" : 1,
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
 			}]
 		},
 		Const.BUILD : {
@@ -70,9 +70,9 @@ const FOREST := {
 				"WOOD" : 1,
 				"RAW_ESS" : 1,
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.LEVEL,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN,
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
 			}]
 		},
 		Const.UNLOCKS : [
@@ -102,7 +102,7 @@ const AIR_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.LOCAL_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const EARTH_SOURCE_BASIC := {
@@ -125,7 +125,7 @@ const EARTH_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.LOCAL_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const FIRE_SOURCE_BASIC := {
@@ -148,7 +148,7 @@ const FIRE_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.LOCAL_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const WATER_SOURCE_BASIC := {
@@ -171,7 +171,7 @@ const WATER_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.LOCAL_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const MIND_SOURCE_BASIC := {
@@ -195,7 +195,7 @@ const MIND_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.PRICE_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
+			Const.LOCAL_MOD_TYPE : Const.PRICE_MODIFIER_FLAT_LEVEL
 		}
 	}
 const FOCUS_BASIC := {

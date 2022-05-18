@@ -44,8 +44,13 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 	else:
 		temp_object_key = _object_key
 	
-	var purchase_properties := {Const.LEVEL : _level}
-	if(!PurchaseUtil.make_purchase(Const.OBJECT, temp_object_key, purchase_properties)):
+	var purchase_props := {
+		Const.MOD_TARGET_CAT : Const.OBJECT,
+		Const.MOD_TARGET_KEY : temp_object_key,
+		Const.MOD_TYPE : Const.PURCHASE,
+		Const.LEVEL : _level
+	}
+	if(!PurchaseUtil.make_purchase(purchase_props)):
 		return
 			
 	insert_object(temp_object_key, _level)
@@ -126,8 +131,13 @@ func upgrade_object():
 	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
 		return false
 	
-	var purchase_properties := {Const.MOD_TYPE : Const.UPGRADE, Const.LEVEL : level}
-	if(!PurchaseUtil.make_purchase(Const.OBJECT, object_key, purchase_properties)):
+	var purchase_props := {
+		Const.MOD_TARGET_CAT : Const.OBJECT,
+		Const.MOD_TARGET_KEY : object_key,
+		Const.MOD_TYPE : Const.UPGRADE,
+		Const.LEVEL : level
+	}
+	if(!PurchaseUtil.make_purchase(purchase_props)):
 		return false
 	
 	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)

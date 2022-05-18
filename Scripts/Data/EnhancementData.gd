@@ -23,9 +23,9 @@ const FOREST_BUFF := {
 			Const.PRICE : {
 				"RAW_ESS" : 1
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
 			}]
 		},
 		Const.MODIFIERS : [
@@ -83,9 +83,9 @@ const ENHANCE_ELEMENTS := {
 				"FIRE_ESS" : 15,
 				"WATER_ESS" : 15
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
 			}]
 		},
 		Const.MODIFIERS : [
@@ -150,9 +150,9 @@ const ENHANCE_MIND := {
 				"FIRE_ESS" : 10,
 				"WATER_ESS" : 10
 			},
-			Const.PRICE_MODIFIERS : [{
-				Const.PRICE_MODIFIER_TARGET : Const.COUNT,
-				Const.PRICE_MOD_TYPE : Const.TYPE_LIN
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
 			}]
 		},
 		Const.SOURCE : {

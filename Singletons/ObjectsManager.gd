@@ -17,7 +17,12 @@ func is_disabled(key : String) -> bool:
 func get_available_object_keys() -> Array:
 	var available_keys = []
 	for key in Database.get_keys(Const.OBJECT):
-		if(PurchaseUtil.is_purchasable(Const.OBJECT, key)
+		var purchase_props := {
+			Const.MOD_TARGET_CAT : Const.OBJECT,
+			Const.MOD_TARGET_KEY : key,
+			Const.MOD_TYPE : Const.PURCHASE
+		}
+		if(PurchaseUtil.is_purchasable(purchase_props)
 		&& !is_disabled(key)
 		&& !LockUtil.is_locked(Const.OBJECT, key)):
 			available_keys.append(key)

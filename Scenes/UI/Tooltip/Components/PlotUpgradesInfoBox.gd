@@ -26,13 +26,18 @@ func update_display():
 	if(plot == null || !plot.is_ready_for_upgrade()):
 		visible = false
 		return
-	var purchase_properties := {Const.MOD_TYPE : Const.UPGRADE, Const.LEVEL : plot.level}
-	if(!PurchaseUtil.is_purchasable(Const.OBJECT, plot.get_object_key(), purchase_properties)):
+	var upgrade_props := {
+		Const.MOD_TARGET_CAT : Const.OBJECT,
+		Const.MOD_TARGET_KEY : plot.get_object_key(),
+		Const.MOD_TYPE : Const.UPGRADE,
+		Const.LEVEL : plot.level
+	}
+	if(!PurchaseUtil.is_purchasable(upgrade_props)):
 		visible = false
 		return
 	visible = true
 	
-	var price : Dictionary = PurchaseUtil.get_modified_purchase_price(Const.OBJECT, plot.get_object_key(), purchase_properties)
+	var price : Dictionary = PurchaseUtil.get_modifed_supply_values(upgrade_props)
 	
 	for supply in price.keys():
 		if(!price_displays.has(supply)):

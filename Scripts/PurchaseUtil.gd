@@ -1,42 +1,30 @@
 class_name PurchaseUtil
 
-static func has_purchase_data(category : String, key : String, _props : Dictionary = {}) -> bool:
-	var purchase_type = _props.get(Const.MOD_TYPE, Const.PURCHASE)
-	return Database.get_entry_attr(category, key, purchase_type, null) != null
-
-static func get_purchase_data(category : String, key : String, _props : Dictionary = {}) -> Dictionary:
-	var purchase_type = _props.get(Const.MOD_TYPE, Const.PURCHASE)
-	return Database.get_entry_attr(category, key, purchase_type, {})
-
-static func get_purchase_limit(category : String, key : String, _props : Dictionary = {}) -> int:
-	return get_purchase_data(category, key, _props).get(Const.LIMIT, -1)
-
-static func get_purchase_price(category : String, key : String, _props : Dictionary = {}) -> Dictionary:
-	return get_purchase_data(category, key, _props).get(Const.PRICE, {})
-
-static func is_purchasable(category : String, key : String, _props : Dictionary = {}) -> bool:
-	if(!has_purchase_data(category, key, _props)):
+static func is_purchasable(props : Dictionary = {}) -> bool:
+	var source_category = props.get(Const.MOD_TARGET_CAT)
+	var source_key = props.get(Const.MOD_TARGET_KEY)
+	var purchase_type = props.get(Const.MOD_TYPE)
+	if(Database.get_entry_attr(source_category, source_key, purchase_type, null) == null):
 		return false
-	return has_available_purchase_limit(category, key, _props)
-
-# has_available_purchase_limit(category : String, key : String)
-#	checks if the target is valid for purchase based on the targets purchase limit and current count
-static func has_available_purchase_limit(category : String, key : String, _props : Dictionary = {}) -> bool:
-	var limit : int = get_purchase_limit(category, key, _props)
+	var limit : int = Database.get_entry_attr(source_category, source_key, purchase_type, {}).get(Const.LIMIT, -1)
 	if(limit == 0):
 		return false
-	elif(limit == -1):
+	if(limit == -1):
 		return true
-	return limit > Database.get_entry_attr(category, key, Const.COUNT, 0)
+	return limit > Database.get_entry_attr(source_category, source_key, Const.COUNT, 0)
 
-# make_purchase(category : String, key : String, _props : Dictionary = {})
+# make_purchase(props : Dictionary)
 #	subtracts the calculated purchase cost (spend) from applicable supplies
 #	only subtracts the cost if can afford the full cost
-static func make_purchase(category : String, key : String, _props : Dictionary = {}) -> bool:
-	if(!is_purchasable(category, key, _props)):
+static func make_purchase(props : Dictionary) -> bool:
+	assert(props.get(Const.MOD_TARGET_CAT))
+	assert(props.get(Const.MOD_TARGET_KEY))
+	assert(props.get(Const.MOD_TYPE))
+
+	if(!is_purchasable(props)):
 		return false
 	
-	var total_price = get_modified_purchase_price(category, key, _props)
+	var total_price = get_modifed_supply_values(props)
 	if(!can_afford_purchase_internal(total_price)):
 		return false
 	
@@ -46,9 +34,12 @@ static func make_purchase(category : String, key : String, _props : Dictionary =
 		supply.change_quantity(-price)
 	return true
 
-# can_afford_purchase(category : String, key : String, _props : Dictionary = {})
-static func can_afford_purchase(category : String, key : String, _props : Dictionary = {}) -> bool:
-	var total_price = get_modified_purchase_price(category, key, _props)
+static func can_afford_purchase(props : Dictionary) -> bool:
+	assert(props.get(Const.MOD_TARGET_CAT))
+	assert(props.get(Const.MOD_TARGET_KEY))
+	assert(props.get(Const.MOD_TYPE))
+	
+	var total_price = get_modifed_supply_values(props)
 	return can_afford_purchase_internal(total_price)
 
 static func can_afford_purchase_internal(total_price : Dictionary) -> bool:
@@ -66,26 +57,37 @@ static func can_afford_purchase_internal(total_price : Dictionary) -> bool:
 			return false
 	return true
 
-# gets the purchase price for an item, with all relevent modifiers applied
-static func get_modified_purchase_price(category : String, key : String, _props : Dictionary = {}):
-	print("get_modified_purchase_price(%s, %s) @ %s" % [str(category), str(key), Time.get_time_string_from_system()])#DEBUG
-	var props := {
-		Const.MOD_TARGET_CAT : _props.get(Const.MOD_TARGET_CAT, category),
-		Const.MOD_TARGET_KEY : _props.get(Const.MOD_TARGET_KEY, key),
-		Const.MOD_TYPE : _props.get(Const.MOD_TYPE, Const.PURCHASE),
-		Const.COUNT : _props.get(Const.COUNT, Database.get_entry_attr(category, key, Const.COUNT, 0)),
-		Const.LEVEL : _props.get(Const.LEVEL, Database.get_entry_attr(category, key, Const.LEVEL, 0))
-	}
+# applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
+static func get_modifed_supply_values(props : Dictionary):
+	var source_category = props.get(Const.MOD_TARGET_CAT)
+	var source_key = props.get(Const.MOD_TARGET_KEY)
+	var purchase_type = props.get(Const.MOD_TYPE)
+	var base_price = Database.get_entry_attr(source_category, source_key, purchase_type, {}).get(Const.PRICE, {})
+	return modify_supply_values(base_price, props)
+
+# applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
+# 	Global Mods : global value modifiers that affect the defined MOD_TARGET and MOD_TYPE
+#	Local Mods : local modifiers defined inside source[LOCAL_MODIFIERS] data
+#	Supply Mods : global value modifiers that affect a specific Supply type making up part of the supply value
+static func modify_supply_values(supply_value : Dictionary, props : Dictionary):
+	assert(props.get(Const.MOD_TARGET_CAT))
+	assert(props.get(Const.MOD_TARGET_KEY))
+	assert(props.get(Const.MOD_TYPE))
 	
-	var global_mod : float = ModifiersManager.get_modifier_scale(props)
-	var local_mod : float = get_local_price_modifier(category, key, props)
-	print("\tglobal_mod: %s" % str(global_mod))#DEBUG
-	print("\tlocal_mod: %s" % str(local_mod))#DEBUG
+	var debug_props = [props.get(Const.MOD_TARGET_CAT, ""), props.get(Const.MOD_TARGET_KEY, "")]#DEBUG
+	print("get_modifed_supply_values(%s, %s) @ %s" % [debug_props, Time.get_time_string_from_system()])#DEBUG
 	
-	var base_price = get_purchase_price(category, key, props)
-	var modified_price = {}
-	for supply_key in base_price.keys():
-		var supply_price = base_price.get(supply_key, 0.0)
+	var source_global_mod : float = ModifiersManager.get_modifier_scale(props)
+	var source_local_mod : float = get_local_source_modifier(props)
+	
+	if(source_global_mod != 1.0):
+		print("\tglobal_mod: %s" % str(source_global_mod))#DEBUG
+	if(source_local_mod != 1.0):
+		print("\tlocal_mod: %s" % str(source_local_mod))#DEBUG
+	
+	var modified_supply_value = {}
+	for supply_key in supply_value.keys():
+		var supply_quantity = supply_value.get(supply_key, 0.0)
 		
 		var supply_prop := {
 			Const.MOD_TARGET_CAT : Const.SUPPLY,
@@ -93,36 +95,46 @@ static func get_modified_purchase_price(category : String, key : String, _props 
 			Const.MOD_TYPE : Const.PRICE
 		}
 		var supply_mod = ModifiersManager.get_modifier_scale(supply_prop)
-		modified_price[supply_key] = supply_price * supply_mod * local_mod * global_mod
-		print("\t\tsupply_key: %s" % str(supply_key))#DEBUG
-		print("\t\tsupply_mod: %s" % str(supply_mod))#DEBUG
-		print("\t\tmodified_price: %s" % str(modified_price[supply_key]))#DEBUG
+		modified_supply_value[supply_key] = supply_quantity * supply_mod * source_local_mod * source_global_mod
+		if(supply_mod != 1.0):
+			print("\t\tsupply_key: %s, supply_mod: %s" % [str(supply_key), str(supply_mod)])#DEBUG
 		
-	return modified_price
+	return modified_supply_value
 
-# calculate the price modifier based on the local PURCHASE[PRICE_MODIFIER] entry
-static func get_local_price_modifier(category : String, key : String, _props : Dictionary):
-	var modifiers : Array = get_purchase_data(category, key, _props).get(Const.PRICE_MODIFIERS, [])
+# calculate the local modifier based on the local SOURCE[LOCAL_MODIFIERS] entry
+static func get_local_source_modifier(props : Dictionary):
+	assert(props.get(Const.MOD_TARGET_CAT))
+	assert(props.get(Const.MOD_TARGET_KEY))
+	assert(props.get(Const.MOD_TYPE))
+	
+	var source_category = props.get(Const.MOD_TARGET_CAT, "")
+	var source_key = props.get(Const.MOD_TARGET_KEY, "")
+	var source_type = props.get(Const.MOD_TYPE, "")
+	var modifiers : Array = Database.get_entry_attr(source_category, source_key, source_type, {}).get(Const.LOCAL_MODIFIERS, [])
 	
 	if(modifiers == null || modifiers.size() == 0):
 		return 1.0
 	
-	var price_modifier := 1.0
+	var mod_applied : bool = false
+	var local_mod_scale := 1.0
 	for modifier in modifiers:
-		if(!modifier.has(Const.PRICE_MODIFIER_TARGET) || !modifier.has(Const.PRICE_MOD_TYPE)):
-			print("get_price_modifier() : malformed price modifier dictionary")#DEBUG
+		if(!modifier.has(Const.LOCAL_MOD_TARGET) || !modifier.has(Const.LOCAL_MOD_TYPE)):
+			print("get_local_source_modifier() : malformed local modifier dictionary")#DEBUG
 			continue
 		var target_scale = 0.0
-		var target : String = modifier.get(Const.PRICE_MODIFIER_TARGET)
-		if(_props.has(target)):
-			target_scale = _props.get(target)
+		var target : String = modifier.get(Const.LOCAL_MOD_TARGET)
+		if(props.has(target)):
+			target_scale = props.get(target)
 		
-		var type : String = modifier.get(Const.PRICE_MOD_TYPE)
+		var type : String = modifier.get(Const.LOCAL_MOD_TYPE)
 		if(type == Const.TYPE_LIN):
-			price_modifier *= (target_scale + 1)
+			local_mod_scale *= (target_scale + 1)
+			mod_applied = true
 		#TODO: add logic for other modifier types
 	
-	return price_modifier
+	if(mod_applied):
+		print("get_local_source_modifier(%s, %s) : %s @ %s" % [source_category, source_key, local_mod_scale, Time.get_time_string_from_system()])#DEBUG
+	return local_mod_scale
 
 static func can_afford(total_cost : Dictionary, cost_modifier : float = 1.0) -> bool:
 	if(total_cost.size() == 0):
