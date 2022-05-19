@@ -30,8 +30,7 @@ static func make_purchase(props : Dictionary) -> bool:
 	
 	for supply_key in total_price.keys():
 		var price = total_price[supply_key]
-		var supply : Supply = SupplyManager.get_supply(supply_key)
-		supply.change_quantity(-price)
+		SupplyManager.change_supply_quantity(supply_key, -price)
 	return true
 
 static func can_afford_purchase(props : Dictionary) -> bool:
@@ -61,9 +60,18 @@ static func can_afford_purchase_internal(total_price : Dictionary) -> bool:
 static func get_modifed_supply_values(props : Dictionary):
 	var source_category = props.get(Const.MOD_TARGET_CAT)
 	var source_key = props.get(Const.MOD_TARGET_KEY)
-	var purchase_type = props.get(Const.MOD_TYPE)
-	var base_price = Database.get_entry_attr(source_category, source_key, purchase_type, {}).get(Const.PRICE, {})
-	return modify_supply_values(base_price, props)
+	var value_type = props.get(Const.MOD_TYPE)
+	
+	var attr : Dictionary
+	if(props.has(Const.VALUE_PATH)):
+		attr = Database.get_entry(source_category, source_key)
+		for key in props.get(Const.VALUE_PATH):
+			attr = attr.get(key, {})
+	else:
+		attr = Database.get_entry_attr(source_category, source_key, value_type, {})
+			
+	var base_value = attr.get(Const.VALUE, {})
+	return modify_supply_values(base_value, props)
 
 # applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
 # 	Global Mods : global value modifiers that affect the defined MOD_TARGET and MOD_TYPE
@@ -74,8 +82,8 @@ static func modify_supply_values(supply_value : Dictionary, props : Dictionary):
 	assert(props.get(Const.MOD_TARGET_KEY))
 	assert(props.get(Const.MOD_TYPE))
 	
-	var debug_props = [props.get(Const.MOD_TARGET_CAT, ""), props.get(Const.MOD_TARGET_KEY, "")]#DEBUG
-	print("get_modifed_supply_values(%s, %s) @ %s" % [debug_props, Time.get_time_string_from_system()])#DEBUG
+	var debug_props = [props.get(Const.MOD_TARGET_CAT, ""), props.get(Const.MOD_TARGET_KEY, ""), Time.get_time_string_from_system()]#DEBUG
+	print("get_modifed_supply_values(%s, %s) @ %s" % debug_props)#DEBUG
 	
 	var source_global_mod : float = ModifiersManager.get_modifier_scale(props)
 	var source_local_mod : float = get_local_source_modifier(props)
@@ -92,7 +100,7 @@ static func modify_supply_values(supply_value : Dictionary, props : Dictionary):
 		var supply_prop := {
 			Const.MOD_TARGET_CAT : Const.SUPPLY,
 			Const.MOD_TARGET_KEY : supply_key,
-			Const.MOD_TYPE : Const.PRICE
+			Const.MOD_TYPE : props.get(Const.MOD_TYPE)
 		}
 		var supply_mod = ModifiersManager.get_modifier_scale(supply_prop)
 		modified_supply_value[supply_key] = supply_quantity * supply_mod * source_local_mod * source_global_mod
@@ -157,5 +165,4 @@ static func can_afford(total_cost : Dictionary, cost_modifier : float = 1.0) -> 
 static func spend(total_cost : Dictionary, cost_modifier : float = 1.0):
 	for key in total_cost.keys():
 		var cost = total_cost[key]
-		var supply : Supply = SupplyManager.get_supply(key)
-		supply.change_quantity(-cost * cost_modifier)
+		SupplyManager.change_quantity(key, -cost * cost_modifier)

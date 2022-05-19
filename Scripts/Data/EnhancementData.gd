@@ -7,12 +7,16 @@ const BASE_STAT := {
 		Const.AUTO : true,
 		Const.SOURCE : {
 			Const.GAIN : {
-				"RAW_MEMORY" : 1,
-				"RAW_ESS" : 1
+				Const.VALUE : {
+					"RAW_MEMORY" : 1,
+					"RAW_ESS" : 1
+				}
 			},
 			Const.CAPACITY : {
-				"RAW_MEMORY" : 100,
-				"RAW_ESS" : 10
+				Const.VALUE : {
+					"RAW_MEMORY" : 100,
+					"RAW_ESS" : 10
+				}
 			}
 		},
 	}
@@ -20,7 +24,7 @@ const FOREST_BUFF := {
 		Const.DISPLAY_NAME : "forest buff test",
 		Const.LOCKED : false,
 		Const.PURCHASE : {
-			Const.PRICE : {
+			Const.VALUE : {
 				"RAW_ESS" : 1
 			},
 			Const.LOCAL_MODIFIERS : [{
@@ -38,6 +42,68 @@ const FOREST_BUFF := {
 						Const.MOD_SCALE : -0.1,
 						Const.MOD_COMPOUNDING : true
 					},
+					{
+						Const.MOD_TYPE : Const.UPGRADE,
+						Const.MOD_SCALE : -0.1,
+						Const.MOD_COMPOUNDING : true
+					},
+					{
+						Const.MOD_TYPE : Const.GAIN,
+						Const.MOD_SCALE : 0.1,
+						Const.MOD_COMPOUNDING : false
+					}
+				]
+			}
+		]
+	}
+const FOREST_GAIN_BUFF := {
+		Const.DISPLAY_NAME : "forest gain buff",
+		Const.LOCKED : false,
+		Const.PURCHASE : {
+			Const.VALUE : {
+				"RAW_ESS" : 1
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			}]
+		},
+		Const.MODIFIERS : [
+			{
+				Const.MOD_TARGET_CAT : Const.OBJECT,
+				Const.MOD_TARGET_KEY : ["FOREST"],
+				Const.MOD_EFFECT : [
+					{
+						Const.MOD_TYPE : Const.GAIN,
+						Const.MOD_SCALE : 0.1,
+						Const.MOD_COMPOUNDING : false
+					}
+				]
+			}
+		]
+	}
+const WOOD_GAIN_BUFF := {
+		Const.DISPLAY_NAME : "wood gain buff",
+		Const.LOCKED : false,
+		Const.PURCHASE : {
+			Const.VALUE : {
+				"RAW_ESS" : 1
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.COUNT,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			}]
+		},
+		Const.MODIFIERS : [
+			{
+				Const.MOD_TARGET_CAT : Const.SUPPLY,
+				Const.MOD_TARGET_KEY : ["WOOD"],
+				Const.MOD_EFFECT : [
+					{
+						Const.MOD_TYPE : Const.GAIN,
+						Const.MOD_SCALE : 0.1,
+						Const.MOD_COMPOUNDING : false
+					}
 				]
 			}
 		]
@@ -46,16 +112,20 @@ const UNLOCK_AIR := {
 		Const.DISPLAY_NAME : "path of the air",
 		Const.LOCKED : false,
 		Const.PURCHASE : {
-			Const.PRICE : {
+			Const.VALUE : {
 				"RAW_ESS" : 5
 			}
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
-				"AIR_ESS" : 0.1
+				Const.VALUE : {
+					"AIR_ESS" : 0.1
+				}
 			},
 			Const.CAPACITY : {
-				"AIR_ESS" : 100
+				Const.VALUE : {
+					"AIR_ESS" : 100
+				}
 			}
 		},
 		Const.UNLOCKS : [
@@ -77,7 +147,7 @@ const ENHANCE_ELEMENTS := {
 		Const.DISPLAY_NAME : "elemental focus",
 		Const.LOCKED : true,
 		Const.PURCHASE : {
-			Const.PRICE : {
+			Const.VALUE : {
 				"AIR_ESS" : 15,
 				"EARTH_ESS" : 15,
 				"FIRE_ESS" : 15,
@@ -109,7 +179,7 @@ const UNLOCK_MIND := {
 		Const.DISPLAY_NAME : "path of the mind",
 		Const.LOCKED : false,
 		Const.PURCHASE : {
-			Const.PRICE : {
+			Const.VALUE : {
 				"AIR_ESS" : 10,
 				"EARTH_ESS" : 10,
 				"FIRE_ESS" : 10,
@@ -119,10 +189,14 @@ const UNLOCK_MIND := {
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
-				"MIND_ESS" : 0.1
+				Const.VALUE : {
+					"MIND_ESS" : 0.1
+				}
 			},
 			Const.CAPACITY : {
-				"MIND_ESS" : 100
+				Const.VALUE : {
+					"MIND_ESS" : 100
+				}
 			}
 		},
 		Const.UNLOCKS : [
@@ -144,7 +218,7 @@ const ENHANCE_MIND := {
 		Const.DISPLAY_NAME : "enhance mind",
 		Const.LOCKED : true,
 		Const.PURCHASE : {
-			Const.PRICE : {
+			Const.VALUE : {
 				"AIR_ESS" : 10,
 				"EARTH_ESS" : 10,
 				"FIRE_ESS" : 10,
@@ -157,7 +231,9 @@ const ENHANCE_MIND := {
 		},
 		Const.SOURCE : {
 			Const.GAIN : {
-				"MIND_ESS" : 0.1
+				Const.VALUE : {
+					"MIND_ESS" : 0.1
+				}
 			}
 		},
 		Const.MODIFIERS : [
@@ -181,6 +257,8 @@ const ENHANCE_MIND := {
 const upgrade_types := {
 	"BASE_STAT" : BASE_STAT,
 	"FOREST_BUFF" : FOREST_BUFF,
+	"FOREST_GAIN_BUFF" : FOREST_GAIN_BUFF,
+	"WOOD_GAIN_BUFF" : WOOD_GAIN_BUFF,
 	"UNLOCK_AIR" : UNLOCK_AIR,
 	"ENHANCE_ELEMENTS" : ENHANCE_ELEMENTS,
 	"UNLOCK_MIND" : UNLOCK_MIND,

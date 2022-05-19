@@ -71,12 +71,14 @@ func _process(delta: float) -> void:
 		open_tooltip()
 	elif(_mouseover_updated):
 		if(_mouse_inside_owner || _mouse_inside_tooltip):
-			_timer.timeout.connect(open_tooltip)
+			if(!_timer.timeout.is_connected(open_tooltip)):
+				_timer.timeout.connect(open_tooltip)
 			if(_timer.timeout.is_connected(close_tooltip)):
 				_timer.timeout.disconnect(close_tooltip)
 			_timer.start(open_delay)
 		else:
-			_timer.timeout.connect(close_tooltip)
+			if(!_timer.timeout.is_connected(close_tooltip)):
+				_timer.timeout.connect(close_tooltip)
 			if(_timer.timeout.is_connected(open_tooltip)):
 				_timer.timeout.disconnect(open_tooltip)
 			_timer.start(close_delay)

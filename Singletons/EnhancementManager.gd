@@ -82,13 +82,13 @@ func apply_enhancement(key : String):
 	if(enhancement_type.has(Const.SOURCE)):
 		var source : Dictionary = enhancement_type[Const.SOURCE]
 		if(source.has(Const.GAIN)):
-			var gain = source.get(Const.GAIN)
-			for supply_key in gain.keys():
-				SupplyManager.get_supply(supply_key).set_gain_source(str(key), gain[supply_key] * enhancement_type[Const.LEVEL])
+			var gain_value = source.get(Const.GAIN, {}).get(Const.VALUE, {})
+			for supply_key in gain_value.keys():
+				SupplyManager.set_change_source(supply_key, str(key), gain_value[supply_key] * enhancement_type[Const.LEVEL])
 		if(source.has(Const.CAPACITY)):
-			var capacity = source.get(Const.CAPACITY)
-			for supply_key in capacity.keys():
-				SupplyManager.get_supply(supply_key).set_capacity_source(str(key), capacity[supply_key] * enhancement_type[Const.LEVEL])
+			var capacity_value = source.get(Const.CAPACITY, {}).get(Const.VALUE, {})
+			for supply_key in capacity_value.keys():
+				SupplyManager.set_capacity_source(supply_key, str(key), capacity_value[supply_key] * enhancement_type[Const.LEVEL])
 	
 	#setup enhancement modifier values
 	if(enhancement_type.has(Const.MODIFIERS)):

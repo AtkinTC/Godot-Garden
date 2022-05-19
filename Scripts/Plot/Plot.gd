@@ -44,6 +44,9 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 	else:
 		temp_object_key = _object_key
 	
+	if(temp_object_key == null || temp_object_key == ""):
+		return false
+	
 	var purchase_props := {
 		Const.MOD_TARGET_CAT : Const.OBJECT,
 		Const.MOD_TARGET_KEY : temp_object_key,

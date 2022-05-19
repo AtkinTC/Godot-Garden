@@ -13,19 +13,19 @@ class_name SupplyDisplay
 @export_node_path(Label) var capacity_label_path
 @onready var capacity_label : Label = get_node(capacity_label_path) if capacity_label_path else null
 
-@export_node_path(Label) var gain_label_path
-@onready var gain_label : Label = get_node(gain_label_path) if gain_label_path else null
+@export_node_path(Label) var change_label_path
+@onready var change_label : Label = get_node(change_label_path) if change_label_path else null
 
 var key : String
 
 var quantity : float = 0.00
 var capacity : float = -1.0
-var gain : float = 0.00
+var change : float = 0.00
 
 var display_name : String = ""
 var display_quantity : String = ""
 var display_capacity : String = ""
-var display_gain : String = ""
+var display_change : String = ""
 
 var need_update : bool = true
 
@@ -34,33 +34,36 @@ func _ready():
 	update_display()
 
 # setup initial display settings
-# settings which are not expected to change often
 func setup():
-	if(key == null || key == ""):
-		return
 	
-	SupplyManager.connect_to_supply_quantity_changed(key, _on_supply_quantity_changed)
-	SupplyManager.connect_to_supply_capacity_changed(key, _on_supply_capacity_changed)
-	SupplyManager.connect_to_supply_gain_changed(key, _on_supply_gain_changed)
+	SupplyManager.supply_capacity_updated.connect(_on_supply_capacity_updated)
+	SupplyManager.supply_change_updated.connect(_on_supply_change_updated)
+	SupplyManager.supply_quantity_updated.connect(_on_supply_quantity_updated)
 	
-	var supply : Supply = SupplyManager.get_supply(key)
-	
-	set_display_name(supply.get_display_name())
-	set_quantity(supply.get_quantity())
-	set_capacity(supply.get_capacity())
-	set_gain(supply.get_gain())
-	
-	if(progress_bar):
-		progress_bar.tint_progress = supply.get_display_color(0, progress_bar.tint_progress)
-		progress_bar.tint_under = supply.get_display_color(1, progress_bar.tint_under)
+	need_update = true
 
 func _process(_delta):
 	if(need_update):
 		update_display()
-		need_update = false
 
 # update the display based on current values
 func update_display():
+	need_update = false
+	var supply : SupplyVO
+	if(key == null || key == ""):
+		supply = SupplyVO.new()
+	else:
+		supply = SupplyManager.get_supply(key)
+	
+	set_display_name(supply.get_display_name())
+	set_quantity(supply.get_quantity())
+	set_capacity(supply.get_capacity())
+	set_change(supply.get_change())
+	
+	if(progress_bar):
+		progress_bar.tint_progress = supply.get_display_color(0, progress_bar.tint_progress)
+		progress_bar.tint_under = supply.get_display_color(1, progress_bar.tint_under)
+	
 	name_label.text = display_name
 	
 	if(quantity_label):
@@ -74,12 +77,12 @@ func update_display():
 			set_display_capacity("")
 		capacity_label.text = display_capacity
 	
-	if(gain_label):
-		if(gain == 0):
-			set_display_gain("")
+	if(change_label):
+		if(change == 0):
+			set_display_change("")
 		else:
-			set_display_gain("(" + ("+" if gain > 0 else "-") + Utils.format_comma_seperated("%.1f" % gain) + ")")
-		gain_label.text = display_gain
+			set_display_change("(" + ("+" if change > 0 else "-") + Utils.format_comma_seperated("%.1f" % change) + ")")
+		change_label.text = display_change
 	
 	if(progress_bar):
 		progress_bar.max_value = 100.00
@@ -90,6 +93,7 @@ func update_display():
 
 func set_key(_key):
 	key = _key
+	need_update = true
 
 func set_display_name(_display_name : String):
 	display_name = _display_name
@@ -106,25 +110,22 @@ func set_capacity(_capacity : float):
 func set_display_capacity(_display_capacity : String):
 	display_capacity = _display_capacity
 
-func set_gain(_gain : float):
-	gain = _gain
+func set_change(_change : float):
+	change = _change
 
-func set_display_gain(_display_gain : String):
-	display_gain = _display_gain
+func set_display_change(_display_change : String):
+	display_change = _display_change
 
 # trigger quantity update and recalculate display when supply updates
-func _on_supply_quantity_changed(_key : String, _new_quantity : float):
+func _on_supply_quantity_updated(_key : String):
 	if(key == _key):
-		set_quantity(_new_quantity)
 		need_update = true
 
 # trigger capacity update and recalculate display when supply updates
-func _on_supply_capacity_changed(_key : String, _new_capacity : float):
+func _on_supply_capacity_updated(_key : String):
 	if(key == _key):
-		set_capacity(_new_capacity)
 		need_update = true
 
-func _on_supply_gain_changed(_key : String, _new_gain : float):
+func _on_supply_change_updated(_key : String):
 	if(key == _key):
-		set_gain(_new_gain)
 		need_update = true

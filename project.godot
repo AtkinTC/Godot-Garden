@@ -150,11 +150,6 @@ _global_script_classes=[{
 "path": "res://Scenes/UI/SimpleSupplyDisplay.gd"
 }, {
 "base": "RefCounted",
-"class": &"Supply",
-"language": &"GDScript",
-"path": "res://Scripts/Supply.gd"
-}, {
-"base": "RefCounted",
 "class": &"SupplyData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/SupplyData.gd"
@@ -173,6 +168,11 @@ _global_script_classes=[{
 "class": &"SupplyLineDisplay",
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyLineDisplay.gd"
+}, {
+"base": "Resource",
+"class": &"SupplyVO",
+"language": &"GDScript",
+"path": "res://Scripts/VO/SupplyVO.gd"
 }, {
 "base": "Node",
 "class": &"TooltipHost",
@@ -228,11 +228,11 @@ _global_script_class_icons={
 "PurchaseUtil": "",
 "SelectMenu": "",
 "SimpleSupplyDisplay": "",
-"Supply": "",
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
 "SupplyLineDisplay": "",
+"SupplyVO": "",
 "TooltipHost": "",
 "TooltipPanel": "",
 "UpgradePlotComponent": "",

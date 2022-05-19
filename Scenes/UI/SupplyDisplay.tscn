@@ -13,7 +13,7 @@ progress_bar_path = NodePath("ProgressBar")
 name_label_path = NodePath("LabelsContainer/NameLabel")
 quantity_label_path = NodePath("LabelsContainer/H/QuantityLabel")
 capacity_label_path = NodePath("LabelsContainer/H/CapacityLabel")
-gain_label_path = NodePath("LabelsContainer/H/GainLabel")
+change_label_path = NodePath("LabelsContainer/H/ChangeLabel")
 metadata/_edit_use_custom_anchors = false
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
@@ -60,7 +60,7 @@ theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 12
 text = "/ 99999999"
 
-[node name="GainLabel" type="Label" parent="LabelsContainer/H"]
+[node name="ChangeLabel" type="Label" parent="LabelsContainer/H"]
 offset_left = 126.0
 offset_right = 196.0
 offset_bottom = 17.0
