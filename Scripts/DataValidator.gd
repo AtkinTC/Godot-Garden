@@ -85,9 +85,6 @@ const templates := {
 
 static func validate_data_entry(key : String, entry : Dictionary, _sequence : Array = []) -> Dictionary:
 	var sequence : Array = _sequence + [key]
-	var indent = ""
-	for i in sequence.size():
-		indent += "\t"
 	var errors := 0
 	var warnings := 0
 	

@@ -118,8 +118,6 @@ static func get_local_source_modifier(props : Dictionary):
 	
 	var source_category = props.get(Const.MOD_TARGET_CAT, "")
 	var source_key = props.get(Const.MOD_TARGET_KEY, "")
-	var source_type = props.get(Const.MOD_TYPE, "")
-	#var modifiers : Array = Database.get_entry_attr(source_category, source_key, source_type, {}).get(Const.LOCAL_MODIFIERS, [])
 	
 	var modifiers : Array = get_target_attribute(props).get(Const.LOCAL_MODIFIERS, [])
 	

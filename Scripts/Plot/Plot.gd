@@ -141,8 +141,6 @@ func upgrade_object():
 	if(!PurchaseUtil.make_purchase(purchase_props)):
 		return false
 	
-	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
-	
 	#setup upgrade component progress upgrade job
 	var comp := UpgradePlotComponent.new(coord, object_key, level)
 	comp.upgrade_complete.connect(_on_upgrade_complete)

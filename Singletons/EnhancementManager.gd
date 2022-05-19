@@ -112,6 +112,6 @@ func adjust_enhancement_count(key : String, adj : int):
 func is_disabled(key : String) -> bool:
 	return Database.get_entry_attr(Const.ENHANCEMENT, key, Const.DISABLED, false)
 
-func _on_locked_status_changed(category : String, key : String):
+func _on_locked_status_changed(category : String, _key : String):
 	if(category == Const.ENHANCEMENT):
 		refresh_enhancements()

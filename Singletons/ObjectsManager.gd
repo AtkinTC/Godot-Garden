@@ -58,6 +58,6 @@ func adjust_object_count(key : String, adj : int):
 	var count : int = Database.get_entry_attr(Const.OBJECT, key, Const.COUNT, 0)
 	set_object_count(key, count + adj)
 
-func _on_locked_status_changed(category : String, key : String):
+func _on_locked_status_changed(category : String, _key : String):
 	if(category == Const.OBJECT):
 		refresh_objects()

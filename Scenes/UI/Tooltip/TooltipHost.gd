@@ -64,7 +64,7 @@ func _ready() -> void:
 	if(_tooltip.has_signal("close_tooltip")):
 		_tooltip.close_tooltip.connect(close_tooltip)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(_force_close):
 		close_tooltip()
 	elif(_force_open):
