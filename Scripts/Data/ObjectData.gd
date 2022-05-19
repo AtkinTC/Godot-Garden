@@ -14,7 +14,11 @@ const STARTER := {
 			Const.GAIN : {
 				Const.VALUE : {
 					"RAW_ESS" : 1
-				}
+				},
+				Const.LOCAL_MODIFIERS : [{
+					Const.LOCAL_MOD_TARGET : Const.LEVEL,
+					Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+				}]
 			},
 			Const.CAPACITY : {
 				Const.VALUE : {
@@ -64,12 +68,20 @@ const FOREST := {
 			Const.GAIN : {
 				Const.VALUE : {
 					"WOOD" : 1
-				}
+				},
+				Const.LOCAL_MODIFIERS : [{
+					Const.LOCAL_MOD_TARGET : Const.LEVEL,
+					Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+				}]
 			},
 			Const.CAPACITY : {
 				Const.VALUE : {
 					"WOOD" : 10
-				}
+				},
+				Const.LOCAL_MODIFIERS : [{
+					Const.LOCAL_MOD_TARGET : Const.LEVEL,
+					Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+				}]
 			},
 		},
 		Const.UPGRADE : {
@@ -114,7 +126,15 @@ const AIR_SOURCE_BASIC := {
 			}
 		},
 		Const.UPGRADE : {
-			Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
+			Const.VALUE : {
+				"RAW_ESS" : 5
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		}
 	}
 const EARTH_SOURCE_BASIC := {
@@ -141,7 +161,15 @@ const EARTH_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
+			Const.VALUE : {
+				"RAW_ESS" : 5
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		}
 	}
 const FIRE_SOURCE_BASIC := {
@@ -168,7 +196,15 @@ const FIRE_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
+			Const.VALUE : {
+				"RAW_ESS" : 5
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		}
 	}
 const WATER_SOURCE_BASIC := {
@@ -195,7 +231,15 @@ const WATER_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
+			Const.VALUE : {
+				"RAW_ESS" : 5
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		}
 	}
 const MIND_SOURCE_BASIC := {
@@ -223,7 +267,15 @@ const MIND_SOURCE_BASIC := {
 			},
 		},
 		Const.UPGRADE : {
-			Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
+			Const.LENGTH : 1,
+			Const.LIMIT : 5,
+			Const.VALUE : {
+				"RAW_ESS" : 5
+			},
+			Const.LOCAL_MODIFIERS : [{
+				Const.LOCAL_MOD_TARGET : Const.LEVEL,
+				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN,
+			}]
 		}
 	}
 const FOCUS_BASIC := {

@@ -9,7 +9,7 @@ var current_level : int
 
 var completed : bool
 
-func _init(_coord : Vector2, _object_key : String, _current_level : int = 1):
+func _init(_coord : Vector2, _object_key : String, _current_level : int = 0):
 	coord = _coord
 	object_key = _object_key
 	current_level = _current_level
@@ -41,7 +41,7 @@ func step(_delta : float):
 
 # complete the current job
 func complete_upgrade():
-	if(upgrade_length > 0 && upgrade_progress < (upgrade_length * current_level)):
+	if(upgrade_length > 0 && upgrade_progress < ((current_level + 1) * upgrade_length)):
 		return
 	upgrade_complete.emit()
 	running = false
@@ -53,5 +53,5 @@ func get_progress() -> float:
 func get_progress_percent() -> float:
 	if(upgrade_length <= 0):
 		return -1.0
-	return upgrade_progress * 100.0 / (upgrade_length * current_level)
+	return upgrade_progress * 100.0 / ((current_level + 1) * upgrade_length)
 	

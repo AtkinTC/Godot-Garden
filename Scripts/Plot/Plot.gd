@@ -8,7 +8,7 @@ var available : bool = false
 var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
-var level : int = 0
+var level : int = -1
 
 var paused : bool = false
 
@@ -32,7 +32,7 @@ func purchase_plot():
 	GardenManager.add_available_plots()
 
 #purchase and insert object to the plot
-func purchase_object(_object_key : String = "", _level : int = 1):
+func purchase_object(_object_key : String = "", _level : int = 0):
 	if(!owned):
 		return false
 	if(!get_object_type().get(Const.REMOVABLE, true) || under_construction):
@@ -59,7 +59,7 @@ func purchase_object(_object_key : String = "", _level : int = 1):
 	insert_object(temp_object_key, _level)
 
 #insert object to the plot
-func insert_object(_object_key : String = "", _level : int = 1, skip_build : bool = false):
+func insert_object(_object_key : String = "", _level : int = 0, skip_build : bool = false):
 	if(_object_key == ""):
 		object_key = ObjectsManager.get_selected_object_key()
 	else:
@@ -123,15 +123,13 @@ func setup_components(build_complete : bool = false):
 func is_ready_for_upgrade() -> bool:
 	if(!owned):
 		return false
-	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
+	if(!get_object_type().has(Const.UPGRADE) || level < 0 || under_construction):
 		return false
 	return true
 
 #apply upgrade action to plot object
 func upgrade_object():
-	if(!owned):
-		return false
-	if(!get_object_type().has(Const.UPGRADE) || level < 1 || under_construction):
+	if(!is_ready_for_upgrade()):
 		return false
 	
 	var purchase_props := {

@@ -49,7 +49,7 @@ const REBUY := "rebuy"
 const PRICE_MODIFIER_FLAT_LEVEL := "flat_level"
 const PRICE_MODIFIER_EXP_LEVEL := "exp_level"
 
-const LOCAL_MODIFIERS := "price_modifiers"
+const LOCAL_MODIFIERS := "local_modifiers"
 const LOCAL_MOD_TARGET := "target"
 const LOCAL_MOD_TYPE := "type"
 const TYPE_LIN := "linear"

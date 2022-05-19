@@ -58,10 +58,13 @@ static func can_afford_purchase_internal(total_price : Dictionary) -> bool:
 
 # applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
 static func get_modifed_supply_values(props : Dictionary):
+	var base_value = get_target_attribute(props).get(Const.VALUE, {})
+	return modify_supply_values(base_value, props)
+
+static func get_target_attribute(props : Dictionary):
 	var source_category = props.get(Const.MOD_TARGET_CAT)
 	var source_key = props.get(Const.MOD_TARGET_KEY)
 	var value_type = props.get(Const.MOD_TYPE)
-	
 	var attr : Dictionary
 	if(props.has(Const.VALUE_PATH)):
 		attr = Database.get_entry(source_category, source_key)
@@ -69,9 +72,7 @@ static func get_modifed_supply_values(props : Dictionary):
 			attr = attr.get(key, {})
 	else:
 		attr = Database.get_entry_attr(source_category, source_key, value_type, {})
-			
-	var base_value = attr.get(Const.VALUE, {})
-	return modify_supply_values(base_value, props)
+	return attr
 
 # applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
 # 	Global Mods : global value modifiers that affect the defined MOD_TARGET and MOD_TYPE
@@ -118,7 +119,9 @@ static func get_local_source_modifier(props : Dictionary):
 	var source_category = props.get(Const.MOD_TARGET_CAT, "")
 	var source_key = props.get(Const.MOD_TARGET_KEY, "")
 	var source_type = props.get(Const.MOD_TYPE, "")
-	var modifiers : Array = Database.get_entry_attr(source_category, source_key, source_type, {}).get(Const.LOCAL_MODIFIERS, [])
+	#var modifiers : Array = Database.get_entry_attr(source_category, source_key, source_type, {}).get(Const.LOCAL_MODIFIERS, [])
+	
+	var modifiers : Array = get_target_attribute(props).get(Const.LOCAL_MODIFIERS, [])
 	
 	if(modifiers == null || modifiers.size() == 0):
 		return 1.0

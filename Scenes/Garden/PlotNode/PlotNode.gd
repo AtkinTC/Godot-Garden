@@ -53,8 +53,8 @@ func update_display() -> void:
 		display_label.visible = false
 	elif(plot.get_object_key()):
 		var display_name := str(plot.get_object_type()[Const.DISPLAY_NAME])
-		if(plot.level > 1):
-			display_name += " " + str(plot.level)
+		if(plot.level > 0):
+			display_name += " " + str(plot.level + 1)
 		display_label.text = display_name
 	else:
 		display_label.text = "Empty"
