@@ -18,7 +18,8 @@ enum Direction {RIGHT = 1, LEFT = 2, TOP = 4, BOTTOM = 8, BOTTOM_RIGHT = 9, BOTT
 @export_range(0, 100, 1) var padding_y : float
 
 var _tooltip: Control
-var _timer: Timer
+var _open_timer: Timer
+var _close_timer : Timer
 var _mouse_inside_owner : bool
 var _mouse_inside_tooltip : bool
 var _mouseover_updated : bool
@@ -54,15 +55,22 @@ func _ready() -> void:
 	_tooltip.mouse_exited.connect(_on_mouse_exited_tooltip)
 	
 	# initialize the timer
-	_timer = Timer.new()
-	_timer.one_shot = true
-	add_child(_timer)
+	_open_timer = Timer.new()
+	_open_timer.one_shot = true
+	_open_timer.timeout.connect(open_tooltip)
+	add_child(_open_timer)
+	_close_timer = Timer.new()
+	_close_timer.one_shot = true
+	_close_timer.timeout.connect(close_tooltip)
+	add_child(_close_timer)
 	
 	# default to hide
 	_tooltip.hide()
 	
-	if(_tooltip.has_signal("close_tooltip")):
-		_tooltip.close_tooltip.connect(close_tooltip)
+	if(_tooltip.has_signal("trigger_close_tooltip")):
+		_tooltip.trigger_close_tooltip.connect(_on_trigger_close_tooltip)
+	
+	self.tree_exiting.connect(_on_tree_exiting)
 
 func _process(_delta: float) -> void:
 	if(_force_close):
@@ -71,17 +79,11 @@ func _process(_delta: float) -> void:
 		open_tooltip()
 	elif(_mouseover_updated):
 		if(_mouse_inside_owner || _mouse_inside_tooltip):
-			if(!_timer.timeout.is_connected(open_tooltip)):
-				_timer.timeout.connect(open_tooltip)
-			if(_timer.timeout.is_connected(close_tooltip)):
-				_timer.timeout.disconnect(close_tooltip)
-			_timer.start(open_delay)
+			_open_timer.start(open_delay)
+			_close_timer.stop()
 		else:
-			if(!_timer.timeout.is_connected(close_tooltip)):
-				_timer.timeout.connect(close_tooltip)
-			if(_timer.timeout.is_connected(open_tooltip)):
-				_timer.timeout.disconnect(open_tooltip)
-			_timer.start(close_delay)
+			_close_timer.start(close_delay)
+			_open_timer.stop()
 		_mouseover_updated = false
 	
 	if _tooltip.visible:
@@ -188,7 +190,7 @@ func calculate_tooltip_position() -> Vector2:
 func open_tooltip() -> void:
 	if(_tooltip.has_method("_on_tooltip_open")):
 		_tooltip._on_tooltip_open()
-	_timer.stop()
+	_open_timer.stop()
 	_tooltip.show()
 	_mouseover_updated = false
 	_force_open = false
@@ -197,11 +199,14 @@ func open_tooltip() -> void:
 func close_tooltip() -> void:
 	if(_tooltip.has_method("_on_tooltip_close")):
 		_tooltip._on_tooltip_close()
-	_timer.stop()
+	_close_timer.stop()
 	_tooltip.hide()
 	_mouseover_updated = false
 	_force_open = false
 	_force_close = false
+
+func _on_tree_exiting() -> void:
+	_tooltip.queue_free()
 
 func _on_mouse_entered_owner() -> void:
 	if(!_mouse_inside_owner):
@@ -222,3 +227,10 @@ func _on_mouse_exited_tooltip() -> void:
 	if(_mouse_inside_tooltip):
 		_mouse_inside_tooltip = false
 		_mouseover_updated = true
+
+func _on_trigger_close_tooltip():
+	_force_close = true
+	_open_timer.stop()
+	_close_timer.stop()
+	_mouse_inside_owner = false
+	_mouse_inside_tooltip = false
