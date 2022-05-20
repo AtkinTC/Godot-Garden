@@ -24,7 +24,7 @@ var plot_content : PlotContent
 func _ready():
 	plot_button.pressed.connect(_on_plot_button_pressed)
 	if(plot_coord != null):
-		GardenManager.get_plot(plot_coord).plot_object_changed.connect(_on_plot_object_changed)
+		GardenManager.get_plot(plot_coord).plot_updated.connect(_on_plot_updated)
 	update_display()
 
 func set_plot_coord(_plot_coord : Vector2) -> void:
@@ -40,11 +40,15 @@ func update_display() -> void:
 		return
 	
 	# hide plot if not owned and not available
-	if(!plot.is_owned() && !plot.is_available()):
+	if(!plot.is_visible() || (!plot.is_owned() && !plot.is_available())):
 		for child in get_children():
 			if(child.has_method("set_visible")):
 				child.set_visible(false)
 		return
+	
+	for child in get_children():
+		if(child.has_method("set_visible")):
+			child.set_visible(true)
 	
 	# set plot display label
 	display_label.visible = true
@@ -85,5 +89,6 @@ func _on_plot_button_pressed():
 	else:
 		ActionManager.apply_current_action_to_plot(plot_coord)
 
-func _on_plot_object_changed():
-	update_display()
+func _on_plot_updated(coord : Vector2):
+	if(plot_coord == coord):
+		update_display()

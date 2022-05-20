@@ -69,10 +69,10 @@ func update_display():
 
 func set_plot_coord(_plot_coord : Vector2):
 	if(_plot_coord != null):
-		if(GardenManager.get_plot(plot_coord).plot_object_changed.is_connected(_on_plot_object_changed)):
-			GardenManager.get_plot(plot_coord).plot_object_changed.disconnect(_on_plot_object_changed)
+		if(GardenManager.get_plot(plot_coord).plot_updated.is_connected(_on_plot_updated)):
+			GardenManager.get_plot(plot_coord).plot_updated.disconnect(_on_plot_updated)
 		plot_coord = _plot_coord
-		GardenManager.get_plot(plot_coord).plot_object_changed.connect(_on_plot_object_changed)
+		GardenManager.get_plot(plot_coord).plot_updated.connect(_on_plot_updated)
 
 func _on_tooltip_open():
 	update_display()
@@ -80,6 +80,7 @@ func _on_tooltip_open():
 func _on_tooltip_close():
 	pass
 
-func _on_plot_object_changed():
-	update_display()
+func _on_plot_updated(coord : Vector2):
+	if(plot_coord == coord):
+		update_display()
 

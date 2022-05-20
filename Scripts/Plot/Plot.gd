@@ -1,14 +1,15 @@
 class_name Plot
 
-signal plot_object_changed()
-signal plot_ownership_changed()
+signal plot_updated(coord : Vector2)
 
 var owned : bool = false
 var available : bool = false
+var visible : bool = false
 var coord : Vector2 = Vector2.ZERO
 var object_key : String = ""
 var components : Dictionary = {}
 var level : int = -1
+var vision_range : int = 1
 
 var paused : bool = false
 
@@ -28,7 +29,7 @@ func purchase_plot():
 	
 	# purchase plot
 	owned = true
-	plot_ownership_changed.emit()
+	plot_updated.emit(coord)
 	GardenManager.add_available_plots()
 
 #purchase and insert object to the plot
@@ -74,7 +75,7 @@ func insert_object(_object_key : String = "", _level : int = 0, skip_build : boo
 	ObjectsManager.adjust_object_count(object_key, 1)
 	apply_set_object(skip_build)
 	
-	plot_object_changed.emit()
+	plot_updated.emit(coord)
 	
 	return true
 
@@ -83,7 +84,7 @@ func apply_set_object(skip_build : bool = false):
 	clear_components()
 	setup_components(skip_build)
 	
-	plot_object_changed.emit()
+	plot_updated.emit(coord)
 
 func clear_components():
 	for comp in components.values():
@@ -147,7 +148,7 @@ func upgrade_object():
 	components[Const.UPGRADE] = comp
 	under_construction = true
 	
-	plot_object_changed.emit()
+	plot_updated.emit(coord)
 	
 	return true
 
@@ -164,7 +165,7 @@ func remove_object():
 	object_key = ""
 	clear_components()
 	
-	plot_object_changed.emit()
+	plot_updated.emit(coord)
 
 func toggle_pause():
 	pause_object(!paused)
@@ -180,6 +181,17 @@ func pause_object(_paused: bool = true):
 func step(_delta : float):
 	for comp_key in components.keys():
 		(components[comp_key] as PlotComponent).step(_delta)
+
+func contains_object():
+	return (object_key != null && object_key != "")
+
+func set_visible(_visible : bool):
+	if(visible != _visible):
+		visible = _visible
+		plot_updated.emit(coord)
+
+func is_visible() -> bool:
+	return visible
 
 func set_coord(_coord : Vector2):
 	coord = _coord
@@ -211,10 +223,13 @@ func set_owned(_owned : bool):
 func is_owned() -> bool:
 	return owned
 
+func get_vision_range() -> int:
+	return vision_range
+
 func _on_build_complete():
 	clear_components()
 	setup_components(true)
-	plot_object_changed.emit()
+	plot_updated.emit(coord)
 
 func _on_upgrade_complete():
 	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)

@@ -1,6 +1,8 @@
 extends Node
 
 signal garden_resized()
+signal garden_state_changed()
+signal garden_plot_updated(coord : Vector2)
 
 var plots : Array2D
 var garden_rect := Rect2(-1, -1, 3, 3)
@@ -34,12 +36,14 @@ func setup_plots(owned : bool = false):
 				plot.set_coord(coord)
 				if(owned):
 					plot.set_owned(owned)
-				plot.plot_ownership_changed.connect(count_owned_plots)
+				plot.plot_updated.connect(_on_plot_updated)
 				set_plot(coord, plot)
 	
-	# update plot availability based on neighbors
+	
 	for x in plots.range_x():
 		for y in plots.range_y():
+			update_plot_visibility_outgoing(Vector2(x,y))
+			# update plot availability based on neighbors
 			for coord in [Vector2(-1,0), Vector2(1,0), Vector2(0,-1), Vector2(0,1)]:
 				var neighbor = plots.get_at(Vector2(x,y) + coord)
 				if(neighbor != null && neighbor.is_owned()):
@@ -74,7 +78,8 @@ func add_available_plots():
 	var position : Vector2 = garden_rect.position + Vector2(-int(exp_w), -int(exp_n))
 	var size : Vector2 = garden_rect.size + Vector2(int(exp_w) + int(exp_e), int(exp_n) + int(exp_s))
 	
-	set_garden_rect(Rect2(position, size))
+	if(position != garden_rect.position || size != garden_rect.size):
+		set_garden_rect(Rect2(position, size))
 
 # count all owned plots in the garden
 func count_owned_plots():
@@ -82,7 +87,7 @@ func count_owned_plots():
 	for x in plots.range_x():
 		for y in plots.range_y():
 			owned_plots += int(plots.get_at(Vector2(x,y)).is_owned())
-					
+
 # process step time for all garden plots
 func step_plots(step_time : float):
 	for x in plots.range_x():
@@ -139,3 +144,35 @@ func get_direction_alignment(dir : Vector2) -> Dictionary:
 	elif(dir.y < 0):
 		alignment["EARTH_ESS"] = abs(dir.y)
 	return alignment
+
+func _on_plot_updated(coord : Vector2):
+	var updated_plot : Plot = plots.get_at(coord)
+	
+	if(updated_plot == null):
+		return false
+	
+	update_plot_visibility_outgoing(coord)
+	
+	count_owned_plots()
+
+func update_plot_visibility_outgoing(coord : Vector2):
+	var updated_plot : Plot = plots.get_at(coord)
+	
+	if(updated_plot == null):
+		return false
+	
+	if(updated_plot.is_owned() || coord.is_equal_approx(Vector2.ZERO)):
+		updated_plot.set_visible(true)
+	
+	if(updated_plot.is_owned() && updated_plot.contains_object()):
+		var r : int = updated_plot.get_vision_range()
+		var x_range = range(-r, r+1)
+		for x in x_range:
+			var ry = (r-(abs(x)))
+			var y_range = range(-ry, ry+1)
+			for y in y_range:
+				if(x == 0 && y == 0):
+					continue
+				var vis_plot : Plot = plots.get_at(coord + Vector2(x,y))
+				if(vis_plot != null):
+					vis_plot.set_visible(true)
