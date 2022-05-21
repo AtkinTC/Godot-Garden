@@ -25,6 +25,7 @@ const REMOVABLE := "removable"
 
 const BUILD := "BUILD"
 const LENGTH := "length"
+const SPEED := "speed"
 
 const UPGRADE_OBJECT := "upgrade_object"
 
@@ -37,6 +38,8 @@ const JOB_SPEED_UNSATISFIED := "job_speed_unsatisfied"
 const JOB_COMPLETION_REWARD := "job_completion_reward"
 
 const PASSIVE := "PASSIVE"
+
+const VISION := "VISION"
 
 ## ENHANCEMENT ##
 const ENHANCEMENT := "ENHANCEMENT"

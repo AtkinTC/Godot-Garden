@@ -150,6 +150,16 @@ _global_script_classes=[{
 "path": "res://Scenes/UI/SimpleSupplyDisplay.gd"
 }, {
 "base": "RefCounted",
+"class": &"Structure",
+"language": &"GDScript",
+"path": "res://Scripts/Structure/Structure.gd"
+}, {
+"base": "RefCounted",
+"class": &"StructureDAO",
+"language": &"GDScript",
+"path": "res://Scripts/Structure/StructureDAO.gd"
+}, {
+"base": "RefCounted",
 "class": &"SupplyData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/SupplyData.gd"
@@ -228,6 +238,8 @@ _global_script_class_icons={
 "PurchaseUtil": "",
 "SelectMenu": "",
 "SimpleSupplyDisplay": "",
+"Structure": "",
+"StructureDAO": "",
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayContainer": "",
@@ -257,6 +269,7 @@ ModifiersManager="*res://Singletons/ModifiersManager.gd"
 Database="*res://Singletons/Database.gd"
 SignalBus="*res://Singletons/SignalBus.gd"
 EnhancementManager="*res://Singletons/EnhancementManager.gd"
+StructuresManager="*res://Singletons/StructuresManager.gd"
 
 [display]
 
