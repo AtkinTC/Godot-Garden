@@ -164,7 +164,7 @@ func update_plot_visibility_outgoing(coord : Vector2):
 	if(updated_plot.is_owned() || coord.is_equal_approx(Vector2.ZERO)):
 		updated_plot.set_visible(true)
 	
-	if(updated_plot.is_owned() && updated_plot.has_structure()):
+	if(updated_plot.is_owned() && updated_plot.has_structure() && updated_plot.get_structure().is_active()):
 		var r : int = updated_plot.get_structure().get_structure_data().get_vision_distance()
 		var x_range = range(-r, r+1)
 		for x in x_range:

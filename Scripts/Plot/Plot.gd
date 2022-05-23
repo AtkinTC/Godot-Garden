@@ -97,7 +97,7 @@ func remove_structure():
 		return false
 	
 	StructuresManager.adjust_structure_count(plot_structure.get_structure_key(), -1)
-	plot_structure.queue_free()
+	plot_structure.cleanup_before_delete()
 	plot_structure = null
 	plot_updated.emit(coord)
 
@@ -150,4 +150,5 @@ func is_owned() -> bool:
 	return owned
 
 func _on_structure_updated(_world_coord : Vector2):
-	pass
+	if(_world_coord == coord):
+		plot_updated.emit(coord)

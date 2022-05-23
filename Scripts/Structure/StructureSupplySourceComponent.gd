@@ -34,7 +34,7 @@ func recalculate():
 	final_values = PurchaseUtil.get_modifed_supply_values(mod_prop)
 	
 	for supply_key in final_values.keys():
-		SupplyManager.set_source(source_key, supply_key, "StructureSupplySourceComponent::"+str(world_coord), final_values[supply_key])
+		SupplyManager.set_source(source_key, supply_key, get_source_id(), final_values[supply_key])
 
 func get_base_values() -> Dictionary:
 	return base_values
@@ -45,7 +45,10 @@ func get_values() -> Dictionary:
 # perform needed cleanup, to be called before this component would be deleted
 func cleanup_before_delete():
 	for supply_key in final_values.keys():
-		SupplyManager.remove_source(source_key, supply_key, str(world_coord))
+		SupplyManager.remove_source(source_key, supply_key, get_source_id())
+
+func get_source_id():
+	return "StructureSupplySourceComponent::"+str(world_coord)
 
 func _on_modifiers_updated():
 	recalculate()

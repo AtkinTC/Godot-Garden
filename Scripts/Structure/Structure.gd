@@ -141,3 +141,8 @@ func refresh_structure():
 			components[Const.CAPACITY] = component
 		
 	structure_updated.emit(world_coord)
+
+func cleanup_before_delete():
+	for component in components.values():
+		component.cleanup_before_delete()
+		
