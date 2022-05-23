@@ -8,13 +8,13 @@ class_name SelectMenu
 
 var buttons : Dictionary
 
-enum MenuTypeEnum {OBJECTS, ACTIONS, ENHANCEMENT}
-@export var menu_type: MenuTypeEnum = MenuTypeEnum.OBJECTS
+enum MenuTypeEnum {STRUCTURES, ACTIONS, ENHANCEMENT}
+@export var menu_type: MenuTypeEnum = MenuTypeEnum.STRUCTURES
 
 func _ready():
-	if(menu_type == MenuTypeEnum.OBJECTS):
-		ObjectsManager.objects_status_updated.connect(_on_status_updated)
-		ObjectsManager.selected_object_changed.connect(_on_selected_changed)
+	if(menu_type == MenuTypeEnum.STRUCTURES):
+		StructuresManager.structures_updated.connect(_on_status_updated)
+		StructuresManager.selected_structure_updated.connect(_on_selected_changed)
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		ActionManager.actions_status_updated.connect(_on_status_updated)
 		ActionManager.selected_action_changed.connect(_on_selected_changed)
@@ -49,8 +49,8 @@ func reset():
 	highlight_selected_button()
 
 func get_keys() -> Array:
-	if(menu_type == MenuTypeEnum.OBJECTS):
-		return ObjectsManager.get_available_object_keys()
+	if(menu_type == MenuTypeEnum.STRUCTURES):
+		return StructuresManager.get_available_structure_keys()
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_available_action_keys()
 	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
@@ -59,8 +59,8 @@ func get_keys() -> Array:
 		return []
 
 func get_type(key : String) -> Dictionary:
-	if(menu_type == MenuTypeEnum.OBJECTS):
-		return ObjectsManager.get_object_type(key)
+	if(menu_type == MenuTypeEnum.STRUCTURES):
+		return StructuresManager.get_structure_type(key)
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_action_type(key)
 	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
@@ -69,8 +69,8 @@ func get_type(key : String) -> Dictionary:
 		return {}
 
 func get_selected_key() -> String:
-	if(menu_type == MenuTypeEnum.OBJECTS):
-		return ObjectsManager.get_selected_object_key()
+	if(menu_type == MenuTypeEnum.STRUCTURES):
+		return StructuresManager.get_selected_structure_key()
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		return ActionManager.get_selected_action_key()
 	elif(menu_type == MenuTypeEnum.ENHANCEMENT):
@@ -87,9 +87,9 @@ func _on_button_pressed(key : String = ""):
 	if(key == null || key == ""):
 		return
 	
-	if(menu_type == MenuTypeEnum.OBJECTS):
-		ObjectsManager.set_selected_object_key(key)
-		ActionManager.set_selected_action_key("PURCHASE_PLOT_OBJECT")
+	if(menu_type == MenuTypeEnum.STRUCTURES):
+		StructuresManager.set_selected_structure_key(key)
+		ActionManager.set_selected_action_key("PURCHASE_PLOT_STRUCTURE")
 	elif(menu_type == MenuTypeEnum.ACTIONS):
 		ActionManager.set_selected_action_key(key)
 	elif(menu_type == MenuTypeEnum.ENHANCEMENT):

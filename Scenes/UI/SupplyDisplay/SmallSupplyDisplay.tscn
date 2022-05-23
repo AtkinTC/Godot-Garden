@@ -1,14 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://2t8itnbiunjl"]
+[gd_scene load_steps=2 format=3 uid="uid://6pxcavp3f7li"]
 
-[ext_resource type="Script" path="res://Scenes/UI/SimpleSupplyDisplay.gd" id="1_4mxnk"]
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay/SmallSupplyDisplay.gd" id="1_kwq2e"]
 
-[node name="SimpleSupplyDisplay" type="Control"]
+[node name="SmallSupplyDisplay" type="Control"]
 minimum_size = Vector2(0, 20)
 offset_right = 100.0
 offset_bottom = 25.0
 size_flags_horizontal = 3
 mouse_filter = 2
-script = ExtResource( "1_4mxnk" )
+script = ExtResource( "1_kwq2e" )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0

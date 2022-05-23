@@ -6,14 +6,8 @@ var owned : bool = false
 var available : bool = false
 var visible : bool = false
 var coord : Vector2 = Vector2.ZERO
-var object_key : String = ""
-var components : Dictionary = {}
-var level : int = -1
-var vision_range : int = 1
 
-var paused : bool = false
-
-var under_construction : bool = false
+var plot_structure : Structure
 
 func purchase_plot():
 	if(owned || !available):
@@ -32,158 +26,96 @@ func purchase_plot():
 	plot_updated.emit(coord)
 	GardenManager.add_available_plots()
 
-#purchase and insert object to the plot
-func purchase_object(_object_key : String = "", _level : int = 0):
+func purchase_structure(_structure_key : String = ""):
 	if(!owned):
 		return false
-	if(!get_object_type().get(Const.REMOVABLE, true) || under_construction):
+	if(plot_structure != null):
 		return false
 	
-	var temp_object_key
-	if(_object_key == ""):
-		temp_object_key = ObjectsManager.selected_object_key
+	var temp_structure_key
+	if(_structure_key == ""):
+		temp_structure_key = StructuresManager.get_selected_structure_key()
 	else:
-		temp_object_key = _object_key
+		temp_structure_key = _structure_key
 	
-	if(temp_object_key == null || temp_object_key == ""):
+	if(temp_structure_key == null || temp_structure_key == ""):
 		return false
+	
+	var structure_data : StructureDAO = StructureDAO.new(temp_structure_key)
 	
 	var purchase_props := {
 		Const.MOD_TARGET_CAT : Const.OBJECT,
-		Const.MOD_TARGET_KEY : temp_object_key,
-		Const.MOD_TYPE : Const.PURCHASE,
-		Const.LEVEL : _level
+		Const.MOD_TARGET_KEY : temp_structure_key,
+		Const.MOD_TYPE : Const.BUILD,
+		Const.COUNT : structure_data.get_count()
 	}
 	if(!PurchaseUtil.make_purchase(purchase_props)):
 		return
 			
-	insert_object(temp_object_key, _level)
+	insert_structure(_structure_key)
 
-#insert object to the plot
-func insert_object(_object_key : String = "", _level : int = 0, skip_build : bool = false):
-	if(_object_key == ""):
-		object_key = ObjectsManager.get_selected_object_key()
+func insert_structure(_structure_key : String = ""):
+	var temp_structure_key
+	if(_structure_key == ""):
+		temp_structure_key = StructuresManager.get_selected_structure_key()
 	else:
-		object_key = _object_key
+		temp_structure_key = _structure_key
 	
-	var object_type := get_object_type()
-	
-	if(object_type == null || object_type.size() == 0):
+	if(temp_structure_key == null || temp_structure_key == ""):
 		return false
 	
-	level = _level
-	ObjectsManager.adjust_object_count(object_key, 1)
-	apply_set_object(skip_build)
-	
-	plot_updated.emit(coord)
-	
-	return true
-
-#reset the plot components for the currently applied object type
-func apply_set_object(skip_build : bool = false):
-	clear_components()
-	setup_components(skip_build)
-	
+	StructuresManager.adjust_structure_count(temp_structure_key, 1)
+	plot_structure = Structure.new(temp_structure_key, coord)
+	plot_structure.start_building()
+	plot_structure.structure_updated.connect(_on_structure_updated)
 	plot_updated.emit(coord)
 
-func clear_components():
-	for comp in components.values():
-		comp.cleanup_before_delete()
-	components = {}
-
-func setup_components(build_complete : bool = false):
-	var object_type := get_object_type()
-	
-	#if object needs to be built, then only setup BuildPlotComponent
-	if(!build_complete && object_type.get(Const.BUILD, null) != null && object_type.get(Const.BUILD, {}).get(Const.LENGTH, 0) > 0):
-		var comp := BuildPlotComponent.new(coord, object_key)
-		comp.build_complete.connect(_on_build_complete)
-		components[Const.BUILD] = comp
-		under_construction = true
-		return
-	
-	if(object_type.has(Const.UNLOCKS)):
-		for unlock in object_type[Const.UNLOCKS]:
-			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
-	
-	if(object_type.has(Const.SOURCE)):
-		var source : Dictionary = object_type[Const.SOURCE]
-		if(source.has(Const.GAIN)):
-			var comp := PassivePlotComponent.new(coord, object_key, level)
-			components[Const.PASSIVE] = comp
-		if(source.has(Const.CAPACITY)):
-			var comp := CapacityPlotComponent.new(coord, object_key, level)
-			components[Const.CAPACITY] = comp
-	
-	if(object_type.get(Const.LENGTH, null) != null):
-		var comp := JobPlotComponent.new(coord, object_key, level)
-		components[Const.JOB] = comp
-	
-	under_construction = false
-
-func is_ready_for_upgrade() -> bool:
-	if(!owned):
+func upgrade_structure():
+	if(plot_structure == null):
 		return false
-	if(!get_object_type().has(Const.UPGRADE) || level < 0 || under_construction):
-		return false
-	return true
-
-#apply upgrade action to plot object
-func upgrade_object():
-	if(!is_ready_for_upgrade()):
+	if(!plot_structure.can_be_upgraded()):
 		return false
 	
 	var purchase_props := {
 		Const.MOD_TARGET_CAT : Const.OBJECT,
-		Const.MOD_TARGET_KEY : object_key,
+		Const.MOD_TARGET_KEY : plot_structure.get_structure_key(),
 		Const.MOD_TYPE : Const.UPGRADE,
-		Const.LEVEL : level
+		Const.LEVEL : plot_structure.get_upgrade_level()
 	}
 	if(!PurchaseUtil.make_purchase(purchase_props)):
 		return false
 	
-	#setup upgrade component progress upgrade job
-	var comp := UpgradePlotComponent.new(coord, object_key, level)
-	comp.upgrade_complete.connect(_on_upgrade_complete)
-	components[Const.UPGRADE] = comp
-	under_construction = true
-	
+	plot_structure.start_upgrading()
 	plot_updated.emit(coord)
-	
-	return true
 
-#remove object from plot
-func remove_object():
+func remove_structure():
 	if(!owned):
 		return false
-		
-	var object_type := get_object_type()
-	if(!object_type.get(Const.REMOVABLE, true)):
+	if(plot_structure == null):
+		return false
+	if(!plot_structure.get_structure_data().is_removable()):
 		return false
 	
-	ObjectsManager.adjust_object_count(object_key, -1)
-	object_key = ""
-	clear_components()
-	
+	StructuresManager.adjust_structure_count(plot_structure.get_structure_key(), -1)
+	plot_structure.queue_free()
+	plot_structure = null
 	plot_updated.emit(coord)
 
 func toggle_pause():
-	pause_object(!paused)
+	if(plot_structure == null):
+		return false
+	pause_structure(!plot_structure.is_paused())
 
-func pause_object(_paused: bool = true):
-	if(object_key == null || object_key == ""):
-		return
+func pause_structure(_paused: bool = true):
+	if(plot_structure == null):
+		return false
 		
-	paused = _paused
-	for comp_key in components.keys():
-		(components[comp_key] as PlotComponent).set_running(!paused)
+	plot_structure.set_paused(_paused)
 
 func step(_delta : float):
-	for comp_key in components.keys():
-		(components[comp_key] as PlotComponent).step(_delta)
-
-func contains_object():
-	return (object_key != null && object_key != "")
+	if(plot_structure == null):
+		return false
+	plot_structure.step(_delta)
 
 func set_visible(_visible : bool):
 	if(visible != _visible):
@@ -199,17 +131,11 @@ func set_coord(_coord : Vector2):
 func get_coord() -> Vector2:
 	return coord
 
-func get_component(comp_key : String):
-	return components.get(comp_key)
+func has_structure():
+	return (plot_structure != null)
 
-func get_object_key() -> String:
-	return object_key
-
-func get_object_type() -> Dictionary:
-	return ObjectsManager.get_object_type(object_key)
-
-func get_level() -> int:
-	return level
+func get_structure() -> Structure:
+	return plot_structure
 
 func set_available(_available : bool):
 	available = _available
@@ -223,19 +149,5 @@ func set_owned(_owned : bool):
 func is_owned() -> bool:
 	return owned
 
-func get_vision_range() -> int:
-	return vision_range
-
-func _on_build_complete():
-	clear_components()
-	setup_components(true)
-	plot_updated.emit(coord)
-
-func _on_upgrade_complete():
-	var upgrade : Dictionary = get_object_type().get(Const.UPGRADE)
-	if(upgrade.has(Const.UPGRADE_OBJECT)):
-		# replace with the target upgrade object
-		insert_object(upgrade.get(Const.UPGRADE_OBJECT), 1, true)
-	else:
-		# level up current object
-		insert_object(object_key, level + 1, true)
+func _on_structure_updated(_world_coord : Vector2):
+	pass

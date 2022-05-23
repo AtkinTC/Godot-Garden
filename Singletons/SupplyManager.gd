@@ -38,6 +38,18 @@ func setup_supply(supply_key : String):
 	supply.locked = supply_def.get(Const.LOCKED, false)
 	supplies[supply_key] = supply
 
+func set_source(source_key : String, supply_key : String, source_id : String, value : float):
+	if(source_key == Const.CAPACITY):
+		set_capacity_source(supply_key, source_id, value)
+	elif(source_key == Const.GAIN):
+		set_change_source(supply_key, source_id, value)
+
+func remove_source(source_key : String, supply_key : String, source_id : String):
+	if(source_key == Const.CAPACITY):
+		remove_capacity_source(supply_key, source_id)
+	elif(source_key == Const.GAIN):
+		remove_change_source(supply_key, source_id)
+
 # set a supply capacity source, inserting or overwriting if the source already exists
 func set_capacity_source(supply_key : String, source_id : String, capacity : float):
 	if(!capacity_sources.has(supply_key)):

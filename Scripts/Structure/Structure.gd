@@ -1,4 +1,5 @@
 class_name Structure
+extends Object
 
 #############################
 # Structure object is the cotent of a Plot that can be placed by the player
@@ -37,6 +38,9 @@ func get_structure_data() -> StructureDAO:
 func get_world_coord() -> Vector2:
 	return world_coord
 
+func get_component(type_key : String) -> StructureComponenet:
+	return components.get(type_key, null)
+
 func is_active() -> bool:
 	return active
 
@@ -48,6 +52,17 @@ func set_paused(_paused : bool):
 
 func is_paused() -> bool:
 	return paused
+
+func is_building_in_progress() -> bool:
+	return building
+
+func is_upgrading_in_progress() -> bool:
+	return upgrading
+
+func get_work_progress_percent() -> float:
+	if(construction_work_length <= 0):
+		return 100.0
+	return construction_work_progress * 100.0 / construction_work_length
 
 func can_be_upgraded() -> bool:
 	if(!active):
@@ -115,5 +130,14 @@ func refresh_structure():
 	if(active):
 		for unlock in structure_data.get_unlocks():
 			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
-	
+		
+		if(structure_data.get_supply_source_gain() != {}):
+			# setup supply gains componenet
+			var component := StructureSupplySourceComponent.new(world_coord, structure_data.get_structure_key(), Const.GAIN, upgrade_level)
+			components[Const.GAIN] = component
+		if(structure_data.get_supply_source_capacity() != {}):
+			# setup supply 
+			var component := StructureSupplySourceComponent.new(world_coord, structure_data.get_structure_key(), Const.CAPACITY, upgrade_level)
+			components[Const.CAPACITY] = component
+		
 	structure_updated.emit(world_coord)

@@ -1,12 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cto1wj2nvg42j"]
+[gd_scene load_steps=8 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
 [ext_resource type="Script" path="res://Scenes/UI/SelectMenu.gd" id="3_6ld0l"]
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
-[ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay.tscn" id="5_cff8l"]
-[ext_resource type="PackedScene" uid="uid://dy0kddxcd45bs" path="res://Scenes/Garden/PlotNode/PlotNode.tscn" id="8_w1srn"]
+[ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.tscn" id="4_so846"]
+[ext_resource type="PackedScene" uid="uid://ckysx4cxsd1yg" path="res://Scenes/Garden/PlotDisplay/PlotDisplay.tscn" id="6_3kq36"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -129,13 +129,9 @@ text = "Resources"
 [node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
 offset_top = 324.0
 offset_right = 200.0
-offset_bottom = 362.0
+offset_bottom = 324.0
 script = ExtResource( "4_ajn05" )
-
-[node name="SupplyDisplay" parent="UI/H/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "5_cff8l" )]
-anchor_right = 0.0
-offset_right = 200.0
-offset_bottom = 38.0
+supply_display_scene = ExtResource( "4_so846" )
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)
@@ -147,6 +143,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource( "2_754aq" )
+base_plot_node_scene = ExtResource( "6_3kq36" )
 metadata/_edit_use_custom_anchors = false
 
 [node name="UIGrid" type="GridContainer" parent="GardenNode/GardenGrid"]
@@ -162,49 +159,49 @@ columns = 3
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
-[node name="PlotNode1" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay1" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_right = 120.0
 offset_bottom = 120.0
 
-[node name="PlotNode2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 124.0
 offset_right = 244.0
 offset_bottom = 120.0
 
-[node name="PlotNode3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 248.0
 offset_right = 368.0
 offset_bottom = 120.0
 
-[node name="PlotNode4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_top = 124.0
 offset_right = 120.0
 offset_bottom = 244.0
 
-[node name="PlotNode5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 124.0
 offset_top = 124.0
 offset_right = 244.0
 offset_bottom = 244.0
 
-[node name="PlotNode6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 248.0
 offset_top = 124.0
 offset_right = 368.0
 offset_bottom = 244.0
 
-[node name="PlotNode7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_top = 248.0
 offset_right = 120.0
 offset_bottom = 368.0
 
-[node name="PlotNode8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 124.0
 offset_top = 248.0
 offset_right = 244.0
 offset_bottom = 368.0
 
-[node name="PlotNode9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "8_w1srn" )]
+[node name="PlotDisplay9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
 offset_left = 248.0
 offset_top = 248.0
 offset_right = 368.0

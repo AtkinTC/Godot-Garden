@@ -56,11 +56,6 @@ static func can_afford_purchase_internal(total_price : Dictionary) -> bool:
 			return false
 	return true
 
-# applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
-static func get_modifed_supply_values(props : Dictionary):
-	var base_value = get_target_attribute(props).get(Const.VALUE, {})
-	return modify_supply_values(base_value, props)
-
 static func get_target_attribute(props : Dictionary):
 	var source_category = props.get(Const.MOD_TARGET_CAT)
 	var source_key = props.get(Const.MOD_TARGET_KEY)
@@ -73,6 +68,11 @@ static func get_target_attribute(props : Dictionary):
 	else:
 		attr = Database.get_entry_attr(source_category, source_key, value_type, {})
 	return attr
+
+# applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
+static func get_modifed_supply_values(props : Dictionary):
+	var base_value = get_target_attribute(props).get(Const.VALUE, {})
+	return modify_supply_values(base_value, props)
 
 # applies all relevent modifiers to a supply value object (dictionary of supply keys and quantities)
 # 	Global Mods : global value modifiers that affect the defined MOD_TARGET and MOD_TYPE

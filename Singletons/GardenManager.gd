@@ -125,7 +125,7 @@ func get_garden_rect() -> Rect2:
 func set_plot(coord : Vector2, plot : Plot):
 	plots.set_at(coord, plot)
 
-func get_plot(coord : Vector2):
+func get_plot(coord : Vector2) -> Plot:
 	if(plots == null):
 		return null
 	return plots.get_at(coord)
@@ -164,8 +164,8 @@ func update_plot_visibility_outgoing(coord : Vector2):
 	if(updated_plot.is_owned() || coord.is_equal_approx(Vector2.ZERO)):
 		updated_plot.set_visible(true)
 	
-	if(updated_plot.is_owned() && updated_plot.contains_object()):
-		var r : int = updated_plot.get_vision_range()
+	if(updated_plot.is_owned() && updated_plot.has_structure()):
+		var r : int = updated_plot.get_structure().get_structure_data().get_vision_distance()
 		var x_range = range(-r, r+1)
 		for x in x_range:
 			var ry = (r-(abs(x)))

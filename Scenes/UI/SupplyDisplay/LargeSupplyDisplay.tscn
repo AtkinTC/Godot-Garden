@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxv4pu5x3t8rx"]
 
-[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay.gd" id="1_2qgu8"]
-[ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="3_n8sck"]
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.gd" id="1_uvhm8"]
+[ext_resource type="Texture2D" uid="uid://c6iehapq57ncv" path="res://Assets/UI/bar_foreground.png" id="2_d6ey6"]
 
-[node name="SupplyDisplay" type="Control"]
+[node name="LargeSupplyDisplay" type="Control"]
 minimum_size = Vector2(0, 38)
 anchor_right = 1.0
 offset_bottom = 40.0
 grow_horizontal = 2
-script = ExtResource( "1_2qgu8" )
+script = ExtResource( "1_uvhm8" )
 progress_bar_path = NodePath("ProgressBar")
 name_label_path = NodePath("LabelsContainer/NameLabel")
 quantity_label_path = NodePath("LabelsContainer/H/QuantityLabel")
@@ -21,8 +21,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 value = 50.0
 nine_patch_stretch = true
-texture_under = ExtResource( "3_n8sck" )
-texture_progress = ExtResource( "3_n8sck" )
+texture_under = ExtResource( "2_d6ey6" )
+texture_progress = ExtResource( "2_d6ey6" )
 tint_under = Color(0, 0, 0, 1)
 tint_progress = Color(0.392157, 0.392157, 0.392157, 1)
 

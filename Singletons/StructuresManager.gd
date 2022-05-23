@@ -13,7 +13,6 @@ func get_available_structure_keys() -> Array:
 	var available_keys = []
 	for structure_key in Database.get_keys(Const.OBJECT):
 		var structure_data := StructureDAO.new(structure_key)
-		var build_limit := structure_data.get_build_limit()
 		if(structure_data.is_locked() || structure_data.is_disabled()):
 			continue
 		if(structure_data.get_build_data().size() == 0):

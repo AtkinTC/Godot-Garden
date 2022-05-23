@@ -1,5 +1,5 @@
 extends Control
-class_name SupplyLineDisplay
+class_name LineSupplyDisplay
 
 @export_node_path(Label) var supply_name_label_path : NodePath
 @export_node_path(Label) var quantity_label_path : NodePath

@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuq7jvicl8wb8"]
+[gd_scene load_steps=2 format=3 uid="uid://ba3uskm231joc"]
 
-[ext_resource type="Script" path="res://Scenes/UI/SupplyLineDisplay.gd" id="1_mabtq"]
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay/LineSupplyDisplay.gd" id="1_kjbg2"]
 
-[node name="SupplyLineDisplay" type="HBoxContainer"]
+[node name="LineSupplyDisplay" type="HBoxContainer"]
 offset_right = 177.0
 offset_bottom = 20.0
-script = ExtResource( "1_mabtq" )
+script = ExtResource( "1_kjbg2" )
 supply_name_label_path = NodePath("SupplyNameLabel")
 quantity_label_path = NodePath("QuantityLabel")
 

@@ -1,5 +1,5 @@
 extends Control
-class_name SupplyDisplay
+class_name LargeSupplyDisplay
 
 @export_node_path(TextureProgressBar) var progress_bar_path
 @onready var progress_bar : TextureProgressBar = get_node(progress_bar_path) if progress_bar_path else null

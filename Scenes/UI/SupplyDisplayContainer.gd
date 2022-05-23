@@ -1,7 +1,7 @@
 extends VBoxContainer
 class_name SupplyDisplayContainer
 
-@onready var supply_display_scene : PackedScene = preload("res://Scenes/UI/SupplyDisplay.tscn")
+@export var supply_display_scene : PackedScene
 
 var supply_displays_dict : Dictionary = {}
 
@@ -25,7 +25,7 @@ func add_supply_display(_key: String) -> bool:
 	if(supply_displays_dict.has(_key)):
 		return false
 	
-	var supply_display : SupplyDisplay = supply_display_scene.instantiate()
+	var supply_display : LargeSupplyDisplay = supply_display_scene.instantiate()
 	supply_display.set_key(_key)
 	add_child(supply_display)
 	return true

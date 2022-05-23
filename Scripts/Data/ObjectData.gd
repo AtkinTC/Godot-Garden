@@ -4,7 +4,7 @@ const STARTER := {
 		Const.DISPLAY_NAME : "small hearth",
 		Const.LOCKED : false,
 		Const.REMOVABLE : false,
-		Const.PURCHASE : {
+		Const.BUILD : {
 			Const.VALUE : {
 				"RAW_MEMORY" : 5
 			},
@@ -52,17 +52,15 @@ const FOREST := {
 		Const.DISPLAY_NAME : "small forest",
 		Const.LOCKED : true,
 		Const.REMOVABLE : true,
-		Const.PURCHASE : {
+		Const.BUILD : {
 			Const.VALUE : {
-				"RAW_ESS" : 1,
+				"RAW_ESS" : 1
 			},
+			Const.LENGTH : 5,
 			Const.LOCAL_MODIFIERS : [{
 				Const.LOCAL_MOD_TARGET : Const.COUNT,
 				Const.LOCAL_MOD_TYPE : Const.TYPE_LIN
 			}]
-		},
-		Const.BUILD : {
-			Const.LENGTH : 5,
 		},
 		Const.SOURCE : {
 			Const.GAIN : {

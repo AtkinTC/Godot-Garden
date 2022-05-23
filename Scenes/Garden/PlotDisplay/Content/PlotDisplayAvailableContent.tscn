@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://cq2yfpehob08s"]
 
-[ext_resource type="Script" path="res://Scenes/Garden/PlotNode/AvailablePlotContent.gd" id="1_rrg55"]
-[ext_resource type="PackedScene" uid="uid://2t8itnbiunjl" path="res://Scenes/UI/SimpleSupplyDisplay.tscn" id="2_ll3bs"]
+[ext_resource type="Script" path="res://Scenes/Garden/PlotDisplay/Content/PlotDisplayAvailableContent.gd" id="1_we1hx"]
+[ext_resource type="PackedScene" uid="uid://6pxcavp3f7li" path="res://Scenes/UI/SupplyDisplay/SmallSupplyDisplay.tscn" id="2_784eh"]
 
-[node name="AvailablePlotContent" type="VBoxContainer"]
+[node name="PlotDisplayAvailableContent" type="VBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1180.0
 offset_bottom = -620.0
 mouse_filter = 2
-script = ExtResource( "1_rrg55" )
-price_display_scene = ExtResource( "2_ll3bs" )
+script = ExtResource( "1_we1hx" )
+price_display_scene = ExtResource( "2_784eh" )
 display_container_path = NodePath("H")
 
 [node name="Label" type="Label" parent="."]
@@ -28,5 +28,5 @@ offset_right = 100.0
 offset_bottom = 50.0
 mouse_filter = 2
 
-[node name="SimpleSupplyDisplay" parent="H" instance=ExtResource( "2_ll3bs" )]
+[node name="SmallSupplyDisplay" parent="H" instance=ExtResource( "2_784eh" )]
 offset_bottom = 20.0

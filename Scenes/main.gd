@@ -11,7 +11,7 @@ func _init():
 	ModifiersManager.initialize()
 	ActionManager.initialize()
 	SupplyManager.initialize()
-	ObjectsManager.initialize()
+	StructuresManager.initialize()
 	EnhancementManager.initialize()
 	GardenManager.initialize()
 
