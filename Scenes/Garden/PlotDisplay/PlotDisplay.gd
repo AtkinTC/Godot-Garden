@@ -24,7 +24,7 @@ func _ready():
 	if(plot_coord != null):
 		GardenManager.get_plot(plot_coord).plot_updated.connect(_on_plot_updated)
 	for child in content_container.get_children():
-		child.queue_free
+		child.queue_free()
 	update_display()
 
 func set_plot_coord(_plot_coord : Vector2) -> void:

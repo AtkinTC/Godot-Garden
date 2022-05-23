@@ -129,9 +129,14 @@ text = "Resources"
 [node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
 offset_top = 324.0
 offset_right = 200.0
-offset_bottom = 324.0
+offset_bottom = 362.0
 script = ExtResource( "4_ajn05" )
 supply_display_scene = ExtResource( "4_so846" )
+
+[node name="LargeSupplyDisplay" parent="UI/H/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "4_so846" )]
+anchor_right = 0.0
+offset_right = 200.0
+offset_bottom = 38.0
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)

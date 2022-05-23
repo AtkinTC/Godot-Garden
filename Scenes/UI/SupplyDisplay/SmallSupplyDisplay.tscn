@@ -9,6 +9,8 @@ offset_bottom = 25.0
 size_flags_horizontal = 3
 mouse_filter = 2
 script = ExtResource( "1_kwq2e" )
+background_path = NodePath("ColorRect")
+quantity_label_path = NodePath("QuantityLabel")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -18,7 +20,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="QuantityLabel" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3

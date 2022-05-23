@@ -1,27 +1,27 @@
 class_name SmallSupplyDisplay
 extends SupplyDisplay
 
-@onready var background : ColorRect = $ColorRect
-@onready var label : Label = $Label
+@export_node_path(ColorRect) var background_path : NodePath
+@export_node_path(Label) var quantity_label_path : NodePath
 
-var needs_update : bool = true
+@onready var background : ColorRect = get_node(background_path)
+@onready var quantity_label : Label = get_node(quantity_label_path)
 
-func _ready():
-	needs_update = true
-	update_display()
-
-func _process(_delta):
-	update_display()
+func _ready() -> void:
+	ready()
 
 func update_display():
 	if(!needs_update):
 		return
+	needs_update = false
 	
+	# display colors
 	if(display_colors != null && display_colors.size() >= 1):
-		label.modulate = display_colors[0]
+		quantity_label.modulate = display_colors[0]
 	if(display_colors != null && display_colors.size() >= 2):
 		background.color = display_colors[1]
 	
+	# display quantity
 	display_quantity = ""
 	if(quantity != null):
 		if(show_sign):
@@ -30,18 +30,4 @@ func update_display():
 			elif(quantity < 0):
 				display_quantity = "- "
 		display_quantity += "%.2f" % quantity
-	label.text = display_quantity
-	
-	needs_update = false
-
-func set_display_colors(_display_colors : Array) -> void:
-	super.set_display_colors(_display_colors)
-	needs_update = true
-
-func set_quantity(_quantity : float) -> void:
-	super.set_quantity(_quantity)
-	needs_update = true
-
-func set_show_sign(_show_sign : bool) -> void:
-	super.set_show_sign(_show_sign)
-	needs_update = true
+	quantity_label.text = display_quantity

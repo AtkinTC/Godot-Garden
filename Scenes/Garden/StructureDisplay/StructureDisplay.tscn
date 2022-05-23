@@ -9,7 +9,7 @@
 minimum_size = Vector2(85, 85)
 offset_right = 40.0
 offset_bottom = 40.0
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource( "1_gjl24" )
 content_container_path = NodePath("MarginContainer/V")
 name_label_path = NodePath("MarginContainer/V/NameLabel")
@@ -31,6 +31,7 @@ metadata/_edit_use_custom_anchors = false
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_left = 4
@@ -41,6 +42,7 @@ offset_left = 4.0
 offset_top = 4.0
 offset_right = 81.0
 offset_bottom = 81.0
+mouse_filter = 2
 
 [node name="NameLabel" type="Label" parent="MarginContainer/V"]
 offset_right = 77.0

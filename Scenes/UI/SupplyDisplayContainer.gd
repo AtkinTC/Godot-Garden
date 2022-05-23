@@ -25,8 +25,8 @@ func add_supply_display(_key: String) -> bool:
 	if(supply_displays_dict.has(_key)):
 		return false
 	
-	var supply_display : LargeSupplyDisplay = supply_display_scene.instantiate()
-	supply_display.set_key(_key)
+	var supply_display : SmartSupplyDisplay = supply_display_scene.instantiate()
+	supply_display.set_supply_key(_key)
 	add_child(supply_display)
 	return true
 

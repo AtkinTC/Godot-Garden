@@ -12,31 +12,66 @@ var change : float  = 0.0
 var capacity : float = -1
 var display_quantity : String = "0.00"
 var display_change : String = "0.00"
+var display_capacity : String = "0.00"
 var display_colors : Array = []
 var show_sign : bool = false
 
+var needs_update : bool = true
+
+func _ready() -> void:
+	ready()
+
+func ready():
+	needs_update = true
+	update_display()
+
+func _process(_delta) -> void:
+	update_display()
+
+func update_display() -> void:
+	pass
+
 func set_display_name(_display_name : String) -> void:
-	display_name = _display_name
+	if(display_name != _display_name):
+		display_name = _display_name
+		needs_update = true
 
 func set_quantity(_quantity : float) -> void:
-	quantity = _quantity
-	set_display_quantity(str(quantity))
+	if(quantity != _quantity):
+		quantity = _quantity
+		needs_update = true
 
 func set_display_quantity(_display_quantity : String) -> void:
-	display_quantity = _display_quantity
+	if(display_quantity != _display_quantity):
+		display_quantity = _display_quantity
+		needs_update = true
 
 func set_change(_change : float) -> void:
-	change = _change
-	set_display_change(str(change))
+	if(change != _change):
+		change = _change
+		needs_update = true
 
-func set_display_change(_display_quantity : String) -> void:
-	display_quantity = _display_quantity
+func set_display_change(_display_change : String) -> void:
+	if(display_change != _display_change):
+		display_change = _display_change
+		needs_update = true
 
 func set_capacity(_capacity : float) -> void:
-	capacity = _capacity
+	if(capacity != _capacity):
+		capacity = _capacity
+		needs_update = true
+
+func set_display_capacity(_display_capacity : String) -> void:
+	if(display_capacity != _display_capacity):
+		display_capacity = _display_capacity
+		needs_update = true
 
 func set_display_colors(_display_colors : Array) -> void:
-	display_colors = _display_colors
+	if(display_colors != _display_colors):
+		display_colors = _display_colors
+		needs_update = true
 
 func set_show_sign(_show_sign : bool) -> void:
-	show_sign = _show_sign
+	if(show_sign != _show_sign):
+		show_sign = _show_sign
+		needs_update = true

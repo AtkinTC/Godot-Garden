@@ -1,10 +1,7 @@
 extends Node
 
 signal supplies_status_updated()
-
-signal supply_capacity_updated(key : String)
-signal supply_change_updated(key : String)
-signal supply_quantity_updated(key : String)
+signal supply_updated(key : String)
 
 var supplies : Dictionary
 var capacity_sources : Dictionary
@@ -91,7 +88,7 @@ func remove_change_source(supply_key : String, source_id : String):
 	return true
 
 # recalculates supply capacity value from all gain sources and applies any modifiers
-# emits supply_capacity_updated signal if a change has been made
+# emits supply_updated signal if a change has been made
 func recalculate_capacity():
 	capacity_needs_recalculate = false
 	for supply_key in supplies.keys():
@@ -107,10 +104,10 @@ func recalculate_capacity():
 		
 		if(!is_equal_approx(new_capacity, supply.get_capacity())):
 			supply.capacity = new_capacity
-			supply_capacity_updated.emit(supply_key)
+			supply_updated.emit(supply_key)
 
 # recalculates supply gain value from all gain sources and applies any modifiers
-# emits supply_change_updated signal if a change has been made
+# emits supply_updated signal if a change has been made
 func recalculate_change():
 	change_needs_recalculate = false
 	for supply_key in supplies.keys():
@@ -123,14 +120,14 @@ func recalculate_change():
 		
 		if(!is_equal_approx(new_change, supply.get_change())):
 			supply.change = new_change
-			supply_change_updated.emit(supply_key)
+			supply_updated.emit(supply_key)
 
 func change_supply_quantity(supply_key : String, change: float):
 	assert(supplies.has(supply_key))
 	set_supply_quantity(supply_key, supplies.get(supply_key).get_quantity() + change)
 
 # set supply quantity value limited by capacity
-#	emit supply_quantity_updated signal if the quantity has changed
+#	emit supply_updated signal if the quantity has changed
 func set_supply_quantity(supply_key : String, quantity: float):
 	assert(supplies.has(supply_key))
 	var supply : SupplyVO = supplies[supply_key]
@@ -144,7 +141,7 @@ func set_supply_quantity(supply_key : String, quantity: float):
 		return false
 	
 	supply.quantity = new_quantity
-	supply_quantity_updated.emit(supply_key)
+	supply_updated.emit(supply_key)
 
 func step(_delta):
 	if(capacity_needs_recalculate):

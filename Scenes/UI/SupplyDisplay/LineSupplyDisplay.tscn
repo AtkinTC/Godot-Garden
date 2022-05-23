@@ -6,7 +6,7 @@
 offset_right = 177.0
 offset_bottom = 20.0
 script = ExtResource( "1_kjbg2" )
-supply_name_label_path = NodePath("SupplyNameLabel")
+display_name_label_path = NodePath("SupplyNameLabel")
 quantity_label_path = NodePath("QuantityLabel")
 
 [node name="SupplyNameLabel" type="Label" parent="."]
