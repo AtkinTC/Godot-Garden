@@ -1,19 +1,17 @@
-class_name LargeSupplyDisplay
-extends SmartSupplyDisplay
+class_name SupplyDisplayBar
+extends SupplyDisplay
 
 @export_node_path(TextureProgressBar) var progress_bar_path
 @export_node_path(Label) var name_label_path
 @export_node_path(Label) var quantity_label_path
 @export_node_path(Label) var capacity_label_path
-@export_node_path(Label) var change_label_path
 
 @onready var progress_bar : TextureProgressBar = get_node(progress_bar_path) if progress_bar_path else null
 @onready var name_label : Label = get_node(name_label_path) if name_label_path else null
 @onready var quantity_label : Label = get_node(quantity_label_path) if quantity_label_path else null
 @onready var capacity_label : Label = get_node(capacity_label_path) if capacity_label_path else null
-@onready var change_label : Label = get_node(change_label_path) if change_label_path else null
 
-func _ready():
+func _ready() -> void:
 	ready()
 
 func update_display():
@@ -36,28 +34,24 @@ func update_display():
 		name_label.text = display_name
 	
 	if(quantity_label):
-		set_display_quantity(Utils.format_comma_seperated("%.1f" % quantity))
+		if(quantity < 0 && !allow_negative_quantity):
+			set_display_quantity("--")
+		else:
+			set_display_quantity(format_value(quantity))
 		quantity_label.text = display_quantity
 	
 	if(capacity_label):
 		if(capacity > 0):
-			set_display_capacity("/ " + Utils.format_comma_seperated("%.0f" % capacity))
+			set_display_capacity(format_value(capacity))
 		else:
 			set_display_capacity("")
 		capacity_label.text = display_capacity
 	
-	if(change_label):
-		if(change == 0):
-			set_display_change("")
-		else:
-			set_display_change("(" + ("+" if change > 0 else "-") + Utils.format_comma_seperated("%.1f" % change) + ")")
-		change_label.text = display_change
-	
 	if(progress_bar):
 		progress_bar.max_value = 100.00
 		if(capacity > 0):
-			progress_bar.value = quantity * 100.0 / capacity
+			progress_bar.value = max(quantity, 0) * 100.0 / capacity
 		else:
-			progress_bar.value = 0
+			progress_bar.value = 100.00
 	
 	needs_update = false

@@ -14,6 +14,7 @@ const LIMIT := "limit"
 const COUNT := "count"
 const PRICE := "price"
 const VALUE := "value"
+const VALUE_FINAL := "value_final"
 const VALUE_PATH := "value_path"
 
 const ACTION := "ACTION"

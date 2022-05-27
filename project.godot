@@ -20,6 +20,46 @@ _global_script_classes=[{
 "path": "res://Scripts/Array2D.gd"
 }, {
 "base": "RefCounted",
+"class": &"CharAttrDAO",
+"language": &"GDScript",
+"path": "res://Scripts/Character/CharAttrDAO.gd"
+}, {
+"base": "RefCounted",
+"class": &"CharAttrUtil",
+"language": &"GDScript",
+"path": "res://Scripts/Character/CharAttrUtil.gd"
+}, {
+"base": "RefCounted",
+"class": &"CharAttrVO",
+"language": &"GDScript",
+"path": "res://Scripts/Character/CharAttrVO.gd"
+}, {
+"base": "RefCounted",
+"class": &"Character",
+"language": &"GDScript",
+"path": "res://Scripts/Character/Character.gd"
+}, {
+"base": "MarginContainer",
+"class": &"CharacterPortraitDisplay",
+"language": &"GDScript",
+"path": "res://Scenes/UI/Character/CharacterPortraitDisplay.gd"
+}, {
+"base": "Control",
+"class": &"CharacterSummaryDisplay",
+"language": &"GDScript",
+"path": "res://Scenes/UI/Character/CharacterSummaryDisplay.gd"
+}, {
+"base": "Resource",
+"class": &"CharacterVO",
+"language": &"GDScript",
+"path": "res://Scripts/Character/CharacterVO.gd"
+}, {
+"base": "VBoxContainer",
+"class": &"CharactersDisplayList",
+"language": &"GDScript",
+"path": "res://Scenes/UI/Character/CharactersDisplayList.gd"
+}, {
+"base": "RefCounted",
 "class": &"Const",
 "language": &"GDScript",
 "path": "res://Scripts/Data/Const.gd"
@@ -120,6 +160,11 @@ _global_script_classes=[{
 "path": "res://Scenes/UI/SupplyDisplay/SmallSupplyDisplay.gd"
 }, {
 "base": "SupplyDisplay",
+"class": &"SmallTextSupplyDisplay",
+"language": &"GDScript",
+"path": "res://Scenes/UI/SupplyDisplay/SmallTextSupplyDisplay.gd"
+}, {
+"base": "SupplyDisplay",
 "class": &"SmartSupplyDisplay",
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyDisplay/SmartSupplyDisplay.gd"
@@ -174,6 +219,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/SupplyDisplay/SupplyDisplay.gd"
 }, {
+"base": "SupplyDisplay",
+"class": &"SupplyDisplayBar",
+"language": &"GDScript",
+"path": "res://Scenes/UI/SupplyDisplay/SupplyDisplayBar.gd"
+}, {
 "base": "VBoxContainer",
 "class": &"SupplyDisplayContainer",
 "language": &"GDScript",
@@ -202,6 +252,14 @@ _global_script_classes=[{
 _global_script_class_icons={
 "ActionData": "",
 "Array2D": "",
+"CharAttrDAO": "",
+"CharAttrUtil": "",
+"CharAttrVO": "",
+"Character": "",
+"CharacterPortraitDisplay": "",
+"CharacterSummaryDisplay": "",
+"CharacterVO": "",
+"CharactersDisplayList": "",
 "Const": "",
 "CustCamera2D": "",
 "DataValidator": "",
@@ -222,6 +280,7 @@ _global_script_class_icons={
 "PurchaseUtil": "",
 "SelectMenu": "",
 "SmallSupplyDisplay": "",
+"SmallTextSupplyDisplay": "",
 "SmartSupplyDisplay": "",
 "Structure": "",
 "StructureComponenet": "",
@@ -233,6 +292,7 @@ _global_script_class_icons={
 "StructureSupplySourceComponent": "",
 "SupplyData": "",
 "SupplyDisplay": "",
+"SupplyDisplayBar": "",
 "SupplyDisplayContainer": "",
 "SupplyVO": "",
 "TooltipHost": "",
@@ -258,6 +318,7 @@ Database="*res://Singletons/Database.gd"
 SignalBus="*res://Singletons/SignalBus.gd"
 EnhancementManager="*res://Singletons/EnhancementManager.gd"
 StructuresManager="*res://Singletons/StructuresManager.gd"
+CharactersManager="*res://Singletons/CharactersManager.gd"
 
 [display]
 

@@ -1,0 +1,101 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnyvrav7145q2"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Character/CharacterSummaryDisplay.gd" id="1_8kevv"]
+[ext_resource type="PackedScene" uid="uid://b8iji5ey6q018" path="res://Scenes/UI/SupplyDisplay/SupplyDisplayBar.tscn" id="1_rgepo"]
+[ext_resource type="Texture2D" uid="uid://cyi404ej02kup" path="res://Assets/UI/nine_patch_panel_single_outer.png" id="2_umcwi"]
+[ext_resource type="PackedScene" uid="uid://dl6rdtq83v863" path="res://Scenes/UI/SupplyDisplay/SmallTextSupplyDisplay.tscn" id="3_0mqtd"]
+[ext_resource type="PackedScene" uid="uid://bnck218fxvxt5" path="res://Scenes/UI/Character/CharacterPortraitDisplay.tscn" id="4_em7hg"]
+
+[node name="CharacterSummaryDisplay" type="MarginContainer"]
+offset_right = 206.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource( "1_8kevv" )
+char_name_label_path = NodePath("MarginContainer/HBox/LeftVBox/NameLabel")
+HP_display_path = NodePath("MarginContainer/HBox/LeftVBox/HPDisplayBar")
+SP_display_path = NodePath("MarginContainer/HBox/LeftVBox/SPDisplayBar")
+STR_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/STRDisplay")
+AGI_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/AGIDisplay")
+INT_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/INTDisplay")
+char_portrait_path = NodePath("MarginContainer/HBox/CharacterPortraitDisplay")
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+texture_filter = 1
+offset_right = 239.0
+offset_bottom = 101.0
+texture = ExtResource( "2_umcwi" )
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+metadata/_edit_layout_mode = 0
+metadata/_edit_use_custom_anchors = false
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 239.0
+offset_bottom = 101.0
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 235.0
+offset_bottom = 97.0
+
+[node name="LeftVBox" type="VBoxContainer" parent="MarginContainer/HBox"]
+offset_right = 147.0
+offset_bottom = 93.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBox/LeftVBox"]
+offset_right = 147.0
+offset_bottom = 14.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 10
+text = "CHAR_NAME"
+vertical_alignment = 1
+
+[node name="HPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource( "1_rgepo" )]
+offset_right = 147.0
+
+[node name="SPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource( "1_rgepo" )]
+offset_top = 35.0
+offset_right = 147.0
+offset_bottom = 52.0
+
+[node name="AttributesLine" type="HBoxContainer" parent="MarginContainer/HBox/LeftVBox"]
+offset_top = 54.0
+offset_right = 147.0
+offset_bottom = 71.0
+theme_override_constants/separation = 0
+
+[node name="STRDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+offset_right = 49.0
+
+[node name="AGIDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+offset_left = 49.0
+offset_right = 98.0
+
+[node name="INTDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+offset_left = 98.0
+offset_right = 147.0
+
+[node name="ActivityLabel" type="Label" parent="MarginContainer/HBox/LeftVBox"]
+offset_top = 73.0
+offset_right = 147.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 12
+text = "On Standby"
+
+[node name="CharacterPortraitDisplay" parent="MarginContainer/HBox" instance=ExtResource( "4_em7hg" )]
+offset_left = 151.0
+offset_right = 231.0

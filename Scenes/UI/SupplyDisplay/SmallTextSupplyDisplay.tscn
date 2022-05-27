@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl6rdtq83v863"]
+
+[ext_resource type="Script" path="res://Scenes/UI/SupplyDisplay/SmallTextSupplyDisplay.gd" id="1_ea8y7"]
+
+[node name="SmallTextSupplyDisplay" type="HBoxContainer"]
+offset_right = 35.0
+offset_bottom = 17.0
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+script = ExtResource( "1_ea8y7" )
+name_label_path = NodePath("NameLabel")
+quantity_label_path = NodePath("QuantityLabel")
+
+[node name="NameLabel" type="Label" parent="."]
+minimum_size = Vector2(20, 0)
+offset_right = 20.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 10
+text = "ATR"
+vertical_alignment = 1
+
+[node name="QuantityLabel" type="Label" parent="."]
+minimum_size = Vector2(15, 0)
+offset_left = 20.0
+offset_right = 38.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 10
+text = "999"
+vertical_alignment = 1

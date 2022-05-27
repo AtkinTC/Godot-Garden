@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx3m2od417uow"]
+[gd_scene load_steps=10 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -6,61 +6,57 @@
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.tscn" id="4_so846"]
+[ext_resource type="Script" path="res://Scenes/UI/Character/CharactersDisplayList.gd" id="5_cr0o5"]
 [ext_resource type="PackedScene" uid="uid://ckysx4cxsd1yg" path="res://Scenes/Garden/PlotDisplay/PlotDisplay.tscn" id="6_3kq36"]
+[ext_resource type="PackedScene" uid="uid://dnyvrav7145q2" path="res://Scenes/UI/Character/CharacterSummaryDisplay.tscn" id="6_aeyih"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="H" type="HBoxContainer" parent="UI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-metadata/_edit_lock_ = true
-
-[node name="LPanel" type="Control" parent="UI/H"]
+[node name="LPanel" type="Control" parent="UI"]
 minimum_size = Vector2(200, 0)
 offset_right = 200.0
 offset_bottom = 720.0
 
-[node name="Panel" type="Panel" parent="UI/H/LPanel"]
+[node name="Panel" type="Panel" parent="UI/LPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="V" type="VBoxContainer" parent="UI/H/LPanel"]
+[node name="V" type="VBoxContainer" parent="UI/LPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="ObjectsSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
+[node name="ObjectsSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_right = 200.0
 offset_bottom = 94.0
 script = ExtResource( "3_6ld0l" )
 buttons_container_path = NodePath("ButtonsContainer")
 
-[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/ObjectsSelectMenu"]
+[node name="MenuTitle" type="Label" parent="UI/LPanel/V/ObjectsSelectMenu"]
 offset_right = 200.0
 offset_bottom = 26.0
 text = "Structures"
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/ObjectsSelectMenu"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/ObjectsSelectMenu"]
 offset_top = 30.0
 offset_right = 200.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
-[node name="Button1" type="Button" parent="UI/H/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
+[node name="Button1" type="Button" parent="UI/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
 offset_right = 200.0
 offset_bottom = 31.0
 text = "OBJECT_1"
 
-[node name="Button2" type="Button" parent="UI/H/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
+[node name="Button2" type="Button" parent="UI/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
 offset_top = 33.0
 offset_right = 200.0
 offset_bottom = 64.0
 text = "OBJECT_1"
 
-[node name="ActionsSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
+[node name="ActionsSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 98.0
 offset_right = 200.0
 offset_bottom = 192.0
@@ -68,29 +64,29 @@ script = ExtResource( "3_6ld0l" )
 buttons_container_path = NodePath("ButtonsContainer")
 menu_type = 1
 
-[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/ActionsSelectMenu"]
+[node name="MenuTitle" type="Label" parent="UI/LPanel/V/ActionsSelectMenu"]
 offset_right = 200.0
 offset_bottom = 26.0
 text = "Actions"
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/ActionsSelectMenu"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/ActionsSelectMenu"]
 offset_top = 30.0
 offset_right = 200.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
-[node name="Button1" type="Button" parent="UI/H/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
+[node name="Button1" type="Button" parent="UI/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
 offset_right = 200.0
 offset_bottom = 31.0
 text = "ACTION_1"
 
-[node name="Button2" type="Button" parent="UI/H/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
+[node name="Button2" type="Button" parent="UI/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
 offset_top = 33.0
 offset_right = 200.0
 offset_bottom = 64.0
 text = "ACTION_1"
 
-[node name="UpgradeSelectMenu" type="VBoxContainer" parent="UI/H/LPanel/V"]
+[node name="UpgradeSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 196.0
 offset_right = 200.0
 offset_bottom = 290.0
@@ -98,45 +94,74 @@ script = ExtResource( "3_6ld0l" )
 buttons_container_path = NodePath("ButtonsContainer")
 menu_type = 2
 
-[node name="MenuTitle" type="Label" parent="UI/H/LPanel/V/UpgradeSelectMenu"]
+[node name="MenuTitle" type="Label" parent="UI/LPanel/V/UpgradeSelectMenu"]
 offset_right = 200.0
 offset_bottom = 26.0
 text = "Upgrades"
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="UI/H/LPanel/V/UpgradeSelectMenu"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/UpgradeSelectMenu"]
 offset_top = 30.0
 offset_right = 200.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
-[node name="Button1" type="Button" parent="UI/H/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
+[node name="Button1" type="Button" parent="UI/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
 offset_right = 200.0
 offset_bottom = 31.0
 text = "UPGRADE_1"
 
-[node name="Button2" type="Button" parent="UI/H/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
+[node name="Button2" type="Button" parent="UI/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
 offset_top = 33.0
 offset_right = 200.0
 offset_bottom = 64.0
 text = "UPGRADE_2"
 
-[node name="SupplyTitle" type="Label" parent="UI/H/LPanel/V"]
+[node name="SupplyTitle" type="Label" parent="UI/LPanel/V"]
 offset_top = 294.0
 offset_right = 200.0
 offset_bottom = 320.0
 text = "Resources"
 
-[node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/H/LPanel/V"]
+[node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 324.0
 offset_right = 200.0
 offset_bottom = 362.0
 script = ExtResource( "4_ajn05" )
 supply_display_scene = ExtResource( "4_so846" )
 
-[node name="LargeSupplyDisplay" parent="UI/H/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "4_so846" )]
+[node name="LargeSupplyDisplay" parent="UI/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "4_so846" )]
 anchor_right = 0.0
 offset_right = 200.0
 offset_bottom = 38.0
+
+[node name="RPanel" type="Control" parent="UI"]
+minimum_size = Vector2(250, 0)
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_bottom = 720.0
+
+[node name="Panel" type="Panel" parent="UI/RPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CharactersDisplayList" type="VBoxContainer" parent="UI/RPanel"]
+anchor_right = 1.0
+script = ExtResource( "5_cr0o5" )
+character_display_scene = ExtResource( "6_aeyih" )
+
+[node name="CharacterSummary" parent="UI/RPanel/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+offset_right = 250.0
+
+[node name="CharacterSummary2" parent="UI/RPanel/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+offset_top = 105.0
+offset_right = 250.0
+offset_bottom = 206.0
+
+[node name="CharacterSummary3" parent="UI/RPanel/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+offset_top = 210.0
+offset_right = 250.0
+offset_bottom = 311.0
 
 [node name="GardenNode" type="Node2D" parent="."]
 position = Vector2(205, 5)

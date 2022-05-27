@@ -13,7 +13,30 @@ func _init():
 	SupplyManager.initialize()
 	StructuresManager.initialize()
 	EnhancementManager.initialize()
+	CharactersManager.initialize()
 	GardenManager.initialize()
+	
+	#TODO: remove this test code
+	#example characters for testing purposes
+	var new_char : CharacterVO = CharactersManager.create_empty_character()
+	new_char.set_character_name("Joe")
+	new_char.set_character_portrait_name("portrait_basic_005.png")
+	new_char.set_attr_HP(20)
+	new_char.set_current_HP(20)
+	new_char.set_attr_STR(5)
+	
+	new_char = CharactersManager.create_empty_character()
+	new_char.set_character_name("Bob")
+	new_char.set_character_portrait_name("portrait_basic_007.png")
+	new_char.set_attr_HP(10)
+	new_char.set_current_HP(10)
+	
+	new_char = CharactersManager.create_empty_character()
+	new_char.set_character_name("Carl")
+	new_char.set_character_portrait_name("portrait_basic_003.png")
+	new_char.set_attr_HP(10)
+	new_char.set_current_HP(10)
+	new_char.set_attr_INT(3)
 
 func _process(_delta):
 	SupplyManager.step(_delta)

@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnck218fxvxt5"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Character/CharacterPortraitDisplay.gd" id="1_gtw4e"]
+[ext_resource type="Texture2D" uid="uid://381im0ai4mr8" path="res://Assets/UI/portrait_frame.png" id="2_2h3cd"]
+[ext_resource type="Texture2D" uid="uid://bhoghyuf62huh" path="res://Assets/CharacterPortraits/portrait_default.png" id="3_on4iv"]
+
+[node name="CharacterPortraitDisplay" type="MarginContainer"]
+offset_left = 118.0
+offset_right = 198.0
+offset_bottom = 93.0
+script = ExtResource( "1_gtw4e" )
+portrait_texture_node_path = NodePath("PortraitTexture")
+portraits_directory = "res://Assets/CharacterPortraits"
+
+[node name="PortraitFrameBackground" type="NinePatchRect" parent="."]
+texture_filter = 1
+minimum_size = Vector2(80, 80)
+offset_top = 6.0
+offset_right = 80.0
+offset_bottom = 86.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( "2_2h3cd" )
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="PortraitTexture" type="TextureRect" parent="."]
+texture_filter = 1
+minimum_size = Vector2(68, 68)
+offset_left = 6.0
+offset_top = 12.0
+offset_right = 74.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( "3_on4iv" )
+metadata/_edit_layout_mode = 0
+metadata/_edit_use_custom_anchors = false

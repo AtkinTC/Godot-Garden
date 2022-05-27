@@ -15,6 +15,8 @@ var display_change : String = "0.00"
 var display_capacity : String = "0.00"
 var display_colors : Array = []
 var show_sign : bool = false
+var number_format_string : String
+var allow_negative_quantity : bool = false
 
 var needs_update : bool = true
 
@@ -75,3 +77,17 @@ func set_show_sign(_show_sign : bool) -> void:
 	if(show_sign != _show_sign):
 		show_sign = _show_sign
 		needs_update = true
+
+func set_number_format_string(_number_format_string : String) -> void:
+	number_format_string = _number_format_string
+	needs_update = true
+
+func set_allow_negative_quantity(_allow_negative_quantity : bool) -> void:
+	allow_negative_quantity = _allow_negative_quantity
+	needs_update = true
+
+func format_value(_value : float) -> String:
+	if(number_format_string):
+		return number_format_string % _value
+	else:
+		return str(_value)
