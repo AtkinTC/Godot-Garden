@@ -16,14 +16,14 @@ const ATTR_DATA := {
 	ATTR_HP : {
 		DISPLAY_NAME : "health",
 		DISPLAY_SHORT : "HP",
-		DISPLAY_COLORS : [Color8(255, 0, 0), Color8(100, 0, 0)],
+		DISPLAY_COLORS : [Color8(225, 0, 0), Color8(100, 0, 0)],
 		DISPLAY_DESC : "health description text",
 		DEFAULT_VALUE : 10
 	},
 	ATTR_SP : {
 		DISPLAY_NAME : "stamina",
 		DISPLAY_SHORT : "SP",
-		DISPLAY_COLORS : [Color8(0, 255, 0), Color8(0, 100, 0)],
+		DISPLAY_COLORS : [Color8(0, 225, 0), Color8(0, 100, 0)],
 		DISPLAY_DESC : "stamina description text",
 		DEFAULT_VALUE : 10
 	},

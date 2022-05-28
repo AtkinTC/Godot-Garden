@@ -1,5 +1,5 @@
 class_name CharactersDisplayList
-extends VBoxContainer
+extends Control
 
 @export var character_display_scene : PackedScene
 
@@ -35,7 +35,7 @@ func update_display():
 		if(char_displays.has(char_id)):
 			continue
 		var new_char_display : CharacterSummaryDisplay = character_display_scene.instantiate()
-		new_char_display.set_character(CharactersManager.get_character(char_id))
+		new_char_display.set_character(CharactersManager.get_character_by_id(char_id))
 		char_displays[char_id] = new_char_display
 		add_child(new_char_display)
 
