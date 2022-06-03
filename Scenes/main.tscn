@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx3m2od417uow"]
+[gd_scene load_steps=12 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -6,9 +6,11 @@
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.tscn" id="4_so846"]
+[ext_resource type="Texture2D" uid="uid://cyi404ej02kup" path="res://Assets/UI/nine_patch_panel_single_outer.png" id="5_4jlim"]
 [ext_resource type="Script" path="res://Scenes/UI/Character/CharactersDisplayList.gd" id="5_cr0o5"]
 [ext_resource type="PackedScene" uid="uid://ckysx4cxsd1yg" path="res://Scenes/Garden/PlotDisplay/PlotDisplay.tscn" id="6_3kq36"]
 [ext_resource type="PackedScene" uid="uid://dnyvrav7145q2" path="res://Scenes/UI/Character/CharacterSummaryDisplay.tscn" id="6_aeyih"]
+[ext_resource type="PackedScene" uid="uid://bhw64rto27g0l" path="res://Scenes/UI/Character/SmallCharacterSummaryDisplay.tscn" id="6_fr030"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -141,9 +143,77 @@ size_flags_horizontal = 8
 offset_right = 484.0
 offset_bottom = 720.0
 
-[node name="CharactersDisplayList" type="GridContainer" parent="UI/RPanel/VBoxContainer"]
+[node name="ExplorationDisplay" type="MarginContainer" parent="UI/RPanel/VBoxContainer"]
 offset_right = 484.0
-offset_bottom = 206.0
+offset_bottom = 86.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/RPanel/VBoxContainer/ExplorationDisplay"]
+texture_filter = 1
+offset_right = 484.0
+offset_bottom = 86.0
+texture = ExtResource( "5_4jlim" )
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+metadata/_edit_layout_mode = 0
+metadata/_edit_use_custom_anchors = false
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay"]
+offset_right = 484.0
+offset_bottom = 86.0
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 480.0
+offset_bottom = 82.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer"]
+offset_right = 476.0
+offset_bottom = 14.0
+
+[node name="AreaNameLabel" type="Label" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer"]
+offset_right = 59.0
+offset_bottom = 14.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 10
+text = "AREA_NAME"
+vertical_alignment = 1
+
+[node name="AreaLevelLabel" type="Label" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 63.0
+offset_right = 97.0
+offset_bottom = 14.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 10
+text = "Lv. 999"
+vertical_alignment = 1
+
+[node name="AreaRankLabel" type="Label" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer"]
+offset_left = 101.0
+offset_right = 145.0
+offset_bottom = 14.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 10
+text = "Rank 999"
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer"]
+offset_top = 18.0
+offset_right = 476.0
+offset_bottom = 78.0
+
+[node name="SmallCharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( "6_fr030" )]
+
+[node name="CharactersDisplayList" type="GridContainer" parent="UI/RPanel/VBoxContainer"]
+offset_top = 90.0
+offset_right = 484.0
+offset_bottom = 296.0
 grow_vertical = 0
 columns = 2
 script = ExtResource( "5_cr0o5" )

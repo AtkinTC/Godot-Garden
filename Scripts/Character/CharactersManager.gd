@@ -12,7 +12,7 @@ func initialize() -> void:
 func get_character_ids() -> Array:
 	return characters_dict.keys()
 
-func get_character(char_id : int) -> CharacterVO:
+func get_character_by_id(char_id : int) -> CharacterVO:
 	return characters_dict.get(char_id)
 
 func create_empty_character() -> CharacterVO:
@@ -21,7 +21,7 @@ func create_empty_character() -> CharacterVO:
 	
 	var new_char = CharacterVO.new()
 	new_char.set_character_id(new_char_id)
-	
+	new_char.set_character_portrait_name("portrait_default.png")
 	new_char.set_attr_HP(CharAttrDAO.new(CharAttrUtil.ATTR_HP).get_default_value())
 	new_char.set_attr_SP(CharAttrDAO.new(CharAttrUtil.ATTR_SP).get_default_value())
 	new_char.set_attr_STR(CharAttrDAO.new(CharAttrUtil.ATTR_STR).get_default_value())

@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
+"base": "Resource",
+"class": &"AreaVO",
+"language": &"GDScript",
+"path": "res://Scripts/Area/AreaVO.gd"
+}, {
 "base": "RefCounted",
 "class": &"Array2D",
 "language": &"GDScript",
@@ -28,16 +33,6 @@ _global_script_classes=[{
 "class": &"CharAttrUtil",
 "language": &"GDScript",
 "path": "res://Scripts/Character/CharAttrUtil.gd"
-}, {
-"base": "RefCounted",
-"class": &"CharAttrVO",
-"language": &"GDScript",
-"path": "res://Scripts/Character/CharAttrVO.gd"
-}, {
-"base": "RefCounted",
-"class": &"Character",
-"language": &"GDScript",
-"path": "res://Scripts/Character/Character.gd"
 }, {
 "base": "MarginContainer",
 "class": &"CharacterPortraitDisplay",
@@ -54,7 +49,7 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Character/CharacterVO.gd"
 }, {
-"base": "VBoxContainer",
+"base": "Control",
 "class": &"CharactersDisplayList",
 "language": &"GDScript",
 "path": "res://Scenes/UI/Character/CharactersDisplayList.gd"
@@ -78,6 +73,11 @@ _global_script_classes=[{
 "class": &"EnhancementData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/EnhancementData.gd"
+}, {
+"base": "Resource",
+"class": &"ExplorationVO",
+"language": &"GDScript",
+"path": "res://Scripts/Exploration/ExplorationVO.gd"
 }, {
 "base": "Control",
 "class": &"GardenGrid",
@@ -251,11 +251,10 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionData": "",
+"AreaVO": "",
 "Array2D": "",
 "CharAttrDAO": "",
 "CharAttrUtil": "",
-"CharAttrVO": "",
-"Character": "",
 "CharacterPortraitDisplay": "",
 "CharacterSummaryDisplay": "",
 "CharacterVO": "",
@@ -264,6 +263,7 @@ _global_script_class_icons={
 "CustCamera2D": "",
 "DataValidator": "",
 "EnhancementData": "",
+"ExplorationVO": "",
 "GardenGrid": "",
 "InfoBox": "",
 "LargeSupplyDisplay": "",
@@ -318,7 +318,9 @@ Database="*res://Singletons/Database.gd"
 SignalBus="*res://Singletons/SignalBus.gd"
 EnhancementManager="*res://Singletons/EnhancementManager.gd"
 StructuresManager="*res://Singletons/StructuresManager.gd"
-CharactersManager="*res://Singletons/CharactersManager.gd"
+CharactersManager="*res://Scripts/Character/CharactersManager.gd"
+AreasManager="*res://Scripts/Area/AreasManager.gd"
+ExplorationsManager="*res://Scripts/Exploration/ExplorationsManager.gd"
 
 [display]
 
