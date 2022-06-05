@@ -44,6 +44,25 @@ func _init():
 	new_char.set_attr_HP(10)
 	new_char.set_current_HP(10)
 	new_char.set_attr_AGI(2)
+	
+	var center_plot : Plot = GardenManager.create_plot(Vector2(0,0))
+	center_plot.insert_structure("STARTER")
+	center_plot.set_display_name("base")
+	center_plot.set_explored(true)
+	
+	#TODO: remove this test code
+	#example plot areas for testing purposes
+	var plot = GardenManager.create_plot(Vector2(1,0))
+	plot.set_display_name("forest")
+	
+	plot = GardenManager.create_plot(Vector2(0,1))
+	plot.set_display_name("cave")
+	
+	plot = GardenManager.create_plot(Vector2(-1,0))
+	plot.set_display_name("valley")
+	
+	plot = GardenManager.create_plot(Vector2(0,-1))
+	plot.set_display_name("road")
 
 func _process(_delta):
 	SupplyManager.step(_delta)

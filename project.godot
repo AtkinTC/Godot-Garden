@@ -119,11 +119,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/PlotDisplay/PlotDisplay.gd"
 }, {
-"base": "PlotDisplayContent",
-"class": &"PlotDisplayAvailableContent",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/PlotDisplay/Content/PlotDisplayAvailableContent.gd"
-}, {
 "base": "Control",
 "class": &"PlotDisplayContent",
 "language": &"GDScript",
@@ -272,7 +267,6 @@ _global_script_class_icons={
 "ObjectData": "",
 "Plot": "",
 "PlotDisplay": "",
-"PlotDisplayAvailableContent": "",
 "PlotDisplayContent": "",
 "PlotPassivesInfoBox": "",
 "PlotTooltipPanel": "",

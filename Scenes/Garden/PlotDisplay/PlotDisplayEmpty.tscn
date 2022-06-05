@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://caw6xv7i0kt6d"]
+
+[node name="PlotDisplayEmpty" type="Control"]
+minimum_size = Vector2(120, 120)
+offset_right = 100.0
+offset_bottom = 100.0

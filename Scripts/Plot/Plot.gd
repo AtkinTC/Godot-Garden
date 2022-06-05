@@ -2,56 +2,45 @@ class_name Plot
 
 signal plot_updated(coord : Vector2)
 
+var explored : bool = false
 var owned : bool = false
-var available : bool = false
-var visible : bool = false
 var coord : Vector2 = Vector2.ZERO
 
-var plot_structure : Structure
+var display_name : String
 
-func purchase_plot():
-	if(owned || !available):
+var plot_structure : Structure
+var plot_area : AreaVO
+
+func step(_delta : float):
+	if(plot_structure != null):
+		plot_structure.step(_delta)
+
+# Begin the exploration process
+# A character assigned to the plot advances the exploration progress
+# new plots/features/items are earned when an exploration stage is completed
+func explore():
+	if(explored):
 		return
-	
-	# check if can afford to purchase plot
-	var total_cost := GardenManager.get_plot_purchase_price(coord)
-	if(!PurchaseUtil.can_afford(total_cost)):
-		return
-		
-	# subtract spent resources
-	PurchaseUtil.spend(total_cost)
-	
-	# purchase plot
+	complete_exploration()
+
+# triggered on the completion of an exploration stage
+# reveals neighboring plots and gives other rewards
+func complete_exploration():
 	owned = true
+	explored = true
+	
+	var empty_neighbor_coords = GardenManager.get_empty_neighbors(coord)
+
+	for coord in empty_neighbor_coords:
+		var plot = GardenManager.create_plot(coord)
+		plot.set_display_name("new")
+		plot.plot_updated.emit(coord)
+	
 	plot_updated.emit(coord)
-	GardenManager.add_available_plots()
 
 func purchase_structure(_structure_key : String = ""):
-	if(!owned):
-		return false
-	if(plot_structure != null):
-		return false
-	
-	var temp_structure_key
-	if(_structure_key == ""):
-		temp_structure_key = StructuresManager.get_selected_structure_key()
-	else:
-		temp_structure_key = _structure_key
-	
-	if(temp_structure_key == null || temp_structure_key == ""):
-		return false
-	
-	var structure_data : StructureDAO = StructureDAO.new(temp_structure_key)
-	
-	var purchase_props := {
-		Const.MOD_TARGET_CAT : Const.OBJECT,
-		Const.MOD_TARGET_KEY : temp_structure_key,
-		Const.MOD_TYPE : Const.BUILD,
-		Const.COUNT : structure_data.get_count()
-	}
-	if(!PurchaseUtil.make_purchase(purchase_props)):
+	if(!explored || !owned):
 		return
-			
 	insert_structure(_structure_key)
 
 func insert_structure(_structure_key : String = ""):
@@ -82,8 +71,6 @@ func upgrade_structure():
 		Const.MOD_TYPE : Const.UPGRADE,
 		Const.LEVEL : plot_structure.get_upgrade_level()
 	}
-	if(!PurchaseUtil.make_purchase(purchase_props)):
-		return false
 	
 	plot_structure.start_upgrading()
 	plot_updated.emit(coord)
@@ -101,30 +88,6 @@ func remove_structure():
 	plot_structure = null
 	plot_updated.emit(coord)
 
-func toggle_pause():
-	if(plot_structure == null):
-		return false
-	pause_structure(!plot_structure.is_paused())
-
-func pause_structure(_paused: bool = true):
-	if(plot_structure == null):
-		return false
-		
-	plot_structure.set_paused(_paused)
-
-func step(_delta : float):
-	if(plot_structure == null):
-		return false
-	plot_structure.step(_delta)
-
-func set_visible(_visible : bool):
-	if(visible != _visible):
-		visible = _visible
-		plot_updated.emit(coord)
-
-func is_visible() -> bool:
-	return visible
-
 func set_coord(_coord : Vector2):
 	coord = _coord
 
@@ -137,17 +100,35 @@ func has_structure():
 func get_structure() -> Structure:
 	return plot_structure
 
-func set_available(_available : bool):
-	available = _available
-
-func is_available() -> bool:
-	return available
-
 func set_owned(_owned : bool):
 	owned = _owned
 
 func is_owned() -> bool:
 	return owned
+
+func set_area(area : AreaVO):
+	plot_area = area
+
+func get_area() -> AreaVO:
+	return plot_area
+
+func has_area() -> bool:
+	return (plot_area != null)
+
+func set_explored(_explored : bool):
+	explored = _explored
+
+func get_explored() -> bool:
+	return explored
+
+func set_display_name(_display_name : String):
+	display_name = _display_name
+
+func get_display_name() -> String:
+	if(explored):
+		return display_name
+	else:
+		return "?" + display_name + "?"
 
 func _on_structure_updated(_world_coord : Vector2):
 	if(_world_coord == coord):

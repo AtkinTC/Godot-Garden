@@ -29,5 +29,11 @@ const action_types := {
 		Const.TARGET_TYPE : "Plot",
 		Const.FUNC_NAME : "toggle_pause",
 		Const.DISPLAY : true
+	},
+	"EXPLORE_PLOT" : {
+		Const.DISPLAY_NAME : "Explore",
+		Const.TARGET_TYPE : "Plot",
+		Const.FUNC_NAME : "explore",
+		Const.DISPLAY : true
 	}
 }

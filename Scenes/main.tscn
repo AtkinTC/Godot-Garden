@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bx3m2od417uow"]
+[gd_scene load_steps=13 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ckysx4cxsd1yg" path="res://Scenes/Garden/PlotDisplay/PlotDisplay.tscn" id="6_3kq36"]
 [ext_resource type="PackedScene" uid="uid://dnyvrav7145q2" path="res://Scenes/UI/Character/CharacterSummaryDisplay.tscn" id="6_aeyih"]
 [ext_resource type="PackedScene" uid="uid://bhw64rto27g0l" path="res://Scenes/UI/Character/SmallCharacterSummaryDisplay.tscn" id="6_fr030"]
+[ext_resource type="PackedScene" uid="uid://caw6xv7i0kt6d" path="res://Scenes/Garden/PlotDisplay/PlotDisplayEmpty.tscn" id="11_stkmo"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -136,20 +137,20 @@ offset_bottom = 38.0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -484.0
+offset_left = -240.0
 size_flags_horizontal = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/RPanel"]
-offset_right = 484.0
+offset_right = 240.0
 offset_bottom = 720.0
 
 [node name="ExplorationDisplay" type="MarginContainer" parent="UI/RPanel/VBoxContainer"]
-offset_right = 484.0
+offset_right = 240.0
 offset_bottom = 86.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="UI/RPanel/VBoxContainer/ExplorationDisplay"]
 texture_filter = 1
-offset_right = 484.0
+offset_right = 240.0
 offset_bottom = 86.0
 texture = ExtResource( "5_4jlim" )
 patch_margin_left = 8
@@ -160,7 +161,7 @@ metadata/_edit_layout_mode = 0
 metadata/_edit_use_custom_anchors = false
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay"]
-offset_right = 484.0
+offset_right = 240.0
 offset_bottom = 86.0
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_top = 4
@@ -170,11 +171,11 @@ theme_override_constants/margin_bottom = 4
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer"]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 480.0
+offset_right = 236.0
 offset_bottom = 82.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer"]
-offset_right = 476.0
+offset_right = 232.0
 offset_bottom = 14.0
 
 [node name="AreaNameLabel" type="Label" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -205,17 +206,16 @@ vertical_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer"]
 offset_top = 18.0
-offset_right = 476.0
+offset_right = 232.0
 offset_bottom = 78.0
 
 [node name="SmallCharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( "6_fr030" )]
 
 [node name="CharactersDisplayList" type="GridContainer" parent="UI/RPanel/VBoxContainer"]
 offset_top = 90.0
-offset_right = 484.0
-offset_bottom = 296.0
+offset_right = 240.0
+offset_bottom = 506.0
 grow_vertical = 0
-columns = 2
 script = ExtResource( "5_cr0o5" )
 character_display_scene = ExtResource( "6_aeyih" )
 metadata/_edit_layout_mode = 1
@@ -225,36 +225,48 @@ metadata/_edit_use_custom_anchors = false
 offset_right = 240.0
 
 [node name="CharacterSummaryDisplay2" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
-offset_left = 244.0
-offset_right = 484.0
-
-[node name="CharacterSummaryDisplay3" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
 offset_top = 105.0
 offset_right = 240.0
 offset_bottom = 206.0
 
+[node name="CharacterSummaryDisplay3" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+offset_top = 210.0
+offset_right = 240.0
+offset_bottom = 311.0
+
 [node name="CharacterSummaryDisplay4" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
-offset_left = 244.0
-offset_top = 105.0
-offset_right = 484.0
-offset_bottom = 206.0
+offset_top = 315.0
+offset_right = 240.0
+offset_bottom = 416.0
 
 [node name="GardenNode" type="Node2D" parent="."]
-position = Vector2(205, 5)
+position = Vector2(393, 197)
 
 [node name="GardenGrid" type="Control" parent="GardenNode"]
-offset_right = 320.0
-offset_bottom = 317.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -158.5
+offset_right = 160.0
+offset_bottom = 158.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
 script = ExtResource( "2_754aq" )
 base_plot_node_scene = ExtResource( "6_3kq36" )
+empty_plot_scene = ExtResource( "11_stkmo" )
 metadata/_edit_use_custom_anchors = false
 
 [node name="UIGrid" type="GridContainer" parent="GardenNode/GardenGrid"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -184.0
+offset_right = 184.0
+offset_bottom = 184.0
 columns = 3
 
 [node name="Grid" type="GridContainer" parent="GardenNode/GardenGrid/UIGrid"]
