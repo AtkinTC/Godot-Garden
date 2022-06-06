@@ -18,11 +18,6 @@ func initialize():
 func get_available_enhancement_keys() -> Array:
 	var available_keys = []
 	for key in Database.get_keys(Const.ENHANCEMENT):
-		var purchase_props := {
-			Const.MOD_TARGET_CAT : Const.ENHANCEMENT,
-			Const.MOD_TARGET_KEY : key,
-			Const.MOD_TYPE : Const.PURCHASE
-		}
 		if(!is_disabled(key) && !LockUtil.is_locked(Const.ENHANCEMENT, key)):
 			available_keys.append(key)
 	return available_keys
@@ -46,14 +41,6 @@ func get_selected_enhancement_key() -> String:
 # purchase an enhancement, spending the required resources and then applying it
 func purchase_enhancement(key : String) -> bool:
 	set_selected_enhancement_key(key)
-	
-	var upgrade_props := {
-		Const.MOD_TARGET_CAT : Const.ENHANCEMENT,
-		Const.MOD_TARGET_KEY : key,
-		Const.MOD_TYPE : Const.PURCHASE,
-		Const.COUNT : Database.get_entry_attr(Const.ENHANCEMENT, key, Const.COUNT, 0),
-	}
-		
 	apply_enhancement(key)
 	return true
 

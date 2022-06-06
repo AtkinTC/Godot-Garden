@@ -32,11 +32,11 @@ func complete_exploration():
 	
 	var empty_neighbor_coords = GardenManager.get_empty_neighbors(coord)
 
-	for coord in empty_neighbor_coords:
-		var plot = GardenManager.create_plot(coord)
+	for neighbor_coord in empty_neighbor_coords:
+		var plot = GardenManager.create_plot(neighbor_coord)
 		plot.set_display_name("new")
 		plot.plot_type = GardenManager.select_plot_type_neighbor(plot_type)
-		plot.plot_updated.emit(coord)
+		plot.plot_updated.emit(neighbor_coord)
 	
 	plot_updated.emit(coord)
 
@@ -66,13 +66,6 @@ func upgrade_structure():
 		return false
 	if(!plot_structure.can_be_upgraded()):
 		return false
-	
-	var purchase_props := {
-		Const.MOD_TARGET_CAT : Const.OBJECT,
-		Const.MOD_TARGET_KEY : plot_structure.get_structure_key(),
-		Const.MOD_TYPE : Const.UPGRADE,
-		Const.LEVEL : plot_structure.get_upgrade_level()
-	}
 	
 	plot_structure.start_upgrading()
 	plot_updated.emit(coord)

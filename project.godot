@@ -179,16 +179,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/Garden/StructureDisplay/Content/StructureDisplayContent.gd"
 }, {
-"base": "StructureDisplayContent",
-"class": &"StructureDisplaySupplyChangeContent",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/StructureDisplay/Content/StructureDisplaySupplyChangeContent.gd"
-}, {
-"base": "StructureComponenet",
-"class": &"StructureSupplySourceComponent",
-"language": &"GDScript",
-"path": "res://Scripts/Structure/StructureSupplySourceComponent.gd"
-}, {
 "base": "RefCounted",
 "class": &"SupplyData",
 "language": &"GDScript",
@@ -264,8 +254,6 @@ _global_script_class_icons={
 "StructureDisplay": "",
 "StructureDisplayBuildContent": "",
 "StructureDisplayContent": "",
-"StructureDisplaySupplyChangeContent": "",
-"StructureSupplySourceComponent": "",
 "SupplyData": "",
 "SupplyDisplay": "",
 "SupplyDisplayBar": "",

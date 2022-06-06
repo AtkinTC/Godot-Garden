@@ -9,13 +9,13 @@ extends Control
 @export_node_path var INT_display_path
 @export_node_path var char_portrait_path
 
-@onready var char_name_label : Label = get_node(char_name_label_path) if char_name_label_path else null
-@onready var supply_display_HP : SupplyDisplay = get_node(HP_display_path) if HP_display_path else null
-@onready var supply_display_SP : SupplyDisplay = get_node(SP_display_path) if SP_display_path else null
-@onready var supply_display_STR : SupplyDisplay = get_node(STR_display_path) if SP_display_path else null
-@onready var supply_display_AGI : SupplyDisplay = get_node(AGI_display_path) if SP_display_path else null
-@onready var supply_display_INT : SupplyDisplay = get_node(INT_display_path) if SP_display_path else null
-@onready var char_portrait : CharacterPortraitDisplay = get_node(char_portrait_path) if char_portrait_path else null
+@onready var char_name_label : Label = get_node_or_null(char_name_label_path) if char_name_label_path else null
+@onready var supply_display_HP : SupplyDisplay = get_node_or_null(HP_display_path) if HP_display_path else null
+@onready var supply_display_SP : SupplyDisplay = get_node_or_null(SP_display_path) if SP_display_path else null
+@onready var supply_display_STR : SupplyDisplay = get_node_or_null(STR_display_path) if SP_display_path else null
+@onready var supply_display_AGI : SupplyDisplay = get_node_or_null(AGI_display_path) if SP_display_path else null
+@onready var supply_display_INT : SupplyDisplay = get_node_or_null(INT_display_path) if SP_display_path else null
+@onready var char_portrait : CharacterPortraitDisplay = get_node_or_null(char_portrait_path) if char_portrait_path else null
 
 var character : CharacterVO
 

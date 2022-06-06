@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://n85122ecy3sy"]
+[gd_scene load_steps=4 format=3 uid="uid://n85122ecy3sy"]
 
 [ext_resource type="Script" path="res://Scenes/Garden/StructureDisplay/StructureDisplay.gd" id="1_gjl24"]
 [ext_resource type="Texture2D" uid="uid://cyi404ej02kup" path="res://Assets/UI/nine_patch_panel_single_outer.png" id="2_7lxvh"]
 [ext_resource type="PackedScene" uid="uid://ktyeyneg052u" path="res://Scenes/Garden/StructureDisplay/Content/StructureDisplayBuildContent.tscn" id="2_oao6j"]
-[ext_resource type="PackedScene" uid="uid://bb0nh152jsmqv" path="res://Scenes/Garden/StructureDisplay/Content/StructureDisplaySupplyChangeContent.tscn" id="3_p35hb"]
 
 [node name="StructureDisplay" type="Control"]
 minimum_size = Vector2(85, 85)
@@ -14,7 +13,6 @@ script = ExtResource( "1_gjl24" )
 content_container_path = NodePath("MarginContainer/V")
 name_label_path = NodePath("MarginContainer/V/NameLabel")
 build_display_content = ExtResource( "2_oao6j" )
-gain_display_content = ExtResource( "3_p35hb" )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 texture_filter = 1

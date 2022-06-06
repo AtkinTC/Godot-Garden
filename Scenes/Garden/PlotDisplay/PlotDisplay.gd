@@ -65,7 +65,6 @@ func update_display() -> void:
 		content_container.add_child(plot_display_content)
 
 func _on_plot_button_pressed():
-	var plot : Plot = GardenManager.get_plot(plot_coord)
 	ActionManager.apply_current_action_to_plot(plot_coord)
 
 func _on_plot_updated(coord : Vector2):

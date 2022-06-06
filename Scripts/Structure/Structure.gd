@@ -131,15 +131,6 @@ func refresh_structure():
 		for unlock in structure_data.get_unlocks():
 			LockUtil.set_locked(unlock[Const.UNLOCK_TYPE], unlock[Const.UNLOCK_KEY], false)
 		
-		if(structure_data.get_supply_source_gain() != {}):
-			# setup supply gains componenet
-			var component := StructureSupplySourceComponent.new(world_coord, structure_data.get_structure_key(), Const.GAIN, upgrade_level)
-			components[Const.GAIN] = component
-		if(structure_data.get_supply_source_capacity() != {}):
-			# setup supply 
-			var component := StructureSupplySourceComponent.new(world_coord, structure_data.get_structure_key(), Const.CAPACITY, upgrade_level)
-			components[Const.CAPACITY] = component
-		
 	structure_updated.emit(world_coord)
 
 func cleanup_before_delete():
