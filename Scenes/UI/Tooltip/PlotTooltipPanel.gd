@@ -20,9 +20,9 @@ var plot_coord : Vector2
 func _ready():
 	super._ready()
 	assert(owner_node != null)
-	assert(owner_node is PlotNode)
+	assert(owner_node is PlotDisplay)
 	
-	set_plot_coord((owner_node as PlotNode).get_plot_coord())
+	set_plot_coord((owner_node as PlotDisplay).get_plot_coord())
 		
 	for child in content_container.get_children():
 		if(child is InfoBox):

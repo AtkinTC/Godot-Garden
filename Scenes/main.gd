@@ -15,7 +15,8 @@ func _init():
 	EnhancementManager.initialize()
 	CharactersManager.initialize()
 	GardenManager.initialize()
-	
+
+func _ready():
 	#TODO: remove this test code
 	#example characters for testing purposes
 	var new_char : CharacterVO = CharactersManager.create_empty_character()
@@ -49,20 +50,25 @@ func _init():
 	center_plot.insert_structure("STARTER")
 	center_plot.set_display_name("base")
 	center_plot.set_explored(true)
+	center_plot.plot_type = "test"
 	
 	#TODO: remove this test code
 	#example plot areas for testing purposes
 	var plot = GardenManager.create_plot(Vector2(1,0))
 	plot.set_display_name("forest")
+	plot.plot_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(0,1))
 	plot.set_display_name("cave")
+	plot.plot_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(-1,0))
 	plot.set_display_name("valley")
+	plot.plot_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(0,-1))
 	plot.set_display_name("road")
+	plot.plot_type = "grass"
 
 func _process(_delta):
 	SupplyManager.step(_delta)

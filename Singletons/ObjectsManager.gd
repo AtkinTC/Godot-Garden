@@ -22,9 +22,7 @@ func get_available_object_keys() -> Array:
 			Const.MOD_TARGET_KEY : key,
 			Const.MOD_TYPE : Const.PURCHASE
 		}
-		if(PurchaseUtil.is_purchasable(purchase_props)
-		&& !is_disabled(key)
-		&& !LockUtil.is_locked(Const.OBJECT, key)):
+		if(!is_disabled(key) && !LockUtil.is_locked(Const.OBJECT, key)):
 			available_keys.append(key)
 	return available_keys
 

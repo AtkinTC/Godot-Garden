@@ -52,6 +52,6 @@ func _on_garden_plot_updated(coord : Vector2):
 		garden_plot_node.set_plot_coord(coord)
 		current_node.add_sibling(garden_plot_node)
 		grid.remove_child(current_node)
-		current_node.queue_free
+		current_node.queue_free()
 		
 		nodes[coord] = garden_plot_node

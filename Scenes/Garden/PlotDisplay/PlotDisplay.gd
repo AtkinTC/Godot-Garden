@@ -18,6 +18,9 @@ var plot_display_content : PlotDisplayContent
 var structure_display : StructureDisplay
 
 func _ready():
+	if(GardenManager.get_plot(plot_coord) == null):
+		queue_free()
+		return
 	plot_button.pressed.connect(_on_plot_button_pressed)
 	if(plot_coord != null):
 		GardenManager.get_plot(plot_coord).plot_updated.connect(_on_plot_updated)

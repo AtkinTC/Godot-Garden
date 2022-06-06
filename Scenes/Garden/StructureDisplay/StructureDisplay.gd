@@ -19,7 +19,7 @@ var structure : Structure
 var structure_display_content : StructureDisplayContent
 
 func _ready():
-	if(!GardenManager.get_plot(world_coord).has_structure()):
+	if(GardenManager.get_plot(world_coord) == null || !GardenManager.get_plot(world_coord).has_structure()):
 		self.queue_free()
 		return
 	structure = GardenManager.get_plot(world_coord).get_structure()

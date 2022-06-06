@@ -27,14 +27,9 @@ func recalculate():
 	
 	var source : Dictionary = StructuresManager.get_structure_type_attribute(structure_key, Const.SOURCE, {}).duplicate()
 	base_values = source.get(source_key).get(Const.VALUE)
-	var local_modifier = PurchaseUtil.get_local_source_modifier(mod_prop)
-	for key in base_values:
-		base_values[key] = base_values[key] * local_modifier
 	
-	final_values = PurchaseUtil.get_modifed_supply_values(mod_prop)
-	
-	for supply_key in final_values.keys():
-		SupplyManager.set_source(source_key, supply_key, get_source_id(), final_values[supply_key])
+	for supply_key in base_values.keys():
+		SupplyManager.set_source(source_key, supply_key, get_source_id(), base_values[supply_key])
 
 func get_base_values() -> Dictionary:
 	return base_values

@@ -88,6 +88,9 @@ func set_plot(coord : Vector2, plot : Plot):
 	#plots.set_at(coord, plot)
 	insert_plot(coord, plot)
 
+func get_used_plots() -> Array:
+	return plots_dict.keys()
+
 func get_plot(coord : Vector2) -> Plot:
 	return plots_dict.get(coord, null)
 

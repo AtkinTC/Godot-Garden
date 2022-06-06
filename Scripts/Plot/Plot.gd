@@ -6,6 +6,7 @@ var explored : bool = false
 var owned : bool = false
 var coord : Vector2 = Vector2.ZERO
 
+var plot_type : String
 var display_name : String
 
 var plot_structure : Structure
@@ -34,6 +35,7 @@ func complete_exploration():
 	for coord in empty_neighbor_coords:
 		var plot = GardenManager.create_plot(coord)
 		plot.set_display_name("new")
+		plot.plot_type = "grass"
 		plot.plot_updated.emit(coord)
 	
 	plot_updated.emit(coord)
