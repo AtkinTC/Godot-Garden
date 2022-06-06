@@ -35,7 +35,7 @@ func complete_exploration():
 	for coord in empty_neighbor_coords:
 		var plot = GardenManager.create_plot(coord)
 		plot.set_display_name("new")
-		plot.plot_type = "grass"
+		plot.plot_type = GardenManager.select_plot_type_neighbor(plot_type)
 		plot.plot_updated.emit(coord)
 	
 	plot_updated.emit(coord)

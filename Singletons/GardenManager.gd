@@ -4,27 +4,31 @@ signal garden_resized()
 signal garden_state_changed()
 signal garden_plot_updated(coord : Vector2)
 
-var plot_types := {
+var plot_type_neighbors := {
 	"base" : {
 		"forest" : 0.5,
-		"road" : 0.5
+		"field" : 0.5
+	},
+	"field" : {
+		"forest" : 0.25,
+		"field" : 0.75,
+		"swamp" : 0.1,
+		"cave" : 0.05
 	},
 	"forest" : {
 		"forest" : 0.5,
-		"deep forest" : 0.5
-	},
-	"deep forest" : {
-		"forest" : 0.25,
-		"deep forest" : 0.5,
-		"cave" : 0.25
-	},
-	"road" : {
-		"road" : 0.75,
-		"cave" : 0.25
+		"field" : 0.5,
+		"cave" : 0.2,
+		"swamp" : 0.2
 	},
 	"cave" : {
-		"road" : 0.75,
-		"cave" : 0.25
+		"cave" : 0.1,
+		"forest" : 0.5,
+		"field" : 0.5,
+	},
+	"swamp" : {
+		"swamp" : 0.25,
+		"field" : 0.5
 	},
 }
 
@@ -104,6 +108,25 @@ func get_empty_neighbors(coord : Vector2) -> Array:
 		if(neighbor == null):
 			neighbors.append(coord+d)
 	return neighbors
+
+# returns the dictionary of potential neighbor types for this plot type
+func get_plot_type_neighbors(plot_type : String) -> Dictionary:
+	return plot_type_neighbors.get(plot_type, {})
+
+# randomly selects one of the potential neighbor types based on the defined chances
+func select_plot_type_neighbor(plot_type : String) -> String:
+	var neighbors = get_plot_type_neighbors(plot_type)
+	var total : float = 0
+	for key in neighbors.keys():
+		total += neighbors[key]
+	var select = randf_range(0, total)
+	var selected_key = ""
+	for key in neighbors.keys():
+		selected_key = key
+		select -= neighbors[key]
+		if(select <= 0):
+			break
+	return selected_key
 
 func _on_plot_updated(coord : Vector2):
 	var updated_plot : Plot = get_plot(coord)

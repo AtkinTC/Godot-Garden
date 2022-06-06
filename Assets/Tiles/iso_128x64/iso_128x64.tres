@@ -1,12 +1,11 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://cyg463145nr86"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://cyg463145nr86"]
 
 [ext_resource type="Texture2D" uid="uid://c8m6mcqutiq57" path="res://Assets/Tiles/iso_128x64/test.png" id="1_tnjn2"]
 [ext_resource type="Texture2D" uid="uid://x8w120be5wrl" path="res://Assets/Tiles/iso_128x64/unknown.png" id="2_jomm1"]
 [ext_resource type="Texture2D" uid="uid://dbvckc0wvf2u3" path="res://Assets/Tiles/iso_128x64/grass.png" id="3_fw8uk"]
-[ext_resource type="Texture2D" uid="uid://dnfdktb5layx7" path="res://Assets/Tiles/iso_128x64/forest.png" id="3_m87hv"]
-[ext_resource type="Texture2D" uid="uid://bhqu8idh675la" path="res://Assets/Tiles/iso_128x64/atlus_test.png" id="4_5nepe"]
 [ext_resource type="Texture2D" uid="uid://ov76te2i70fh" path="res://Assets/Tiles/iso_128x64/question_icon.png" id="6_4e8ul"]
 [ext_resource type="Texture2D" uid="uid://mhcxmnk20agp" path="res://Assets/Tiles/iso_128x64/border.png" id="7_0vj1q"]
+[ext_resource type="Texture2D" uid="uid://btbi0pkpw5ffw" path="res://Assets/Tiles/iso_128x64/terrain.png" id="8_rkftf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pwsct"]
 resource_name = "test"
@@ -43,29 +42,6 @@ texture_region_size = Vector2i(128, 144)
 2:0/0/custom_data_0 = "grass"
 2:0/0/custom_data_1 = "grass"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ojq05"]
-resource_name = "forest"
-texture = ExtResource( "3_m87hv" )
-texture_region_size = Vector2i(128, 144)
-0:0/0 = 0
-0:0/0/texture_offset = Vector2i(0, 24)
-0:0/0/custom_data_0 = "forest"
-0:0/0/custom_data_1 = "forest"
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o1j8c"]
-resource_name = "atlus"
-texture = ExtResource( "4_5nepe" )
-texture_region_size = Vector2i(128, 144)
-0:0/0 = 0
-0:0/0/texture_offset = Vector2i(0, 24)
-0:0/0/custom_data_0 = "test_blue"
-1:0/0 = 0
-1:0/0/texture_offset = Vector2i(0, 24)
-1:0/0/custom_data_0 = "test_red"
-2:0/0 = 0
-2:0/0/texture_offset = Vector2i(0, 24)
-2:0/0/custom_data_0 = "test_green"
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bnd6n"]
 resource_name = "question"
 texture = ExtResource( "6_4e8ul" )
@@ -88,6 +64,26 @@ texture_region_size = Vector2i(128, 144)
 0:0/0/modulate = Color(1, 1, 1, 0.784314)
 0:0/0/custom_data_0 = "border"
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q16as"]
+texture = ExtResource( "8_rkftf" )
+texture_region_size = Vector2i(128, 144)
+0:0/0 = 0
+0:0/0/texture_offset = Vector2i(0, 24)
+0:0/0/custom_data_0 = "empty"
+0:0/0/custom_data_1 = "empty"
+1:0/0 = 0
+1:0/0/texture_offset = Vector2i(0, 24)
+1:0/0/custom_data_1 = "field"
+2:0/0 = 0
+2:0/0/texture_offset = Vector2i(0, 24)
+2:0/0/custom_data_1 = "swamp"
+3:0/0 = 0
+3:0/0/texture_offset = Vector2i(0, 24)
+3:0/0/custom_data_1 = "forest"
+4:0/0 = 0
+4:0/0/texture_offset = Vector2i(0, 24)
+4:0/0/custom_data_1 = "cave"
+
 [resource]
 tile_shape = 1
 tile_layout = 5
@@ -99,7 +95,6 @@ custom_data_layer_1/type = 4
 sources/0 = SubResource( "TileSetAtlasSource_pwsct" )
 sources/1 = SubResource( "TileSetAtlasSource_c202p" )
 sources/2 = SubResource( "TileSetAtlasSource_druuw" )
-sources/3 = SubResource( "TileSetAtlasSource_ojq05" )
-sources/4 = SubResource( "TileSetAtlasSource_o1j8c" )
 sources/5 = SubResource( "TileSetAtlasSource_bnd6n" )
 sources/6 = SubResource( "TileSetAtlasSource_kdbve" )
+sources/7 = SubResource( "TileSetAtlasSource_q16as" )
