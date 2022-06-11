@@ -20,8 +20,7 @@ func _process(_delta):
 		# show unexplored plot icons
 		if(!plot.explored):
 			var tiles_array = tiles_by_tile_name.get(UNEXPLORED_ICON_NAME, null)
-			var tile : Array = tiles_array[0]
-			set_cell(0, coord_i, tile[0], tile[1])
+			set_cell_from_tile_identifier(coord_i, tiles_array[0])
 		else:
 			erase_cell(0, coord_i)
 		

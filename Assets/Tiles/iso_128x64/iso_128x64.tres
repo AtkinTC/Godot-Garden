@@ -54,6 +54,7 @@ texture_region_size = Vector2i(128, 144)
 resource_name = "border"
 texture = ExtResource( "7_0vj1q" )
 texture_region_size = Vector2i(128, 144)
+0:0/next_alternative_id = 2
 0:0/animation_columns = 4
 0:0/animation_frame_0/duration = 0.6
 0:0/animation_frame_1/duration = 0.2
@@ -62,6 +63,10 @@ texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
 0:0/0/custom_data_0 = "border"
+0:0/1 = 1
+0:0/1/texture_offset = Vector2i(0, 24)
+0:0/1/modulate = Color(1, 0, 0, 1)
+0:0/1/custom_data_0 = "border_selected"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q16as"]
 texture = ExtResource( "8_rkftf" )

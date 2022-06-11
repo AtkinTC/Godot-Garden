@@ -2,6 +2,7 @@ class_name BordersTileMap
 extends TileMapCust
 
 const BORDER_TILE_NAME := "border"
+const SELECTED_TILE_NAME := "border_selected"
 
 var display_borders : bool = true
 
@@ -21,8 +22,7 @@ func _process(_delta):
 		
 		# set border tiles
 		var tiles_array = tiles_by_tile_name.get(BORDER_TILE_NAME, null)
-		var tile : Array = tiles_array[0]
-		set_cell(0, coord_i, tile[0], tile[1])
+		set_cell_from_tile_identifier(coord_i, tiles_array[0])
 		
 		unused_cells.erase(coord_i)
 	
