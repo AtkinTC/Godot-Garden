@@ -1,20 +1,10 @@
-[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://cyg463145nr86"]
+[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://cyg463145nr86"]
 
-[ext_resource type="Texture2D" uid="uid://c8m6mcqutiq57" path="res://Assets/Tiles/iso_128x64/test.png" id="1_tnjn2"]
 [ext_resource type="Texture2D" uid="uid://x8w120be5wrl" path="res://Assets/Tiles/iso_128x64/unknown.png" id="2_jomm1"]
-[ext_resource type="Texture2D" uid="uid://dbvckc0wvf2u3" path="res://Assets/Tiles/iso_128x64/grass.png" id="3_fw8uk"]
+[ext_resource type="Texture2D" uid="uid://bnem7nd8oevpl" path="res://Assets/Tiles/iso_128x64/terrain_feature.png" id="4_on3gk"]
 [ext_resource type="Texture2D" uid="uid://ov76te2i70fh" path="res://Assets/Tiles/iso_128x64/question_icon.png" id="6_4e8ul"]
 [ext_resource type="Texture2D" uid="uid://mhcxmnk20agp" path="res://Assets/Tiles/iso_128x64/border.png" id="7_0vj1q"]
-[ext_resource type="Texture2D" uid="uid://btbi0pkpw5ffw" path="res://Assets/Tiles/iso_128x64/terrain.png" id="8_rkftf"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pwsct"]
-resource_name = "test"
-texture = ExtResource( "1_tnjn2" )
-texture_region_size = Vector2i(128, 144)
-0:0/0 = 0
-0:0/0/texture_offset = Vector2i(0, 24)
-0:0/0/custom_data_0 = "test"
-0:0/0/custom_data_1 = "test"
+[ext_resource type="Texture2D" uid="uid://ds73ancvar7rs" path="res://Assets/Tiles/iso_128x64/terrain_base.png" id="8_8byh2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c202p"]
 resource_name = "unknown"
@@ -23,24 +13,30 @@ texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
 0:0/0/custom_data_0 = "unknown"
-0:0/0/custom_data_1 = "ERROR"
+0:0/0/custom_data_1 = "ERROR_base"
+1:0/0 = 0
+1:0/0/texture_offset = Vector2i(0, 24)
+1:0/0/custom_data_1 = "ERROR_feature"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_druuw"]
-resource_name = "grass"
-texture = ExtResource( "3_fw8uk" )
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c6wtk"]
+texture = ExtResource( "4_on3gk" )
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
-0:0/0/custom_data_0 = "grass"
-0:0/0/custom_data_1 = "grass"
+0:0/0/custom_data_0 = "empty"
+0:0/0/custom_data_1 = "empty_feature"
 1:0/0 = 0
 1:0/0/texture_offset = Vector2i(0, 24)
-1:0/0/custom_data_0 = "grass"
-1:0/0/custom_data_1 = "grass"
+1:0/0/custom_data_1 = "field_feature"
 2:0/0 = 0
 2:0/0/texture_offset = Vector2i(0, 24)
-2:0/0/custom_data_0 = "grass"
-2:0/0/custom_data_1 = "grass"
+2:0/0/custom_data_1 = "swamp_feature"
+3:0/0 = 0
+3:0/0/texture_offset = Vector2i(0, 24)
+3:0/0/custom_data_1 = "forest_feature"
+4:0/0 = 0
+4:0/0/texture_offset = Vector2i(0, 24)
+4:0/0/custom_data_1 = "cave_feature"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bnd6n"]
 resource_name = "question"
@@ -68,25 +64,15 @@ texture_region_size = Vector2i(128, 144)
 0:0/1/modulate = Color(1, 0, 0, 1)
 0:0/1/custom_data_0 = "border_selected"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q16as"]
-texture = ExtResource( "8_rkftf" )
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x303i"]
+texture = ExtResource( "8_8byh2" )
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
-0:0/0/custom_data_0 = "empty"
-0:0/0/custom_data_1 = "empty"
+0:0/0/custom_data_1 = "blank_base"
 1:0/0 = 0
 1:0/0/texture_offset = Vector2i(0, 24)
-1:0/0/custom_data_1 = "field"
-2:0/0 = 0
-2:0/0/texture_offset = Vector2i(0, 24)
-2:0/0/custom_data_1 = "swamp"
-3:0/0 = 0
-3:0/0/texture_offset = Vector2i(0, 24)
-3:0/0/custom_data_1 = "forest"
-4:0/0 = 0
-4:0/0/texture_offset = Vector2i(0, 24)
-4:0/0/custom_data_1 = "cave"
+1:0/0/custom_data_1 = "grass_base"
 
 [resource]
 tile_shape = 1
@@ -96,9 +82,8 @@ custom_data_layer_0/name = "tile_name"
 custom_data_layer_0/type = 4
 custom_data_layer_1/name = "plot_type"
 custom_data_layer_1/type = 4
-sources/0 = SubResource( "TileSetAtlasSource_pwsct" )
 sources/1 = SubResource( "TileSetAtlasSource_c202p" )
-sources/2 = SubResource( "TileSetAtlasSource_druuw" )
+sources/4 = SubResource( "TileSetAtlasSource_c6wtk" )
 sources/5 = SubResource( "TileSetAtlasSource_bnd6n" )
 sources/6 = SubResource( "TileSetAtlasSource_kdbve" )
-sources/7 = SubResource( "TileSetAtlasSource_q16as" )
+sources/8 = SubResource( "TileSetAtlasSource_x303i" )

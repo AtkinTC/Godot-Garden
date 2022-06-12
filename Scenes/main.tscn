@@ -338,8 +338,16 @@ script = ExtResource( "12_l8sup" )
 texture_filter = 1
 tile_set = ExtResource( "12_roxqa" )
 format = 2
+layer_0/name = "base"
 layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(-1, 1, 0)
+layer_1/name = "feature"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = true
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
 script = ExtResource( "14_wiqlv" )
 
 [node name="IconsTileMap" type="TileMap" parent="World"]

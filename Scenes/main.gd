@@ -50,7 +50,8 @@ func _ready():
 	center_plot.insert_structure("STARTER")
 	center_plot.set_display_name("base")
 	center_plot.set_explored(true)
-	center_plot.plot_type = "test"
+	center_plot.plot_type = "empty"
+	center_plot.base_type = "blank"
 	
 	#TODO: remove this test code
 	#example plot areas for testing purposes
@@ -58,21 +59,25 @@ func _ready():
 	var plot_type = GardenManager.select_plot_type_neighbor("base")
 	plot.set_display_name(plot_type)
 	plot.plot_type = plot_type
+	plot.base_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(0,1))
 	plot_type = GardenManager.select_plot_type_neighbor("base")
 	plot.set_display_name(plot_type)
 	plot.plot_type = plot_type
+	plot.base_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(-1,0))
 	plot_type = GardenManager.select_plot_type_neighbor("base")
 	plot.set_display_name(plot_type)
 	plot.plot_type = plot_type
+	plot.base_type = "grass"
 	
 	plot = GardenManager.create_plot(Vector2(0,-1))
 	plot_type = GardenManager.select_plot_type_neighbor("base")
 	plot.set_display_name(plot_type)
 	plot.plot_type = plot_type
+	plot.base_type = "grass"
 
 func _process(_delta):
 	SupplyManager.step(_delta)

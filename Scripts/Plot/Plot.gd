@@ -7,6 +7,7 @@ var owned : bool = false
 var coord : Vector2 = Vector2.ZERO
 
 var plot_type : String
+var base_type : String
 var display_name : String
 
 var plot_structure : Structure
@@ -34,8 +35,9 @@ func complete_exploration():
 
 	for neighbor_coord in empty_neighbor_coords:
 		var plot = GardenManager.create_plot(neighbor_coord)
-		plot.set_display_name("new")
+		plot.set_display_name(plot_type)
 		plot.plot_type = GardenManager.select_plot_type_neighbor(plot_type)
+		plot.base_type = "grass"
 		plot.plot_updated.emit(neighbor_coord)
 	
 	plot_updated.emit(coord)
