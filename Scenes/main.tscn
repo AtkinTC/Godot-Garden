@@ -15,8 +15,8 @@
 [ext_resource type="Script" path="res://Scenes/World/World.gd" id="12_l8sup"]
 [ext_resource type="TileSet" uid="uid://cyg463145nr86" path="res://Assets/Tiles/iso_128x64/iso_128x64.tres" id="12_roxqa"]
 [ext_resource type="Script" path="res://Scripts/TileMap/PlotsBaseTileMap.gd" id="14_wiqlv"]
-[ext_resource type="Script" path="res://Scripts/TileMap/BordersTileMap.gd" id="15_0r3s3"]
 [ext_resource type="Script" path="res://Scripts/TileMap/IconsTileMap.gd" id="15_47ens"]
+[ext_resource type="Script" path="res://Scripts/TileMap/HighlightsTileMap.gd" id="16_ctr35"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( "1_83mxw" )
@@ -350,13 +350,13 @@ layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(-1, 1, 0)
 script = ExtResource( "15_47ens" )
 
-[node name="BordersTileMap" type="TileMap" parent="World"]
+[node name="HighlightsTileMap" type="TileMap" parent="World"]
 texture_filter = 1
 tile_set = ExtResource( "12_roxqa" )
 format = 2
 layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(-1, 1, 0)
-script = ExtResource( "15_0r3s3" )
+script = ExtResource( "16_ctr35" )
 
 [node name="Camera" type="Camera2D" parent="World"]
 current = true

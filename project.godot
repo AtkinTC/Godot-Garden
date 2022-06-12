@@ -24,11 +24,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Array2D.gd"
 }, {
-"base": "TileMapCust",
-"class": &"BordersTileMap",
-"language": &"GDScript",
-"path": "res://Scripts/TileMap/BordersTileMap.gd"
-}, {
 "base": "RefCounted",
 "class": &"CharAttrDAO",
 "language": &"GDScript",
@@ -88,6 +83,11 @@ _global_script_classes=[{
 "class": &"GardenGrid",
 "language": &"GDScript",
 "path": "res://Scenes/Garden/GardenGrid.gd"
+}, {
+"base": "TileMapCust",
+"class": &"HighlightsTileMap",
+"language": &"GDScript",
+"path": "res://Scripts/TileMap/HighlightsTileMap.gd"
 }, {
 "base": "TileMapCust",
 "class": &"IconsTileMap",
@@ -243,7 +243,6 @@ _global_script_class_icons={
 "ActionData": "",
 "AreaVO": "",
 "Array2D": "",
-"BordersTileMap": "",
 "CharAttrDAO": "",
 "CharAttrUtil": "",
 "CharacterPortraitDisplay": "",
@@ -256,6 +255,7 @@ _global_script_class_icons={
 "EnhancementData": "",
 "ExplorationVO": "",
 "GardenGrid": "",
+"HighlightsTileMap": "",
 "IconsTileMap": "",
 "InfoBox": "",
 "LargeSupplyDisplay": "",
