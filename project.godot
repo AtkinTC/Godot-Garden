@@ -238,6 +238,26 @@ _global_script_classes=[{
 "class": &"Utils",
 "language": &"GDScript",
 "path": "res://Scripts/Utils.gd"
+}, {
+"base": "Node2D",
+"class": &"World",
+"language": &"GDScript",
+"path": "res://Scenes/World/World.gd"
+}, {
+"base": "Node2D",
+"class": &"WorldUnit",
+"language": &"GDScript",
+"path": "res://Scenes/World/WorldUnits/WorldUnit.gd"
+}, {
+"base": "Node2D",
+"class": &"WorldUnitsActionController",
+"language": &"GDScript",
+"path": "res://Scenes/World/WorldUnits/WorldUnitsActionController.gd"
+}, {
+"base": "Node2D",
+"class": &"WorldUnitsManager",
+"language": &"GDScript",
+"path": "res://Scenes/World/WorldUnits/WorldUnitsManager.gd"
 }]
 _global_script_class_icons={
 "ActionData": "",
@@ -285,7 +305,11 @@ _global_script_class_icons={
 "TileMapCust": "",
 "TooltipHost": "",
 "TooltipPanel": "",
-"Utils": ""
+"Utils": "",
+"World": "",
+"WorldUnit": "",
+"WorldUnitsActionController": "",
+"WorldUnitsManager": ""
 }
 
 [application]
