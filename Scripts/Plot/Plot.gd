@@ -115,7 +115,7 @@ func has_area() -> bool:
 func set_explored(_explored : bool):
 	explored = _explored
 
-func get_explored() -> bool:
+func is_explored() -> bool:
 	return explored
 
 func set_display_name(_display_name : String):

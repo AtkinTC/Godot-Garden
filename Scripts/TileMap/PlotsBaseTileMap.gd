@@ -65,7 +65,7 @@ func _process(_delta):
 				var random_i = randi_range(0, tiles_array.size()-1)
 				set_cell_from_tile_identifier(coord_i, tiles_array[random_i], layers_by_name[BASE_LAYER_NAME])
 		
-		if(plot.explored):
+		if(plot.is_explored()):
 			# feature_type defaults to ERR_PLOT_TYPE if the tile type isn't recognized
 			var feature_type = ERR_PLOT_TYPE + FEATURE_SUFFIX
 			if(tiles_by_plot_type.has(plot.plot_type + FEATURE_SUFFIX)):

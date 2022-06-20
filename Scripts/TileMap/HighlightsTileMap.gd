@@ -21,7 +21,6 @@ func _process(_delta):
 	
 	for coord in GardenManager.get_used_plots():
 		var coord_i : Vector2i = coord
-		var plot : Plot = GardenManager.get_plot(coord_i)
 		
 		# set border tiles
 		var tiles_array = tiles_by_tile_name.get(BORDER_TILE_NAME, null)

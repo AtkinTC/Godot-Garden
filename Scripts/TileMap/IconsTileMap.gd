@@ -18,7 +18,7 @@ func _process(_delta):
 		var plot : Plot = GardenManager.get_plot(coord_i)
 		
 		# show unexplored plot icons
-		if(!plot.explored):
+		if(!plot.is_explored()):
 			var tiles_array = tiles_by_tile_name.get(UNEXPLORED_ICON_NAME, null)
 			set_cell_from_tile_identifier(coord_i, tiles_array[0])
 		else:

@@ -1,3 +1,4 @@
+class_name World
 extends Node2D
 
 signal selected_cell(cell : Vector2i)
@@ -16,7 +17,7 @@ func _ready():
 	highlight_cell_changed.connect(highlightsMap._on_highlight_cell_changed)
 	highlight_cleared.connect(highlightsMap._on_highlight_cleared)
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func _unhandled_input(event : InputEvent):
