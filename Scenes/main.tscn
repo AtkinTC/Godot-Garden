@@ -1,17 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://bx3m2od417uow"]
+[gd_scene load_steps=18 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
-[ext_resource type="Script" path="res://Scenes/Garden/GardenGrid.gd" id="2_754aq"]
 [ext_resource type="Script" path="res://Scenes/UI/SelectMenu.gd" id="3_6ld0l"]
 [ext_resource type="Script" path="res://Scenes/UI/SupplyDisplayContainer.gd" id="4_ajn05"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
 [ext_resource type="PackedScene" uid="uid://dxv4pu5x3t8rx" path="res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.tscn" id="4_so846"]
 [ext_resource type="Texture2D" uid="uid://cyi404ej02kup" path="res://Assets/UI/nine_patch_panel_single_outer.png" id="5_4jlim"]
 [ext_resource type="Script" path="res://Scenes/UI/Character/CharactersDisplayList.gd" id="5_cr0o5"]
-[ext_resource type="PackedScene" uid="uid://ckysx4cxsd1yg" path="res://Scenes/Garden/PlotDisplay/PlotDisplay.tscn" id="6_3kq36"]
 [ext_resource type="PackedScene" uid="uid://dnyvrav7145q2" path="res://Scenes/UI/Character/CharacterSummaryDisplay.tscn" id="6_aeyih"]
 [ext_resource type="PackedScene" uid="uid://bhw64rto27g0l" path="res://Scenes/UI/Character/SmallCharacterSummaryDisplay.tscn" id="6_fr030"]
-[ext_resource type="PackedScene" uid="uid://caw6xv7i0kt6d" path="res://Scenes/Garden/PlotDisplay/PlotDisplayEmpty.tscn" id="11_stkmo"]
 [ext_resource type="Script" path="res://Scenes/World/World.gd" id="12_l8sup"]
 [ext_resource type="TileSet" uid="uid://cyg463145nr86" path="res://Assets/Tiles/iso_128x64/iso_128x64.tres" id="12_roxqa"]
 [ext_resource type="Script" path="res://Scripts/TileMap/PlotsBaseTileMap.gd" id="14_wiqlv"]
@@ -22,124 +19,123 @@
 [ext_resource type="Script" path="res://Scenes/World/WorldUnits/WorldUnitsActionController.gd" id="19_gx2qg"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource( "1_83mxw" )
+script = ExtResource("1_83mxw")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="LPanel" type="PanelContainer" parent="UI"]
-minimum_size = Vector2(200, 0)
 anchor_bottom = 1.0
 offset_right = 99.0
 
 [node name="V" type="VBoxContainer" parent="UI/LPanel"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 720.0
 
 [node name="ObjectsSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 94.0
-script = ExtResource( "3_6ld0l" )
+script = ExtResource("3_6ld0l")
 buttons_container_path = NodePath("ButtonsContainer")
 
 [node name="MenuTitle" type="Label" parent="UI/LPanel/V/ObjectsSelectMenu"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 26.0
 text = "Structures"
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/ObjectsSelectMenu"]
 offset_top = 30.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
 [node name="Button1" type="Button" parent="UI/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 31.0
 text = "OBJECT_1"
 
 [node name="Button2" type="Button" parent="UI/LPanel/V/ObjectsSelectMenu/ButtonsContainer"]
 offset_top = 33.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 64.0
 text = "OBJECT_1"
 
 [node name="ActionsSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 98.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 192.0
-script = ExtResource( "3_6ld0l" )
+script = ExtResource("3_6ld0l")
 buttons_container_path = NodePath("ButtonsContainer")
 menu_type = 1
 
 [node name="MenuTitle" type="Label" parent="UI/LPanel/V/ActionsSelectMenu"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 26.0
 text = "Actions"
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/ActionsSelectMenu"]
 offset_top = 30.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
 [node name="Button1" type="Button" parent="UI/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 31.0
 text = "ACTION_1"
 
 [node name="Button2" type="Button" parent="UI/LPanel/V/ActionsSelectMenu/ButtonsContainer"]
 offset_top = 33.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 64.0
 text = "ACTION_1"
 
 [node name="UpgradeSelectMenu" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 196.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 290.0
-script = ExtResource( "3_6ld0l" )
+script = ExtResource("3_6ld0l")
 buttons_container_path = NodePath("ButtonsContainer")
 menu_type = 2
 
 [node name="MenuTitle" type="Label" parent="UI/LPanel/V/UpgradeSelectMenu"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 26.0
 text = "Upgrades"
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="UI/LPanel/V/UpgradeSelectMenu"]
 offset_top = 30.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 94.0
 theme_override_constants/separation = 2
 
 [node name="Button1" type="Button" parent="UI/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 31.0
 text = "UPGRADE_1"
 
 [node name="Button2" type="Button" parent="UI/LPanel/V/UpgradeSelectMenu/ButtonsContainer"]
 offset_top = 33.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 64.0
 text = "UPGRADE_2"
 
 [node name="SupplyTitle" type="Label" parent="UI/LPanel/V"]
 offset_top = 294.0
-offset_right = 200.0
+offset_right = 196.0
 offset_bottom = 320.0
 text = "Resources"
 
 [node name="SupplyDisplayContainer" type="VBoxContainer" parent="UI/LPanel/V"]
 offset_top = 324.0
-offset_right = 200.0
-offset_bottom = 362.0
-script = ExtResource( "4_ajn05" )
-supply_display_scene = ExtResource( "4_so846" )
+offset_right = 196.0
+offset_bottom = 361.0
+script = ExtResource("4_ajn05")
+supply_display_scene = ExtResource("4_so846")
 
-[node name="LargeSupplyDisplay" parent="UI/LPanel/V/SupplyDisplayContainer" instance=ExtResource( "4_so846" )]
+[node name="LargeSupplyDisplay" parent="UI/LPanel/V/SupplyDisplayContainer" instance=ExtResource("4_so846")]
 anchor_right = 0.0
-offset_right = 200.0
-offset_bottom = 38.0
+offset_right = 196.0
+offset_bottom = 37.0
 
 [node name="RPanel" type="PanelContainer" parent="UI"]
 visible = false
@@ -161,7 +157,7 @@ offset_bottom = 86.0
 texture_filter = 1
 offset_right = 240.0
 offset_bottom = 86.0
-texture = ExtResource( "5_4jlim" )
+texture = ExtResource("5_4jlim")
 patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
@@ -172,9 +168,9 @@ metadata/_edit_use_custom_anchors = false
 [node name="MarginContainer" type="MarginContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay"]
 offset_right = 240.0
 offset_bottom = 86.0
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_top = 4
 theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer"]
@@ -218,129 +214,42 @@ offset_top = 18.0
 offset_right = 232.0
 offset_bottom = 78.0
 
-[node name="SmallCharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( "6_fr030" )]
+[node name="SmallCharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/ExplorationDisplay/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("6_fr030")]
 
 [node name="CharactersDisplayList" type="GridContainer" parent="UI/RPanel/VBoxContainer"]
 offset_top = 90.0
 offset_right = 240.0
 offset_bottom = 506.0
 grow_vertical = 0
-script = ExtResource( "5_cr0o5" )
-character_display_scene = ExtResource( "6_aeyih" )
+script = ExtResource("5_cr0o5")
+character_display_scene = ExtResource("6_aeyih")
 metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
-[node name="CharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+[node name="CharacterSummaryDisplay" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource("6_aeyih")]
 offset_right = 240.0
 
-[node name="CharacterSummaryDisplay2" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+[node name="CharacterSummaryDisplay2" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource("6_aeyih")]
 offset_top = 105.0
 offset_right = 240.0
 offset_bottom = 206.0
 
-[node name="CharacterSummaryDisplay3" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+[node name="CharacterSummaryDisplay3" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource("6_aeyih")]
 offset_top = 210.0
 offset_right = 240.0
 offset_bottom = 311.0
 
-[node name="CharacterSummaryDisplay4" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource( "6_aeyih" )]
+[node name="CharacterSummaryDisplay4" parent="UI/RPanel/VBoxContainer/CharactersDisplayList" instance=ExtResource("6_aeyih")]
 offset_top = 315.0
 offset_right = 240.0
 offset_bottom = 416.0
 
-[node name="GardenNode" type="Node2D" parent="."]
-visible = false
-position = Vector2(393, 197)
-
-[node name="GardenGrid" type="Control" parent="GardenNode"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -158.5
-offset_right = 160.0
-offset_bottom = 158.5
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource( "2_754aq" )
-base_plot_node_scene = ExtResource( "6_3kq36" )
-empty_plot_scene = ExtResource( "11_stkmo" )
-metadata/_edit_use_custom_anchors = false
-
-[node name="UIGrid" type="GridContainer" parent="GardenNode/GardenGrid"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -184.0
-offset_top = -184.0
-offset_right = 184.0
-offset_bottom = 184.0
-columns = 3
-
-[node name="Grid" type="GridContainer" parent="GardenNode/GardenGrid/UIGrid"]
-offset_right = 368.0
-offset_bottom = 368.0
-size_flags_horizontal = 3
-columns = 3
-metadata/_edit_layout_mode = 1
-metadata/_edit_use_custom_anchors = false
-
-[node name="PlotDisplay1" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_right = 120.0
-offset_bottom = 120.0
-
-[node name="PlotDisplay2" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 124.0
-offset_right = 244.0
-offset_bottom = 120.0
-
-[node name="PlotDisplay3" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 248.0
-offset_right = 368.0
-offset_bottom = 120.0
-
-[node name="PlotDisplay4" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_top = 124.0
-offset_right = 120.0
-offset_bottom = 244.0
-
-[node name="PlotDisplay5" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 124.0
-offset_top = 124.0
-offset_right = 244.0
-offset_bottom = 244.0
-
-[node name="PlotDisplay6" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 248.0
-offset_top = 124.0
-offset_right = 368.0
-offset_bottom = 244.0
-
-[node name="PlotDisplay7" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_top = 248.0
-offset_right = 120.0
-offset_bottom = 368.0
-
-[node name="PlotDisplay8" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 124.0
-offset_top = 248.0
-offset_right = 244.0
-offset_bottom = 368.0
-
-[node name="PlotDisplay9" parent="GardenNode/GardenGrid/UIGrid/Grid" instance=ExtResource( "6_3kq36" )]
-offset_left = 248.0
-offset_top = 248.0
-offset_right = 368.0
-offset_bottom = 368.0
-
 [node name="World" type="Node2D" parent="."]
-script = ExtResource( "12_l8sup" )
+script = ExtResource("12_l8sup")
 
 [node name="PlotsBaseTileMap" type="TileMap" parent="World"]
 texture_filter = 1
-tile_set = ExtResource( "12_roxqa" )
+tile_set = ExtResource("12_roxqa")
 format = 2
 layer_0/name = "base"
 layer_0/y_sort_enabled = true
@@ -352,38 +261,38 @@ layer_1/y_sort_enabled = true
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
-script = ExtResource( "14_wiqlv" )
+script = ExtResource("14_wiqlv")
 
 [node name="HighlightsTileMap" type="TileMap" parent="World"]
 texture_filter = 1
-tile_set = ExtResource( "12_roxqa" )
+tile_set = ExtResource("12_roxqa")
 format = 2
 layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(-1, 1, 0)
-script = ExtResource( "16_ctr35" )
+script = ExtResource("16_ctr35")
 
 [node name="IconsTileMap" type="TileMap" parent="World"]
 texture_filter = 1
 y_sort_enabled = true
-tile_set = ExtResource( "12_roxqa" )
+tile_set = ExtResource("12_roxqa")
 format = 2
 layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(-1, 1, 0)
-script = ExtResource( "15_47ens" )
+script = ExtResource("15_47ens")
 
 [node name="WorldUnitsManager" type="Node2D" parent="World"]
 y_sort_enabled = true
-script = ExtResource( "17_le2um" )
-world_unit_scene = ExtResource( "18_8s028" )
+script = ExtResource("17_le2um")
+world_unit_scene = ExtResource("18_8s028")
 
-[node name="WorldUnit" parent="World/WorldUnitsManager" instance=ExtResource( "18_8s028" )]
+[node name="WorldUnit" parent="World/WorldUnitsManager" instance=ExtResource("18_8s028")]
 
 [node name="WorldUnitsActionController" type="Node2D" parent="World"]
-script = ExtResource( "19_gx2qg" )
+script = ExtResource("19_gx2qg")
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true
-script = ExtResource( "4_sbgaj" )
+script = ExtResource("4_sbgaj")
 acceleration = 0.1
 min_zoom = 0.25
 zoom_level = 2.0

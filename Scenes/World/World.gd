@@ -70,5 +70,3 @@ func clear_highlight():
 	if(highlighted):
 		highlighted = false
 		highlight_cleared.emit()
-
-

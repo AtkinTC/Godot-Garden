@@ -8,7 +8,7 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c202p"]
 resource_name = "unknown"
-texture = ExtResource( "2_jomm1" )
+texture = ExtResource("2_jomm1")
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
@@ -19,7 +19,7 @@ texture_region_size = Vector2i(128, 144)
 1:0/0/custom_data_1 = "ERROR_feature"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c6wtk"]
-texture = ExtResource( "4_on3gk" )
+texture = ExtResource("4_on3gk")
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
@@ -40,7 +40,7 @@ texture_region_size = Vector2i(128, 144)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bnd6n"]
 resource_name = "question"
-texture = ExtResource( "6_4e8ul" )
+texture = ExtResource("6_4e8ul")
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
@@ -48,7 +48,7 @@ texture_region_size = Vector2i(128, 144)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kdbve"]
 resource_name = "border"
-texture = ExtResource( "7_0vj1q" )
+texture = ExtResource("7_0vj1q")
 texture_region_size = Vector2i(128, 144)
 0:0/next_alternative_id = 2
 0:0/animation_columns = 4
@@ -65,7 +65,7 @@ texture_region_size = Vector2i(128, 144)
 0:0/1/custom_data_0 = "border_selected"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x303i"]
-texture = ExtResource( "8_8byh2" )
+texture = ExtResource("8_8byh2")
 texture_region_size = Vector2i(128, 144)
 0:0/0 = 0
 0:0/0/texture_offset = Vector2i(0, 24)
@@ -82,8 +82,8 @@ custom_data_layer_0/name = "tile_name"
 custom_data_layer_0/type = 4
 custom_data_layer_1/name = "plot_type"
 custom_data_layer_1/type = 4
-sources/1 = SubResource( "TileSetAtlasSource_c202p" )
-sources/4 = SubResource( "TileSetAtlasSource_c6wtk" )
-sources/5 = SubResource( "TileSetAtlasSource_bnd6n" )
-sources/6 = SubResource( "TileSetAtlasSource_kdbve" )
-sources/8 = SubResource( "TileSetAtlasSource_x303i" )
+sources/1 = SubResource("TileSetAtlasSource_c202p")
+sources/4 = SubResource("TileSetAtlasSource_c6wtk")
+sources/5 = SubResource("TileSetAtlasSource_bnd6n")
+sources/6 = SubResource("TileSetAtlasSource_kdbve")
+sources/8 = SubResource("TileSetAtlasSource_x303i")
