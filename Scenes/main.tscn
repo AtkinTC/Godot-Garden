@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bx3m2od417uow"]
+[gd_scene load_steps=19 format=3 uid="uid://bx3m2od417uow"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scenes/UI/SelectMenu.gd" id="3_6ld0l"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/TileMap/PlotsBaseTileMap.gd" id="14_wiqlv"]
 [ext_resource type="Script" path="res://Scripts/TileMap/IconsTileMap.gd" id="15_47ens"]
 [ext_resource type="Script" path="res://Scripts/TileMap/HighlightsTileMap.gd" id="16_ctr35"]
+[ext_resource type="Script" path="res://Scenes/World/WorldNavigationController.gd" id="17_k71em"]
 [ext_resource type="Script" path="res://Scenes/World/WorldUnits/WorldUnitsManager.gd" id="17_le2um"]
 [ext_resource type="PackedScene" uid="uid://c2jqddiqkaja2" path="res://Scenes/World/WorldUnits/WorldUnit.tscn" id="18_8s028"]
 [ext_resource type="Script" path="res://Scenes/World/WorldUnits/WorldUnitsActionController.gd" id="19_gx2qg"]
@@ -289,6 +290,9 @@ world_unit_scene = ExtResource("18_8s028")
 
 [node name="WorldUnitsActionController" type="Node2D" parent="World"]
 script = ExtResource("19_gx2qg")
+
+[node name="WorldNavigationController" type="Node2D" parent="World"]
+script = ExtResource("17_k71em")
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true

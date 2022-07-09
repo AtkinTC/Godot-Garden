@@ -245,6 +245,11 @@ _global_script_classes=[{
 "path": "res://Scenes/World/World.gd"
 }, {
 "base": "Node2D",
+"class": &"WorldNavigationController",
+"language": &"GDScript",
+"path": "res://Scenes/World/WorldNavigationController.gd"
+}, {
+"base": "Node2D",
 "class": &"WorldUnit",
 "language": &"GDScript",
 "path": "res://Scenes/World/WorldUnits/WorldUnit.gd"
@@ -307,6 +312,7 @@ _global_script_class_icons={
 "TooltipPanel": "",
 "Utils": "",
 "World": "",
+"WorldNavigationController": "",
 "WorldUnit": "",
 "WorldUnitsActionController": "",
 "WorldUnitsManager": ""
