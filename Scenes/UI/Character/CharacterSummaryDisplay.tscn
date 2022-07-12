@@ -7,13 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://bnck218fxvxt5" path="res://Scenes/UI/Character/CharacterPortraitDisplay.tscn" id="4_em7hg"]
 
 [node name="CharacterSummaryDisplay" type="MarginContainer"]
-minimum_size = Vector2(240, 0)
-offset_right = 239.0
+custom_minimum_size = Vector2(240, 0)
+offset_right = 240.0
 offset_bottom = 101.0
-grow_horizontal = 2
-grow_vertical = 2
+size_flags_horizontal = 3
 mouse_filter = 2
-script = ExtResource( "1_8kevv" )
+script = ExtResource("1_8kevv")
 char_name_label_path = NodePath("MarginContainer/HBox/LeftVBox/NameLabel")
 HP_display_path = NodePath("MarginContainer/HBox/LeftVBox/HPDisplayBar")
 SP_display_path = NodePath("MarginContainer/HBox/LeftVBox/SPDisplayBar")
@@ -21,14 +20,13 @@ STR_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/STRDis
 AGI_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/AGIDisplay")
 INT_display_path = NodePath("MarginContainer/HBox/LeftVBox/AttributesLine/INTDisplay")
 char_portrait_path = NodePath("MarginContainer/HBox/CharacterPortraitDisplay")
-metadata/_edit_layout_mode = 1
 metadata/_edit_use_custom_anchors = false
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 texture_filter = 1
 offset_right = 240.0
 offset_bottom = 101.0
-texture = ExtResource( "2_umcwi" )
+texture = ExtResource("2_umcwi")
 patch_margin_left = 8
 patch_margin_top = 8
 patch_margin_right = 8
@@ -39,9 +37,9 @@ metadata/_edit_use_custom_anchors = false
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 240.0
 offset_bottom = 101.0
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_top = 4
 theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer"]
@@ -65,10 +63,10 @@ theme_override_font_sizes/font_size = 10
 text = "CHAR_NAME"
 vertical_alignment = 1
 
-[node name="HPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource( "1_rgepo" )]
+[node name="HPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource("1_rgepo")]
 offset_right = 148.0
 
-[node name="SPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource( "1_rgepo" )]
+[node name="SPDisplayBar" parent="MarginContainer/HBox/LeftVBox" instance=ExtResource("1_rgepo")]
 offset_top = 35.0
 offset_right = 148.0
 offset_bottom = 52.0
@@ -79,14 +77,14 @@ offset_right = 148.0
 offset_bottom = 71.0
 theme_override_constants/separation = 0
 
-[node name="STRDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+[node name="STRDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource("3_0mqtd")]
 offset_right = 49.0
 
-[node name="AGIDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+[node name="AGIDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource("3_0mqtd")]
 offset_left = 49.0
 offset_right = 98.0
 
-[node name="INTDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource( "3_0mqtd" )]
+[node name="INTDisplay" parent="MarginContainer/HBox/LeftVBox/AttributesLine" instance=ExtResource("3_0mqtd")]
 offset_left = 98.0
 offset_right = 148.0
 
@@ -97,6 +95,7 @@ offset_bottom = 93.0
 theme_override_font_sizes/font_size = 12
 text = "On Standby"
 
-[node name="CharacterPortraitDisplay" parent="MarginContainer/HBox" instance=ExtResource( "4_em7hg" )]
+[node name="CharacterPortraitDisplay" parent="MarginContainer/HBox" instance=ExtResource("4_em7hg")]
+custom_minimum_size = Vector2(80, 0)
 offset_left = 152.0
 offset_right = 232.0
