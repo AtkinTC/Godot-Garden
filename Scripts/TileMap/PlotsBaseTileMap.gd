@@ -46,9 +46,9 @@ func initialize():
 func _process(_delta):
 	var unused_cells = get_used_cells(0)
 	
-	for coord in GardenManager.get_used_plots():
+	for coord in GardenManager.get_used_plot_coords():
 		var coord_i : Vector2i = coord
-		var plot : Plot = GardenManager.get_plot(coord_i)
+		var plot : PlotVO = GardenManager.get_plot(coord_i)
 		
 		# feature_type defaults to ERR_PLOT_TYPE if the tile type isn't recognized
 		var base_type = ERR_PLOT_TYPE + BASE_SUFFIX

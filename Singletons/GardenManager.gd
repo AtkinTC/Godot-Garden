@@ -44,22 +44,26 @@ var owned_plots : int = 0
 func initialize():
 	pass
 
+func setup_from_plots_array(plots : Array):
+	for i in plots.size():
+		var plot : PlotVO = plots[i]
+		insert_plot(plot.get_coord(), plot)
+
 # process step time for all garden plots
 func step_plots(step_time : float):
-#	for x in plots.range_x():
-#		for y in plots.range_y():
-#			(plots.get_at(Vector2(x,y)) as Plot).step(step_time)
 	for p in plots_dict.values():
-		(p as Plot).step(step_time)
+		if(p.has_method("step")):
+			(p as PlotVO).step(step_time)
 
-func create_plot(coord : Vector2) -> Plot:
-	var plot : Plot = Plot.new()
+
+func create_plot(coord : Vector2) -> PlotVO:
+	var plot : PlotVO = PlotVO.new()
 	insert_plot(coord, plot)
 	return plot
 
-func insert_plot(coord : Vector2, plot : Plot):
+func insert_plot(coord : Vector2, plot : PlotVO):
 	plot.set_coord(coord)
-	plot.plot_updated.connect(_on_plot_updated)
+	plot.changed.connect(_on_plot_updated.bind(coord))
 	plots_dict[coord] = plot
 	update_extents(coord)
 	garden_plot_updated.emit(coord)
@@ -88,14 +92,17 @@ func get_garden_rect() -> Rect2:
 	#return garden_rect
 	return get_extents()
 
-func set_plot(coord : Vector2, plot : Plot):
+func set_plot(coord : Vector2, plot : PlotVO):
 	#plots.set_at(coord, plot)
 	insert_plot(coord, plot)
 
-func get_used_plots() -> Array:
+func get_used_plot_coords() -> Array:
 	return plots_dict.keys()
 
-func get_plot(coord : Vector2) -> Plot:
+func get_used_plots() -> Array:
+	return plots_dict.values()
+
+func get_plot(coord : Vector2) -> PlotVO:
 	return plots_dict.get(coord, null)
 
 func connect_garden_resized(reciever_method : Callable):
@@ -104,7 +111,7 @@ func connect_garden_resized(reciever_method : Callable):
 func get_empty_neighbors(coord : Vector2) -> Array:
 	var neighbors := []
 	for d in [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]:
-		var neighbor : Plot = get_plot(coord+d)
+		var neighbor : PlotVO = get_plot(coord+d)
 		if(neighbor == null):
 			neighbors.append(coord+d)
 	return neighbors
@@ -128,9 +135,92 @@ func select_plot_type_neighbor(plot_type : String) -> String:
 			break
 	return selected_key
 
+# Begin the exploration process
+# A character assigned to the plot advances the exploration progress
+# new plots/features/items are earned when an exploration stage is completed
+func explore_plot(coord : Vector2i):
+	var plot : PlotVO = get_plot(coord)
+	if(plot == null || plot.explored):
+		return
+	complete_exploration(coord)
+
+# triggered on the completion of an exploration stage
+# reveals neighboring plots and gives other rewards
+func complete_exploration(coord : Vector2i):
+	var plot : PlotVO = get_plot(coord)
+	if(plot == null):
+		return
+	
+	plot.set_owned(true)
+	plot.set_explored(true)
+	
+	var empty_neighbor_coords = GardenManager.get_empty_neighbors(coord)
+	
+	var found : int = empty_neighbor_coords.size() 
+	if(empty_neighbor_coords.size() > 1):
+		found = randi() % empty_neighbor_coords.size() + 1
+	
+	if(found < empty_neighbor_coords.size()):
+		empty_neighbor_coords.shuffle()
+	
+	for i in found:
+		var neighbor_coord : Vector2i = empty_neighbor_coords[i]
+		var n_plot = GardenManager.create_plot(neighbor_coord)
+		n_plot.set_plot_type(GardenManager.select_plot_type_neighbor(plot.get_plot_type()))
+		n_plot.set_display_name(n_plot.get_plot_type())
+		n_plot.set_base_type("grass")
+	
+	plot.changed.emit()
+
 func _on_plot_updated(coord : Vector2):
-	var updated_plot : Plot = get_plot(coord)
+	var updated_plot : PlotVO = get_plot(coord)
 	
 	if(updated_plot == null):
 		return false
-	
+
+#func step(_delta : float):
+#	if(plot_structure != null):
+#		plot_structure.step(_delta)
+#
+#func purchase_structure(_structure_key : String = ""):
+#	if(!explored || !owned):
+#		return
+#	insert_structure(_structure_key)
+#
+#func insert_structure(_structure_key : String = ""):
+#	var temp_structure_key
+#	if(_structure_key == ""):
+#		temp_structure_key = StructuresManager.get_selected_structure_key()
+#	else:
+#		temp_structure_key = _structure_key
+#
+#	if(temp_structure_key == null || temp_structure_key == ""):
+#		return false
+#
+#	StructuresManager.adjust_structure_count(temp_structure_key, 1)
+#	plot_structure = Structure.new(temp_structure_key, coord)
+#	plot_structure.start_building()
+#	plot_structure.structure_updated.connect(_on_structure_updated)
+#	plot_updated.emit(coord)
+#
+#func upgrade_structure():
+#	if(plot_structure == null):
+#		return false
+#	if(!plot_structure.can_be_upgraded()):
+#		return false
+#
+#	plot_structure.start_upgrading()
+#	plot_updated.emit(coord)
+#
+#func remove_structure():
+#	if(!owned):
+#		return false
+#	if(plot_structure == null):
+#		return false
+#	if(!plot_structure.get_structure_data().is_removable()):
+#		return false
+#
+#	StructuresManager.adjust_structure_count(plot_structure.get_structure_key(), -1)
+#	plot_structure.cleanup_before_delete()
+#	plot_structure = null
+#	plot_updated.emit(coord)

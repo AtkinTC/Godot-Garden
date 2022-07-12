@@ -2,7 +2,7 @@ extends Control
 class_name PlotDisplayContent
 
 # # # # #
-# Base class for Plot Display Content elements
+# Base class for PlotVO Display Content elements
 # Does nothing on its own, just an interface class for inheritance 
 # # # # #
 

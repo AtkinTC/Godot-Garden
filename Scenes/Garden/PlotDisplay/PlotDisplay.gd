@@ -36,7 +36,7 @@ func get_plot_coord() -> Vector2:
 
 func update_display() -> void:
 	coord_label.text = str(plot_coord)
-	var plot : Plot = GardenManager.get_plot(plot_coord)
+	var plot : PlotVO = GardenManager.get_plot(plot_coord)
 	if(!plot):
 		return
 	

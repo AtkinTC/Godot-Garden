@@ -18,12 +18,11 @@ func setup_points():
 	var new_points : Array = []
 	
 	# add world tiles to the AStar as points
-	for i in world_used_points.size():
-		var point : Vector2i = world_used_points[i]
-		var id = coord_to_id(point)
+	for coord in GardenManager.get_used_plot_coords():
+		var id = coord_to_id(coord)
 		if(!a_star.has_point(id)):
-			new_points.append(point)
-			a_star.add_point(id, point)
+			new_points.append(coord)
+			a_star.add_point(id, coord)
 	
 	# setup connections for any newly added points with their neighbors
 	for i in new_points.size():

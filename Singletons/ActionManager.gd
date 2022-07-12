@@ -18,9 +18,9 @@ func apply_action_to_plot(action_key : String, plot_coord : Vector2):
 	var action_dict = Database.get_entry(Const.ACTION, action_key)
 	if(action_dict == null || action_dict.size() == 0):
 		return false
-	if(action_dict.get(Const.TARGET_TYPE, "") != "Plot"):
+	if(action_dict.get(Const.TARGET_TYPE, "") != "PlotVO"):
 		return false
-	var plot : Plot = GardenManager.get_plot(plot_coord)
+	var plot : PlotVO = GardenManager.get_plot(plot_coord)
 	if(!plot.has_method(action_dict.get(Const.FUNC_NAME, ""))):
 		return false
 	

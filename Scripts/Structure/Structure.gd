@@ -2,7 +2,7 @@ class_name Structure
 extends Object
 
 #############################
-# Structure object is the cotent of a Plot that can be placed by the player
+# Structure object is the cotent of a PlotVO that can be placed by the player
 # Player pays the build price to start construction, structure doesn't take affect until construction complete
 # Structure can be uograded to improve the structure's effect
 #############################

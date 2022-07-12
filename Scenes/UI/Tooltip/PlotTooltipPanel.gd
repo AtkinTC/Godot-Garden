@@ -35,7 +35,7 @@ func _ready():
 func update_display():
 	if(plot_coord == null):
 		return
-	var plot : Plot = GardenManager.get_plot(plot_coord)
+	var plot : PlotVO = GardenManager.get_plot(plot_coord)
 	if(!plot):
 		return
 	
@@ -43,7 +43,7 @@ func update_display():
 		display_name = "Uknown"
 		plot_type = "Uknown"
 	elif(!plot.is_owned() && plot.is_available()):
-		display_name = "Border Plot"
+		display_name = "Border PlotVO"
 		plot_type = "Purchasable"
 	elif(plot.get_object_key()):
 		display_name = str(plot.get_object_type()[Const.DISPLAY_NAME])
@@ -52,7 +52,7 @@ func update_display():
 			display_name += " " + str(plot.level)
 	else:
 		display_name = "Empty"
-		plot_type = "Empty Plot"
+		plot_type = "Empty PlotVO"
 		
 	if(title_label != null):
 		title_label.text = display_name

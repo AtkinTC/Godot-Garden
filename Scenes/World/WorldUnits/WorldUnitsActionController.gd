@@ -58,7 +58,7 @@ func update_unit_objective_states():
 	
 	for i in world_units.size():
 		var world_unit : WorldUnit = world_units[i]
-		var current_plot : Plot = GardenManager.get_plot(world_unit.get_coord())
+		var current_plot : PlotVO = GardenManager.get_plot(world_unit.get_coord())
 		
 		if(world_unit.objective_state == WorldUnit.OBJECTIVE.NONE):
 			world_unit.objective_state = WorldUnit.OBJECTIVE.EXPLORE
@@ -83,7 +83,7 @@ func exploration_decision_precalculation():
 		var world_unit : WorldUnit = world_units[i]
 		if(world_unit.target_set):
 			var target_coord : Vector2i = world_unit.target_map_coord
-			var target_plot : Plot = GardenManager.get_plot(target_coord)
+			var target_plot : PlotVO = GardenManager.get_plot(target_coord)
 			if(target_plot.is_explored()):
 				# clear target if target is already explored
 				world_unit.target_set = false
@@ -106,11 +106,11 @@ func exploration_decision():
 		# if no explore target set, choose a new target
 		if(!world_unit.target_set):
 			#TODO : smarter target decision, this is just minimum viable filler
-			for plot_coord in GardenManager.get_used_plots():
+			for plot_coord in GardenManager.get_used_plot_coords():
 				if(reserved_exploration_targets.has(plot_coord as Vector2i)):
 					# skip plots that are already target for exploration
 					continue
-				var plot : Plot = GardenManager.get_plot(plot_coord)
+				var plot : PlotVO = GardenManager.get_plot(plot_coord)
 				if(!plot.is_explored()):
 					world_unit.target_map_coord = plot.coord
 					world_unit.target_set = true
@@ -129,7 +129,7 @@ func exploration_decision():
 				action_queue.append(action)
 			else:
 				#explore current position
-				var current_plot : Plot = GardenManager.get_plot(world_unit.get_coord())
+				var current_plot : PlotVO = GardenManager.get_plot(world_unit.get_coord())
 				if(!current_plot.is_explored()):
 					var action := ActionObject.new()
 					action.unit_id = world_unit.get_id()
@@ -152,7 +152,7 @@ func execute_unit_actions():
 			unit.start_move_action(action.move_coord)
 		if(action.action_type == ACTION.EXPLORE):
 			var plot_coord = unit.get_coord()
-			ActionManager.apply_action_to_plot("EXPLORE_PLOT", unit.get_coord())
+			GardenManager.explore_plot(unit.get_coord())
 
 func _on_unit_action_complete(id : int):
 	waiting_on_ids.erase(id)

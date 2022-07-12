@@ -13,9 +13,9 @@ func initialize():
 func _process(_delta):
 	var unused_cells = get_used_cells(0)
 	
-	for coord in GardenManager.get_used_plots():
+	for coord in GardenManager.get_used_plot_coords():
 		var coord_i : Vector2i = coord
-		var plot : Plot = GardenManager.get_plot(coord_i)
+		var plot : PlotVO = GardenManager.get_plot(coord_i)
 		
 		# show unexplored plot icons
 		if(!plot.is_explored()):

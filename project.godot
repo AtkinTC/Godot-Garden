@@ -119,11 +119,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ObjectData.gd"
 }, {
-"base": "RefCounted",
-"class": &"Plot",
-"language": &"GDScript",
-"path": "res://Scripts/Plot/Plot.gd"
-}, {
 "base": "Control",
 "class": &"PlotDisplay",
 "language": &"GDScript",
@@ -139,10 +134,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/UI/Tooltip/PlotTooltipPanel.gd"
 }, {
+"base": "Resource",
+"class": &"PlotVO",
+"language": &"GDScript",
+"path": "res://Scripts/Plot/PlotVO.gd"
+}, {
 "base": "TileMapCust",
 "class": &"PlotsBaseTileMap",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/PlotsBaseTileMap.gd"
+}, {
+"base": "Resource",
+"class": &"SaveResource",
+"language": &"GDScript",
+"path": "res://Scripts/Save/SaveResource.gd"
 }, {
 "base": "Control",
 "class": &"SelectMenu",
@@ -292,11 +297,12 @@ _global_script_class_icons={
 "LineSupplyDisplay": "",
 "LockUtil": "",
 "ObjectData": "",
-"Plot": "",
 "PlotDisplay": "",
 "PlotDisplayContent": "",
 "PlotTooltipPanel": "",
+"PlotVO": "",
 "PlotsBaseTileMap": "",
+"SaveResource": "",
 "SelectMenu": "",
 "SmallSupplyDisplay": "",
 "SmallTextSupplyDisplay": "",
@@ -346,6 +352,7 @@ CharactersManager="*res://Scripts/Character/CharactersManager.gd"
 AreasManager="*res://Scripts/Area/AreasManager.gd"
 ExplorationsManager="*res://Scripts/Exploration/ExplorationsManager.gd"
 WorldUnitsManager="*res://Scripts/WorldUnit/WorldUnitsManager.gd"
+SaveController="*res://Scripts/Save/SaveController.gd"
 
 [display]
 
