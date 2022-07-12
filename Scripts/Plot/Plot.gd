@@ -4,7 +4,7 @@ signal plot_updated(coord : Vector2)
 
 var explored : bool = false
 var owned : bool = false
-var coord : Vector2 = Vector2.ZERO
+var coord : Vector2i = Vector2i.ZERO
 
 var plot_type : String
 var base_type : String
@@ -85,10 +85,10 @@ func remove_structure():
 	plot_structure = null
 	plot_updated.emit(coord)
 
-func set_coord(_coord : Vector2):
+func set_coord(_coord : Vector2i):
 	coord = _coord
 
-func get_coord() -> Vector2:
+func get_coord() -> Vector2i:
 	return coord
 
 func has_structure():
@@ -127,6 +127,6 @@ func get_display_name() -> String:
 	else:
 		return "?" + display_name + "?"
 
-func _on_structure_updated(_world_coord : Vector2):
+func _on_structure_updated(_world_coord : Vector2i):
 	if(_world_coord == coord):
 		plot_updated.emit(coord)

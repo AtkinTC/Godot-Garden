@@ -1,4 +1,7 @@
-class_name WorldUnitsManager
+# WorldUnitsParentNode
+# Manages the WorldUnit nodes
+
+class_name WorldUnitsParentNode
 extends Node2D
 
 @onready var world : World = self.get_parent()
@@ -14,33 +17,35 @@ func _ready() -> void:
 	# clear out test content
 	for child in get_children():
 		child.queue_free()
+	
+	WorldUnitsManager.world_unit_created.connect(_on_world_unit_created)
 
-# create new world unit and add it to the world as a child of this node
-#TODO: seperate creation of unit and adding unit to world
-#TODO: unit creation should be based on an existing characterVO
-func add_new_world_unit(map_coord : Vector2i) -> int:
-	var new_unit_id = next_char_id
-	next_char_id += 1
+# trigger the creation of a WorldUnitNode when a new WorldUnitVO is created
+func _on_world_unit_created(id : int):
+	var wuVO := WorldUnitsManager.get_world_unit_by_id(id)
+	insert_world_unit(wuVO)
+
+# create new WorldUnit node from a WorldUnitVO and add as a child
+func insert_world_unit(wuVO : WorldUnitVO) -> int:
+	next_char_id = max(wuVO.get_id() + 1, next_char_id)
 	
 	var new_unit : WorldUnit = world_unit_scene.instantiate()
 	new_unit.set_world(world)
-	new_unit.set_world_map_coord(map_coord)
-	new_unit.set_id(new_unit_id)
+	new_unit.set_VO(wuVO)
 	
 	add_child(new_unit)
 	new_unit.unit_moved.connect(update_unit_coord)
+	units_dict[wuVO.get_id()] = new_unit
+	update_unit_coord(wuVO.get_id())
 	
-	units_dict[new_unit_id] = new_unit
-	update_unit_coord(new_unit_id)
-	
-	return new_unit_id
+	return 0
 
 # update data related to unit's coordinate
 func update_unit_coord(unit_id : int):
 	if(!units_dict.has(unit_id)):
 		return
 	
-	var new_coord = units_dict[unit_id].world_map_coord
+	var new_coord = units_dict[unit_id].get_coord()
 	
 	if(units_to_coord_dict.has(unit_id)):
 		# remove unit from old coordinate entry

@@ -254,15 +254,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scenes/World/WorldUnits/WorldUnit.gd"
 }, {
+"base": "Resource",
+"class": &"WorldUnitVO",
+"language": &"GDScript",
+"path": "res://Scripts/WorldUnit/WorldUnitVO.gd"
+}, {
 "base": "Node2D",
 "class": &"WorldUnitsActionController",
 "language": &"GDScript",
 "path": "res://Scenes/World/WorldUnits/WorldUnitsActionController.gd"
 }, {
 "base": "Node2D",
-"class": &"WorldUnitsManager",
+"class": &"WorldUnitsParentNode",
 "language": &"GDScript",
-"path": "res://Scenes/World/WorldUnits/WorldUnitsManager.gd"
+"path": "res://Scenes/World/WorldUnits/WorldUnitsParentNode.gd"
 }]
 _global_script_class_icons={
 "ActionData": "",
@@ -314,8 +319,9 @@ _global_script_class_icons={
 "World": "",
 "WorldNavigationController": "",
 "WorldUnit": "",
+"WorldUnitVO": "",
 "WorldUnitsActionController": "",
-"WorldUnitsManager": ""
+"WorldUnitsParentNode": ""
 }
 
 [application]
@@ -339,6 +345,7 @@ StructuresManager="*res://Singletons/StructuresManager.gd"
 CharactersManager="*res://Scripts/Character/CharactersManager.gd"
 AreasManager="*res://Scripts/Area/AreasManager.gd"
 ExplorationsManager="*res://Scripts/Exploration/ExplorationsManager.gd"
+WorldUnitsManager="*res://Scripts/WorldUnit/WorldUnitsManager.gd"
 
 [display]
 

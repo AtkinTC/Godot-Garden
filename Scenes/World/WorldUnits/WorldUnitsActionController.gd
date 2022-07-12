@@ -9,7 +9,7 @@ class ActionObject:
 	var move_coord : Vector2i
 
 @onready var world : World = self.get_parent()
-@onready var world_units_manager : WorldUnitsManager = get_node("../WorldUnitsManager") #TODO: UGLY
+@onready var world_units_manager : WorldUnitsParentNode = get_node("../WorldUnitsParentNode") #TODO: UGLY
 @onready var world_navigation_controller : WorldNavigationController = get_node("../WorldNavigationController") #TODO: UGLY
 
 var ready_for_next_turn : bool = false
@@ -58,7 +58,7 @@ func update_unit_objective_states():
 	
 	for i in world_units.size():
 		var world_unit : WorldUnit = world_units[i]
-		var current_plot : Plot = GardenManager.get_plot(world_unit.world_map_coord)
+		var current_plot : Plot = GardenManager.get_plot(world_unit.get_coord())
 		
 		if(world_unit.objective_state == WorldUnit.OBJECTIVE.NONE):
 			world_unit.objective_state = WorldUnit.OBJECTIVE.EXPLORE
@@ -87,12 +87,12 @@ func exploration_decision_precalculation():
 			if(target_plot.is_explored()):
 				# clear target if target is already explored
 				world_unit.target_set = false
-			elif(reserved_exploration_targets.has(target_coord) && reserved_exploration_targets.get(target_coord) != world_unit.id):
+			elif(reserved_exploration_targets.has(target_coord) && reserved_exploration_targets.get(target_coord) != world_unit.get_id()):
 				# clear target if already reserved by another unit
 				world_unit.target_set = false
 			else:
 				# reserve exploration target
-				reserved_exploration_targets[target_coord] = world_unit.id
+				reserved_exploration_targets[target_coord] = world_unit.get_id()
 
 func action_decision():
 	action_queue = []
@@ -112,27 +112,27 @@ func exploration_decision():
 					continue
 				var plot : Plot = GardenManager.get_plot(plot_coord)
 				if(!plot.is_explored()):
-					world_unit.target_map_coord = (plot as Plot).coord
+					world_unit.target_map_coord = plot.coord
 					world_unit.target_set = true
 					
 					# reserve exploration target
-					reserved_exploration_targets[world_unit.target_map_coord] = world_unit.id
+					reserved_exploration_targets[plot.coord] = world_unit.get_id()
 					break
 		
 		if(world_unit.target_set):
-			if(world_unit.world_map_coord != world_unit.target_map_coord):
+			if(world_unit.get_coord() != world_unit.target_map_coord):
 				# move towards exploration target
 				var action := ActionObject.new()
-				action.unit_id = world_unit.id
+				action.unit_id = world_unit.get_id()
 				action.action_type = ACTION.MOVE
-				action.move_coord = world_navigation_controller.get_next_path_step(world_unit.world_map_coord, world_unit.target_map_coord)
+				action.move_coord = world_navigation_controller.get_next_path_step(world_unit.get_coord(), world_unit.target_map_coord)
 				action_queue.append(action)
 			else:
 				#explore current position
-				var current_plot : Plot = GardenManager.get_plot(world_unit.world_map_coord)
+				var current_plot : Plot = GardenManager.get_plot(world_unit.get_coord())
 				if(!current_plot.is_explored()):
 					var action := ActionObject.new()
-					action.unit_id = world_unit.id
+					action.unit_id = world_unit.get_id()
 					action.action_type = ACTION.EXPLORE
 					
 					action_queue.append(action)
@@ -147,12 +147,12 @@ func execute_unit_actions():
 		
 		var unit : WorldUnit = world_units_manager.get_world_unit(action.unit_id)
 		if(action.action_type == ACTION.MOVE):
-			waiting_on_ids.append(unit.id)
+			waiting_on_ids.append(unit.get_id())
 			unit.action_complete.connect(_on_unit_action_complete, CONNECT_ONESHOT)
 			unit.start_move_action(action.move_coord)
 		if(action.action_type == ACTION.EXPLORE):
-			var plot_coord = unit.world_map_coord
-			ActionManager.apply_action_to_plot("EXPLORE_PLOT", unit.world_map_coord)
+			var plot_coord = unit.get_coord()
+			ActionManager.apply_action_to_plot("EXPLORE_PLOT", unit.get_coord())
 
 func _on_unit_action_complete(id : int):
 	waiting_on_ids.erase(id)

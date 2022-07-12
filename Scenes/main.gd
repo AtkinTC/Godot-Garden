@@ -81,11 +81,9 @@ func _ready():
 	
 	#TODO: remove this test code
 	# create dummy world unit for testing
-	var world_units : WorldUnitsManager = $World/WorldUnitsManager
-	world_units.add_new_world_unit(Vector2i(0,0))
-	world_units.add_new_world_unit(Vector2i(0,0))
-	world_units.add_new_world_unit(Vector2i(0,0))
-	world_units.add_new_world_unit(Vector2i(0,0))
+	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
+	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
+	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
 
 
 func _process(_delta):
