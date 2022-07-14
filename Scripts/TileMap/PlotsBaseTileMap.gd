@@ -46,6 +46,8 @@ func initialize():
 func _process(_delta):
 	var unused_cells = get_used_cells(0)
 	
+	var coords = GardenManager.get_used_plot_coords()
+	
 	for coord in GardenManager.get_used_plot_coords():
 		var coord_i : Vector2i = coord
 		var plot : PlotVO = GardenManager.get_plot(coord_i)

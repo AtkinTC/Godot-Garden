@@ -72,7 +72,7 @@ func set_from_character_values():
 	if(char_name_label):
 		char_name_label.text = character.get_character_name()
 	if(char_portrait):
-		char_portrait.set_portrait_name(character.get_character_portrait_name())
+		char_portrait.set_portrait_name(character.get_portrait_name())
 	if(supply_display_HP):
 		supply_display_HP.set_quantity(character.get_current_HP())
 		supply_display_HP.set_capacity(character.get_attr_HP())

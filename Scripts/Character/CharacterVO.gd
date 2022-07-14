@@ -1,29 +1,29 @@
 class_name CharacterVO
 extends Resource
 
-var char_id : int
-var char_name : String
-var char_portrait_name : String
+@export var char_id : int = -1
+@export var char_name : String
+@export var char_portrait_name : String
 
-var attr_HP : float
-var attr_SP : float
-var attr_STR : float
-var attr_AGI : float
-var attr_INT : float
+@export var attr_HP : float
+@export var attr_SP : float
+@export var attr_STR : float
+@export var attr_AGI : float
+@export var attr_INT : float
 
-var current_HP : float
-var current_SP : float
+@export var current_HP : float
+@export var current_SP : float
 
-func set_character_id(_char_id : int):
-	char_id = _char_id
+func set_id(_id : int):
+	char_id = _id
 	emit_signal("changed")
 
-func set_character_name(_char_name : String):
-	char_name = _char_name
+func set_character_name(_name : String):
+	char_name = _name
 	emit_signal("changed")
 
-func set_character_portrait_name(_char_portrait_name : String):
-	char_portrait_name = _char_portrait_name
+func set_portrait_name(_portrait_name : String):
+	char_portrait_name = _portrait_name
 	emit_signal("changed")
 
 func set_attr_HP(_attr_HP : float):
@@ -54,13 +54,13 @@ func set_current_SP(_current_SP : float):
 	current_SP = _current_SP
 	emit_signal("changed")
 
-func get_character_id() -> int:
+func get_id() -> int:
 	return char_id
 
 func get_character_name() -> String:
 	return char_name
 
-func get_character_portrait_name() -> String:
+func get_portrait_name() -> String:
 	return char_portrait_name
 
 func get_attr_HP() -> float:

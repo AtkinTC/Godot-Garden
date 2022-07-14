@@ -145,7 +145,7 @@ _global_script_classes=[{
 "path": "res://Scripts/TileMap/PlotsBaseTileMap.gd"
 }, {
 "base": "Resource",
-"class": &"SaveResource",
+"class": &"SaveFileResource",
 "language": &"GDScript",
 "path": "res://Scripts/Save/SaveResource.gd"
 }, {
@@ -302,7 +302,7 @@ _global_script_class_icons={
 "PlotTooltipPanel": "",
 "PlotVO": "",
 "PlotsBaseTileMap": "",
-"SaveResource": "",
+"SaveFileResource": "",
 "SelectMenu": "",
 "SmallSupplyDisplay": "",
 "SmallTextSupplyDisplay": "",

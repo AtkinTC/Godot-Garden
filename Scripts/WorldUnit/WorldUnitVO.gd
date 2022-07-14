@@ -1,8 +1,8 @@
 class_name WorldUnitVO
 extends Resource
 
-var id : int = -1
-var coord : Vector2i = Vector2.ZERO
+@export var id : int = -1
+@export var coord : Vector2i = Vector2.ZERO
 
 func set_id(_id : int):
 	id = _id

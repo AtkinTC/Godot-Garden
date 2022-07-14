@@ -6,63 +6,61 @@ var demo_save_directory: String = "res://Saves/"
 var demo_save_filename_pre: String = "save_"
 var demo_save_filename_post: String = ".tres"
 
-var current_game_save: SaveResource
+var current_game_save: SaveFileResource
 
 func reset_game_save():
 	current_game_save = null
 
 # create a new game save, set intial values, and trigger save
-func create_new_game_save(_profile_name):
-	current_game_save = SaveResource.new()
-	current_game_save.set(SaveResource.SAVE_VAR_SAVE_NAME, _profile_name)
-	current_game_save.set(SaveResource.SAVE_VAR_CREATION_DATE_TIME, Time.get_datetime_dict_from_system())
-	save_current_game()
+func create_new_save_file(_profile_name) -> SaveFileResource:
+	current_game_save = SaveFileResource.new()
+	current_game_save.save_name = _profile_name
+	current_game_save.creation_date_time = Time.get_datetime_dict_from_system()
+	save_current_save_file()
+	return current_game_save
 
-# trigger save to file of the current game save
-func save_current_game():
-	var METHOD_NAME = "save_current_game"
+func get_current_save_file() -> SaveFileResource:
+	return current_game_save
+
+# trigger save to file of the current game state
+func save_current_save_file():
 	var dir = Directory.new()
 	if(!dir.dir_exists(demo_save_directory)):
 		dir.make_dir_recursive(demo_save_directory)
 	
-	current_game_save.world_plots = GardenManager.get_used_plots()
-	
-	current_game_save.set(SaveResource.SAVE_VAR_SAVE_DATE_TIME, Time.get_datetime_dict_from_system())
-	var profile_name: String = current_game_save.get(SaveResource.SAVE_VAR_SAVE_NAME)
+	current_game_save.save_date_time = Time.get_datetime_dict_from_system()
+	var profile_name: String = current_game_save.save_name
 	var file_name: String = demo_save_filename_pre+profile_name+demo_save_filename_post
 	ResourceSaver.save(demo_save_directory+file_name, current_game_save)
-	print_debug(CLASS_NAME + " : " + METHOD_NAME +  " : save_game complete for file : " + demo_save_directory+file_name)
+	print_debug("save_game complete for file : " + demo_save_directory+file_name)
 
 # load a game save from a file
-func load_game(_file_name: String) -> SaveResource:
-	var METHOD_NAME = "load_game"
+func load_save_file(_file_name: String) -> SaveFileResource:
 	var dir = Directory.new()
 	if(!dir.file_exists(demo_save_directory+_file_name)):
-		print_debug(CLASS_NAME + " : " + METHOD_NAME + " : no file found for profile name")
+		print_debug("no file found for profile name")
 		return null
 		
 	var loaded_save: Resource = load(demo_save_directory+_file_name)
-	if(loaded_save is SaveResource):
-		print_debug(CLASS_NAME + " : " + METHOD_NAME +  " : load complete for file : " + demo_save_directory+_file_name)
-		return (loaded_save as SaveResource)
+	if(loaded_save is SaveFileResource):
+		print_debug("load complete for file : " + demo_save_directory+_file_name)
+		return (loaded_save as SaveFileResource)
 	return null
 
 # load a game save as the current save
-func load_as_current_game(_profile_name: String):
-	var METHOD_NAME = "load_as_current_game"
+func load_as_current_save_file(_profile_name: String):
 	var file_name = demo_save_filename_pre + _profile_name + demo_save_filename_post
-	var loaded_game = load_game(file_name)
-	if(loaded_game is SaveResource):
+	var loaded_game = load_save_file(file_name)
+	if(loaded_game is SaveFileResource):
 		current_game_save = loaded_game
 		return true
 	return false
 
 # get array of all found game saves in the save directory
-func get_all_save_games() -> Array:
-	var METHOD_NAME = "get_all_save_games"
+func get_all_save_files() -> Array:
 	var dir = Directory.new()
 	if(!dir.dir_exists(demo_save_directory)):
-		print_debug(CLASS_NAME + " : " + METHOD_NAME + " : save directory doesn't exist")
+		print_debug("save directory doesn't exist")
 		return []
 	
 	var saves = []
@@ -78,8 +76,8 @@ func get_all_save_games() -> Array:
 				continue
 			if(file_name.begins_with(demo_save_filename_pre) && file_name.ends_with(demo_save_filename_post)):
 				#current is a potential save file
-				var loaded_file = load_game(file_name)
-				if(loaded_file is SaveResource):
+				var loaded_file = load_save_file(file_name)
+				if(loaded_file is SaveFileResource):
 					saves.append(loaded_file)
 	
 	return saves

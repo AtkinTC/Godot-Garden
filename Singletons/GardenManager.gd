@@ -45,9 +45,10 @@ func initialize():
 	pass
 
 func setup_from_plots_array(plots : Array):
+	plots_dict = {}
 	for i in plots.size():
 		var plot : PlotVO = plots[i]
-		insert_plot(plot.get_coord(), plot)
+		insert_plot(plot)
 
 # process step time for all garden plots
 func step_plots(step_time : float):
@@ -58,15 +59,15 @@ func step_plots(step_time : float):
 
 func create_plot(coord : Vector2) -> PlotVO:
 	var plot : PlotVO = PlotVO.new()
-	insert_plot(coord, plot)
+	plot.set_coord(coord)
+	insert_plot(plot)
 	return plot
 
-func insert_plot(coord : Vector2, plot : PlotVO):
-	plot.set_coord(coord)
-	plot.changed.connect(_on_plot_updated.bind(coord))
-	plots_dict[coord] = plot
-	update_extents(coord)
-	garden_plot_updated.emit(coord)
+func insert_plot(plot : PlotVO):
+	plot.changed.connect(_on_plot_updated.bind(plot.get_coord()))
+	plots_dict[plot.get_coord()] = plot
+	update_extents(plot.get_coord())
+	garden_plot_updated.emit(plot.get_coord())
 
 func update_extents(coord : Vector2):
 	var changed = false
@@ -94,7 +95,7 @@ func get_garden_rect() -> Rect2:
 
 func set_plot(coord : Vector2, plot : PlotVO):
 	#plots.set_at(coord, plot)
-	insert_plot(coord, plot)
+	insert_plot(plot)
 
 func get_used_plot_coords() -> Array:
 	return plots_dict.keys()
@@ -102,7 +103,7 @@ func get_used_plot_coords() -> Array:
 func get_used_plots() -> Array:
 	return plots_dict.values()
 
-func get_plot(coord : Vector2) -> PlotVO:
+func get_plot(coord : Vector2i) -> PlotVO:
 	return plots_dict.get(coord, null)
 
 func connect_garden_resized(reciever_method : Callable):

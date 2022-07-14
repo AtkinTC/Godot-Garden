@@ -17,89 +17,96 @@ func _init():
 	GardenManager.initialize()
 
 func _ready():
-	SaveController.load_as_current_game("test")
+	var load_success : bool = SaveController.load_as_current_save_file("test")
 	
-	#TODO: remove this test code
+	if(load_success):
+		var current_save_file := SaveController.get_current_save_file()
+		CharactersManager.setup_from_character_array(current_save_file.characters)
+		GardenManager.setup_from_plots_array(current_save_file.world_plots)
+		WorldUnitsManager.setup_from_world_units_array(current_save_file.world_units)
+	else:
+		setup_test_data()
+	
+	get_tree().create_timer(10).timeout.connect(_autosave)
+
+#TODO: remove this test code
+func setup_test_data():
 	#example characters for testing purposes
-	var new_char : CharacterVO = CharactersManager.create_empty_character()
+	var new_char : CharacterVO = CharactersManager.create_new_character()
 	new_char.set_character_name("Anne")
-	new_char.set_character_portrait_name("portrait_basic_005.png")
+	new_char.set_portrait_name("portrait_basic_005.png")
 	new_char.set_attr_HP(20)
 	new_char.set_current_HP(20)
 	new_char.set_attr_STR(5)
 	
-	new_char = CharactersManager.create_empty_character()
+	new_char = CharactersManager.create_new_character()
 	new_char.set_character_name("Bob")
-	new_char.set_character_portrait_name("portrait_basic_007.png")
+	new_char.set_portrait_name("portrait_basic_007.png")
 	new_char.set_attr_HP(10)
 	new_char.set_current_HP(10)
 	
-	new_char = CharactersManager.create_empty_character()
+	new_char = CharactersManager.create_new_character()
 	new_char.set_character_name("Carl")
-	new_char.set_character_portrait_name("portrait_basic_003.png")
+	new_char.set_portrait_name("portrait_basic_003.png")
 	new_char.set_attr_HP(10)
 	new_char.set_current_HP(10)
 	new_char.set_attr_INT(3)
 	
-	new_char = CharactersManager.create_empty_character()
+	new_char = CharactersManager.create_new_character()
 	new_char.set_character_name("Dirk")
-	new_char.set_character_portrait_name("portrait_basic_004.png")
+	new_char.set_portrait_name("portrait_basic_004.png")
 	new_char.set_attr_HP(10)
 	new_char.set_current_HP(10)
 	new_char.set_attr_AGI(2)
 	
-	#TODO: remove this test code
-	# setup test plots
-	if(SaveController.current_game_save != null && SaveController.current_game_save.world_plots.size() > 0):
-		GardenManager.setup_from_plots_array(SaveController.current_game_save.world_plots)
-	else:
-		var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0))
-		#center_plot.insert_structure("STARTER")
-		center_plot.set_display_name("base")
-		center_plot.set_explored(true)
-		center_plot.plot_type = "empty"
-		center_plot.base_type = "blank"
-		
-		#TODO: remove this test code
-		#example plot areas for testing purposes
-		var plot = GardenManager.create_plot(Vector2(1,0))
-		var plot_type = GardenManager.select_plot_type_neighbor("base")
-		plot.set_display_name(plot_type)
-		plot.plot_type = plot_type
-		plot.base_type = "grass"
-		
-		plot = GardenManager.create_plot(Vector2(0,1))
-		plot_type = GardenManager.select_plot_type_neighbor("base")
-		plot.set_display_name(plot_type)
-		plot.plot_type = plot_type
-		plot.base_type = "grass"
-		
-		plot = GardenManager.create_plot(Vector2(-1,0))
-		plot_type = GardenManager.select_plot_type_neighbor("base")
-		plot.set_display_name(plot_type)
-		plot.plot_type = plot_type
-		plot.base_type = "grass"
-		
-		plot = GardenManager.create_plot(Vector2(0,-1))
-		plot_type = GardenManager.select_plot_type_neighbor("base")
-		plot.set_display_name(plot_type)
-		plot.plot_type = plot_type
-		plot.base_type = "grass"
+	#example plot areas for testing purposes
+	var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0))
+	center_plot.set_display_name("base")
+	center_plot.set_explored(true)
+	center_plot.plot_type = "empty"
+	center_plot.base_type = "blank"
+
+	var plot = GardenManager.create_plot(Vector2(1,0))
+	var plot_type = GardenManager.select_plot_type_neighbor("base")
+	plot.set_display_name(plot_type)
+	plot.plot_type = plot_type
+	plot.base_type = "grass"
 	
-	#TODO: remove this test code
+	plot = GardenManager.create_plot(Vector2(0,1))
+	plot_type = GardenManager.select_plot_type_neighbor("base")
+	plot.set_display_name(plot_type)
+	plot.plot_type = plot_type
+	plot.base_type = "grass"
+	
+	plot = GardenManager.create_plot(Vector2(-1,0))
+	plot_type = GardenManager.select_plot_type_neighbor("base")
+	plot.set_display_name(plot_type)
+	plot.plot_type = plot_type
+	plot.base_type = "grass"
+	
+	plot = GardenManager.create_plot(Vector2(0,-1))
+	plot_type = GardenManager.select_plot_type_neighbor("base")
+	plot.set_display_name(plot_type)
+	plot.plot_type = plot_type
+	plot.base_type = "grass"
+	
 	# create dummy world unit for testing
-	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
-	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
-	WorldUnitsManager.insert_world_unit(WorldUnitVO.new())
-	
-	get_tree().create_timer(10).timeout.connect(_autosave)
+	WorldUnitsManager.create_new_world_unit()
+	WorldUnitsManager.create_new_world_unit()
+	WorldUnitsManager.create_new_world_unit()
 
 func _process(_delta):
 	SupplyManager.step(_delta)
 	GardenManager.step_plots(_delta)
 
 func _autosave():
-	if(SaveController.current_game_save == null):
-		SaveController.create_new_game_save("test")
-	SaveController.save_current_game()
+	var current_save : SaveFileResource = SaveController.get_current_save_file()
+	if(current_save == null):
+		current_save = SaveController.create_new_save_file("test")
+		
+	current_save.world_plots = GardenManager.get_used_plots()
+	current_save.characters = CharactersManager.get_characters()
+	current_save.world_units = WorldUnitsManager.get_world_units()
+	
+	SaveController.save_current_save_file()
 	get_tree().create_timer(10).timeout.connect(_autosave)
