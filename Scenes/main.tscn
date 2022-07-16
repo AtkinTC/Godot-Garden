@@ -297,5 +297,6 @@ current = true
 script = ExtResource("4_sbgaj")
 acceleration = 0.1
 min_zoom = 0.25
+max_zoom = 3.0
 zoom_level = 2.0
 metadata/_edit_lock_ = true

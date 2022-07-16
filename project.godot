@@ -224,6 +224,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/VO/SupplyVO.gd"
 }, {
+"base": "RefCounted",
+"class": &"TileDefinitions",
+"language": &"GDScript",
+"path": "res://Scripts/Data/TileDefinitions.gd"
+}, {
 "base": "TileMap",
 "class": &"TileMapCust",
 "language": &"GDScript",
@@ -243,6 +248,11 @@ _global_script_classes=[{
 "class": &"Utils",
 "language": &"GDScript",
 "path": "res://Scripts/Utils.gd"
+}, {
+"base": "RefCounted",
+"class": &"WaveCollapse",
+"language": &"GDScript",
+"path": "res://Scripts/WaveCollapse.gd"
 }, {
 "base": "Node2D",
 "class": &"World",
@@ -318,10 +328,12 @@ _global_script_class_icons={
 "SupplyDisplayBar": "",
 "SupplyDisplayContainer": "",
 "SupplyVO": "",
+"TileDefinitions": "",
 "TileMapCust": "",
 "TooltipHost": "",
 "TooltipPanel": "",
 "Utils": "",
+"WaveCollapse": "",
 "World": "",
 "WorldNavigationController": "",
 "WorldUnit": "",

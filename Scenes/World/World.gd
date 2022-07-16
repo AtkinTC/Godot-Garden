@@ -53,10 +53,14 @@ func get_tile_size() -> Vector2i:
 	return map.get_tileset().get_tile_size()
 
 func select_cell(_cell : Vector2i):
-	if(_cell as Vector2 in GardenManager.get_used_plots()):
+	if(_cell in GardenManager.get_used_plot_coords()):
 		ActionManager.apply_current_action_to_plot(_cell)
 		selected_cell.emit(_cell)
 		set_highlighted_cell(_cell)
+		
+		#TDOD : remove this test code
+		GardenManager.explore_plot(_cell)
+		print(_cell)
 	else:
 		clear_highlight()
 

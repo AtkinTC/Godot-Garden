@@ -60,37 +60,16 @@ func setup_test_data():
 	new_char.set_attr_AGI(2)
 	
 	#example plot areas for testing purposes
-	var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0))
-	center_plot.set_display_name("base")
+	var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0), "empty", "blank")
 	center_plot.set_explored(true)
-	center_plot.plot_type = "empty"
-	center_plot.base_type = "blank"
 
-	var plot = GardenManager.create_plot(Vector2(1,0))
-	var plot_type = GardenManager.select_plot_type_neighbor("base")
-	plot.set_display_name(plot_type)
-	plot.plot_type = plot_type
-	plot.base_type = "grass"
-	
-	plot = GardenManager.create_plot(Vector2(0,1))
-	plot_type = GardenManager.select_plot_type_neighbor("base")
-	plot.set_display_name(plot_type)
-	plot.plot_type = plot_type
-	plot.base_type = "grass"
-	
-	plot = GardenManager.create_plot(Vector2(-1,0))
-	plot_type = GardenManager.select_plot_type_neighbor("base")
-	plot.set_display_name(plot_type)
-	plot.plot_type = plot_type
-	plot.base_type = "grass"
-	
-	plot = GardenManager.create_plot(Vector2(0,-1))
-	plot_type = GardenManager.select_plot_type_neighbor("base")
-	plot.set_display_name(plot_type)
-	plot.plot_type = plot_type
-	plot.base_type = "grass"
+	GardenManager.create_plot_auto(Vector2(1,0), "grass")
+	GardenManager.create_plot_auto(Vector2(0,1), "grass")
+	GardenManager.create_plot_auto(Vector2(-1,0), "grass")
+	GardenManager.create_plot_auto(Vector2(0,-1), "grass")
 	
 	# create dummy world unit for testing
+	WorldUnitsManager.create_new_world_unit()
 	WorldUnitsManager.create_new_world_unit()
 	WorldUnitsManager.create_new_world_unit()
 	WorldUnitsManager.create_new_world_unit()

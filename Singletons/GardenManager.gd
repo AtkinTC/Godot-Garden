@@ -5,7 +5,8 @@ signal garden_state_changed()
 signal garden_plot_updated(coord : Vector2)
 
 var plot_type_neighbors := {
-	"base" : {
+	"empty" : {
+		"river" : 0.5,
 		"forest" : 0.5,
 		"field" : 0.5
 	},
@@ -30,6 +31,9 @@ var plot_type_neighbors := {
 		"swamp" : 0.25,
 		"field" : 0.5
 	},
+	"river" : {
+		"river" : 1.0
+	},
 }
 
 var plots_dict : Dictionary
@@ -40,9 +44,14 @@ var max_y : int
 
 var owned_plots : int = 0
 
+var wave_collapse : WaveCollapse
+
 # setup initial state of the garden
 func initialize():
-	pass
+	wave_collapse = WaveCollapse.new()
+	wave_collapse.set_min_bound(Vector2i(-20,-20))
+	wave_collapse.set_max_bound(Vector2i(20,20))
+	wave_collapse.set_cell_definitions(TileDefinitions.cell_defs)
 
 func setup_from_plots_array(plots : Array):
 	plots_dict = {}
@@ -56,13 +65,32 @@ func step_plots(step_time : float):
 		if(p.has_method("step")):
 			(p as PlotVO).step(step_time)
 
-
-func create_plot(coord : Vector2) -> PlotVO:
+# create and insert a plot with an automatically selected plot type
+func create_plot_auto(coord : Vector2, base_type : String) -> PlotVO:
+	var plot_type_key = wave_collapse.collapse_cell(coord)
+	var plot_type_name = wave_collapse.get_cell_name_from_key(plot_type_key)
+	
 	var plot : PlotVO = PlotVO.new()
 	plot.set_coord(coord)
+	plot.set_display_name(plot_type_name)
+	plot.set_plot_type(plot_type_name)
+	plot.set_base_type(base_type)
+	
 	insert_plot(plot)
 	return plot
 
+# create and insert a plot with a set plot type
+func create_plot(coord : Vector2, plot_type : String, base_type : String) -> PlotVO:
+	var plot : PlotVO = PlotVO.new()
+	plot.set_coord(coord)
+	plot.set_display_name(plot_type)
+	plot.set_plot_type(plot_type)
+	plot.set_base_type(base_type)
+	wave_collapse.collapse_cell_forced(coord, wave_collapse.get_cell_key_from_name(plot_type))
+	insert_plot(plot)
+	return plot
+
+# internal use only, new plots should be inserted using create_plot_auto or create_plot
 func insert_plot(plot : PlotVO):
 	plot.changed.connect(_on_plot_updated.bind(plot.get_coord()))
 	plots_dict[plot.get_coord()] = plot
@@ -136,6 +164,11 @@ func select_plot_type_neighbor(plot_type : String) -> String:
 			break
 	return selected_key
 
+func select_plot_type(coord : Vector2i) -> String:
+	var possible_types = wave_collapse.get_possible_cell_names(coord)
+	var i : int = randi_range(0, possible_types.size()-1)
+	return possible_types[i]
+
 # Begin the exploration process
 # A character assigned to the plot advances the exploration progress
 # new plots/features/items are earned when an exploration stage is completed
@@ -158,18 +191,16 @@ func complete_exploration(coord : Vector2i):
 	var empty_neighbor_coords = GardenManager.get_empty_neighbors(coord)
 	
 	var found : int = empty_neighbor_coords.size() 
-	if(empty_neighbor_coords.size() > 1):
-		found = randi() % empty_neighbor_coords.size() + 1
-	
-	if(found < empty_neighbor_coords.size()):
-		empty_neighbor_coords.shuffle()
+#	if(empty_neighbor_coords.size() > 1):
+#		found = randi() % empty_neighbor_coords.size() + 1
+#
+#	if(found < empty_neighbor_coords.size()):
+#		empty_neighbor_coords.shuffle()
 	
 	for i in found:
 		var neighbor_coord : Vector2i = empty_neighbor_coords[i]
-		var n_plot = GardenManager.create_plot(neighbor_coord)
-		n_plot.set_plot_type(GardenManager.select_plot_type_neighbor(plot.get_plot_type()))
-		n_plot.set_display_name(n_plot.get_plot_type())
-		n_plot.set_base_type("grass")
+		var base_type : String = "grass"
+		var n_plot = create_plot_auto(neighbor_coord, base_type)
 	
 	plot.changed.emit()
 
