@@ -59,8 +59,10 @@ func select_cell(_cell : Vector2i):
 		set_highlighted_cell(_cell)
 		
 		#TDOD : remove this test code
-		GardenManager.explore_plot(_cell)
+		GardenManager.complete_exploration(_cell)
 		print(_cell)
+		print("base_type : " + str(GardenManager.get_plot(_cell).get_base_type()))
+		print("plot_type : " + str(GardenManager.get_plot(_cell).get_plot_type()))
 	else:
 		clear_highlight()
 

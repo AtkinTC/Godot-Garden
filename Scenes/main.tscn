@@ -263,7 +263,6 @@ layer_1/tile_data = PackedInt32Array()
 script = ExtResource("14_wiqlv")
 
 [node name="HighlightsTileMap" type="TileMap" parent="World"]
-visible = false
 texture_filter = 1
 tile_set = ExtResource("12_roxqa")
 format = 2

@@ -48,10 +48,7 @@ var wave_collapse : WaveCollapse
 
 # setup initial state of the garden
 func initialize():
-	wave_collapse = WaveCollapse.new()
-	wave_collapse.set_min_bound(Vector2i(-20,-20))
-	wave_collapse.set_max_bound(Vector2i(20,20))
-	wave_collapse.set_cell_definitions(TileDefinitions.cell_defs)
+	wave_collapse = WaveCollapse.new(TileDefinitions.cell_defs, Vector2i(-20,-20), Vector2i(20,20))
 
 func setup_from_plots_array(plots : Array):
 	plots_dict = {}

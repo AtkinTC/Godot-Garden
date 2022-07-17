@@ -3,6 +3,7 @@ class_name TileDefinitions
 const CELL := "cell"
 const BORDER := "border"
 const RESTRICTED := "restricted"
+const MANUAL := "manual"
 
 const border_open := "b_open"
 const border_road := "b_road"
@@ -22,13 +23,17 @@ const restricted_river_parallel := "r_river_parallel"
 const restricted_lake_parallel := "r_lake_parallel"
 
 const cell_defs := {
-	"empty" : {
+	"empty" : {},
+	"base" : {
+		"N" : border_road,
+		"S" : border_road,
 		RESTRICTED : {
 			"N" : [restricted_river_parallel, restricted_lake_parallel],
 			"S" : [restricted_river_parallel, restricted_lake_parallel],
 			"E" : [restricted_river_parallel, restricted_lake_parallel],
 			"W" : [restricted_river_parallel, restricted_lake_parallel],
-		}
+		},
+		MANUAL : true
 	},
 	"field" : {},
 	"forest" : {},
@@ -329,8 +334,8 @@ const cell_defs := {
 		"E" : border_road,
 		"W" : border_road,
 		RESTRICTED :{
-			"N" : [restricted_river_end, restricted_river_bend],
-			"S" : [restricted_river_end, restricted_river_bend],
+			"N" : [restricted_river_end, restricted_river_bend, restricted_road_parallel],
+			"S" : [restricted_river_end, restricted_river_bend, restricted_road_parallel],
 			"E" : [restricted_road_end, restricted_river_parallel],
 			"W" : [restricted_road_end, restricted_river_parallel],
 		}
@@ -343,8 +348,8 @@ const cell_defs := {
 		RESTRICTED :{
 			"N" : [restricted_road_end, restricted_river_parallel],
 			"S" : [restricted_road_end, restricted_river_parallel],
-			"E" : [restricted_river_end, restricted_river_bend],
-			"W" : [restricted_river_end, restricted_river_bend],
+			"E" : [restricted_river_end, restricted_river_bend, restricted_road_parallel],
+			"W" : [restricted_river_end, restricted_river_bend, restricted_road_parallel],
 		}
 	},
 	"river_NSEW" : {

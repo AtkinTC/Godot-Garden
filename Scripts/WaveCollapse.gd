@@ -2,6 +2,7 @@ class_name WaveCollapse
 
 const OPEN := "open"
 const RESTRICTED := "restricted"
+const MANUAL := "manual"
 
 const DIRECTIONS := {"N" : Vector2i(-1,0),
 					#"NE" : Vector2i(-1,-1),
@@ -23,6 +24,7 @@ const DIR_OPPOSITE := {"N" : "S",
 					"NW" : "SE"}
 
 var cell_defs: Dictionary = {}
+var auto_cell_keys : Array = []
 var border_defs : Dictionary = {}
 var restricted_border_defs : Dictionary = {}
 
@@ -35,6 +37,10 @@ var collapsed: Array = []
 var min : Vector2i = Vector2i(0,0)
 var max : Vector2i = Vector2i(10, 10)
 
+func _init(_cell_defs : Dictionary, min_bound : Vector2i = min, max_bound : Vector2i = max):
+	set_bounds(min_bound, max_bound)
+	set_cell_definitions(_cell_defs)
+
 func set_cell_definitions(_cell_defs : Dictionary):
 	for cell_name in _cell_defs.keys():
 		process_cell_definition(cell_name, _cell_defs[cell_name])
@@ -45,14 +51,17 @@ func set_cell_definitions(_cell_defs : Dictionary):
 func process_cell_definition(cell_name : String, cell_def: Dictionary):
 	cell_defs[cell_name] = cell_def.duplicate(true)
 	
-	for dir in DIRECTIONS.keys():
-		var border_type : String = cell_def.get(dir, OPEN)
-		var border_def : Dictionary = border_defs.get(border_type, {})
-		var border_direction : Array = border_def.get(dir, [])
-	
-		sorted_insert(border_direction, cell_name)
-		border_def[dir] = border_direction
-		border_defs[border_type] = border_def
+	# cells marked as MANUAL will not be included as a possible cell
+	if(!cell_def.get(MANUAL, false)):
+		sorted_insert(auto_cell_keys, cell_name)
+		for dir in DIRECTIONS.keys():
+			var border_type : String = cell_def.get(dir, OPEN)
+			var border_def : Dictionary = border_defs.get(border_type, {})
+			var border_direction : Array = border_def.get(dir, [])
+		
+			sorted_insert(border_direction, cell_name)
+			border_def[dir] = border_direction
+			border_defs[border_type] = border_def
 			
 	var cell_restricted : Dictionary = cell_def.get(RESTRICTED, {})
 	if(cell_restricted.size() > 0):
@@ -75,9 +84,9 @@ func collapse_cell(coord : Vector2i) -> String:
 		print_debug(str(coord) + " has already been collapsed")
 		return ""
 	
-	var possible_cells : Array = possibility_field.get(coord, cell_defs.keys())
+	var possible_cells : Array = possibility_field.get(coord, auto_cell_keys)
 	if(possible_cells.size() == 0):
-		possible_cells = cell_defs.keys()
+		possible_cells = auto_cell_keys
 	var chosen_cell : String = possible_cells[randi_range(0, possible_cells.size()-1)]
 	
 	collapse_cell_forced(coord, chosen_cell)
@@ -96,7 +105,7 @@ func collapse_cell_forced(coord : Vector2i, cell_name : String):
 		print_debug(str(cell_name) + " is not a recognized cell key")
 		return
 	
-	collapsed.append(coord)
+	sorted_insert(collapsed, coord)
 	possibility_field[coord] = [cell_name]
 	
 	for d in DIRECTIONS.keys():
@@ -111,24 +120,24 @@ func refine_possibilities(coord : Vector2i):
 		return
 	
 	var old_possible_cells : Array = possibility_field.get(coord, [])
-	if(old_possible_cells.size() == cell_defs.size()):
+	if(old_possible_cells.size() == auto_cell_keys.size()):
 		old_possible_cells = []
 		
-	var new_possible_cells : Array = cell_defs.keys()
+	var new_possible_cells : Array = auto_cell_keys
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
-		var n_possible_cells = possibility_field.get(n_coord, cell_defs.keys())
+		var n_possible_cells = possibility_field.get(n_coord, auto_cell_keys)
 		if(n_possible_cells.size() == 0):
-			n_possible_cells = cell_defs.keys()
+			n_possible_cells = auto_cell_keys
 		var possible_cells := get_possible_neighbors_for_cell_types(n_possible_cells, DIR_OPPOSITE[d])
 		new_possible_cells = array_inner_join(new_possible_cells, possible_cells)
-	if(new_possible_cells.size() == cell_defs.size()):
+	if(new_possible_cells.size() == auto_cell_keys.size()):
 		new_possible_cells = []
 	
-	if(old_possible_cells.size() == new_possible_cells.size()):
+	if(array_compare(old_possible_cells, new_possible_cells)):
 		# no change
 		return
-
+	
 	possibility_field[coord] = new_possible_cells
 	
 	for d in DIRECTIONS.keys():
@@ -172,10 +181,8 @@ func get_possible_neighbors_for_cell_type(cell_name : String, direction : String
 	
 	return possible_cells
 
-func set_min_bound(_min : Vector2i):
+func set_bounds(_min : Vector2i, _max : Vector2i):
 	min = _min
-
-func set_max_bound(_max : Vector2i):
 	max = _max
 
 func is_coord_in_bounds(coord : Vector2i) -> bool:
@@ -186,7 +193,25 @@ func sorted_insert(array : Array, value : Variant) -> Array:
 	array.insert(i, value)
 	return array
 
-func array_inner_join(array_1 : Array, array_2 : Array):
+func array_compare(array_1 : Array, array_2 : Array):
+	if(array_1.size() != array_2.size()):
+		return false
+		
+	var a : Array
+	var b : Array
+	if(array_1.size() <= array_2.size()):
+		a = array_1
+		b = array_2
+	else:
+		a = array_2
+		b = array_1
+	
+	for v in a:
+		if(!b.has(v)):
+			return false
+	return true
+		
+func array_inner_join(array_1 : Array, array_2 : Array) -> Array:
 	var a : Array
 	var b : Array
 	if(array_1.size() <= array_2.size()):

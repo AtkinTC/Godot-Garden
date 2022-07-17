@@ -60,13 +60,9 @@ func setup_test_data():
 	new_char.set_attr_AGI(2)
 	
 	#example plot areas for testing purposes
-	var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0), "empty", "blank")
-	center_plot.set_explored(true)
-
-	GardenManager.create_plot_auto(Vector2(1,0), "grass")
-	GardenManager.create_plot_auto(Vector2(0,1), "grass")
-	GardenManager.create_plot_auto(Vector2(-1,0), "grass")
-	GardenManager.create_plot_auto(Vector2(0,-1), "grass")
+	var center_plot : PlotVO = GardenManager.create_plot(Vector2(0,0), "base", "grass")
+	#center_plot.set_explored(true)
+	GardenManager.complete_exploration(center_plot.get_coord())
 	
 	# create dummy world unit for testing
 	WorldUnitsManager.create_new_world_unit()
