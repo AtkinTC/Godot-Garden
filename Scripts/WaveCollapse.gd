@@ -1,10 +1,7 @@
 class_name WaveCollapse
 
-# bitwise operators:
-#	~ not
-#	& and
-#	| or
-#	^ xor
+const OPEN := "open"
+const RESTRICTED := "restricted"
 
 const DIRECTIONS := {"N" : Vector2i(-1,0),
 					#"NE" : Vector2i(-1,-1),
@@ -26,145 +23,81 @@ const DIR_OPPOSITE := {"N" : "S",
 					"NW" : "SE"}
 
 var cell_defs: Dictionary = {}
-var key_to_name: Dictionary = {}
-var name_to_key: Dictionary = {}
+var border_defs : Dictionary = {}
+var restricted_border_defs : Dictionary = {}
 
-var total_key_sum: int = 0
-
-var next_key: int = 1
-
+# Dictionary(Vector2i, Array) of all the possible cell types at each coordinate
+# treat Unset, [] as an unrestricted list of all cell types
 var possibility_field: Dictionary = {}
 
-var collapsed: Array= []
+var collapsed: Array = []
 
 var min : Vector2i = Vector2i(0,0)
 var max : Vector2i = Vector2i(10, 10)
 
-func set_min_bound(_min : Vector2i):
-	min = _min
-
-func set_max_bound(_max : Vector2i):
-	max = _max
-
-func is_coord_in_bounds(coord : Vector2i) -> bool:
-	return (coord.x >= min.x && coord.x <= max.x && coord.y >= min.y && coord.y <= max.y)
-
 func set_cell_definitions(_cell_defs : Dictionary):
 	for cell_name in _cell_defs.keys():
-		assign_cell_key(cell_name)
-	
-	# setup cell definitions
-	var setup_success : bool = true
-	for cell_name in _cell_defs.keys():
-		setup_success = set_cell_definition(cell_name, _cell_defs[cell_name]) && setup_success
-	assert(setup_success)
-	
-	# clean cell definitions
-	var clean_success : bool = true
-	for cell_key in cell_defs.keys():
-		clean_success = clean_cell_definition(cell_key) && clean_success
-	assert(clean_success)
+		process_cell_definition(cell_name, _cell_defs[cell_name])
+	#print_pretty_cell_defs()
+	#print_pretty_border_defs()
 
-func assign_cell_key(cell_name):
-	key_to_name[next_key] = cell_name
-	name_to_key[cell_name] = next_key
-	total_key_sum += next_key
-	next_key *= 2
-
-func set_cell_definition(cell_name : String, cell_def: Dictionary) -> bool:
-	var cell_key : int = name_to_key.get(cell_name, -1)
-	if(cell_key < 0):
-		print_debug("No key assigned for cell name " + str(cell_name))
-		return false
+# read in a cell definition, and update all relevant data
+func process_cell_definition(cell_name : String, cell_def: Dictionary):
+	cell_defs[cell_name] = cell_def.duplicate(true)
 	
-	# convert array of string keys into a sum of binary keys
-	var new_cell_def : Dictionary = {}
 	for dir in DIRECTIONS.keys():
-		var poss_names : Array = cell_def.get(dir, [])
-		var dir_keys_sum : int = 0
-		if(poss_names.size() == 0):
-			new_cell_def[dir] = total_key_sum
-		else:
-			for poss_name in poss_names:
-				var key : int = name_to_key.get(poss_name, -1)
-				if(key <= 0):
-					print_debug("No key assigned for cell name " + str(poss_name))
-					return false
-				dir_keys_sum |= key
-			new_cell_def[dir] = dir_keys_sum
-	cell_defs[cell_key] = new_cell_def
-	return true
-
-
-func clean_cell_definition(cell_key : int, permissive : bool = true) -> bool:
-	var passed : bool = true
-	for d in DIRECTIONS.keys():
-		var possible_neighbor_key_sum : int = cell_defs[cell_key][d]
-		var possible_neighbor_keys : Array = key_sum_to_keys(possible_neighbor_key_sum)
-		for neighbor_key in possible_neighbor_keys:
-			var co_neighbor_keys_sum : int = cell_defs[neighbor_key][DIR_OPPOSITE[d]]
-			if(cell_key & co_neighbor_keys_sum == 0):
-				if(possible_neighbor_key_sum == total_key_sum):
-					# allows all possible neighbors
-					# remove the non-accepting cell from the list of possible neighbors
-					cell_defs[cell_key][d] = cell_defs[cell_key][d] - neighbor_key
-				else:
-					# has an explicit list of allowed neighbors
-					# explicit neighbor list contains a non-accepting cell
-					if(!permissive):
-						print_debug("Conflict between " + str(key_to_name[cell_key]) + ":" + str(d) + " and " + str(key_to_name[neighbor_key]) + ":" + str(DIR_OPPOSITE[d]))
-						# non-permissive: do not allow these conflicts
-						passed = false
-						continue
-					else:
-						# permissive: clean up conflicts and continue on
-						cell_defs[neighbor_key][DIR_OPPOSITE[d]] = cell_defs[neighbor_key][DIR_OPPOSITE[d]] + cell_key
-	return passed
-
-func get_cell_name_from_key(key : int) -> String:
-	return key_to_name.get(key, "")
-
-func get_cell_key_from_name(name : String) -> int:
-	return name_to_key.get(name, -1)
-
-func get_possible_cell_names(coord : Vector2i) -> Array:
-	var possible_names := []
-	for key in key_sum_to_keys(possibility_field.get(coord, total_key_sum)):
-		possible_names.append(key_to_name[key])
-	if possible_names.size() == 0:
-		return name_to_key.keys()
-	return possible_names
+		var border_type : String = cell_def.get(dir, OPEN)
+		var border_def : Dictionary = border_defs.get(border_type, {})
+		var border_direction : Array = border_def.get(dir, [])
+	
+		sorted_insert(border_direction, cell_name)
+		border_def[dir] = border_direction
+		border_defs[border_type] = border_def
+			
+	var cell_restricted : Dictionary = cell_def.get(RESTRICTED, {})
+	if(cell_restricted.size() > 0):
+		for dir in cell_restricted.keys():
+			var cell_restricted_borders : Array = cell_restricted[dir]
+			for restricted_border in cell_restricted_borders:
+				var restricted_border_def : Dictionary = restricted_border_defs.get(restricted_border, {})
+				var restricted_border_directions : Array = restricted_border_def.get(dir, [])
+				
+				sorted_insert(restricted_border_directions, cell_name)
+				restricted_border_def[dir] = restricted_border_directions
+				restricted_border_defs[restricted_border] = restricted_border_def
 
 # collapse a cell to one of the possible cell types chosen at random
-func collapse_cell(coord : Vector2i) -> int:
+func collapse_cell(coord : Vector2i) -> String:
 	if(coord.x < min.x || coord.x > max.x || coord.y < min.y || coord.y > max.y):
 		print_debug(str(coord) + " is outside of bounds")
-		return -1
+		return ""
 	if(collapsed.has(coord)):
 		print_debug(str(coord) + " has already been collapsed")
-		return -1
+		return ""
 	
-	var possible_keys : Array = key_sum_to_keys(possibility_field.get(coord, total_key_sum))
-	var chosen_key : int = possible_keys[randi_range(0, possible_keys.size()-1)]
+	var possible_cells : Array = possibility_field.get(coord, cell_defs.keys())
+	if(possible_cells.size() == 0):
+		possible_cells = cell_defs.keys()
+	var chosen_cell : String = possible_cells[randi_range(0, possible_cells.size()-1)]
 	
-	collapse_cell_forced(coord, chosen_key)
+	collapse_cell_forced(coord, chosen_cell)
 	
-	return chosen_key
+	return chosen_cell
 
 # collapse a cell to a specific cell type and propagate the probability wave to neighboring cells
-func collapse_cell_forced(coord : Vector2i, cell_key : int):
+func collapse_cell_forced(coord : Vector2i, cell_name : String):
 	if(!is_coord_in_bounds(coord)):
 		print_debug(str(coord) + " is outside of bounds")
 		return
 	if(collapsed.has(coord)):
 		print_debug(str(coord) + " has already been collapsed")
 		return
-	if(!cell_defs.has(cell_key)):
-		print_debug(str(key_to_name[cell_key]) + " is not a recognized cell key")
+	if(!cell_defs.has(cell_name)):
+		print_debug(str(cell_name) + " is not a recognized cell key")
 		return
 	
 	collapsed.append(coord)
-	possibility_field[coord] = cell_key
+	possibility_field[coord] = [cell_name]
 	
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
@@ -177,66 +110,110 @@ func refine_possibilities(coord : Vector2i):
 	if(collapsed.has(coord)):
 		return
 	
-	var new_possible_keys_sum : int = total_key_sum
+	var old_possible_cells : Array = possibility_field.get(coord, [])
+	if(old_possible_cells.size() == cell_defs.size()):
+		old_possible_cells = []
+		
+	var new_possible_cells : Array = cell_defs.keys()
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
-		new_possible_keys_sum &= get_possible_neighbors(n_coord, DIR_OPPOSITE[d])
+		var n_possible_cells = possibility_field.get(n_coord, cell_defs.keys())
+		if(n_possible_cells.size() == 0):
+			n_possible_cells = cell_defs.keys()
+		var possible_cells := get_possible_neighbors_for_cell_types(n_possible_cells, DIR_OPPOSITE[d])
+		new_possible_cells = array_inner_join(new_possible_cells, possible_cells)
+	if(new_possible_cells.size() == cell_defs.size()):
+		new_possible_cells = []
 	
-	var old_possible_keys_sum : int = possibility_field.get(coord, total_key_sum)
-	
-	if(new_possible_keys_sum == old_possible_keys_sum):
+	if(old_possible_cells.size() == new_possible_cells.size()):
 		# no change
 		return
-	
-	possibility_field[coord] = new_possible_keys_sum
+
+	possibility_field[coord] = new_possible_cells
 	
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
 		refine_possibilities(n_coord)
 
-# return all the possible neighbors of a cell to one direction as a key sum
-func get_possible_neighbors(coord : Vector2i, direction : String) -> int:
-	if(!is_coord_in_bounds(coord)):
-		return total_key_sum
+# get array of all possible neighbor cells for the specified list of cells in one specified direction
+func get_possible_neighbors_for_cell_types(cell_names : Array, direction : String) -> Array:
+	if(cell_names.size() == 0):
+		print_debug("Empty cell name list")
+		return []
 	
-	var possible_neighbor_keys_sum : int = 0
-	var possible_keys_sum : int = possibility_field.get(coord, total_key_sum)
-	if(possible_keys_sum == total_key_sum):
-		# every possible cell
-		possible_neighbor_keys_sum = total_key_sum
+	var possible_neighbors := []
+	for cell_name in cell_names:
+		var cell_possible_neighbors := get_possible_neighbors_for_cell_type(cell_name, direction)
+		for neighbor_name in cell_possible_neighbors:
+			if(!possible_neighbors.has(neighbor_name)):
+				sorted_insert(possible_neighbors, neighbor_name)
+	
+	return possible_neighbors
+
+# get array of all possible neighbor cells for the specified cell in one specified direction
+func get_possible_neighbors_for_cell_type(cell_name : String, direction : String) -> Array:
+	if(!cell_defs.has(cell_name)):
+		print_debug(str(cell_name) + " is not a recognized cell type")
+		return []
+	
+	var possible_cells := []
+	var border_name : String = cell_defs[cell_name].get(direction, OPEN)
+	var cells : Array = border_defs[border_name].get(DIR_OPPOSITE[direction], [])
+	for cell in cells:
+		if(!possible_cells.has(cell)):
+			sorted_insert(possible_cells, cell)
+	
+	var restricted_border_names : Array = cell_defs[cell_name].get(RESTRICTED, {}).get(direction, [])
+	for restricted_border_name in restricted_border_names:
+		var restricted_cells : Array = restricted_border_defs[restricted_border_name].get(DIR_OPPOSITE[direction], [])
+		for restricted_cell in restricted_cells:
+			if(possible_cells.has(restricted_cell)):
+				possible_cells.erase(restricted_cell)
+	
+	return possible_cells
+
+func set_min_bound(_min : Vector2i):
+	min = _min
+
+func set_max_bound(_max : Vector2i):
+	max = _max
+
+func is_coord_in_bounds(coord : Vector2i) -> bool:
+	return (coord.x >= min.x && coord.x <= max.x && coord.y >= min.y && coord.y <= max.y)
+
+func sorted_insert(array : Array, value : Variant) -> Array:
+	var i := array.bsearch(value)
+	array.insert(i, value)
+	return array
+
+func array_inner_join(array_1 : Array, array_2 : Array):
+	var a : Array
+	var b : Array
+	if(array_1.size() <= array_2.size()):
+		a = array_1
+		b = array_2
 	else:
-		# every possible neighbor cell for every possible local cells
-		var possible_keys : Array = key_sum_to_keys(possible_keys_sum)
-		for key in possible_keys:
-			var neighbors_key_sum : int = cell_defs[key][direction]
-			possible_neighbor_keys_sum |= neighbors_key_sum
-	return possible_neighbor_keys_sum
+		a = array_2
+		b = array_1
+	
+	var joined : Array = []
+	for v in a:
+		if(b.has(v)):
+			joined.append(v)
+	return joined
 
-# breakes up key sum (integer) into an array of individual keys (square integer components)
-func key_sum_to_keys(key_sum : int) -> Array:
-	var new_key_sum = key_sum
-	var keys := []
-	var key : int = 1
-	while new_key_sum > 0:
-		if(key > new_key_sum):
-			print_debug("error decomposing key sum " + str(key_sum))
-			return []
-		if(new_key_sum & key != 0):
-			keys.append(key)
-			new_key_sum -= key
-		key *= 2
-	return keys
-
+# print cell defs in human-readable form, for testing/debug
 func print_pretty_cell_defs():
-	var pretty_cell_defs := {}
-	for key in cell_defs.keys():
-		var name : String = key_to_name[key]
-		print(str(name) + " :")
-		for dir in cell_defs[key]:
-			var possible_keys_sum : int = cell_defs[key][dir]
-			var possible_keys : Array = key_sum_to_keys(possible_keys_sum)
-			var possible_names := []
-			for p_key in possible_keys:
-				var p_name : String = key_to_name[p_key]
-				possible_names.append(p_name)
-			print(str(dir) + " : " + str(possible_names))
+	for name in cell_defs.keys():
+		print("CELL:" + str(name) + " :")
+		for dir in cell_defs[name]:
+			var border : String = cell_defs[name][dir]
+			print("\t" + str(dir) + " : " + str(border))
+
+# print border defs in human-readable form, for testing/debug
+func print_pretty_border_defs():
+	for name in border_defs.keys():
+		print("BORDER:" + str(name) + " :")
+		for dir in DIRECTIONS.keys():
+			var cells : Array = border_defs[name].get(dir, [])
+			print("\t" + str(dir) + " : " + str(cells))

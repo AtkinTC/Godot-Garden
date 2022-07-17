@@ -1,221 +1,554 @@
 class_name TileDefinitions
 
-const neighbors_road_n := ["road_NS", "road_SE", "road_SW", "road_SEW", "road_NSE", "road_NSW", "river_bridge_EW", "road_NSEW"]
-const neighbors_road_s := ["road_NS", "road_NE", "road_NW", "road_NEW", "road_NSE", "road_NSW", "river_bridge_EW", "road_NSEW"]
-const neighbors_road_e := ["road_EW", "road_SW", "road_NW", "road_NEW", "road_SEW", "road_NSW", "river_bridge_NS", "road_NSEW"]
-const neighbors_road_w := ["road_EW", "road_NE", "road_SE", "road_NEW", "road_SEW", "road_NSE", "river_bridge_NS", "road_NSEW"]
-const neighbors_river_n := ["river_S", "river_NS", "river_SE", "river_SW", "river_SEW", "river_NSE", "river_NSW", "river_bridge_NS", "river_NSEW"]
-const neighbors_river_s := ["river_N", "river_NS", "river_NE", "river_NW", "river_NEW", "river_NSE", "river_NSW", "river_bridge_NS", "river_NSEW"]
-const neighbors_river_e := ["river_W", "river_EW", "river_NW", "river_SW", "river_NEW", "river_SEW", "river_NSW", "river_bridge_EW", "river_NSEW"]
-const neighbors_river_w := ["river_E", "river_EW", "river_NE", "river_SE", "river_NEW", "river_SEW", "river_NSE", "river_bridge_EW", "river_NSEW"]
+const CELL := "cell"
+const BORDER := "border"
+const RESTRICTED := "restricted"
+
+const border_open := "b_open"
+const border_road := "b_road"
+const border_river := "b_river"
+const border_lake := "b_lake"
+const border_coast_1 := "b_coast_1" # N->S E->W
+const border_coast_2 := "b_coast_2" # S->N W->E
+
+const restricted_road_end := "r_road_end"
+const restricted_road_bend := "r_road_bend"
+const restricted_road_parallel := "r_road_parallel"
+
+const restricted_river_end := "r_river_end"
+const restricted_river_bend := "r_river_bend"
+const restricted_river_parallel := "r_river_parallel"
+
+const restricted_lake_parallel := "r_lake_parallel"
 
 const cell_defs := {
-	"empty" : {},
+	"empty" : {
+		RESTRICTED : {
+			"N" : [restricted_river_parallel, restricted_lake_parallel],
+			"S" : [restricted_river_parallel, restricted_lake_parallel],
+			"E" : [restricted_river_parallel, restricted_lake_parallel],
+			"W" : [restricted_river_parallel, restricted_lake_parallel],
+		}
+	},
 	"field" : {},
 	"forest" : {},
 	"swamp" : {},
 	"cave" : {},
-	"road_N" : {
-		"N" : neighbors_road_n
-	},
-	"road_S" : {
-		"S" : neighbors_road_s
-	},
-	"road_E" : {
-		"E" : neighbors_road_e
-	},
-	"road_W" : {
-		"W" : neighbors_road_w
-	},
+#	"road_N" : {
+#		"N" : border_road,
+#		RESTRICTED : {
+#			"N" : [restricted_road_end],
+#			"S" : [restricted_road_parallel],
+#			"E" : [restricted_road_parallel],
+#			"W" : [restricted_road_parallel],
+#		}
+#	},
+#	"road_S" : {
+#		"S" : border_road,
+#		RESTRICTED : {
+#			"N" : [restricted_road_parallel],
+#			"S" : [restricted_road_end],
+#			"E" : [restricted_road_parallel],
+#			"W" : [restricted_road_parallel],
+#		}
+#	},
+#	"road_E" : {
+#		"E" : border_road,
+#		RESTRICTED : {
+#			"N" : [restricted_road_parallel],
+#			"S" : [restricted_road_parallel],
+#			"E" : [restricted_road_end],
+#			"W" : [restricted_road_parallel],
+#		}
+#	},
+#	"road_W" : {
+#		"W" : border_road,
+#		RESTRICTED : {
+#			"N" : [restricted_road_parallel],
+#			"S" : [restricted_road_parallel],
+#			"E" : [restricted_road_parallel],
+#			"W" : [restricted_road_end],
+#		}
+#	},
 	"road_NS" : {
-		"N" : neighbors_road_n,
-		"S" : neighbors_road_s
+		"N" : border_road,
+		"S" : border_road,
+		RESTRICTED : {
+			"E" : [restricted_road_parallel],
+			"W" : [restricted_road_parallel],
+		}
 	},
 	"road_EW" : {
-		"E" : neighbors_road_e,
-		"W" : neighbors_road_w
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_parallel],
+			"S" : [restricted_road_parallel],
+		}
 	},
 	"road_NE" : {
-		"N" : neighbors_road_n,
-		"E" : neighbors_road_e
+		"N" : border_road,
+		"E" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_parallel],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_parallel],
+		}
 	},
 	"road_SE" : {
-		"S" : neighbors_road_s,
-		"E" : neighbors_road_e
+		"S" : border_road,
+		"E" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_parallel],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_parallel],
+		}
 	},
 	"road_SW" : {
-		"S" : neighbors_road_s,
-		"W" : neighbors_road_w
+		"S" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_parallel],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_parallel],
+			"W" : [restricted_road_bend],
+		}
 	},
 	"road_NW" : {
-		"N" : neighbors_road_n,
-		"W" : neighbors_road_w
+		"N" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_parallel],
+			"E" : [restricted_road_parallel],
+			"W" : [restricted_road_bend],
+		}
 	},
 	"road_NEW" : {
-		"N" : neighbors_road_n,
-		"E" : neighbors_road_e,
-		"W" : neighbors_road_w
+		"N" : border_road,
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_parallel],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_bend],
+		}
 	},
 	"road_NSE" : {
-		"N" : neighbors_road_n,
-		"S" : neighbors_road_s,
-		"E" : neighbors_road_e
+		"N" : border_road,
+		"S" : border_road,
+		"E" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_parallel],
+		}
 	},
 	"road_SEW" : {
-		"S" : neighbors_road_s,
-		"E" : neighbors_road_e,
-		"W" : neighbors_road_w
+		"S" : border_road,
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_parallel],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_bend],
+		}
 	},
 	"road_NSW" : {
-		"N" : neighbors_road_n,
-		"S" : neighbors_road_s,
-		"W" : neighbors_road_w
+		"N" : border_road,
+		"S" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_parallel],
+			"W" : [restricted_road_bend],
+		}
 	},
 	"road_NSEW" : {
-		"N" : neighbors_road_n,
-		"S" : neighbors_road_s,
-		"E" : neighbors_road_e,
-		"W" : neighbors_road_w
+		"N" : border_road,
+		"S" : border_road,
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED : {
+			"N" : [restricted_road_bend],
+			"S" : [restricted_road_bend],
+			"E" : [restricted_road_bend],
+			"W" : [restricted_road_bend],
+		}
 	},
-	"river" : {},
-	"river_N" : {
-		"N" : neighbors_river_n
-	},
-	"river_S" : {
-		"S" : neighbors_river_s
-	},
-	"river_E" : {
-		"E" : neighbors_river_e
-	},
-	"river_W" : {
-		"W" : neighbors_river_w
-	},
+#	"river" : {},
+#	"river_N" : {
+#		"N" : border_river,
+#		RESTRICTED :{
+#			"N" : [restricted_river_end],
+#			"S" : [restricted_river_parallel],
+#			"E" : [restricted_river_parallel],
+#			"W" : [restricted_river_parallel],
+#		}
+#	},
+#	"river_S" : {
+#		"S" : border_river,
+#		RESTRICTED :{
+#			"N" : [restricted_river_parallel],
+#			"S" : [restricted_river_end],
+#			"E" : [restricted_river_parallel],
+#			"W" : [restricted_river_parallel],
+#		}
+#	},
+#	"river_E" : {
+#		"E" : border_river,
+#		RESTRICTED :{
+#			"N" : [restricted_river_parallel],
+#			"S" : [restricted_river_parallel],
+#			"E" : [restricted_river_end],
+#			"W" : [restricted_river_parallel],
+#		}
+#	},
+#	"river_W" : {
+#		"W" : border_river,
+#		RESTRICTED :{
+#			"N" : [restricted_river_parallel],
+#			"S" : [restricted_river_parallel],
+#			"E" : [restricted_river_parallel],
+#			"W" : [restricted_river_end],
+#		}
+#	},
 	"river_NS" : {
-		"N" : neighbors_river_n,
-		"S" : neighbors_river_s
+		"N" : border_river,
+		"S" : border_river,
+		RESTRICTED :{
+			"N" : [],
+			"S" : [],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"river_EW" : {
-		"E" : neighbors_river_e,
-		"W" : neighbors_river_w
+		"E" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_parallel],
+			"E" : [],
+			"W" : [],
+		}
 	},
 	"river_NE" : {
-		"N" : neighbors_river_n,
-		"E" : neighbors_river_e
+		"N" : border_river,
+		"E" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_end, restricted_river_bend],
+			"S" : [restricted_river_parallel],
+			"E" : [restricted_river_end, restricted_river_bend],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"river_SE" : {
-		"S" : neighbors_river_s,
-		"E" : neighbors_river_e
+		"S" : border_river,
+		"E" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_end, restricted_river_bend],
+			"E" : [restricted_river_end, restricted_river_bend],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"river_SW" : {
-		"S" : neighbors_river_s,
-		"W" : neighbors_river_w
+		"S" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_end, restricted_river_bend],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_end, restricted_river_bend],
+		}
 	},
 	"river_NW" : {
-		"N" : neighbors_river_n,
-		"W" : neighbors_river_w
+		"N" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_end, restricted_river_bend],
+			"S" : [restricted_river_parallel],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_end, restricted_river_bend],
+		}
 	},
 	"river_NEW" : {
-		"N" : neighbors_river_n,
-		"E" : neighbors_river_e,
-		"W" : neighbors_river_w
+		"N" : border_river,
+		"E" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_bend],
+			"S" : [restricted_river_parallel],
+			"E" : [restricted_river_bend],
+			"W" : [restricted_river_bend],
+		}
 	},
 	"river_NSE" : {
-		"N" : neighbors_river_n,
-		"S" : neighbors_river_s,
-		"E" : neighbors_river_e
+		"N" : border_river,
+		"S" : border_river,
+		"E" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_bend],
+			"S" : [restricted_river_bend],
+			"E" : [restricted_river_bend],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"river_SEW" : {
-		"S" : neighbors_river_s,
-		"E" : neighbors_river_e,
-		"W" : neighbors_river_w
+		"S" : border_river,
+		"E" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_bend],
+			"E" : [restricted_river_bend],
+			"W" : [restricted_river_bend],
+		}
 	},
 	"river_NSW" : {
-		"N" : neighbors_river_n,
-		"S" : neighbors_river_s,
-		"W" : neighbors_river_w
+		"N" : border_river,
+		"S" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_bend],
+			"S" : [restricted_river_bend],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_bend],
+		}
 	},
 	"river_bridge_NS" : {
-		"N" : neighbors_river_n,
-		"S" : neighbors_river_s,
-		"E" : neighbors_road_e,
-		"W" : neighbors_road_w
+		"N" : border_river,
+		"S" : border_river,
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED :{
+			"N" : [restricted_river_end, restricted_river_bend],
+			"S" : [restricted_river_end, restricted_river_bend],
+			"E" : [restricted_road_end, restricted_river_parallel],
+			"W" : [restricted_road_end, restricted_river_parallel],
+		}
 	},
 	"river_bridge_EW" : {
-		"N" : neighbors_road_n,
-		"S" : neighbors_road_s,
-		"E" : neighbors_river_e,
-		"W" : neighbors_river_w
+		"N" : border_road,
+		"S" : border_road,
+		"E" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_road_end, restricted_river_parallel],
+			"S" : [restricted_road_end, restricted_river_parallel],
+			"E" : [restricted_river_end, restricted_river_bend],
+			"W" : [restricted_river_end, restricted_river_bend],
+		}
 	},
 	"river_NSEW" : {
-		"N" : neighbors_river_n,
-		"S" : neighbors_river_s,
-		"E" : neighbors_river_e,
-		"W" : neighbors_river_w
+		"N" : border_river,
+		"S" : border_river,
+		"E" : border_river,
+		"W" : border_river,
+		RESTRICTED :{
+			"N" : [restricted_river_bend],
+			"S" : [restricted_river_bend],
+			"E" : [restricted_river_bend],
+			"W" : [restricted_river_bend],
+		}
 	},
 	"lake_inner" : {
-		"N" : ["lake_N", "lake_river_N", "lake_inner"],
-		"S" : ["lake_S", "lake_river_S", "lake_inner"],
-		"E" : ["lake_E", "lake_river_E", "lake_inner"],
-		"W" : ["lake_W", "lake_river_W", "lake_inner"]
+		"N" : border_lake,
+		"S" : border_lake,
+		"E" : border_lake,
+		"W" : border_lake,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
 	},
-	"lake_N" : {
-		"S" : ["lake_S", "lake_river_S", "lake_inner"],
-		"E" : ["lake_N", "lake_river_N", "lake_NE"],
-		"W" : ["lake_N", "lake_river_N", "lake_NW"],
+	"lake_coast_N" : {
+		"S" : border_lake,
+		"E" : border_coast_1,
+		"W" : border_coast_1,
+		RESTRICTED : {
+			"N" : [restricted_lake_parallel, restricted_river_parallel],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
 	},
-	"lake_S" : {
-		"N" : ["lake_N", "lake_river_N", "lake_inner"],
-		"E" : ["lake_S", "lake_river_S", "lake_SE"],
-		"W" : ["lake_S", "lake_river_S", "lake_SW"]
+	"lake_coast_S" : {
+		"N" : border_lake,
+		"E" : border_coast_2,
+		"W" : border_coast_2,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_lake_parallel, restricted_river_parallel],
+			"E" : [],
+			"W" : [],
+		}
 	},
-	"lake_E" : {
-		"N" : ["lake_E", "lake_river_E", "lake_NE"],
-		"S" : ["lake_E", "lake_river_E", "lake_SE"],
-		"W" : ["lake_W", "lake_river_W", "lake_inner"]
+	"lake_coast_E" : {
+		"N" : border_coast_1,
+		"S" : border_coast_1,
+		"W" : border_lake,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [restricted_lake_parallel, restricted_river_parallel],
+			"W" : [],
+		}
 	},
-	"lake_W" : {
-		"N" : ["lake_W", "lake_river_W", "lake_NW"],
-		"S" : ["lake_W", "lake_river_W", "lake_SW"],
-		"E" : ["lake_E", "lake_river_E", "lake_inner"]
+	"lake_coast_W" : {
+		"N" : border_coast_2,
+		"S" : border_coast_2,
+		"E" : border_lake,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [restricted_lake_parallel, restricted_river_parallel],
+		}
 	},
-	"lake_NE" : {
-		"S" : ["lake_E", "lake_river_E", "lake_SE"],
-		"W" : ["lake_N", "lake_river_N", "lake_NW"]
+	"lake_coast_outer_NE" : {
+		"S" : border_coast_1,
+		"W" : border_coast_1,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel],
+			"S" : [],
+			"E" : [restricted_river_parallel],
+			"W" : [],
+		}
 	},
-	"lake_SE" : {
-		"N" : ["lake_E", "lake_river_E", "lake_NE"],
-		"W" : ["lake_S", "lake_river_S", "lake_SW"]
+	"lake_coast_outer_SE" : {
+		"N" : border_coast_1,
+		"W" : border_coast_2,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_river_parallel],
+			"E" : [restricted_river_parallel],
+			"W" : [],
+		}
 	},
-	"lake_SW" : {
-		"N" : ["lake_W", "lake_river_W", "lake_NW"],
-		"E" : ["lake_S", "lake_river_S", "lake_SE"]
+	"lake_coast_outer_SW" : {
+		"N" : border_coast_2,
+		"E" : border_coast_2,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_river_parallel],
+			"E" : [],
+			"W" : [restricted_river_parallel],
+		}
 	},
-	"lake_NW" : {
-		"S" : ["lake_W", "lake_river_W", "lake_SW"],
-		"E" : ["lake_N", "lake_river_N", "lake_NE"]
+	"lake_coast_outer_NW" : {
+		"S" : border_coast_2,
+		"E" : border_coast_1,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel],
+			"S" : [],
+			"E" : [],
+			"W" : [restricted_river_parallel],
+		}
+	},
+	"lake_coast_inner_NE" : {
+		"N" : border_coast_1,
+		"S" : border_lake,
+		"E" : border_coast_1,
+		"W" : border_lake,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel, restricted_lake_parallel],
+			"S" : [],
+			"E" : [restricted_river_parallel, restricted_lake_parallel],
+			"W" : [],
+		}
+	},
+	"lake_coast_inner_SE" : {
+		"N" : border_lake,
+		"S" : border_coast_1,
+		"E" : border_coast_2,
+		"W" : border_lake,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_river_parallel, restricted_lake_parallel],
+			"E" : [restricted_river_parallel, restricted_lake_parallel],
+			"W" : [],
+		}
+	},
+	"lake_coast_inner_SW" : {
+		"N" : border_lake,
+		"S" : border_coast_2,
+		"E" : border_lake,
+		"W" : border_coast_2,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_river_parallel, restricted_lake_parallel],
+			"E" : [],
+			"W" : [restricted_river_parallel, restricted_lake_parallel],
+		}
+	},
+	"lake_coast_inner_NW" : {
+		"N" : border_coast_2,
+		"S" : border_lake,
+		"E" : border_lake,
+		"W" : border_coast_1,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel, restricted_lake_parallel],
+			"S" : [],
+			"E" : [],
+			"W" : [restricted_river_parallel, restricted_lake_parallel],
+		}
 	},
 	"lake_river_N" : {
-		"N" : neighbors_river_n,
-		"S" : ["lake_S", "lake_inner"],
-		"E" : ["lake_N", "lake_NE"],
-		"W" : ["lake_N", "lake_NW"],
+		"N" : border_river,
+		"S" : border_lake,
+		"E" : border_coast_1,
+		"W" : border_coast_1,
+		RESTRICTED : {
+			"N" : [restricted_river_end, restricted_river_bend],
+			"S" : [],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"lake_river_S" : {
-		"S" : neighbors_river_s,
-		"N" : ["lake_N", "lake_inner"],
-		"E" : ["lake_S", "lake_SE"],
-		"W" : ["lake_S", "lake_SW"]
+		"N" : border_lake,
+		"S" : border_river,
+		"E" : border_coast_2,
+		"W" : border_coast_2,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_river_end, restricted_river_bend],
+			"E" : [restricted_river_parallel],
+			"W" : [restricted_river_parallel],
+		}
 	},
 	"lake_river_E" : {
-		"E" : neighbors_river_e,
-		"N" : ["lake_E", "lake_NE"],
-		"S" : ["lake_E", "lake_SE"],
-		"W" : ["lake_W", "lake_inner"]
+		"N" : border_coast_1,
+		"S" : border_coast_1,
+		"E" : border_river,
+		"W" : border_lake,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_parallel],
+			"E" : [restricted_river_end, restricted_river_bend],
+			"W" : [],
+		}
 	},
 	"lake_river_W" : {
-		"W" : neighbors_river_w,
-		"N" : ["lake_W", "lake_NW"],
-		"S" : ["lake_W", "lake_SW"],
-		"E" : ["lake_E", "lake_inner"]
+		"N" : border_coast_2,
+		"S" : border_coast_2,
+		"E" : border_lake,
+		"W" : border_river,
+		RESTRICTED : {
+			"N" : [restricted_river_parallel],
+			"S" : [restricted_river_parallel],
+			"E" : [],
+			"W" : [restricted_river_end, restricted_river_bend],
+		}
 	},
 }

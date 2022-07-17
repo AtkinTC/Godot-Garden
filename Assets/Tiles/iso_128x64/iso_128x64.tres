@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=18 format=3 uid="uid://cyg463145nr86"]
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://cyg463145nr86"]
 
 [ext_resource type="Texture2D" uid="uid://iuumu83xtpkl" path="res://Assets/Tiles/iso_128x64/terrain_feature_lakes.png" id="1_m5vdh"]
 [ext_resource type="Texture2D" uid="uid://x8w120be5wrl" path="res://Assets/Tiles/iso_128x64/unknown.png" id="2_jomm1"]
@@ -8,12 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://ov76te2i70fh" path="res://Assets/Tiles/iso_128x64/question_icon.png" id="6_4e8ul"]
 [ext_resource type="Texture2D" uid="uid://mhcxmnk20agp" path="res://Assets/Tiles/iso_128x64/border.png" id="7_0vj1q"]
 [ext_resource type="Texture2D" uid="uid://ds73ancvar7rs" path="res://Assets/Tiles/iso_128x64/terrain_base.png" id="8_8byh2"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cnh66"]
-texture = ExtResource("1_m5vdh")
-texture_region_size = Vector2i(128, 64)
-0:0/0 = 0
-0:0/0/custom_data_1 = "lake_feature"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c202p"]
 resource_name = "unknown"
@@ -153,35 +147,35 @@ texture_region_size = Vector2i(128, 144)
 texture = ExtResource("1_m5vdh")
 texture_region_size = Vector2i(128, 64)
 0:0/0 = 0
-0:0/0/custom_data_1 = "lake_N_feature"
+0:0/0/custom_data_1 = "lake_coast_N_feature"
 1:0/0 = 0
-1:0/0/custom_data_1 = "lake_NE_feature"
+1:0/0/custom_data_1 = "lake_coast_outer_NE_feature"
 2:0/0 = 0
-2:0/0/custom_data_1 = "lake_inner_NE_feature"
+2:0/0/custom_data_1 = "lake_coast_inner_NE_feature"
 3:0/0 = 0
 3:0/0/custom_data_1 = "lake_river_N_feature"
 0:1/0 = 0
-0:1/0/custom_data_1 = "lake_S_feature"
+0:1/0/custom_data_1 = "lake_coast_S_feature"
 1:1/0 = 0
-1:1/0/custom_data_1 = "lake_SW_feature"
+1:1/0/custom_data_1 = "lake_coast_outer_SW_feature"
 2:1/0 = 0
-2:1/0/custom_data_1 = "lake_inner_SW_feature"
+2:1/0/custom_data_1 = "lake_coast_inner_SW_feature"
 3:1/0 = 0
 3:1/0/custom_data_1 = "lake_river_S_feature"
 0:2/0 = 0
-0:2/0/custom_data_1 = "lake_E_feature"
+0:2/0/custom_data_1 = "lake_coast_E_feature"
 1:2/0 = 0
-1:2/0/custom_data_1 = "lake_NW_feature"
+1:2/0/custom_data_1 = "lake_coast_outer_NW_feature"
 2:2/0 = 0
-2:2/0/custom_data_1 = "lake_inner_NW_feature"
+2:2/0/custom_data_1 = "lake_coast_inner_NW_feature"
 3:2/0 = 0
 3:2/0/custom_data_1 = "lake_river_E_feature"
 0:3/0 = 0
-0:3/0/custom_data_1 = "lake_W_feature"
+0:3/0/custom_data_1 = "lake_coast_W_feature"
 1:3/0 = 0
-1:3/0/custom_data_1 = "lake_SE_feature"
+1:3/0/custom_data_1 = "lake_coast_outer_SE_feature"
 2:3/0 = 0
-2:3/0/custom_data_1 = "lake_inner_SE_feature"
+2:3/0/custom_data_1 = "lake_coast_inner_SE_feature"
 3:3/0 = 0
 3:3/0/custom_data_1 = "lake_river_W_feature"
 4:3/0 = 0
@@ -210,7 +204,6 @@ sources/4 = SubResource("TileSetAtlasSource_c6wtk")
 sources/5 = SubResource("TileSetAtlasSource_bnd6n")
 sources/6 = SubResource("TileSetAtlasSource_kdbve")
 sources/8 = SubResource("TileSetAtlasSource_x303i")
-sources/0 = SubResource("TileSetAtlasSource_cnh66")
 sources/3 = SubResource("TileSetAtlasSource_fqbjy")
 sources/2 = SubResource("TileSetAtlasSource_0534u")
 sources/7 = SubResource("TileSetAtlasSource_jxycb")

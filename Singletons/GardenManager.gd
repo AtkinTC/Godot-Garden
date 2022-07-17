@@ -67,13 +67,12 @@ func step_plots(step_time : float):
 
 # create and insert a plot with an automatically selected plot type
 func create_plot_auto(coord : Vector2, base_type : String) -> PlotVO:
-	var plot_type_key = wave_collapse.collapse_cell(coord)
-	var plot_type_name = wave_collapse.get_cell_name_from_key(plot_type_key)
+	var plot_type : String = wave_collapse.collapse_cell(coord)
 	
 	var plot : PlotVO = PlotVO.new()
 	plot.set_coord(coord)
-	plot.set_display_name(plot_type_name)
-	plot.set_plot_type(plot_type_name)
+	plot.set_display_name(plot_type)
+	plot.set_plot_type(plot_type)
 	plot.set_base_type(base_type)
 	
 	insert_plot(plot)
@@ -86,7 +85,7 @@ func create_plot(coord : Vector2, plot_type : String, base_type : String) -> Plo
 	plot.set_display_name(plot_type)
 	plot.set_plot_type(plot_type)
 	plot.set_base_type(base_type)
-	wave_collapse.collapse_cell_forced(coord, wave_collapse.get_cell_key_from_name(plot_type))
+	wave_collapse.collapse_cell_forced(coord, plot_type)
 	insert_plot(plot)
 	return plot
 
@@ -148,26 +147,6 @@ func get_empty_neighbors(coord : Vector2) -> Array:
 # returns the dictionary of potential neighbor types for this plot type
 func get_plot_type_neighbors(plot_type : String) -> Dictionary:
 	return plot_type_neighbors.get(plot_type, {})
-
-# randomly selects one of the potential neighbor types based on the defined chances
-func select_plot_type_neighbor(plot_type : String) -> String:
-	var neighbors = get_plot_type_neighbors(plot_type)
-	var total : float = 0
-	for key in neighbors.keys():
-		total += neighbors[key]
-	var select = randf_range(0, total)
-	var selected_key = ""
-	for key in neighbors.keys():
-		selected_key = key
-		select -= neighbors[key]
-		if(select <= 0):
-			break
-	return selected_key
-
-func select_plot_type(coord : Vector2i) -> String:
-	var possible_types = wave_collapse.get_possible_cell_names(coord)
-	var i : int = randi_range(0, possible_types.size()-1)
-	return possible_types[i]
 
 # Begin the exploration process
 # A character assigned to the plot advances the exploration progress
