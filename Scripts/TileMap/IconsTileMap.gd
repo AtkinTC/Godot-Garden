@@ -2,13 +2,14 @@ class_name IconsTileMap
 extends TileMapCust
 
 const UNEXPLORED_ICON_NAME := "question"
+const UNEXPLORED_ICON_KEY = ICON_KEY + "_" + UNEXPLORED_ICON_NAME
 
 func _ready():
 	initialize()
 
 func initialize():
 	super.initialize()
-	assert(tiles_by_tile_name.has(UNEXPLORED_ICON_NAME))
+	assert(tiles_by_full_key.has(UNEXPLORED_ICON_KEY))
 
 func _process(_delta):
 	var unused_cells = get_used_cells(0)
@@ -19,7 +20,7 @@ func _process(_delta):
 		
 		# show unexplored plot icons
 		if(!plot.is_explored()):
-			var tiles_array = tiles_by_tile_name.get(UNEXPLORED_ICON_NAME, null)
+			var tiles_array = tiles_by_full_key.get(UNEXPLORED_ICON_KEY, null)
 			set_cell_from_tile_identifier(coord_i, tiles_array[0])
 		else:
 			erase_cell(0, coord_i)
