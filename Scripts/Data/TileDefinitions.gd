@@ -12,6 +12,10 @@ const border_lake := "b_lake"
 const border_coast_1 := "b_coast_1" # N->S E->W
 const border_coast_2 := "b_coast_2" # S->N W->E
 
+const border_forest := "b_forest"
+const border_forest_edge_1 := "b_forest_1" # N->S E->W
+const border_forest_edge_2 := "b_forest_2" # S->N W->E
+
 const restricted_road_end := "r_road_end"
 const restricted_road_bend := "r_road_bend"
 const restricted_road_parallel := "r_road_parallel"
@@ -22,21 +26,12 @@ const restricted_river_parallel := "r_river_parallel"
 
 const restricted_lake_parallel := "r_lake_parallel"
 
+const restricted_forest_edge_1 := "r_forest_edge_1"
+const restricted_forest_edge_2 := "r_forest_edge_2"
+
 const cell_defs := {
 	"empty" : {},
-	"base" : {
-		"N" : border_road,
-		"S" : border_road,
-		RESTRICTED : {
-			"N" : [restricted_river_parallel, restricted_lake_parallel],
-			"S" : [restricted_river_parallel, restricted_lake_parallel],
-			"E" : [restricted_river_parallel, restricted_lake_parallel],
-			"W" : [restricted_river_parallel, restricted_lake_parallel],
-		},
-		MANUAL : true
-	},
 	"field" : {},
-	"forest" : {},
 	"swamp" : {},
 	"cave" : {},
 #	"road_N" : {
@@ -554,6 +549,127 @@ const cell_defs := {
 			"S" : [restricted_river_parallel],
 			"E" : [],
 			"W" : [restricted_river_end, restricted_river_bend],
+		}
+	},
+	"forest" : {},
+	"forest_inner" : {
+		"N" : border_forest,
+		"S" : border_forest,
+		"E" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"forest_N" : {
+		"S" : border_forest,
+		"E" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [restricted_forest_edge_1],
+			"W" : [restricted_forest_edge_2],
+		}
+	},
+	"forest_S" : {
+		"N" : border_forest,
+		"E" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [],
+			"E" : [restricted_forest_edge_2],
+			"W" : [restricted_forest_edge_1],
+		}
+	},
+	"forest_E" : {
+		"N" : border_forest,
+		"S" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [restricted_forest_edge_1],
+			"S" : [restricted_forest_edge_2],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"forest_W" : {
+		"N" : border_forest,
+		"S" : border_forest,
+		"E" : border_forest,
+		RESTRICTED : {
+			"N" : [restricted_forest_edge_2],
+			"S" : [restricted_forest_edge_1],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"forest_NE" : {
+		"S" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_forest_edge_1],
+			"E" : [],
+			"W" : [restricted_forest_edge_2],
+		}
+	},
+	"forest_SE" : {
+		"N" : border_forest,
+		"W" : border_forest,
+		RESTRICTED : {
+			"N" : [restricted_forest_edge_2],
+			"S" : [],
+			"E" : [],
+			"W" : [restricted_forest_edge_1],
+		}
+	},
+	"forest_SW" : {
+		"N" : border_forest,
+		"E" : border_forest,
+		RESTRICTED : {
+			"N" : [restricted_forest_edge_1],
+			"S" : [],
+			"E" : [restricted_forest_edge_2],
+			"W" : [],
+		}
+	},
+	"forest_NW" : {
+		"S" : border_forest,
+		"E" : border_forest,
+		RESTRICTED : {
+			"N" : [],
+			"S" : [restricted_forest_edge_2],
+			"E" : [restricted_forest_edge_1],
+			"W" : [],
+		}
+	},
+	"forest_road_NS" : {
+		"N" : border_road,
+		"S" : border_road,
+		"E" : border_forest,
+		"W" : border_forest,
+		RESTRICTED :{
+			"N" : [restricted_road_end],
+			"S" : [restricted_road_end],
+			"E" : [restricted_road_parallel],
+			"W" : [restricted_road_parallel],
+		}
+	},
+	"forest_road_EW" : {
+		"N" : border_forest,
+		"S" : border_forest,
+		"E" : border_road,
+		"W" : border_road,
+		RESTRICTED :{
+			"N" : [restricted_road_parallel],
+			"S" : [restricted_road_parallel],
+			"E" : [restricted_road_end],
+			"W" : [restricted_road_end],
 		}
 	},
 }

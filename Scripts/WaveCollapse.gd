@@ -2,7 +2,6 @@ class_name WaveCollapse
 
 const OPEN := "open"
 const RESTRICTED := "restricted"
-const MANUAL := "manual"
 
 const DIRECTIONS := {"N" : Vector2i(-1,0),
 					#"NE" : Vector2i(-1,-1),
@@ -24,7 +23,6 @@ const DIR_OPPOSITE := {"N" : "S",
 					"NW" : "SE"}
 
 var cell_defs: Dictionary = {}
-var auto_cell_keys : Array = []
 var border_defs : Dictionary = {}
 var restricted_border_defs : Dictionary = {}
 
@@ -51,17 +49,14 @@ func set_cell_definitions(_cell_defs : Dictionary):
 func process_cell_definition(cell_name : String, cell_def: Dictionary):
 	cell_defs[cell_name] = cell_def.duplicate(true)
 	
-	# cells marked as MANUAL will not be included as a possible cell
-	if(!cell_def.get(MANUAL, false)):
-		sorted_insert(auto_cell_keys, cell_name)
-		for dir in DIRECTIONS.keys():
-			var border_type : String = cell_def.get(dir, OPEN)
-			var border_def : Dictionary = border_defs.get(border_type, {})
-			var border_direction : Array = border_def.get(dir, [])
-		
-			sorted_insert(border_direction, cell_name)
-			border_def[dir] = border_direction
-			border_defs[border_type] = border_def
+	for dir in DIRECTIONS.keys():
+		var border_type : String = cell_def.get(dir, OPEN)
+		var border_def : Dictionary = border_defs.get(border_type, {})
+		var border_direction : Array = border_def.get(dir, [])
+	
+		sorted_insert(border_direction, cell_name)
+		border_def[dir] = border_direction
+		border_defs[border_type] = border_def
 			
 	var cell_restricted : Dictionary = cell_def.get(RESTRICTED, {})
 	if(cell_restricted.size() > 0):
@@ -84,9 +79,9 @@ func collapse_cell(coord : Vector2i) -> String:
 		print_debug(str(coord) + " has already been collapsed")
 		return ""
 	
-	var possible_cells : Array = possibility_field.get(coord, auto_cell_keys)
+	var possible_cells : Array = possibility_field.get(coord, [])
 	if(possible_cells.size() == 0):
-		possible_cells = auto_cell_keys
+		possible_cells = cell_defs.keys()
 	var chosen_cell : String = possible_cells[randi_range(0, possible_cells.size()-1)]
 	
 	collapse_cell_forced(coord, chosen_cell)
@@ -120,18 +115,18 @@ func refine_possibilities(coord : Vector2i):
 		return
 	
 	var old_possible_cells : Array = possibility_field.get(coord, [])
-	if(old_possible_cells.size() == auto_cell_keys.size()):
+	if(old_possible_cells.size() == cell_defs.size()):
 		old_possible_cells = []
 		
-	var new_possible_cells : Array = auto_cell_keys
+	var new_possible_cells : Array = cell_defs.keys()
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
-		var n_possible_cells = possibility_field.get(n_coord, auto_cell_keys)
+		var n_possible_cells = possibility_field.get(n_coord, [])
 		if(n_possible_cells.size() == 0):
-			n_possible_cells = auto_cell_keys
+			n_possible_cells = cell_defs.keys()
 		var possible_cells := get_possible_neighbors_for_cell_types(n_possible_cells, DIR_OPPOSITE[d])
 		new_possible_cells = array_inner_join(new_possible_cells, possible_cells)
-	if(new_possible_cells.size() == auto_cell_keys.size()):
+	if(new_possible_cells.size() == cell_defs.size()):
 		new_possible_cells = []
 	
 	if(array_compare(old_possible_cells, new_possible_cells)):
