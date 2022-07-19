@@ -29,6 +29,11 @@ const restricted_lake_parallel := "r_lake_parallel"
 const restricted_forest_edge_1 := "r_forest_edge_1"
 const restricted_forest_edge_2 := "r_forest_edge_2"
 
+const N := "N"
+const S := "S"
+const E := "E"
+const W := "W"
+
 const cell_defs := {
 	"empty" : {},
 	"field" : {},
@@ -670,6 +675,175 @@ const cell_defs := {
 			"S" : [restricted_road_parallel],
 			"E" : [restricted_road_end],
 			"W" : [restricted_road_end],
+		}
+	},
+}
+
+const open := "open"
+
+const b_road := "b_road"
+const b_road_par := "b_road_par"
+const b_road_lane_h := "b_road_lane_h"
+const b_road_lane_v := "b_road_lane_v"
+const b_road_center_h := "b_road_center_h"
+const b_road_center_v := "b_road_center_v"
+const b_road_edge_v_e := "b_road_edge_v_e"
+const b_road_edge_v_w := "b_road_edge_v_2"
+const b_road_edge_h_n := "b_road_edge_h_n"
+const b_road_edge_h_s := "b_road_edge_h_s"
+
+const r_road_corner := "r_road_corner"
+
+const cell_defs_road := {
+	"empty" : {},
+	"road" : {
+		N : b_road,
+		S : b_road,
+		E : b_road,
+		W : b_road,
+	},
+	"road_lane_n" : {
+		N : b_road,
+		S : b_road_lane_v,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_lane_s" : {
+		N : b_road_lane_v,
+		S : b_road,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_lane_e" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road,
+		W : b_road_lane_h,
+	},
+	"road_lane_w" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road_lane_h,
+		W : b_road,
+	},
+	"road_lane_h" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road_lane_h,
+		W : b_road_lane_h,
+	},
+	"road_lane_v" : {
+		N : b_road_lane_v,
+		S : b_road_lane_v,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_center_n" : {
+		N : b_road,
+		S : b_road_center_v,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_center_s" : {
+		N : b_road_center_v,
+		S : b_road,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_center_e" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road,
+		W : b_road_center_h,
+	},
+	"road_center_w" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road_center_h,
+		W : b_road,
+	},
+	"road_center_h" : {
+		N : b_road_par,
+		S : b_road_par,
+		E : b_road_center_h,
+		W : b_road_center_h,
+	},
+	"road_center_v" : {
+		N : b_road_center_v,
+		S : b_road_center_v,
+		E : b_road_par,
+		W : b_road_par,
+	},
+	"road_edge_v_e" : {
+		N : b_road_edge_v_e,
+		S : b_road_edge_v_e,
+		E : open,
+		W : b_road_par,
+	},
+	"road_edge_v_w" : {
+		N : b_road_edge_v_w,
+		S : b_road_edge_v_w,
+		E : b_road_par,
+		W : open,
+	},
+	"road_edge_h_n" : {
+		N : open,
+		S : b_road_par,
+		E : b_road_edge_h_n,
+		W : b_road_edge_h_n,
+	},
+	"road_edge_h_s" : {
+		N : b_road_par,
+		S : open,
+		E : b_road_edge_h_n,
+		W : b_road_edge_h_n,
+	},
+	"road_edge_ne" : {
+		N : b_road_edge_v_e,
+		S : b_road_par,
+		E : b_road_edge_h_n,
+		W : b_road_par,
+		RESTRICTED :{
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"road_edge_nw" : {
+		N : b_road_edge_v_w,
+		S : b_road_par,
+		E : b_road_par,
+		W : b_road_edge_h_n,
+		RESTRICTED :{
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"road_edge_se" : {
+		N : b_road_par,
+		S : b_road_edge_v_e,
+		E : b_road_edge_h_s,
+		W : b_road_par,
+		RESTRICTED :{
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
+		}
+	},
+	"road_edge_sw" : {
+		N : b_road_par,
+		S : b_road_edge_v_w,
+		E : b_road_par,
+		W : b_road_edge_h_s,
+		RESTRICTED :{
+			"N" : [],
+			"S" : [],
+			"E" : [],
+			"W" : [],
 		}
 	},
 }

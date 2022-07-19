@@ -48,7 +48,7 @@ var wave_collapse : WaveCollapse
 
 # setup initial state of the garden
 func initialize():
-	wave_collapse = WaveCollapse.new(TileDefinitions.cell_defs, Vector2i(-20,-20), Vector2i(20,20))
+	wave_collapse = WaveCollapse.new(TileDefinitions.cell_defs_road, Vector2i(-20,-20), Vector2i(20,20))
 
 func setup_from_plots_array(plots : Array):
 	plots_dict = {}

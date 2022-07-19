@@ -3,15 +3,22 @@ class_name WaveCollapse
 const OPEN := "open"
 const RESTRICTED := "restricted"
 
-const DIRECTIONS := {"N" : Vector2i(-1,0),
-					#"NE" : Vector2i(-1,-1),
-					"E" : Vector2i(0,-1),
-					#"SE" : Vector2i(1,-1),
-					"S" : Vector2i(1,0),
-					#"SW" : Vector2i(1,1),
-					"W" : Vector2i(0,1),
-					#"NW" : Vector2i(-1,1)
-					}
+#const DIRECTIONS_ISO := {"N" : Vector2i(-1,0),
+#					#"NE" : Vector2i(-1,-1),
+#					"E" : Vector2i(0,-1),
+#					#"SE" : Vector2i(1,-1),
+#					"S" : Vector2i(1,0),
+#					#"SW" : Vector2i(1,1),
+#					"W" : Vector2i(0,1),
+#					#"NW" : Vector2i(-1,1)
+#					}
+
+const DIRECTIONS := {
+		"N" : Vector2i(0,-1),
+		"E" : Vector2i(1,0),
+		"S" : Vector2i(0,1),
+		"W" : Vector2i(-1,0),
+	}
 
 const DIR_OPPOSITE := {"N" : "S",
 					"NE" : "SW",

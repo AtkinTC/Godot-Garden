@@ -31,8 +31,6 @@ func _ready():
 	initialize()
 
 func initialize():
-	clear()
-	
 	# build reference dictionary of layers for quick reference
 	for i in get_layers_count():
 		var layer_name = get_layer_name(i)
@@ -72,3 +70,15 @@ func initialize():
 
 func set_cell_from_tile_identifier(coords: Vector2i, tile_identifier : TileIdentifier, layer : int = 0):
 	set_cell(layer, coords, tile_identifier.source_id, tile_identifier.tile_id, tile_identifier.alt_id)
+
+func get_tile_key_for_cell(coord: Vector2i, layer_name : String = "") -> String:
+	var layer_id : int = layers_by_name[layer_name]
+	var source_id : int = get_cell_source_id(layer_id, coord, false)
+	var tile_id: Vector2i = get_cell_atlas_coords(layer_id, coord, false)
+	var alt_id : int = get_cell_alternative_tile(layer_id, coord, false)
+	for tile_key in tiles_by_full_key.keys():
+		var tiles : Array = tiles_by_full_key[tile_key]
+		for tile in tiles:
+			if(tile.source_id == source_id && tile.tile_id == tile_id && tile.alt_id == alt_id):
+				return tile_key
+	return ""
