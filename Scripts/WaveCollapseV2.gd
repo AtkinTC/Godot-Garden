@@ -1,4 +1,4 @@
-class_name WaveCollapse
+class_name WaveCollapseV2
 
 const OPEN := "open"
 const RESTRICTED := "restricted"
@@ -8,8 +8,6 @@ const DIRECTIONS := Constants.DIRECTIONS
 const DIR_OPPOSITE := Constants.DIR_OPPOSITE
 
 var cell_defs: Dictionary = {}
-var border_defs : Dictionary = {}
-var restricted_border_defs : Dictionary = {}
 
 # Dictionary(Vector2i, Array) of all the possible cell types at each coordinate
 # treat Unset, [] as an unrestricted list of all cell types
@@ -17,52 +15,35 @@ var possibility_field: Dictionary = {}
 
 var collapsed: Array = []
 
-var min : Vector2i = Vector2i(0,0)
-var max : Vector2i = Vector2i(10, 10)
+var min_bounds : Vector2i = Vector2i(0,0)
+var max_bounds : Vector2i = Vector2i(10, 10)
 
-func _init(_cell_defs : Dictionary, min_bound : Vector2i = min, max_bound : Vector2i = max):
-	set_bounds(min_bound, max_bound)
+var total_refinements : int = 0
+var deepest : int = 0
+
+var refinement_queue := []
+
+func _init(_cell_defs : Dictionary, _min_bounds : Vector2i = min_bounds, _max_bounds : Vector2i = max_bounds):
+	set_bounds(_min_bounds, _max_bounds)
 	set_cell_definitions(_cell_defs)
 
 func set_cell_definitions(_cell_defs : Dictionary):
 	for cell_name in _cell_defs.keys():
-		process_cell_definition(cell_name, _cell_defs[cell_name])
+		process_cell_definition(cell_name, _cell_defs[cell_name].to_dictionary())
 	#print_pretty_cell_defs()
-	#print_pretty_border_defs()
 
 # read in a cell definition, and update all relevant data
 func process_cell_definition(cell_name : String, cell_def: Dictionary):
 	cell_defs[cell_name] = cell_def.duplicate(true)
-	
-	for dir in DIRECTIONS.keys():
-		var border_type : String = cell_def.get(dir, OPEN)
-		var border_def : Dictionary = border_defs.get(border_type, {})
-		var border_direction : Array = border_def.get(dir, [])
-	
-		sorted_insert(border_direction, cell_name)
-		border_def[dir] = border_direction
-		border_defs[border_type] = border_def
-			
-	var cell_restricted : Dictionary = cell_def.get(RESTRICTED, {})
-	if(cell_restricted.size() > 0):
-		for dir in cell_restricted.keys():
-			var cell_restricted_borders : Array = cell_restricted[dir]
-			for restricted_border in cell_restricted_borders:
-				var restricted_border_def : Dictionary = restricted_border_defs.get(restricted_border, {})
-				var restricted_border_directions : Array = restricted_border_def.get(dir, [])
-				
-				sorted_insert(restricted_border_directions, cell_name)
-				restricted_border_def[dir] = restricted_border_directions
-				restricted_border_defs[restricted_border] = restricted_border_def
 
 # collapse a cell to one of the possible cell types chosen at random
 func collapse_cell(coord : Vector2i) -> String:
-	if(coord.x < min.x || coord.x > max.x || coord.y < min.y || coord.y > max.y):
+	if(is_coord_in_bounds(coord)):
 		print_debug(str(coord) + " is outside of bounds")
 		return ""
 	if(collapsed.has(coord)):
 		print_debug(str(coord) + " has already been collapsed")
-		return ""
+		return possibility_field.get(coord)[0]
 	
 	var possible_cells : Array = possibility_field.get(coord, [])
 	if(possible_cells.size() == 0):
@@ -90,18 +71,27 @@ func collapse_cell_forced(coord : Vector2i, cell_name : String):
 	
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
-		refine_possibilities(n_coord)
+		add_cell_to_refinement_queue(n_coord)
+	refine_possibilities()
+
+func add_cell_to_refinement_queue(coord : Vector2i):
+	if(refinement_queue.has(coord)):
+		return false
+	refinement_queue.append(coord)
+	return true
+
+func refine_possibilities():
+	while(refinement_queue.size() > 0):
+		refine_cell(refinement_queue.pop_front())
 
 # update the possible cell types of an non-collapsed cell and propagate the probability wave to neighboring cells
-func refine_possibilities(coord : Vector2i):
+func refine_cell(coord : Vector2i):
 	if(!is_coord_in_bounds(coord)):
 		return
 	if(collapsed.has(coord)):
 		return
 	
-	var old_possible_cells : Array = possibility_field.get(coord, [])
-	if(old_possible_cells.size() == cell_defs.size()):
-		old_possible_cells = []
+	var old_possible_cells : Array = possibility_field.get(coord, cell_defs.keys())
 		
 	var new_possible_cells : Array = cell_defs.keys()
 	for d in DIRECTIONS.keys():
@@ -110,19 +100,29 @@ func refine_possibilities(coord : Vector2i):
 		if(n_possible_cells.size() == 0):
 			n_possible_cells = cell_defs.keys()
 		var possible_cells := get_possible_neighbors_for_cell_types(n_possible_cells, DIR_OPPOSITE[d])
-		new_possible_cells = array_inner_join(new_possible_cells, possible_cells)
-	if(new_possible_cells.size() == cell_defs.size()):
-		new_possible_cells = []
+		if(possible_cells.size() > 0):
+			new_possible_cells = array_inner_join(new_possible_cells, possible_cells)
 	
-	if(array_compare(old_possible_cells, new_possible_cells)):
-		# no change
-		return
+	if(new_possible_cells.size() == 0):
+		print_debug("EMPTY")
+	
+	if(new_possible_cells.size() == 1):
+		sorted_insert(collapsed, coord)
+	else:
+		if(new_possible_cells.size() > old_possible_cells.size()):
+			print_debug("ERROR")
+			possibility_field[coord] = old_possible_cells
+			return
+		if(new_possible_cells.size() == cell_defs.size() || array_compare(old_possible_cells, new_possible_cells)):
+			# no change
+			possibility_field[coord] = old_possible_cells
+			return
 	
 	possibility_field[coord] = new_possible_cells
 	
 	for d in DIRECTIONS.keys():
 		var n_coord : Vector2i = coord + DIRECTIONS[d]
-		refine_possibilities(n_coord)
+		add_cell_to_refinement_queue(n_coord)
 
 # get array of all possible neighbor cells for the specified list of cells in one specified direction
 func get_possible_neighbors_for_cell_types(cell_names : Array, direction : String) -> Array:
@@ -145,28 +145,16 @@ func get_possible_neighbors_for_cell_type(cell_name : String, direction : String
 		print_debug(str(cell_name) + " is not a recognized cell type")
 		return []
 	
-	var possible_cells := []
-	var border_name : String = cell_defs[cell_name].get(direction, OPEN)
-	var cells : Array = border_defs[border_name].get(DIR_OPPOSITE[direction], [])
-	for cell in cells:
-		if(!possible_cells.has(cell)):
-			sorted_insert(possible_cells, cell)
-	
-	var restricted_border_names : Array = cell_defs[cell_name].get(RESTRICTED, {}).get(direction, [])
-	for restricted_border_name in restricted_border_names:
-		var restricted_cells : Array = restricted_border_defs[restricted_border_name].get(DIR_OPPOSITE[direction], [])
-		for restricted_cell in restricted_cells:
-			if(possible_cells.has(restricted_cell)):
-				possible_cells.erase(restricted_cell)
+	var possible_cells : Array = cell_defs[cell_name].get(direction, [])
 	
 	return possible_cells
 
-func set_bounds(_min : Vector2i, _max : Vector2i):
-	min = _min
-	max = _max
+func set_bounds(_min_bounds : Vector2i, _max_bounds : Vector2i):
+	min_bounds = _min_bounds
+	max_bounds = _max_bounds
 
 func is_coord_in_bounds(coord : Vector2i) -> bool:
-	return (coord.x >= min.x && coord.x <= max.x && coord.y >= min.y && coord.y <= max.y)
+	return (coord.x >= min_bounds.x && coord.x <= max_bounds.x && coord.y >= min_bounds.y && coord.y <= max_bounds.y)
 
 func sorted_insert(array : Array, value : Variant) -> Array:
 	var i := array.bsearch(value)
@@ -214,11 +202,3 @@ func print_pretty_cell_defs():
 		for dir in cell_defs[name]:
 			var border : String = cell_defs[name][dir]
 			print("\t" + str(dir) + " : " + str(border))
-
-# print border defs in human-readable form, for testing/debug
-func print_pretty_border_defs():
-	for name in border_defs.keys():
-		print("BORDER:" + str(name) + " :")
-		for dir in DIRECTIONS.keys():
-			var cells : Array = border_defs[name].get(dir, [])
-			print("\t" + str(dir) + " : " + str(cells))

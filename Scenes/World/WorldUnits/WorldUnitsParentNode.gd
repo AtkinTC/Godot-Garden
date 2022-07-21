@@ -1,6 +1,3 @@
-# WorldUnitsParentNode
-# Manages the WorldUnit nodes
-
 class_name WorldUnitsParentNode
 extends Node2D
 

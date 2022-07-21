@@ -6,7 +6,7 @@
 top_level = true
 offset_right = 181.0
 offset_bottom = 211.0
-script = ExtResource( "1_5e2vi" )
+script = ExtResource("1_5e2vi")
 close_button_path = NodePath("MarginContainer/V/Header/CloseButton")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -17,9 +17,9 @@ color = Color(0, 0, 0, 1)
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 181.0
 offset_bottom = 211.0
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_top = 2
 theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
 [node name="V" type="VBoxContainer" parent="MarginContainer"]
@@ -34,7 +34,7 @@ offset_bottom = 26.0
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/V/Header"]
 offset_top = 1.0
-offset_right = 148.0
+offset_right = 156.0
 offset_bottom = 24.0
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 14
@@ -42,8 +42,7 @@ text = "TOOLTIP_TITLE"
 vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="MarginContainer/V/Header"]
-minimum_size = Vector2(25, 0)
-offset_left = 152.0
+offset_left = 160.0
 offset_right = 177.0
 offset_bottom = 26.0
 mouse_filter = 1

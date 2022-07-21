@@ -1,0 +1,289 @@
+[gd_resource type="Resource" load_steps=34 format=3 uid="uid://5r6dayuf8pqm"]
+
+[ext_resource type="Script" path="res://Scripts/TileMap/CellDefinition.gd" id="1_m2bv1"]
+[ext_resource type="Script" path="res://Scripts/TileMap/CellDefinitionSet.gd" id="2_d2qxt"]
+
+[sub_resource type="Resource" id="Resource_80bkf"]
+script = ExtResource("1_m2bv1")
+key = "road_00"
+N = ["road_00", "road_03", "road_37", "road_43", "road_45", "road_47", "road_57"]
+S = ["road_00", "road_01", "road_06", "road_16", "road_26", "road_41", "road_51", "road_54"]
+E = ["road_00", "road_06", "road_07", "road_10", "road_14", "road_15", "road_37", "road_44"]
+W = ["road_00", "road_26", "road_27", "road_30", "road_34", "road_35", "road_55", "road_57"]
+
+[sub_resource type="Resource" id="Resource_qyl5n"]
+script = ExtResource("1_m2bv1")
+key = "road_01"
+N = ["road_00", "road_57"]
+S = ["road_03"]
+E = ["road_11", "road_54"]
+W = ["road_51"]
+
+[sub_resource type="Resource" id="Resource_y258q"]
+script = ExtResource("1_m2bv1")
+key = "road_03"
+N = ["road_01"]
+S = ["road_00", "road_26"]
+E = ["road_13", "road_45"]
+W = ["road_53"]
+
+[sub_resource type="Resource" id="Resource_2o3jr"]
+script = ExtResource("1_m2bv1")
+key = "road_04"
+N = []
+S = []
+E = ["road_51"]
+W = []
+
+[sub_resource type="Resource" id="Resource_hoea8"]
+script = ExtResource("1_m2bv1")
+key = "road_06"
+N = ["road_00", "road_37", "road_43", "road_53"]
+S = ["road_07", "road_37"]
+E = ["road_16", "road_26"]
+W = ["road_00", "road_26", "road_34", "road_35"]
+
+[sub_resource type="Resource" id="Resource_oufor"]
+script = ExtResource("1_m2bv1")
+key = "road_07"
+N = ["road_06"]
+S = ["road_37"]
+E = ["road_17"]
+W = ["road_00", "road_27", "road_35"]
+
+[sub_resource type="Resource" id="Resource_sw5pq"]
+script = ExtResource("1_m2bv1")
+key = "road_10"
+N = ["road_15"]
+S = ["road_11", "road_44"]
+E = ["road_30"]
+W = ["road_00", "road_57"]
+
+[sub_resource type="Resource" id="Resource_cjyf2"]
+script = ExtResource("1_m2bv1")
+key = "road_11"
+N = ["road_10"]
+S = ["road_13", "road_45"]
+E = ["road_31", "road_55"]
+W = ["road_01"]
+
+[sub_resource type="Resource" id="Resource_0g2tm"]
+script = ExtResource("1_m2bv1")
+key = "road_13"
+N = ["road_11", "road_54"]
+S = ["road_14", "road_15"]
+E = ["road_33", "road_55"]
+W = ["road_03", "road_53"]
+
+[sub_resource type="Resource" id="Resource_2pqj6"]
+script = ExtResource("1_m2bv1")
+key = "road_14"
+N = ["road_13", "road_44"]
+S = ["road_15"]
+E = ["road_34"]
+W = ["road_00", "road_26"]
+
+[sub_resource type="Resource" id="Resource_pdqck"]
+script = ExtResource("1_m2bv1")
+key = "road_15"
+N = ["road_13", "road_14", "road_15"]
+S = ["road_10", "road_15"]
+E = ["road_35"]
+W = ["road_00", "road_26", "road_27", "road_57"]
+
+[sub_resource type="Resource" id="Resource_qenlf"]
+script = ExtResource("1_m2bv1")
+key = "road_16"
+N = ["road_00", "road_47", "road_53"]
+S = ["road_17"]
+E = ["road_26"]
+W = ["road_06"]
+
+[sub_resource type="Resource" id="Resource_3mvqw"]
+script = ExtResource("1_m2bv1")
+key = "road_17"
+N = ["road_16"]
+S = ["road_47"]
+E = ["road_27"]
+W = ["road_07"]
+
+[sub_resource type="Resource" id="Resource_0fj5g"]
+script = ExtResource("1_m2bv1")
+key = "road_26"
+N = ["road_00", "road_03", "road_53", "road_57"]
+S = ["road_27", "road_57"]
+E = ["road_00", "road_06", "road_14", "road_15"]
+W = ["road_06", "road_16"]
+
+[sub_resource type="Resource" id="Resource_jdryd"]
+script = ExtResource("1_m2bv1")
+key = "road_27"
+N = ["road_26"]
+S = ["road_57"]
+E = ["road_00", "road_07", "road_15"]
+W = ["road_17"]
+
+[sub_resource type="Resource" id="Resource_xn85m"]
+script = ExtResource("1_m2bv1")
+key = "road_30"
+N = ["road_35"]
+S = ["road_31", "road_55"]
+E = ["road_00", "road_37"]
+W = ["road_10"]
+
+[sub_resource type="Resource" id="Resource_wdfvd"]
+script = ExtResource("1_m2bv1")
+key = "road_31"
+N = ["road_30"]
+S = ["road_33", "road_45"]
+E = ["road_41"]
+W = ["road_11", "road_44"]
+
+[sub_resource type="Resource" id="Resource_d7dn4"]
+script = ExtResource("1_m2bv1")
+key = "road_33"
+N = ["road_31", "road_54"]
+S = ["road_34", "road_35"]
+E = ["road_43", "road_53"]
+W = ["road_13", "road_44"]
+
+[sub_resource type="Resource" id="Resource_2kedu"]
+script = ExtResource("1_m2bv1")
+key = "road_34"
+N = ["road_33", "road_55"]
+S = ["road_35"]
+E = ["road_00", "road_06"]
+W = ["road_14"]
+
+[sub_resource type="Resource" id="Resource_qlknp"]
+script = ExtResource("1_m2bv1")
+key = "road_35"
+N = ["road_33", "road_34", "road_35"]
+S = ["road_30", "road_35"]
+E = ["road_00", "road_06", "road_07", "road_37"]
+W = ["road_15"]
+
+[sub_resource type="Resource" id="Resource_pvgg7"]
+script = ExtResource("1_m2bv1")
+key = "road_37"
+N = ["road_06", "road_07"]
+S = ["road_00", "road_06", "road_41", "road_51"]
+E = ["road_47", "road_57"]
+W = ["road_00", "road_30", "road_35", "road_57"]
+
+[sub_resource type="Resource" id="Resource_hvgjw"]
+script = ExtResource("1_m2bv1")
+key = "road_41"
+N = ["road_00", "road_37"]
+S = ["road_43"]
+E = ["road_51"]
+W = ["road_31", "road_54"]
+
+[sub_resource type="Resource" id="Resource_1sb67"]
+script = ExtResource("1_m2bv1")
+key = "road_43"
+N = ["road_41"]
+S = ["road_00", "road_06"]
+E = ["road_53"]
+W = ["road_33", "road_45"]
+
+[sub_resource type="Resource" id="Resource_tu2ro"]
+script = ExtResource("1_m2bv1")
+key = "road_44"
+N = ["road_10", "road_44"]
+S = ["road_14", "road_44"]
+E = ["road_31", "road_33"]
+W = ["road_00"]
+
+[sub_resource type="Resource" id="Resource_orxg4"]
+script = ExtResource("1_m2bv1")
+key = "road_45"
+N = ["road_11", "road_31"]
+S = ["road_00"]
+E = ["road_43", "road_45"]
+W = ["road_03", "road_45"]
+
+[sub_resource type="Resource" id="Resource_77cgn"]
+script = ExtResource("1_m2bv1")
+key = "road_47"
+N = ["road_17"]
+S = ["road_00", "road_16", "road_51"]
+E = ["road_57"]
+W = ["road_37"]
+
+[sub_resource type="Resource" id="Resource_io0td"]
+script = ExtResource("1_m2bv1")
+key = "road_51"
+N = ["road_00", "road_37", "road_47", "road_57"]
+S = ["road_53"]
+E = ["road_01", "road_51"]
+W = ["road_04", "road_41", "road_51"]
+
+[sub_resource type="Resource" id="Resource_ph813"]
+script = ExtResource("1_m2bv1")
+key = "road_53"
+N = ["road_51"]
+S = ["road_06", "road_16", "road_26"]
+E = ["road_03", "road_13", "road_53"]
+W = ["road_33", "road_43", "road_53"]
+
+[sub_resource type="Resource" id="Resource_evgla"]
+script = ExtResource("1_m2bv1")
+key = "road_54"
+N = ["road_00"]
+S = ["road_13", "road_33"]
+E = ["road_41", "road_54"]
+W = ["road_01", "road_54"]
+
+[sub_resource type="Resource" id="Resource_4fwsg"]
+script = ExtResource("1_m2bv1")
+key = "road_55"
+N = ["road_30", "road_55"]
+S = ["road_34", "road_55"]
+E = ["road_00"]
+W = ["road_11", "road_13"]
+
+[sub_resource type="Resource" id="Resource_l3l06"]
+script = ExtResource("1_m2bv1")
+key = "road_57"
+N = ["road_26", "road_27"]
+S = ["road_00", "road_01", "road_26", "road_51"]
+E = ["road_00", "road_10", "road_15", "road_37"]
+W = ["road_37", "road_47"]
+
+[resource]
+resource_name = "roads_v1"
+script = ExtResource("2_d2qxt")
+cell_defs_dictionary = {
+"road_00": SubResource("Resource_80bkf"),
+"road_01": SubResource("Resource_qyl5n"),
+"road_03": SubResource("Resource_y258q"),
+"road_04": SubResource("Resource_2o3jr"),
+"road_06": SubResource("Resource_hoea8"),
+"road_07": SubResource("Resource_oufor"),
+"road_10": SubResource("Resource_sw5pq"),
+"road_11": SubResource("Resource_cjyf2"),
+"road_13": SubResource("Resource_0g2tm"),
+"road_14": SubResource("Resource_2pqj6"),
+"road_15": SubResource("Resource_pdqck"),
+"road_16": SubResource("Resource_qenlf"),
+"road_17": SubResource("Resource_3mvqw"),
+"road_26": SubResource("Resource_0fj5g"),
+"road_27": SubResource("Resource_jdryd"),
+"road_30": SubResource("Resource_xn85m"),
+"road_31": SubResource("Resource_wdfvd"),
+"road_33": SubResource("Resource_d7dn4"),
+"road_34": SubResource("Resource_2kedu"),
+"road_35": SubResource("Resource_qlknp"),
+"road_37": SubResource("Resource_pvgg7"),
+"road_41": SubResource("Resource_hvgjw"),
+"road_43": SubResource("Resource_1sb67"),
+"road_44": SubResource("Resource_tu2ro"),
+"road_45": SubResource("Resource_orxg4"),
+"road_47": SubResource("Resource_77cgn"),
+"road_51": SubResource("Resource_io0td"),
+"road_53": SubResource("Resource_ph813"),
+"road_54": SubResource("Resource_evgla"),
+"road_55": SubResource("Resource_4fwsg"),
+"road_57": SubResource("Resource_l3l06")
+}

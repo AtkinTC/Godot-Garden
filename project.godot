@@ -24,6 +24,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Array2D.gd"
 }, {
+"base": "Resource",
+"class": &"CellDefinition",
+"language": &"GDScript",
+"path": "res://Scripts/TileMap/CellDefinition.gd"
+}, {
+"base": "Resource",
+"class": &"CellDefinitionSet",
+"language": &"GDScript",
+"path": "res://Scripts/TileMap/CellDefinitionSet.gd"
+}, {
 "base": "RefCounted",
 "class": &"CharAttrDAO",
 "language": &"GDScript",
@@ -34,30 +44,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Character/CharAttrUtil.gd"
 }, {
-"base": "MarginContainer",
-"class": &"CharacterPortraitDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/Character/CharacterPortraitDisplay.gd"
-}, {
-"base": "Control",
-"class": &"CharacterSummaryDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/Character/CharacterSummaryDisplay.gd"
-}, {
 "base": "Resource",
 "class": &"CharacterVO",
 "language": &"GDScript",
 "path": "res://Scripts/Character/CharacterVO.gd"
 }, {
-"base": "Control",
-"class": &"CharactersDisplayList",
-"language": &"GDScript",
-"path": "res://Scenes/UI/Character/CharactersDisplayList.gd"
-}, {
 "base": "RefCounted",
 "class": &"Const",
 "language": &"GDScript",
 "path": "res://Scripts/Data/Const.gd"
+}, {
+"base": "RefCounted",
+"class": &"Constants",
+"language": &"GDScript",
+"path": "res://Scripts/Constants.gd"
 }, {
 "base": "Camera2D",
 "class": &"CustCamera2D",
@@ -69,6 +69,16 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/DataValidator.gd"
 }, {
+"base": "Node2D",
+"class": &"EnemiesNode",
+"language": &"GDScript",
+"path": "res://Scripts/EnemiesNode.gd"
+}, {
+"base": "CharacterBody2D",
+"class": &"Enemy",
+"language": &"GDScript",
+"path": "res://Scripts/Enemy.gd"
+}, {
 "base": "RefCounted",
 "class": &"EnhancementData",
 "language": &"GDScript",
@@ -79,35 +89,20 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Exploration/ExplorationVO.gd"
 }, {
-"base": "Control",
-"class": &"GardenGrid",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/GardenGrid.gd"
-}, {
 "base": "TileMapCust",
 "class": &"HighlightsTileMap",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/HighlightsTileMap.gd"
 }, {
+"base": "Area2D",
+"class": &"Hurtbox",
+"language": &"GDScript",
+"path": "res://Scripts/Hurtbox.gd"
+}, {
 "base": "TileMapCust",
 "class": &"IconsTileMap",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/IconsTileMap.gd"
-}, {
-"base": "Control",
-"class": &"InfoBox",
-"language": &"GDScript",
-"path": "res://Scenes/UI/Tooltip/Components/InfoBox.gd"
-}, {
-"base": "SmartSupplyDisplay",
-"class": &"LargeSupplyDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/LargeSupplyDisplay.gd"
-}, {
-"base": "SupplyDisplay",
-"class": &"LineSupplyDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/LineSupplyDisplay.gd"
 }, {
 "base": "RefCounted",
 "class": &"LockUtil",
@@ -115,24 +110,14 @@ _global_script_classes=[{
 "path": "res://Scripts/LockUtil.gd"
 }, {
 "base": "RefCounted",
+"class": &"Navigation",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation.gd"
+}, {
+"base": "RefCounted",
 "class": &"ObjectData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/ObjectData.gd"
-}, {
-"base": "Control",
-"class": &"PlotDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/PlotDisplay/PlotDisplay.gd"
-}, {
-"base": "Control",
-"class": &"PlotDisplayContent",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/PlotDisplay/Content/PlotDisplayContent.gd"
-}, {
-"base": "TooltipPanel",
-"class": &"PlotTooltipPanel",
-"language": &"GDScript",
-"path": "res://Scenes/UI/Tooltip/PlotTooltipPanel.gd"
 }, {
 "base": "Resource",
 "class": &"PlotVO",
@@ -149,25 +134,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Save/SaveResource.gd"
 }, {
-"base": "Control",
-"class": &"SelectMenu",
+"base": "RefCounted",
+"class": &"SeekSteering",
 "language": &"GDScript",
-"path": "res://Scenes/UI/SelectMenu.gd"
+"path": "res://Scripts/Behaviors/SeekSteering.gd"
 }, {
-"base": "SupplyDisplay",
-"class": &"SmallSupplyDisplay",
+"base": "RefCounted",
+"class": &"SeperationSteering",
 "language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/SmallSupplyDisplay.gd"
-}, {
-"base": "SupplyDisplay",
-"class": &"SmallTextSupplyDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/SmallTextSupplyDisplay.gd"
-}, {
-"base": "SupplyDisplay",
-"class": &"SmartSupplyDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/SmartSupplyDisplay.gd"
+"path": "res://Scripts/Behaviors/SeperationSteering.gd"
 }, {
 "base": "Object",
 "class": &"Structure",
@@ -184,50 +159,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Structure/StructureDAO.gd"
 }, {
-"base": "Control",
-"class": &"StructureDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/StructureDisplay/StructureDisplay.gd"
-}, {
-"base": "StructureDisplayContent",
-"class": &"StructureDisplayBuildContent",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/StructureDisplay/Content/StructureDisplayBuildContent.gd"
-}, {
-"base": "Control",
-"class": &"StructureDisplayContent",
-"language": &"GDScript",
-"path": "res://Scenes/Garden/StructureDisplay/Content/StructureDisplayContent.gd"
-}, {
 "base": "RefCounted",
 "class": &"SupplyData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/SupplyData.gd"
 }, {
-"base": "Control",
-"class": &"SupplyDisplay",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/SupplyDisplay.gd"
-}, {
-"base": "SupplyDisplay",
-"class": &"SupplyDisplayBar",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplay/SupplyDisplayBar.gd"
-}, {
-"base": "VBoxContainer",
-"class": &"SupplyDisplayContainer",
-"language": &"GDScript",
-"path": "res://Scenes/UI/SupplyDisplayContainer.gd"
-}, {
 "base": "Resource",
 "class": &"SupplyVO",
 "language": &"GDScript",
 "path": "res://Scripts/VO/SupplyVO.gd"
-}, {
-"base": "RefCounted",
-"class": &"TileDefinitions",
-"language": &"GDScript",
-"path": "res://Scripts/Data/TileDefinitions.gd"
 }, {
 "base": "TileMap",
 "class": &"TileMapCust",
@@ -250,9 +190,24 @@ _global_script_classes=[{
 "path": "res://Scripts/Utils.gd"
 }, {
 "base": "RefCounted",
+"class": &"WallSeperationSteering",
+"language": &"GDScript",
+"path": "res://Scripts/Behaviors/WallSeperationSteering.gd"
+}, {
+"base": "RefCounted",
+"class": &"WanderSteering",
+"language": &"GDScript",
+"path": "res://Scripts/Behaviors/WanderSteering.gd"
+}, {
+"base": "RefCounted",
 "class": &"WaveCollapse",
 "language": &"GDScript",
 "path": "res://Scripts/WaveCollapse.gd"
+}, {
+"base": "RefCounted",
+"class": &"WaveCollapseV2",
+"language": &"GDScript",
+"path": "res://Scripts/WaveCollapseV2.gd"
 }, {
 "base": "Node2D",
 "class": &"World",
@@ -288,52 +243,43 @@ _global_script_class_icons={
 "ActionData": "",
 "AreaVO": "",
 "Array2D": "",
+"CellDefinition": "",
+"CellDefinitionSet": "",
 "CharAttrDAO": "",
 "CharAttrUtil": "",
-"CharacterPortraitDisplay": "",
-"CharacterSummaryDisplay": "",
 "CharacterVO": "",
-"CharactersDisplayList": "",
 "Const": "",
+"Constants": "",
 "CustCamera2D": "",
 "DataValidator": "",
+"EnemiesNode": "",
+"Enemy": "",
 "EnhancementData": "",
 "ExplorationVO": "",
-"GardenGrid": "",
 "HighlightsTileMap": "",
+"Hurtbox": "",
 "IconsTileMap": "",
-"InfoBox": "",
-"LargeSupplyDisplay": "",
-"LineSupplyDisplay": "",
 "LockUtil": "",
+"Navigation": "",
 "ObjectData": "",
-"PlotDisplay": "",
-"PlotDisplayContent": "",
-"PlotTooltipPanel": "",
 "PlotVO": "",
 "PlotsBaseTileMap": "",
 "SaveFileResource": "",
-"SelectMenu": "",
-"SmallSupplyDisplay": "",
-"SmallTextSupplyDisplay": "",
-"SmartSupplyDisplay": "",
+"SeekSteering": "",
+"SeperationSteering": "",
 "Structure": "",
 "StructureComponenet": "",
 "StructureDAO": "",
-"StructureDisplay": "",
-"StructureDisplayBuildContent": "",
-"StructureDisplayContent": "",
 "SupplyData": "",
-"SupplyDisplay": "",
-"SupplyDisplayBar": "",
-"SupplyDisplayContainer": "",
 "SupplyVO": "",
-"TileDefinitions": "",
 "TileMapCust": "",
 "TooltipHost": "",
 "TooltipPanel": "",
 "Utils": "",
+"WallSeperationSteering": "",
+"WanderSteering": "",
 "WaveCollapse": "",
+"WaveCollapseV2": "",
 "World": "",
 "WorldNavigationController": "",
 "WorldUnit": "",
@@ -344,27 +290,17 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Garden"
+config/name="TowerDefence_Godot4"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
 config/icon="res://icon.png"
 
 [autoload]
 
-ActionManager="*res://Singletons/ActionManager.gd"
 GardenManager="*res://Singletons/GardenManager.gd"
-ObjectsManager="*res://Singletons/ObjectsManager.gd"
-SupplyManager="*res://Singletons/SupplyManager.gd"
-ModifiersManager="*res://Singletons/ModifiersManager.gd"
-Database="*res://Singletons/Database.gd"
-SignalBus="*res://Singletons/SignalBus.gd"
-EnhancementManager="*res://Singletons/EnhancementManager.gd"
-StructuresManager="*res://Singletons/StructuresManager.gd"
-CharactersManager="*res://Scripts/Character/CharactersManager.gd"
-AreasManager="*res://Scripts/Area/AreasManager.gd"
-ExplorationsManager="*res://Scripts/Exploration/ExplorationsManager.gd"
-WorldUnitsManager="*res://Scripts/WorldUnit/WorldUnitsManager.gd"
 SaveController="*res://Scripts/Save/SaveController.gd"
+PhysicsUtil="*res://Singletons/PhysicsUtil.gd"
+ResourceRef="*res://Singletons/ResourceRef.gd"
 
 [display]
 
@@ -418,6 +354,12 @@ mouse_left={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="friend"
+2d_physics/layer_2="enemy"
+2d_physics/layer_3="wall"
 
 [rendering]
 

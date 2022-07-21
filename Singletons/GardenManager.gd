@@ -4,38 +4,6 @@ signal garden_resized()
 signal garden_state_changed()
 signal garden_plot_updated(coord : Vector2)
 
-var plot_type_neighbors := {
-	"empty" : {
-		"river" : 0.5,
-		"forest" : 0.5,
-		"field" : 0.5
-	},
-	"field" : {
-		"forest" : 0.25,
-		"field" : 0.75,
-		"swamp" : 0.1,
-		"cave" : 0.05
-	},
-	"forest" : {
-		"forest" : 0.5,
-		"field" : 0.5,
-		"cave" : 0.2,
-		"swamp" : 0.2
-	},
-	"cave" : {
-		"cave" : 0.1,
-		"forest" : 0.5,
-		"field" : 0.5,
-	},
-	"swamp" : {
-		"swamp" : 0.25,
-		"field" : 0.5
-	},
-	"river" : {
-		"river" : 1.0
-	},
-}
-
 var plots_dict : Dictionary
 var min_x : int
 var max_x : int
@@ -44,11 +12,12 @@ var max_y : int
 
 var owned_plots : int = 0
 
-var wave_collapse : WaveCollapse
+var wave_collapse : WaveCollapseV2
 
 # setup initial state of the garden
 func initialize():
-	wave_collapse = WaveCollapse.new(TileDefinitions.cell_defs_road, Vector2i(-20,-20), Vector2i(20,20))
+	var cell_defs := CellDefinitionSet.load_cell_definition_set("roads_v1")
+	wave_collapse = WaveCollapseV2.new(cell_defs.cell_defs_dictionary, Vector2i(-20,-20), Vector2i(20,20))
 
 func setup_from_plots_array(plots : Array):
 	plots_dict = {}
@@ -117,8 +86,7 @@ func get_garden_rect() -> Rect2:
 	#return garden_rect
 	return get_extents()
 
-func set_plot(coord : Vector2, plot : PlotVO):
-	#plots.set_at(coord, plot)
+func set_plot(plot : PlotVO):
 	insert_plot(plot)
 
 func get_used_plot_coords() -> Array:
@@ -140,10 +108,6 @@ func get_empty_neighbors(coord : Vector2) -> Array:
 		if(neighbor == null):
 			neighbors.append(coord+d)
 	return neighbors
-
-# returns the dictionary of potential neighbor types for this plot type
-func get_plot_type_neighbors(plot_type : String) -> Dictionary:
-	return plot_type_neighbors.get(plot_type, {})
 
 # Begin the exploration process
 # A character assigned to the plot advances the exploration progress
@@ -176,7 +140,7 @@ func complete_exploration(coord : Vector2i):
 	for i in found:
 		var neighbor_coord : Vector2i = empty_neighbor_coords[i]
 		var base_type : String = "grass"
-		var n_plot = create_plot_auto(neighbor_coord, base_type)
+		var _n_plot = create_plot_auto(neighbor_coord, base_type)
 	
 	plot.changed.emit()
 

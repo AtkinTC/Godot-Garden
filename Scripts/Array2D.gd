@@ -1,69 +1,44 @@
 class_name Array2D
 
-var size : Vector2
-var array : Array
-var offset : Vector2
+var width: int = 0
+var height: int = 0
+var array : Array = []
 
-func _init(_size : Vector2 = Vector2.ZERO, _offset : Vector2 = Vector2.ZERO):
-	size = _size
-	offset = _offset
+func _init(_width: int, _height: int, init_value = null):
+	assert(_width > 0)
+	assert(_height > 0)
 	
+	width = _width
+	height = _height
+
 	var col_0 := []
-	col_0.resize(size.y as int)
+	col_0.resize(height)
 	for y in range(col_0.size()):
-		col_0[y] = null
-	
+		col_0[y] = init_value
+		
 	array = []
-	array.resize(size.x as int)
+	array.resize(width)
 	for x in range(array.size()):
 		array[x] = col_0.duplicate()
 
-func get_size() -> Vector2:
-	return size
-
-func get_offset() -> Vector2:
-	return offset
-
-func set_offset(_offset : Vector2):
-	offset = _offset
-
-func set_at(_coord : Vector2, _value):
-	var adj_coord : Vector2= _coord - offset
-	if(adj_coord.x < 0 || adj_coord.x >= size.x):
-		return null
-	if(adj_coord.y < 0 || adj_coord.y >= size.y):
-		return null
+func has_index(x: int, y: int) -> bool:
+	if(x >= 0 && x < width && y >= 0 && y < height):
+		return true
+	return false
 	
-	array[adj_coord.x][adj_coord.y] = _value
+func has_index_v(index: Vector2i) -> bool:
+	if(index.x >= 0 && index.x < width && index.y >= 0 && index.y < height):
+		return true
+	return false
 
-func get_at(_coord : Vector2):
-	var adj_coord : Vector2 = _coord - offset
-	if(adj_coord.x < 0 || adj_coord.x >= size.x):
-		return null
-	if(adj_coord.y < 0 || adj_coord.y >= size.y):
-		return null
+func get_from(x: int, y: int):
+	return array[x][y]
 	
-	return array[adj_coord.x][adj_coord.y]
-
-func min_x() -> int:
-	return offset.x as int
-
-func max_x() -> int:
-	return offset.x + size.x - 1 as int
-
-func min_y() -> int:
-	return offset.y as int
-
-func max_y() -> int:
-	return offset.y + size.y - 1 as int
-
-func range_x() -> Array:
-	return range(offset.x, size.x + offset.x)
-
-func range_y() -> Array:
-	return range(offset.y, size.y + offset.y)
-
-func insert(array2d : Array2D):
-	for x in array2d.range_x():
-		for y in array2d.range_y():
-			set_at(Vector2(x,y), array2d.get_at(Vector2(x,y)))
+func get_from_v(index: Vector2i):
+	return array[index.x][index.y]
+	
+func set_to(x: int, y: int, value):
+	array[x][y] = value
+	
+func set_to_v(index: Vector2i, value):
+	array[index.x][index.y] = value

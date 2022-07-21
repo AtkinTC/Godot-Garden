@@ -1,0 +1,24 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b32pqfyi51vdr"]
+
+[ext_resource type="Texture2D" uid="uid://cpj5qbe8d3bjv" path="res://Assets/Tiles/square/32x32/base.png" id="1_blu8e"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_la1ac"]
+texture = ExtResource("1_blu8e")
+texture_region_size = Vector2i(32, 32)
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/custom_data_0 = true
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[resource]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 0
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "nav"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_la1ac")

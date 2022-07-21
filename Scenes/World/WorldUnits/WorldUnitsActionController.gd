@@ -18,7 +18,7 @@ var unit_objective_groups : Dictionary
 
 var action_queue : Array
 
-var minimum_turn_time = 0.5
+var minimum_turn_time = 0.20
 var minimum_timer : SceneTreeTimer
 
 var maximum_turn_time = 1.0
