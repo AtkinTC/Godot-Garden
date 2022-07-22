@@ -23,13 +23,13 @@ func _ready():
 	nav_controller.set_tile_map(map)
 	
 	var enemy_scene : PackedScene = preload("res://Scenes/test_enemy.tscn")
-	for i in range(500):
+	for i in range(300):
 		var params = {}
 		params["nav_controller"] = nav_controller
 		params["position"] = Vector2(896 + randi()%128, 448 + randi()%128)
 		
 		enemies_node.create_enemy(enemy_scene, params)
-		await(get_tree().create_timer(0.02).timeout)
+		await(get_tree().create_timer(0.01).timeout)
 		#yield(get_tree().create_timer(0.02), "timeout")
 	
 	pass
@@ -103,6 +103,6 @@ func select_cell(_cell : Vector2i):
 		print("plot_type : " + str(GardenManager.get_plot(_cell).get_plot_type()))
 
 func _draw() -> void:
-	nav_controller.draw(self, target_pos)
+	#nav_controller.draw(self, target_pos)
 	#self.draw_circle(position, 100, Color.BLACK)
 	pass

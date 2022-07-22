@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://deqsu2xoejcqt"]
+[gd_scene load_steps=7 format=3 uid="uid://deqsu2xoejcqt"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_m18yt"]
+[ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
+[ext_resource type="Script" path="res://Scripts/Steering/SeperationSteeringComponent2D.gd" id="3_ih00y"]
+[ext_resource type="Script" path="res://Scripts/Steering/WallSeperationSteeringComponent2D.gd" id="4_t2d02"]
+[ext_resource type="Script" path="res://Scripts/Steering/WanderSteeringComponent2D.gd" id="5_42n0a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
 radius = 8.0
@@ -15,3 +19,27 @@ polygon = PackedVector2Array(6, 6, 0, 8, -6, 6, -8, 0, -6, -6, 0, -8, 6, -6, 8, 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mgevr")
+
+[node name="SeekSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("2_u45d0")
+calculation_cooldown = 10
+
+[node name="SeperationSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("3_ih00y")
+calculation_cooldown = 100
+seperation_distance = 16
+min_seperation_distance = 8
+
+[node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("4_t2d02")
+steering_magnitude = 2.0
+calculation_cooldown = 100
+seperation_distance = 20
+min_seperation_distance = 8
+
+[node name="WanderSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("5_42n0a")
+steering_magnitude = 0.5
+calculation_cooldown = 10
+circle_radius = 30
+angle_change = 0.5

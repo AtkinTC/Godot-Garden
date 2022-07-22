@@ -16,7 +16,6 @@ func _ready():
 		setup_test_data()
 	
 	var center : Vector2 = world.get_world_center()
-	print(center)
 	cam.set_position(center)
 	
 	#get_tree().create_timer(10).timeout.connect(_autosave)

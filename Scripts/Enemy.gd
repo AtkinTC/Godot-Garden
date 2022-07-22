@@ -14,40 +14,30 @@ var facing_direction := Vector2.RIGHT
 
 var nav_controller : Navigation
 
-var seek_steering : SeekSteering
-var wander_steering : WanderSteering
-var wall_avoid_steering : WallSeperationSteering
-var seperation_steering : SeperationSteering
-
 @onready var hurtbox: Hurtbox = get_node_or_null("Hurtbox")
 
 func set_params(params : Dictionary):
 	position = params.get("position", position)
 	nav_controller = params.get("nav_controller", nav_controller)
-	
-	seek_steering = SeekSteering.new(max_speed)
-	wander_steering = WanderSteering.new(max_speed,max_speed,0.5)
-	wall_avoid_steering = WallSeperationSteering.new(nav_controller, 20, 8)
-	seperation_steering = SeperationSteering.new(16, 8)
+
+func _init() -> void:
+	facing_direction = Vector2(randf()-0.5, randf()-0.5).normalized()
 
 func _ready() -> void:
 	target_position = position
 	
 	if(hurtbox is Hurtbox):
 		hurtbox.connect_hit(_on_Hurtbox_took_hit)
+	
+	attach_steering_components()
 
-var wander_force := 0.25
-var seek_force := 1.0
-var seperation_force := 3.0
-var wall_avoid_force := 2.0
+var steering_components : Array[SteeringComponent2D]
 
-var wander_vector := Vector2.ZERO
-var seek_vector := Vector2.ZERO
-var seperation_vector := Vector2.ZERO
-var wall_avoid_vector := Vector2.ZERO
-
-var seperation_cooldown_limit := 0.03
-var seperation_cooldown := 0.0
+func attach_steering_components():
+	steering_components = []
+	for child in get_children():
+		if(child is SteeringComponent2D):
+			steering_components.append(child)
 
 func _process(delta: float) -> void:
 	# gradually remove tint after taking a hit
@@ -63,25 +53,10 @@ func _physics_process(delta: float) -> void:
 	
 	practical_target_position = get_practical_target()
 	
-	if(!knockback_state):
-		wander_vector = Vector2.ZERO #wander_steering.steer(facing_direction)
-		seek_vector = seek_steering.steer(position, practical_target_position, move_vector)
-	else:
-		wander_vector = Vector2.ZERO
-		seek_vector = Vector2.ZERO
-		
-	if(seperation_cooldown <= 0):
-		seperation_vector = seperation_steering.steer(self)
-		seperation_cooldown = seperation_cooldown_limit
-	else:
-		seperation_cooldown -= delta
-	wall_avoid_vector = wall_avoid_steering.steer(self)
-	
 	steering_vector = Vector2.ZERO
-	steering_vector += wander_vector * wander_force
-	steering_vector += seperation_vector * seperation_force
-	steering_vector += seek_vector * seek_force
-	steering_vector += wall_avoid_vector * wall_avoid_force
+	for steering_component in steering_components:
+		if(steering_component.get_steer_type() == steering_component.STEER_TYPE.PASSIVE || !knockback_state):
+			steering_vector += steering_component.steer()
 	
 	steering_vector = steering_vector.limit_length(max_speed) * max_speed
 	
@@ -104,13 +79,10 @@ func _physics_process(delta: float) -> void:
 
 func _draw() -> void:
 	#draw_line(Vector2.ZERO, (practical_target_position - position).normalized() * max_speed, Color.blue, 2)
-	#draw_line(Vector2.ZERO, seek_vector * max_speed, Color.red, 2)
 	#draw_line(Vector2.ZERO, move_vector, Color.green, 2)
 	
-	#seek_steering.draw(self)
-	#wander_steering.draw(self, Color.RED)
-	#wall_avoid_steering.draw(self, Color.RED)
-	#seperation_steering.draw(self)
+	#for steering_component in steering_components:
+	#	steering_component.draw()
 	pass
 
 var min_target_distance := 20.0
@@ -166,6 +138,18 @@ func get_knockback() -> Vector2:
 	knockback_vector = knockback_direction * knockback_impulse
 	
 	return knockback_vector
+
+func get_target_position() -> Vector2:
+	return target_position
+
+func get_seek_target_position() -> Vector2:
+	return practical_target_position
+
+func get_max_speed() -> float:
+	return max_speed
+
+func get_facing_direction() -> Vector2:
+	return facing_direction
 
 func _on_Hurtbox_took_hit(source: Hurtbox, hit_data: Dictionary):
 	if(hit_data.has("damage")):

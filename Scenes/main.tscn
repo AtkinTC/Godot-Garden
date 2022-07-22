@@ -49,9 +49,6 @@ layer_0/tile_data = PackedInt32Array(1048594, 196609, 0, 786454, 196609, 0, 7209
 script = ExtResource("4_xe0o4")
 custom_layer_names = ["nav"]
 
-[node name="NavObjective" type="Node2D" parent="World"]
-position = Vector2(492, 305)
-
 [node name="EnemiesNode" type="Node2D" parent="World"]
 script = ExtResource("7_cnids")
 
@@ -61,5 +58,4 @@ script = ExtResource("4_sbgaj")
 acceleration = 0.1
 min_zoom = 0.25
 max_zoom = 3.0
-zoom_level = 2.0
 metadata/_edit_lock_ = true
