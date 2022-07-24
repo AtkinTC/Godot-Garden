@@ -43,7 +43,6 @@ func get_world_center() -> Vector2:
 
 func _physics_process(delta: float) -> void:
 	target_pos = get_global_mouse_position()
-	#print(target_pos)
 	var objective_cellv := world_to_map(target_pos)
 	if(!nav_controller.is_flow_map_complete(objective_cellv)):
 		nav_controller.process_flow_map_segmented(objective_cellv, false, 0, true, 1)
@@ -59,11 +58,7 @@ func _unhandled_input(event : InputEvent):
 		select_cell(target_cell)
 		print("-----------------")
 		print(str("event.position =", event.position))
-		print(str("screen_to_world(event.position) =", screen_to_world(event.position)))
-		print(str("screen_to_map(event.position) =", screen_to_map(event.position)))
-		print(str("get_global_mouse_position =", get_global_mouse_position()))
-		print(str("global_to_world(get_global_mouse_position()) =", global_to_world(get_global_mouse_position())))
-		print(str("world_to_map(event.position) =", world_to_map(get_global_mouse_position())))
+		print(str("target_cell =", target_cell))
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:

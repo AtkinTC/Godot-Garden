@@ -105,11 +105,6 @@ _global_script_classes=[{
 "path": "res://Scripts/TileMap/IconsTileMap.gd"
 }, {
 "base": "RefCounted",
-"class": &"LockUtil",
-"language": &"GDScript",
-"path": "res://Scripts/LockUtil.gd"
-}, {
-"base": "RefCounted",
 "class": &"Navigation",
 "language": &"GDScript",
 "path": "res://Scripts/Navigation.gd"
@@ -218,31 +213,6 @@ _global_script_classes=[{
 "class": &"World",
 "language": &"GDScript",
 "path": "res://Scenes/World/World.gd"
-}, {
-"base": "Node2D",
-"class": &"WorldNavigationController",
-"language": &"GDScript",
-"path": "res://Scenes/World/WorldNavigationController.gd"
-}, {
-"base": "Node2D",
-"class": &"WorldUnit",
-"language": &"GDScript",
-"path": "res://Scenes/World/WorldUnits/WorldUnit.gd"
-}, {
-"base": "Resource",
-"class": &"WorldUnitVO",
-"language": &"GDScript",
-"path": "res://Scripts/WorldUnit/WorldUnitVO.gd"
-}, {
-"base": "Node2D",
-"class": &"WorldUnitsActionController",
-"language": &"GDScript",
-"path": "res://Scenes/World/WorldUnits/WorldUnitsActionController.gd"
-}, {
-"base": "Node2D",
-"class": &"WorldUnitsParentNode",
-"language": &"GDScript",
-"path": "res://Scenes/World/WorldUnits/WorldUnitsParentNode.gd"
 }]
 _global_script_class_icons={
 "ActionData": "",
@@ -264,7 +234,6 @@ _global_script_class_icons={
 "HighlightsTileMap": "",
 "Hurtbox": "",
 "IconsTileMap": "",
-"LockUtil": "",
 "Navigation": "",
 "ObjectData": "",
 "PlotVO": "",
@@ -286,12 +255,7 @@ _global_script_class_icons={
 "WanderSteeringComponent2D": "",
 "WaveCollapse": "",
 "WaveCollapseV2": "",
-"World": "",
-"WorldNavigationController": "",
-"WorldUnit": "",
-"WorldUnitVO": "",
-"WorldUnitsActionController": "",
-"WorldUnitsParentNode": ""
+"World": ""
 }
 
 [application]
@@ -312,6 +276,7 @@ ResourceRef="*res://Singletons/ResourceRef.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/resizable=false
 
 [input]
 
