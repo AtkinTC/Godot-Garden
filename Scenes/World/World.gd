@@ -27,6 +27,7 @@ func _ready():
 		var params = {}
 		params["nav_controller"] = nav_controller
 		params["position"] = Vector2(896 + randi()%128, 448 + randi()%128)
+		params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
 		
 		enemies_node.create_enemy(enemy_scene, params)
 		await(get_tree().create_timer(0.01).timeout)

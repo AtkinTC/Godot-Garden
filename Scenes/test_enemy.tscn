@@ -1,23 +1,47 @@
-[gd_scene load_steps=7 format=3 uid="uid://deqsu2xoejcqt"]
+[gd_scene load_steps=13 format=3 uid="uid://deqsu2xoejcqt"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_m18yt"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeperationSteeringComponent2D.gd" id="3_ih00y"]
 [ext_resource type="Script" path="res://Scripts/Steering/WallSeperationSteeringComponent2D.gd" id="4_t2d02"]
 [ext_resource type="Script" path="res://Scripts/Steering/WanderSteeringComponent2D.gd" id="5_42n0a"]
+[ext_resource type="Texture2D" uid="uid://bjyyn08qa3myu" path="res://Assets/Sprites/Characters/zombie_walk_16x16.png" id="6_rcaxp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
 radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sau1m"]
+atlas = ExtResource("6_rcaxp")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qg83q"]
+atlas = ExtResource("6_rcaxp")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pahn1"]
+atlas = ExtResource("6_rcaxp")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_am5m4"]
+atlas = ExtResource("6_rcaxp")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w787k"]
+animations = [{
+"frames": [SubResource("AtlasTexture_sau1m"), SubResource("AtlasTexture_qg83q"), SubResource("AtlasTexture_pahn1"), SubResource("AtlasTexture_am5m4")],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
+}]
 
 [node name="Node2D" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_m18yt")
-
-[node name="Sprite" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(6, 6, 0, 8, -6, 6, -8, 0, -6, -6, 0, -8, 6, -6, 8, 0)
+max_speed = 20.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_mgevr")
 
 [node name="SeekSteeringComponent2D" type="Node2D" parent="."]
@@ -26,8 +50,9 @@ calculation_cooldown = 10
 
 [node name="SeperationSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("3_ih00y")
+steering_magnitude = 2.0
 calculation_cooldown = 100
-seperation_distance = 16
+seperation_distance = 12
 min_seperation_distance = 8
 
 [node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
@@ -39,7 +64,14 @@ min_seperation_distance = 8
 
 [node name="WanderSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("5_42n0a")
-steering_magnitude = 0.5
+steering_magnitude = 0.25
 calculation_cooldown = 10
 circle_radius = 30
 angle_change = 0.5
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+frames = SubResource("SpriteFrames_w787k")
+animation = &"walk"
+frame = 3
+playing = true
