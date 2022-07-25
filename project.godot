@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
+"base": "FlowMapNavigation",
+"class": &"AdvancedFlowMapNavigation",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation/AdvancedFlowMapNavigation.gd"
+}, {
 "base": "Resource",
 "class": &"AreaVO",
 "language": &"GDScript",
@@ -89,6 +94,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Exploration/ExplorationVO.gd"
 }, {
+"base": "NavigationBase",
+"class": &"FlowMapNavigation",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation/FlowMapNavigation.gd"
+}, {
 "base": "TileMapCust",
 "class": &"HighlightsTileMap",
 "language": &"GDScript",
@@ -105,9 +115,9 @@ _global_script_classes=[{
 "path": "res://Scripts/TileMap/IconsTileMap.gd"
 }, {
 "base": "RefCounted",
-"class": &"Navigation",
+"class": &"NavigationBase",
 "language": &"GDScript",
-"path": "res://Scripts/Navigation.gd"
+"path": "res://Scripts/Navigation/NavigationBase.gd"
 }, {
 "base": "RefCounted",
 "class": &"ObjectData",
@@ -216,6 +226,7 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionData": "",
+"AdvancedFlowMapNavigation": "",
 "AreaVO": "",
 "Array2D": "",
 "CellDefinition": "",
@@ -231,10 +242,11 @@ _global_script_class_icons={
 "Enemy": "",
 "EnhancementData": "",
 "ExplorationVO": "",
+"FlowMapNavigation": "",
 "HighlightsTileMap": "",
 "Hurtbox": "",
 "IconsTileMap": "",
-"Navigation": "",
+"NavigationBase": "",
 "ObjectData": "",
 "PlotVO": "",
 "PlotsBaseTileMap": "",

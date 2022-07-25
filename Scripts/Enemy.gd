@@ -12,7 +12,7 @@ var practical_target_position := Vector2.ZERO
 
 var facing_direction := Vector2.RIGHT
 
-var nav_controller : Navigation
+var nav_controller : NavigationBase
 
 @onready var hurtbox: Hurtbox = get_node_or_null("Hurtbox")
 
@@ -116,7 +116,7 @@ func update_practical_target():
 	
 	if(result is Dictionary && result.size() > 0):
 		#wall in the direct line to the target, will use pathfinding instead
-		var flow_vector := nav_controller.get_flow_direction(position, target_position)
+		var flow_vector := nav_controller.get_nav_direction(position, target_position)
 		practical_target_position = position + flow_vector * max_speed
 		return
 	

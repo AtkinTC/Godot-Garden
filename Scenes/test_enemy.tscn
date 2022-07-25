@@ -34,7 +34,7 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="Node2D" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_m18yt")
@@ -52,7 +52,7 @@ calculation_cooldown = 10
 script = ExtResource("3_ih00y")
 steering_magnitude = 2.0
 calculation_cooldown = 100
-seperation_distance = 12
+seperation_distance = 16
 min_seperation_distance = 8
 
 [node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
@@ -73,5 +73,5 @@ angle_change = 0.5
 texture_filter = 1
 frames = SubResource("SpriteFrames_w787k")
 animation = &"walk"
-frame = 3
+frame = 1
 playing = true

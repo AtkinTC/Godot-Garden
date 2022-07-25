@@ -8,14 +8,19 @@ signal selected_cell(cell : Vector2i)
 var highlighted : bool = false
 var highlighted_cell : Vector2i
 
-var nav_controller: Navigation
+var nav_controller: FlowMapNavigation
 
 @onready var enemies_node: EnemiesNode = get_node("EnemiesNode")
 
 var target_pos := Vector2.ZERO
 
+var switch : int = 1
+var p1 := Vector2.ZERO
+var p2 := Vector2.ZERO
+var int_cells : Array[Vector2i] = []
+
 func _init():
-	nav_controller = Navigation.new()
+	nav_controller = AdvancedFlowMapNavigation.new()
 
 func _ready():
 	#get_viewport().warp_mouse(Vector2(640,320))
@@ -45,8 +50,10 @@ func get_world_center() -> Vector2:
 func _physics_process(delta: float) -> void:
 	target_pos = get_global_mouse_position()
 	var objective_cellv := world_to_map(target_pos)
-	if(!nav_controller.is_flow_map_complete(objective_cellv)):
-		nav_controller.process_flow_map_segmented(objective_cellv, false, 0, true, 1)
+	#var objective_cellv = Vector2i(13, 10)
+	#target_pos = map_to_world(objective_cellv)
+	
+	nav_controller.process_flow_map_segmented(objective_cellv, false, 0, true, 1)
 	update()
 	
 	for enemy in enemies_node.get_enemies():
@@ -55,11 +62,22 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
-		var target_cell = screen_to_map(event.position)
+		var target_cell := screen_to_map(event.position)
 		select_cell(target_cell)
 		print("-----------------")
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
+		
+		if(switch == 1):
+			p1 = target_cell as Vector2 + Vector2(0.5, 0.5)
+			int_cells = []
+			switch = 2
+		elif(switch == 2):
+			p2 = target_cell as Vector2 + Vector2(0.5, 0.5)
+			switch = 1
+			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
+			print(str("from: ", p1.floor(), " to: ", p2.floor()))
+			print(int_cells)
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -99,6 +117,14 @@ func select_cell(_cell : Vector2i):
 		print("plot_type : " + str(GardenManager.get_plot(_cell).get_plot_type()))
 
 func _draw() -> void:
-	#nav_controller.draw(self, target_pos)
-	#self.draw_circle(position, 100, Color.BLACK)
+	nav_controller.draw(self, target_pos)
+	for cell in int_cells:
+		var p_tl = map_to_world(cell) - (map.get_tile_size() as Vector2)/2
+		var p_bl = p_tl + (map.get_tile_size() as Vector2) * Vector2(0, 1)
+		var p_br = p_tl + (map.get_tile_size() as Vector2) * Vector2(1, 1)
+		var p_tr = p_tl + (map.get_tile_size() as Vector2) * Vector2(1, 0)
+		draw_polyline([p_tl, p_tr, p_tr, p_br, p_br, p_bl, p_bl, p_tl], Color.BLACK)
+	
+	if(switch == 1 && p1 != p2):
+		draw_line(p1*(map.get_tile_size() as Vector2), p2*(map.get_tile_size() as Vector2), Color.RED, 3)
 	pass
