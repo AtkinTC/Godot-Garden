@@ -33,8 +33,8 @@ func create_enemy(enemy_scene : PackedScene, params : Dictionary = {}) -> int:
 		params["world"] = world
 	
 	var enemy: Node2D = enemy_scene.instantiate()
-	if(enemy.has_method("set_params")):
-		enemy.set_params(params)
+	if(enemy.has_method("set_setup_params")):
+		enemy.set_setup_params(params)
 	
 	enemy.tree_exiting.connect(_on_enemy_exiting.bind(new_id))
 	

@@ -9,6 +9,9 @@ var wander_angle: float = 0.0
 var circle_center: Vector2 = Vector2.ZERO
 var displacement: Vector2 = Vector2.ZERO
 
+func _init() -> void:
+	steering_type = STEERING_TYPE.WANDER
+
 func _ready() -> void:
 	super._ready()
 	
@@ -18,9 +21,6 @@ func _ready() -> void:
 	
 	if(running):
 		wander_angle = parent.get_facing_direction().angle()
-
-func get_steer_type() -> int:
-	return STEER_TYPE.ACTIVE
 
 func calculate_steering_force():
 	var facing_direction : Vector2 = parent.get_facing_direction()
@@ -33,7 +33,7 @@ func calculate_steering_force():
 	wander_angle += (randf() - 0.5) * angle_change
 	steering_force = (circle_center + displacement)
 	
-	steering_force = steering_force.normalized()
+	steering_force = steering_force.limit_length(max_force)
 
 func draw():
 	if(running):

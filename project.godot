@@ -49,6 +49,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Character/CharAttrUtil.gd"
 }, {
+"base": "CharacterBody2D",
+"class": &"CharacterBody2DCust",
+"language": &"GDScript",
+"path": "res://Scripts/CharacterBody2DCust.gd"
+}, {
 "base": "Resource",
 "class": &"CharacterVO",
 "language": &"GDScript",
@@ -79,10 +84,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/EnemiesNode.gd"
 }, {
-"base": "CharacterBody2D",
-"class": &"Enemy",
+"base": "Node2D",
+"class": &"EnemyController",
 "language": &"GDScript",
-"path": "res://Scripts/Enemy.gd"
+"path": "res://Scripts/EnemyController.gd"
 }, {
 "base": "RefCounted",
 "class": &"EnhancementData",
@@ -94,7 +99,12 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Exploration/ExplorationVO.gd"
 }, {
-"base": "NavigationBase",
+"base": "RefCounted",
+"class": &"FlowMap",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation/FlowMap.gd"
+}, {
+"base": "TileMapBasedNavigation",
 "class": &"FlowMapNavigation",
 "language": &"GDScript",
 "path": "res://Scripts/Navigation/FlowMapNavigation.gd"
@@ -120,6 +130,11 @@ _global_script_classes=[{
 "path": "res://Scripts/Navigation/NavigationBase.gd"
 }, {
 "base": "RefCounted",
+"class": &"NavigationController",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation/NavigationController.gd"
+}, {
+"base": "RefCounted",
 "class": &"ObjectData",
 "language": &"GDScript",
 "path": "res://Scripts/Data/ObjectData.gd"
@@ -133,6 +148,11 @@ _global_script_classes=[{
 "class": &"PlotsBaseTileMap",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/PlotsBaseTileMap.gd"
+}, {
+"base": "Node2D",
+"class": &"RectNode2D",
+"language": &"GDScript",
+"path": "res://Scripts/Util/RectNode2D.gd"
 }, {
 "base": "Resource",
 "class": &"SaveFileResource",
@@ -178,6 +198,11 @@ _global_script_classes=[{
 "class": &"SupplyVO",
 "language": &"GDScript",
 "path": "res://Scripts/VO/SupplyVO.gd"
+}, {
+"base": "NavigationBase",
+"class": &"TileMapBasedNavigation",
+"language": &"GDScript",
+"path": "res://Scripts/Navigation/TileMapBasedNavigation.gd"
 }, {
 "base": "TileMap",
 "class": &"TileMapCust",
@@ -233,23 +258,27 @@ _global_script_class_icons={
 "CellDefinitionSet": "",
 "CharAttrDAO": "",
 "CharAttrUtil": "",
+"CharacterBody2DCust": "",
 "CharacterVO": "",
 "Const": "",
 "Constants": "",
 "CustCamera2D": "",
 "DataValidator": "",
 "EnemiesNode": "",
-"Enemy": "",
+"EnemyController": "",
 "EnhancementData": "",
 "ExplorationVO": "",
+"FlowMap": "",
 "FlowMapNavigation": "",
 "HighlightsTileMap": "",
 "Hurtbox": "",
 "IconsTileMap": "",
 "NavigationBase": "",
+"NavigationController": "",
 "ObjectData": "",
 "PlotVO": "",
 "PlotsBaseTileMap": "",
+"RectNode2D": "",
 "SaveFileResource": "",
 "SeekSteeringComponent2D": "",
 "SeperationSteeringComponent2D": "",
@@ -259,6 +288,7 @@ _global_script_class_icons={
 "StructureDAO": "",
 "SupplyData": "",
 "SupplyVO": "",
+"TileMapBasedNavigation": "",
 "TileMapCust": "",
 "TooltipHost": "",
 "TooltipPanel": "",
@@ -335,6 +365,16 @@ zoom_out={
 mouse_left={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"pressed":false,"double_click":false,"script":null)
+]
+}
+key_1={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"unicode":0,"echo":false,"script":null)
+]
+}
+key_2={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"unicode":0,"echo":false,"script":null)
 ]
 }
 

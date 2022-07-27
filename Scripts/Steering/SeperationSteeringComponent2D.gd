@@ -1,8 +1,14 @@
 class_name SeperationSteeringComponent2D
 extends SteeringComponent2D
 
-@export var seperation_distance: int = 30
-@export var min_seperation_distance: int = 0
+@export var outer_seperation_distance: float = 30
+@export var inner_seperation_distance: float = 0
+
+func _init() -> void:
+	steering_type = STEERING_TYPE.SEPERATION
+	if(outer_seperation_distance < inner_seperation_distance):
+		print_debug("outer_seperation_distance cannot be smaller than inner_seperation_distance")
+		outer_seperation_distance = inner_seperation_distance
 
 func _ready() -> void:
 	super._ready()
@@ -20,9 +26,6 @@ func _ready() -> void:
 		print_debug("parent did not have required method get_world_2d")
 		running = false
 
-func get_steer_type() -> int:
-	return STEER_TYPE.PASSIVE
-
 func calculate_steering_force():
 	var position : Vector2 = parent.get_position()
 	var collision_mask : int = parent.get_collision_layer()
@@ -30,7 +33,7 @@ func calculate_steering_force():
 	var world2D : World2D = parent.get_world_2d()
 	
 	var shape = CircleShape2D.new()
-	shape.radius = seperation_distance
+	shape.radius = outer_seperation_distance
 	
 	var query = PhysicsShapeQueryParameters2D.new()
 	query.shape_rid = shape.get_rid()
@@ -45,14 +48,14 @@ func calculate_steering_force():
 		if(collider is CollisionObject2D):
 			var distance = position.distance_to(collider.position)
 			var mag := 0.0
-			if(distance <= min_seperation_distance):
+			if(distance <= inner_seperation_distance):
 				mag = 1.0
-			if(distance < seperation_distance):
-				mag = (seperation_distance - distance)/(seperation_distance - min_seperation_distance)
-			steering_force += (position - collider.position).normalized() * mag
+			if(distance < outer_seperation_distance):
+				mag = (outer_seperation_distance - distance)/(outer_seperation_distance - inner_seperation_distance)
+			steering_force += (position - collider.position).normalized() * mag * max_force
 	
-	steering_force = steering_force.limit_length(1.0)
+	steering_force = steering_force.limit_length(max_force)
 
 func draw():
 	if(running && !is_equal_approx(steering_magnitude, 0)):
-		parent.draw_line(Vector2.ZERO, steering_force * seperation_distance, Color.GREEN, 1.0)
+		parent.draw_line(Vector2.ZERO, steering_force * outer_seperation_distance, Color.GREEN, 1.0)

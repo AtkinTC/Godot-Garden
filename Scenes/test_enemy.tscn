@@ -1,77 +1,125 @@
-[gd_scene load_steps=13 format=3 uid="uid://deqsu2xoejcqt"]
+[gd_scene load_steps=13 format=3 uid="uid://pmlk6umbs0ud"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_m18yt"]
+[ext_resource type="Script" path="res://Scripts/CharacterBody2DCust.gd" id="1_smewm"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeperationSteeringComponent2D.gd" id="3_ih00y"]
 [ext_resource type="Script" path="res://Scripts/Steering/WallSeperationSteeringComponent2D.gd" id="4_t2d02"]
 [ext_resource type="Script" path="res://Scripts/Steering/WanderSteeringComponent2D.gd" id="5_42n0a"]
-[ext_resource type="Texture2D" uid="uid://bjyyn08qa3myu" path="res://Assets/Sprites/Characters/zombie_walk_16x16.png" id="6_rcaxp"]
+[ext_resource type="SpriteFrames" uid="uid://de4xaebdkky01" path="res://Resources/SpriteFrames/zombie_01.tres" id="6_t5wi7"]
+[ext_resource type="Script" path="res://Scripts/EnemyController.gd" id="7_1kk7w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
 radius = 8.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sau1m"]
-atlas = ExtResource("6_rcaxp")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="Animation" id="Animation_tpsu3"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qg83q"]
-atlas = ExtResource("6_rcaxp")
-region = Rect2(16, 0, 16, 16)
+[sub_resource type="Animation" id="Animation_whwrc"]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"walk"]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pahn1"]
-atlas = ExtResource("6_rcaxp")
-region = Rect2(32, 0, 16, 16)
+[sub_resource type="Animation" id="Animation_g8d50"]
+resource_name = "run"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"run"]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_am5m4"]
-atlas = ExtResource("6_rcaxp")
-region = Rect2(48, 0, 16, 16)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s6bao"]
+_data = {
+"idle": SubResource("Animation_tpsu3"),
+"run": SubResource("Animation_g8d50"),
+"walk": SubResource("Animation_whwrc")
+}
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_w787k"]
-animations = [{
-"frames": [SubResource("AtlasTexture_sau1m"), SubResource("AtlasTexture_qg83q"), SubResource("AtlasTexture_pahn1"), SubResource("AtlasTexture_am5m4")],
-"loop": true,
-"name": &"walk",
-"speed": 4.0
-}]
-
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("roation_sourc_node", "visuals_source_node")]
 collision_layer = 2
 collision_mask = 4
-script = ExtResource("1_m18yt")
-max_speed = 20.0
+script = ExtResource("1_smewm")
+roation_sourc_node = NodePath("RotationNode")
+visuals_source_node = NodePath("RotationNode/VisualsNode")
+max_speed = 30.0
+retarget_cooldown = 100
+
+[node name="SeekSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("2_u45d0")
+max_force = 30.0
+calculation_cooldown = 100
+automatic = false
+
+[node name="SeperationSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("3_ih00y")
+max_force = 30.0
+calculation_cooldown = 250
+outer_seperation_distance = 16.0
+inner_seperation_distance = 8.0
+
+[node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("4_t2d02")
+max_force = 30.0
+calculation_cooldown = 100
+outer_seperation_distance = 16.0
+inner_seperation_distance = 8.0
+
+[node name="WanderSteeringComponent2D" type="Node2D" parent="."]
+script = ExtResource("5_42n0a")
+max_force = 10.0
+steering_magnitude = 0.0
+calculation_cooldown = 33
+circle_radius = 30
+angle_change = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_mgevr")
 
-[node name="SeekSteeringComponent2D" type="Node2D" parent="."]
-script = ExtResource("2_u45d0")
-calculation_cooldown = 10
+[node name="RotationNode" type="Node2D" parent="."]
 
-[node name="SeperationSteeringComponent2D" type="Node2D" parent="."]
-script = ExtResource("3_ih00y")
-steering_magnitude = 2.0
-calculation_cooldown = 100
-seperation_distance = 16
-min_seperation_distance = 8
+[node name="VisualsNode" type="Node2D" parent="RotationNode"]
 
-[node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
-script = ExtResource("4_t2d02")
-steering_magnitude = 2.0
-calculation_cooldown = 100
-seperation_distance = 20
-min_seperation_distance = 8
-
-[node name="WanderSteeringComponent2D" type="Node2D" parent="."]
-script = ExtResource("5_42n0a")
-steering_magnitude = 0.25
-calculation_cooldown = 10
-circle_radius = 30
-angle_change = 0.5
-
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="RotationNode/VisualsNode"]
 texture_filter = 1
-frames = SubResource("SpriteFrames_w787k")
-animation = &"walk"
-frame = 1
+frames = ExtResource("6_t5wi7")
+animation = &"idle"
 playing = true
+
+[node name="EnemyController" type="Node2D" parent="." node_paths=PackedStringArray("animation_player")]
+script = ExtResource("7_1kk7w")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyController"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_s6bao")
+}

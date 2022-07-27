@@ -19,6 +19,8 @@ var p1 := Vector2.ZERO
 var p2 := Vector2.ZERO
 var int_cells : Array[Vector2i] = []
 
+@onready var spawn_area : RectNode2D = $SpawnArea
+
 func _init():
 	nav_controller = AdvancedFlowMapNavigation.new()
 
@@ -27,15 +29,21 @@ func _ready():
 	map.show_behind_parent = true
 	nav_controller.set_tile_map(map)
 	
+	var spawn_rect : Rect2i
+	if(spawn_area != null):
+		spawn_rect = spawn_area.get_rect()
+	else:
+		spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
+	
 	var enemy_scene : PackedScene = preload("res://Scenes/test_enemy.tscn")
 	for i in range(300):
 		var params = {}
 		params["nav_controller"] = nav_controller
-		params["position"] = Vector2(896 + randi()%128, 448 + randi()%128)
+		params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
 		params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
 		
 		enemies_node.create_enemy(enemy_scene, params)
-		await(get_tree().create_timer(0.01).timeout)
+		await(get_tree().create_timer(0.05).timeout)
 		#yield(get_tree().create_timer(0.02), "timeout")
 	
 	pass
@@ -78,6 +86,36 @@ func _unhandled_input(event : InputEvent):
 			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
 			print(str("from: ", p1.floor(), " to: ", p2.floor()))
 			print(int_cells)
+			
+	if(event.is_action_pressed("key_1")):
+		var p1 = Vector2(78, 46)
+		var p2 = Vector2(1041, 562)
+		var runs = 10000
+		var t1 = Time.get_ticks_msec()
+		for i in range(runs):
+			nav_controller.has_direct_line(p1, p2)
+		var t2 = Time.get_ticks_msec()
+		print("has_direct_line ran for ", str(t2-t1), " msec(s)")
+		print("\t ~", str((t2-t1) as float / runs), " per run")
+		
+	if(event.is_action_pressed("key_2")):
+		var p1 = Vector2(78, 46)
+		var p2 = Vector2(1041, 562)
+		var runs = 10000
+		var t1 = Time.get_ticks_msec()
+		for i in range(runs):
+			var physics_layer_bit := PhysicsUtil.get_physics_layer_bit("wall")
+			var wall_collision_mask = PhysicsUtil.get_physics_layer_mask([physics_layer_bit])
+			var params := PhysicsRayQueryParameters2D.new()
+			params.collision_mask = wall_collision_mask
+			params.from = p1
+			params.to = p2
+			get_world_2d().direct_space_state.intersect_ray(params)
+		var t2 = Time.get_ticks_msec()
+		print("intersect_ray ran for ", str(t2-t1), " msec(s)")
+		print("\t ~", str((t2-t1) as float / runs), " per run")
+
+		
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:

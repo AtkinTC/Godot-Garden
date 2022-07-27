@@ -1,6 +1,9 @@
 class_name SeekSteeringComponent2D
 extends SteeringComponent2D
 
+func _init() -> void:
+	steering_type = STEERING_TYPE.SEEK
+
 func _ready() -> void:
 	super._ready()
 	
@@ -17,17 +20,14 @@ func _ready() -> void:
 		print_debug("parent did not have required method get_velocity")
 		running = false
 
-func get_steer_type() -> int:
-	return STEER_TYPE.ACTIVE
-
 func calculate_steering_force():
 	var position : Vector2 = parent.get_position()
 	var target_position : Vector2 = parent.get_seek_target_position()
 	var max_speed : float = parent.get_max_speed()
 	var velocity : Vector2 = parent.get_velocity()
 	
-	var desired_vector := (target_position - position).normalized() * max_speed
-	steering_force = (desired_vector - velocity).limit_length(max_speed) / max_speed
+	var desired_velocity := (target_position - position).limit_length(max_speed)
+	steering_force = (desired_velocity - velocity).limit_length(max_force)
 
 func draw():
 	if(running && !is_equal_approx(steering_magnitude, 0)):
