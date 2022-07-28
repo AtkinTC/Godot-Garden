@@ -13,7 +13,7 @@ var seek_target_position := Vector2.ZERO
 
 var facing_direction := Vector2.RIGHT
 
-var nav_controller : NavigationBase
+var nav_controller : NavigationController
 
 @onready var hurtbox: Hurtbox = get_node_or_null("Hurtbox")
 
@@ -96,7 +96,8 @@ func update_seek_target():
 		seek_target_position = position
 		return
 	
-	var flow_vector := nav_controller.get_nav_direction(position, target_position)
+	#var flow_vector := nav_controller.get_targeted_nav_direction(position, target_position)
+	var flow_vector := nav_controller.get_goal_nav_direction(position)
 	seek_target_position = position + flow_vector * max_speed
 	return
 	

@@ -1,23 +1,21 @@
-class_name TileMapBasedNavigation
-extends NavigationBase
+class_name TileNavMap
 
-var map_layer_id : int = 0
-var tile_map: TileMap
+var map_layer_id = 0
+var tile_map : TileMap
+var tiles : Array2D
 
-var tiles_2d: Array2D
-
-func set_tile_map(_tile_map: TileMap):
+func _init(_tile_map : TileMap):
 	tile_map = _tile_map
 	
 	var used_rect := tile_map.get_used_rect()
 	
 	var height: int = (used_rect.position.y + used_rect.size.y) as int
 	var width: int = (used_rect.position.x + used_rect.size.x) as int
-	tiles_2d = Array2D.new(width, height, -1)
+	tiles = Array2D.new(width, height, -1)
 	
 	for cell in tile_map.get_used_cells(map_layer_id):
 		var id = tile_map.get_cell_source_id(0, cell, false)
-		tiles_2d.set_to_v(cell, id)
+		tiles.set_to_v(cell, id)
 
 func world_to_map(coordv: Vector2) -> Vector2i:
 	return tile_map.world_to_map(tile_map.to_local(coordv))
@@ -28,7 +26,7 @@ func get_closest_navigable_cells(cellv : Vector2i) -> Array[Vector2i] :
 	
 	var cells : Array[Vector2i] = []
 	var r : int = 1
-	var max_r : int = max(tiles_2d.width, tiles_2d.height)
+	var max_r : int = max(tiles.width, tiles.height)
 	while(cells.size() == 0 && r < max_r):
 		for x in range(-r, r+1):
 			var co_x : int = r - abs(x)
@@ -41,7 +39,7 @@ func get_closest_navigable_cells(cellv : Vector2i) -> Array[Vector2i] :
 	return cells
 
 func has_cell(cellv: Vector2i) -> bool:
-	return tiles_2d.has_index_v(cellv)
+	return tiles.has_index_v(cellv)
 
 func is_cell_navigable(cellv : Vector2i) -> bool:
-	return (tiles_2d.has_index_v(cellv) && tiles_2d.get_from_v(cellv) != -1)
+	return (tiles.has_index_v(cellv) && tiles.get_from_v(cellv) != -1)

@@ -3,7 +3,7 @@ extends Node2D
 
 @onready var parent_body : CharacterBody2DCust
 
-var nav_controller : NavigationBase
+var nav_controller : NavigationController
 
 var target_position : Vector2
 var seek_target_position : Vector2
@@ -40,10 +40,10 @@ func _process(delta: float) -> void:
 			animation_player.play(desired_animation)
 			last_animation_change_time = Time.get_ticks_msec()
 
-func set_nav_controller(_nav_controller : NavigationBase) -> void:
+func set_nav_controller(_nav_controller : NavigationController) -> void:
 	nav_controller = _nav_controller
 
-func get_nav_controller() -> NavigationBase:
+func get_nav_controller() -> NavigationController:
 	return nav_controller
 
 func set_body_position(_position : Vector2) -> void:

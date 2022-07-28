@@ -8,7 +8,9 @@ signal selected_cell(cell : Vector2i)
 var highlighted : bool = false
 var highlighted_cell : Vector2i
 
-var nav_controller: FlowMapNavigation
+var nav_controller : NavigationController
+#var multi_flow_map : MultiFlowMapNavigation
+#var flow_map_nav : FlowMapNavigation
 
 @onready var enemies_node: EnemiesNode = get_node("EnemiesNode")
 
@@ -20,14 +22,21 @@ var p2 := Vector2.ZERO
 var int_cells : Array[Vector2i] = []
 
 @onready var spawn_area : RectNode2D = $SpawnArea
+@onready var goal_area : RectNode2D = $GoalArea
 
-func _init():
-	nav_controller = AdvancedFlowMapNavigation.new()
 
 func _ready():
 	#get_viewport().warp_mouse(Vector2(640,320))
 	map.show_behind_parent = true
-	nav_controller.set_tile_map(map)
+	
+	#multi_flow_map = MultiFlowMapNavigation.new(map)
+	
+	self.set_as_top_level(true)
+	
+	var goal_cells := rect_to_map_cells(goal_area.get_rect())
+	#flow_map_nav = FlowMapNavigation.new(map, goal_cells)
+	
+	nav_controller = NavigationController.new(map, goal_cells)
 	
 	var spawn_rect : Rect2i
 	if(spawn_area != null):
@@ -36,7 +45,7 @@ func _ready():
 		spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
 	
 	var enemy_scene : PackedScene = preload("res://Scenes/test_enemy.tscn")
-	for i in range(300):
+	for i in range(500):
 		var params = {}
 		params["nav_controller"] = nav_controller
 		params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
@@ -61,7 +70,9 @@ func _physics_process(delta: float) -> void:
 	#var objective_cellv = Vector2i(13, 10)
 	#target_pos = map_to_world(objective_cellv)
 	
-	nav_controller.process_flow_map_segmented(objective_cellv, false, 0, true, 1)
+	#multi_flow_map.process_flow_map_segmented(objective_cellv, 0, 1)
+	#flow_map_nav.process_flow_map_segmented(1, 1)
+	nav_controller.process_maps_segmented(0, 1)
 	update()
 	
 	for enemy in enemies_node.get_enemies():
@@ -86,36 +97,6 @@ func _unhandled_input(event : InputEvent):
 			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
 			print(str("from: ", p1.floor(), " to: ", p2.floor()))
 			print(int_cells)
-			
-	if(event.is_action_pressed("key_1")):
-		var p1 = Vector2(78, 46)
-		var p2 = Vector2(1041, 562)
-		var runs = 10000
-		var t1 = Time.get_ticks_msec()
-		for i in range(runs):
-			nav_controller.has_direct_line(p1, p2)
-		var t2 = Time.get_ticks_msec()
-		print("has_direct_line ran for ", str(t2-t1), " msec(s)")
-		print("\t ~", str((t2-t1) as float / runs), " per run")
-		
-	if(event.is_action_pressed("key_2")):
-		var p1 = Vector2(78, 46)
-		var p2 = Vector2(1041, 562)
-		var runs = 10000
-		var t1 = Time.get_ticks_msec()
-		for i in range(runs):
-			var physics_layer_bit := PhysicsUtil.get_physics_layer_bit("wall")
-			var wall_collision_mask = PhysicsUtil.get_physics_layer_mask([physics_layer_bit])
-			var params := PhysicsRayQueryParameters2D.new()
-			params.collision_mask = wall_collision_mask
-			params.from = p1
-			params.to = p2
-			get_world_2d().direct_space_state.intersect_ray(params)
-		var t2 = Time.get_ticks_msec()
-		print("intersect_ray ran for ", str(t2-t1), " msec(s)")
-		print("\t ~", str((t2-t1) as float / runs), " per run")
-
-		
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -124,6 +105,16 @@ func map_to_world(map_coord : Vector2i) -> Vector2:
 # convert local world coordinate to map cell
 func world_to_map(world_coord : Vector2) -> Vector2i:
 	return map.world_to_map(world_coord)
+
+func rect_to_map_cells(rect : Rect2) -> Array[Vector2i]:
+	var p1 : Vector2i = world_to_map(rect.position)
+	var p2 : Vector2i = world_to_map(rect.end)
+	
+	var cells : Array[Vector2i] = []
+	for x in range(p1.x, p2.x+1):
+		for y in range(p1.y, p2.y+1):
+			cells.append(Vector2i(x,y))
+	return cells
 
 # convert global coordinate to local world coordinate
 func global_to_world(global_coord : Vector2) -> Vector2:
@@ -155,7 +146,9 @@ func select_cell(_cell : Vector2i):
 		print("plot_type : " + str(GardenManager.get_plot(_cell).get_plot_type()))
 
 func _draw() -> void:
-	nav_controller.draw(self, target_pos)
+	#multi_flow_map.draw(self, target_pos)
+	nav_controller.draw_goal_flow(self)
+	
 	for cell in int_cells:
 		var p_tl = map_to_world(cell) - (map.get_tile_size() as Vector2)/2
 		var p_bl = p_tl + (map.get_tile_size() as Vector2) * Vector2(0, 1)
