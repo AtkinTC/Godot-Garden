@@ -99,7 +99,7 @@ func process_cell_standard(cell):
 	for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
 		var n_cell: Vector2i = cell + direction
 		if(tile_nav_map.is_cell_navigable(n_cell)):
-			var distance: int = d_map[cell] + CARD_DIST
+			var distance: int = d_map[cell] + CARD_DIST * tile_nav_map.get_cell_nav_value(n_cell)
 			if(!d_map.has(n_cell) || distance <= d_map[n_cell]):
 				d_map[n_cell] = distance
 				# record the direction vector from neighbor cell to the current cell
@@ -115,7 +115,7 @@ func process_cell_standard(cell):
 				var n_card_1 := Vector2i(n_cell.x, cell.y)
 				var n_card_2 := Vector2i(cell.x, n_cell.y)
 				if(tile_nav_map.is_cell_navigable(n_card_1) && tile_nav_map.is_cell_navigable(n_card_2)):
-					var distance: int = d_map[cell] + DIAG_DIST
+					var distance: int = d_map[cell] + DIAG_DIST * tile_nav_map.get_cell_nav_value(n_cell)
 					if(!d_map.has(n_cell) || distance < d_map[n_cell]):
 						d_map[n_cell] = distance
 						# record the direction vector from neighbor cell to the current cell

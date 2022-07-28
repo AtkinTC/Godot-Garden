@@ -4,7 +4,7 @@ var width: int = 0
 var height: int = 0
 var array : Array = []
 
-func _init(_width: int, _height: int, init_value = null):
+func _init(_width: int, _height: int, init_value : Variant = null):
 	assert(_width > 0)
 	assert(_height > 0)
 	

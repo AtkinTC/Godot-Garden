@@ -86,6 +86,7 @@ func _unhandled_input(event : InputEvent):
 		print("-----------------")
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
+		print(str("tile_def = ", map.get_tile_identifier_for_cell(target_cell)))
 		
 		if(switch == 1):
 			p1 = target_cell as Vector2 + Vector2(0.5, 0.5)

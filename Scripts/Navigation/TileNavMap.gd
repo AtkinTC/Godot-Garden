@@ -1,10 +1,12 @@
 class_name TileNavMap
 
-var map_layer_id = 0
-var tile_map : TileMap
+const NAV_LAYER_KEY := "nav_cost"
+
+var map_layer_id : int = 0
+var tile_map : TileMapCust
 var tiles : Array2D
 
-func _init(_tile_map : TileMap):
+func _init(_tile_map : TileMapCust):
 	tile_map = _tile_map
 	
 	var used_rect := tile_map.get_used_rect()
@@ -14,8 +16,14 @@ func _init(_tile_map : TileMap):
 	tiles = Array2D.new(width, height, -1)
 	
 	for cell in tile_map.get_used_cells(map_layer_id):
-		var id = tile_map.get_cell_source_id(0, cell, false)
-		tiles.set_to_v(cell, id)
+		var tile_def : TileDefinition = tile_map.get_tile_identifier_for_cell(cell)
+		var nav_value : float = -1.0
+		if(tile_def != null):
+			nav_value = tile_def.get_custom_data(NAV_LAYER_KEY, -1.0)
+		tiles.set_to_v(cell, nav_value)
+		
+		#var id = tile_map.get_cell_source_id(0, cell, false)
+		#tiles.set_to_v(cell, id)
 
 func world_to_map(coordv: Vector2) -> Vector2i:
 	return tile_map.world_to_map(tile_map.to_local(coordv))
@@ -42,4 +50,10 @@ func has_cell(cellv: Vector2i) -> bool:
 	return tiles.has_index_v(cellv)
 
 func is_cell_navigable(cellv : Vector2i) -> bool:
-	return (tiles.has_index_v(cellv) && tiles.get_from_v(cellv) != -1)
+	return (tiles.has_index_v(cellv) && tiles.get_from_v(cellv) > 0)
+
+func get_cell_nav_value(cellv : Vector2i) -> float:
+	if(!tiles.has_index_v(cellv)):
+		return -1.0
+	else:
+		return tiles.get_from_v(cellv)
