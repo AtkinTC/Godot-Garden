@@ -6,8 +6,11 @@ var open_set : Array[Vector2i]
 var d_map : Dictionary
 var goal_cells : Array
 
-const CARD_DIST = 1.0
-const DIAG_DIST = 1.4
+const CARD_DIR = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+const DIAG_DIR = [Vector2i(1,1), Vector2i(-1,1), Vector2i(-1,-1), Vector2i(1,-1)]
+
+const CARD_DIST = 10
+const DIAG_DIST = 14
 
 func _init(_tile_nav_map : TileNavMap, _goal_cells : Array[Vector2i]):
 	tile_nav_map = _tile_nav_map
@@ -33,7 +36,7 @@ func _init(_tile_nav_map : TileNavMap, _goal_cells : Array[Vector2i]):
 	goal_cells = open_set.duplicate()
 
 func get_flow_direction(cell : Vector2i) -> Vector2:
-	if(flow_map == null):
+	if(flow_map == null || !tile_nav_map.has_cell(cell)):
 		return Vector2.ZERO
 	return flow_map.get_from_v(cell).normalized()
 
@@ -94,33 +97,34 @@ func process_next_open_cell():
 	
 	process_cell_standard(cell)
 
-func process_cell_standard(cell):
+func process_cell_standard(cell : Vector2i):
 	# cardinal directions
-	for direction in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+	for direction in CARD_DIR:
 		var n_cell: Vector2i = cell + direction
 		if(tile_nav_map.is_cell_navigable(n_cell)):
-			var distance: int = d_map[cell] + CARD_DIST * tile_nav_map.get_cell_nav_value(n_cell)
+			var distance: int = d_map[cell] + CARD_DIST * tile_nav_map.get_cell_nav_value(cell)
 			if(!d_map.has(n_cell) || distance <= d_map[n_cell]):
 				d_map[n_cell] = distance
 				# record the direction vector from neighbor cell to the current cell
 				flow_map.set_to_v(n_cell, ((cell-n_cell) as Vector2).normalized())
-				open_set.append(n_cell)
+				if(!open_set.has(n_cell)):
+					open_set.append(n_cell)
 
 	# diagonal directions
-	for x in [-1,1]:
-		for y in [-1, 1]:
-			var n_cell : Vector2i = cell + Vector2i(x,y)
+	for direction in DIAG_DIR:
+			var n_cell : Vector2i = cell + direction
 			if(tile_nav_map.is_cell_navigable(n_cell)):
 				# two cardinal neighbors both need to be open to consider diagonal
 				var n_card_1 := Vector2i(n_cell.x, cell.y)
 				var n_card_2 := Vector2i(cell.x, n_cell.y)
 				if(tile_nav_map.is_cell_navigable(n_card_1) && tile_nav_map.is_cell_navigable(n_card_2)):
-					var distance: int = d_map[cell] + DIAG_DIST * tile_nav_map.get_cell_nav_value(n_cell)
+					var distance: int = d_map[cell] + DIAG_DIST * tile_nav_map.get_cell_nav_value(cell)
 					if(!d_map.has(n_cell) || distance < d_map[n_cell]):
 						d_map[n_cell] = distance
 						# record the direction vector from neighbor cell to the current cell
 						flow_map.set_to_v(n_cell, ((cell-n_cell) as Vector2).normalized())
-						open_set.append(n_cell)
+						if(!open_set.has(n_cell)):
+							open_set.append(n_cell)
 
 func process_cell_advanced(cell):
 	var target_cell : Vector2i = ((cell as Vector2) + flow_map.get_from_v(cell)) as Vector2i
@@ -140,7 +144,7 @@ func process_cell_advanced(cell):
 					break
 			if(direct):
 				var vec : Vector2 = ((target_cell - n_cell) as Vector2)
-				var distance: float = vec.length() + d_map[target_cell]
+				var distance: float =  d_map[target_cell] + vec.length()
 				if(!d_map.has(n_cell) || distance < d_map[n_cell]):
 					d_map[n_cell] = distance
 					# record the direction vector from neighbor cell to the current cell
