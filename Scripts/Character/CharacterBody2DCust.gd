@@ -22,6 +22,8 @@ var setup_params : Dictionary = {}
 @export var retarget_cooldown : int = 0
 var last_retarget : int = 0
 
+@export var nav_width : int = 0
+
 func set_setup_params(_params : Dictionary):
 	setup_params = _params
 	position = _params.get("position", position)
@@ -81,6 +83,11 @@ func _draw() -> void:
 	#draw_line(Vector2.ZERO, (practical_target_position - position).normalized() * max_speed, Color.blue, 2)
 	#draw_line(Vector2.ZERO, move_vector, Color.green, 2)
 	
+#	var sc : SteeringComponent2D
+#	sc = steering_components[SteeringComponent2D.STEERING_TYPE.WALL_SEPERATION]
+#	if(sc != null):
+#		sc.draw()
+	
 	#for steering_component in steering_components:
 	#	steering_component.draw()
 	pass
@@ -97,7 +104,7 @@ func update_seek_target():
 		return
 	
 	#var flow_vector := nav_controller.get_targeted_nav_direction(position, target_position)
-	var flow_vector := nav_controller.get_goal_nav_direction(position)
+	var flow_vector := nav_controller.get_goal_nav_direction(position, nav_width)
 	seek_target_position = position + flow_vector * max_speed
 	return
 	

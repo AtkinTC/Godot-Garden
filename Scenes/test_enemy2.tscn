@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://drq02gxkbfgko"]
+[gd_scene load_steps=13 format=3 uid="uid://b4lvjejurv818"]
 
 [ext_resource type="Script" path="res://Scripts/Character/CharacterBody2DCust.gd" id="1_nfs0u"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Character/EnemyController.gd" id="7_yf40b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
-radius = 8.0
+radius = 16.0
 
 [sub_resource type="Animation" id="Animation_tpsu3"]
 resource_name = "idle"
@@ -69,29 +69,29 @@ collision_mask = 4
 script = ExtResource("1_nfs0u")
 roation_sourc_node = NodePath("RotationNode")
 visuals_source_node = NodePath("RotationNode/VisualsNode")
-max_speed = 30.0
+max_speed = 25.0
 retarget_cooldown = 100
-nav_width = 16
+nav_width = 34
 
 [node name="SeekSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("2_u45d0")
-max_force = 30.0
+max_force = 40.0
 calculation_cooldown = 100
 automatic = false
 
 [node name="SeperationSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("3_ih00y")
-max_force = 30.0
+max_force = 15.0
 calculation_cooldown = 250
-outer_seperation_distance = 16.0
-inner_seperation_distance = 8.0
+outer_seperation_distance = 22.0
+inner_seperation_distance = 14.0
 
 [node name="WallSeperationSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("4_t2d02")
-max_force = 25.0
+max_force = 30.0
 calculation_cooldown = 100
-outer_seperation_distance = 12.0
-inner_seperation_distance = 8.0
+outer_seperation_distance = 26.0
+inner_seperation_distance = 16.0
 
 [node name="WanderSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("5_42n0a")
@@ -111,8 +111,10 @@ shape = SubResource("CircleShape2D_mgevr")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="RotationNode/VisualsNode"]
 texture_filter = 1
+scale = Vector2(2, 2)
 frames = ExtResource("6_t5wi7")
 animation = &"idle"
+speed_scale = 0.5
 playing = true
 
 [node name="EnemyController" type="Node2D" parent="." node_paths=PackedStringArray("animation_player")]

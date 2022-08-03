@@ -9,8 +9,6 @@ var highlighted : bool = false
 var highlighted_cell : Vector2i
 
 var nav_controller : NavigationController
-#var multi_flow_map : MultiFlowMapNavigation
-#var flow_map_nav : FlowMapNavigation
 
 @onready var enemies_node: EnemiesNode = get_node("EnemiesNode")
 
@@ -24,18 +22,14 @@ var int_cells : Array[Vector2i] = []
 @onready var spawn_area : RectNode2D = $SpawnArea
 @onready var goal_area : RectNode2D = $GoalArea
 
+@export var font : Font
 
 func _ready():
 	#get_viewport().warp_mouse(Vector2(640,320))
 	map.show_behind_parent = true
 	
-	#multi_flow_map = MultiFlowMapNavigation.new(map)
-	
 	self.set_as_top_level(true)
-	
 	var goal_cells := rect_to_map_cells(goal_area.get_rect())
-	#flow_map_nav = FlowMapNavigation.new(map, goal_cells)
-	
 	nav_controller = NavigationController.new(map, goal_cells)
 	
 	var spawn_rect : Rect2i
@@ -44,18 +38,19 @@ func _ready():
 	else:
 		spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
 	
-	var enemy_scene : PackedScene = preload("res://Scenes/test_enemy.tscn")
+	var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
+	var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
 	for i in range(500):
 		var params = {}
 		params["nav_controller"] = nav_controller
 		params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
 		params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
 		
-		enemies_node.create_enemy(enemy_scene, params)
+		if(randf() < 0.95):
+			enemies_node.create_enemy(enemy_scene1, params)
+		else:
+			enemies_node.create_enemy(enemy_scene2, params)
 		await(get_tree().create_timer(0.05).timeout)
-		#yield(get_tree().create_timer(0.02), "timeout")
-	
-	pass
 
 func _process(_delta):
 	pass
@@ -67,11 +62,7 @@ func get_world_center() -> Vector2:
 func _physics_process(delta: float) -> void:
 	target_pos = get_global_mouse_position()
 	var objective_cellv := world_to_map(target_pos)
-	#var objective_cellv = Vector2i(13, 10)
-	#target_pos = map_to_world(objective_cellv)
-	
-	#multi_flow_map.process_flow_map_segmented(objective_cellv, 0, 1)
-	#flow_map_nav.process_flow_map_segmented(1, 1)
+
 	nav_controller.process_maps_segmented(0, 1)
 	update()
 	
@@ -82,7 +73,6 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var target_cell := screen_to_map(event.position)
-		select_cell(target_cell)
 		print("-----------------")
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
@@ -136,19 +126,9 @@ func screen_to_map(global_coord : Vector2) -> Vector2i:
 func get_tile_size() -> Vector2i:
 	return map.get_tile_size()
 
-func select_cell(_cell : Vector2i):
-	if(_cell in GardenManager.get_used_plot_coords()):
-		selected_cell.emit(_cell)
-		
-		#TDOD : remove this test code
-		GardenManager.complete_exploration(_cell)
-		print(_cell)
-		print("base_type : " + str(GardenManager.get_plot(_cell).get_base_type()))
-		print("plot_type : " + str(GardenManager.get_plot(_cell).get_plot_type()))
-
 func _draw() -> void:
-	#multi_flow_map.draw(self, target_pos)
-	nav_controller.draw_goal_flow(self)
+	nav_controller.draw_goal_flow(self, 2)
+	nav_controller.draw_cell_widths(self, font)
 	
 	for cell in int_cells:
 		var p_tl = map_to_world(cell) - (map.get_tile_size() as Vector2)/2
