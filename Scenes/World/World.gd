@@ -40,7 +40,7 @@ func _ready():
 	
 	var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
 	var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
-	for i in range(500):
+	for i in range(400):
 		var params = {}
 		params["nav_controller"] = nav_controller
 		params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
@@ -78,16 +78,16 @@ func _unhandled_input(event : InputEvent):
 		print(str("target_cell =", target_cell))
 		print(str("tile_def = ", map.get_tile_identifier_for_cell(target_cell)))
 		
-		if(switch == 1):
-			p1 = target_cell as Vector2 + Vector2(0.5, 0.5)
-			int_cells = []
-			switch = 2
-		elif(switch == 2):
-			p2 = target_cell as Vector2 + Vector2(0.5, 0.5)
-			switch = 1
-			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
-			print(str("from: ", p1.floor(), " to: ", p2.floor()))
-			print(int_cells)
+#		if(switch == 1):
+#			p1 = target_cell as Vector2 + Vector2(0.5, 0.5)
+#			int_cells = []
+#			switch = 2
+#		elif(switch == 2):
+#			p2 = target_cell as Vector2 + Vector2(0.5, 0.5)
+#			switch = 1
+#			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
+#			print(str("from: ", p1.floor(), " to: ", p2.floor()))
+#			print(int_cells)
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -99,7 +99,7 @@ func world_to_map(world_coord : Vector2) -> Vector2i:
 
 func rect_to_map_cells(rect : Rect2) -> Array[Vector2i]:
 	var p1 : Vector2i = world_to_map(rect.position)
-	var p2 : Vector2i = world_to_map(rect.end)
+	var p2 : Vector2i = world_to_map(rect.end-Vector2(1,1))
 	
 	var cells : Array[Vector2i] = []
 	for x in range(p1.x, p2.x+1):
@@ -127,7 +127,7 @@ func get_tile_size() -> Vector2i:
 	return map.get_tile_size()
 
 func _draw() -> void:
-	nav_controller.draw_goal_flow(self, 2)
+	nav_controller.draw_goal_flow(self, 1)
 	nav_controller.draw_cell_widths(self, font)
 	
 	for cell in int_cells:

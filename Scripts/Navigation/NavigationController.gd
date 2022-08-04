@@ -1,5 +1,7 @@
 class_name NavigationController
 
+const NAV_WIDTH_BUFFER := 6
+
 var tile_map: TileMapCust
 var goal_cells : Array[Vector2i] = []
 
@@ -49,8 +51,9 @@ func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 func get_nav_width(_real_width : int = 0) -> int:
 	if(_real_width <= 0):
 		return 1
+	var adj_width = _real_width + NAV_WIDTH_BUFFER
 	var tile_size := tile_map.get_tile_size()
-	var nav_width : int = ceil(max(float(_real_width)/float(tile_size.x), float(_real_width)/float(tile_size.y)))
+	var nav_width : int = ceil(max(float(adj_width)/float(tile_size.x), float(adj_width)/float(tile_size.y)))
 	return nav_width
 
 func get_width_adjusted_nav_position(_real_position : Vector2, _real_width : int):

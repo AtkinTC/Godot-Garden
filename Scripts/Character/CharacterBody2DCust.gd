@@ -22,7 +22,8 @@ var setup_params : Dictionary = {}
 @export var retarget_cooldown : int = 0
 var last_retarget : int = 0
 
-@export var nav_width : int = 0
+#TODO: investigate way to base body radius off real collision shape
+@export var body_radius : float = 0
 
 func set_setup_params(_params : Dictionary):
 	setup_params = _params
@@ -53,29 +54,16 @@ func _physics_process(delta: float) -> void:
 		update_seek_target()
 	
 	calculate_steering_force(delta)
-
-	var max_speed_vector = move_vector * max_speed
-	var max_speed_temp = max_speed_vector.length()
-	if(move_vector.length() > max_speed):
-		var excess = move_vector.length() - max_speed
-		move_vector *= (1.0 - (excess/max_speed) * 2.0 * delta)
+	
 	move_vector += steering_force * delta
 	move_vector.limit_length(max_speed)
 	set_velocity(move_vector + get_knockback())
 	move_and_slide()
-
-#	move_vector = steering_force
-#	var move_velocity = velocity + move_vector * delta
-#	move_velocity *= (1.0 - (0.3) * delta)
-#	move_velocity = move_velocity.limit_length(max_speed)
-#	set_velocity(move_velocity + get_knockback())
-	
-#	move_and_slide()
 	
 	if(!move_vector.is_equal_approx(Vector2.ZERO) && !knockback_state):
 		set_facing_direction(move_vector.normalized())
 	
-		#end knockback if collided
+	#end knockback if collided
 	if(get_slide_collision_count() > 0 && knockback_state):
 		set_knockback(0.0)
 
@@ -84,7 +72,7 @@ func _draw() -> void:
 	#draw_line(Vector2.ZERO, move_vector, Color.green, 2)
 	
 #	var sc : SteeringComponent2D
-#	sc = steering_components[SteeringComponent2D.STEERING_TYPE.WALL_SEPERATION]
+#	sc = steering_components[SteeringComponent2D.STEERING_TYPE.WALL_SEPARATION]
 #	if(sc != null):
 #		sc.draw()
 	
@@ -104,7 +92,7 @@ func update_seek_target():
 		return
 	
 	#var flow_vector := nav_controller.get_targeted_nav_direction(position, target_position)
-	var flow_vector := nav_controller.get_goal_nav_direction(position, nav_width)
+	var flow_vector := nav_controller.get_goal_nav_direction(position, body_radius*2)
 	seek_target_position = position + flow_vector * max_speed
 	return
 	
@@ -152,7 +140,7 @@ func calculate_steering_force(delta: float) -> void:
 	if(!knockback_state):
 		steering_force += manual_steering
 	
-	steering_force = (steering_force * max_speed).limit_length(max_speed) 
+	steering_force = (steering_force).limit_length(max_speed)
 
 #############
 # KNOCKBACK #
@@ -213,6 +201,9 @@ func get_seek_target_position() -> Vector2:
 
 func get_max_speed() -> float:
 	return max_speed
+
+func get_body_radius() -> float:
+	return body_radius
 
 func _on_Hurtbox_took_hit(source: Hurtbox, hit_data: Dictionary):
 	if(hit_data.has("damage")):

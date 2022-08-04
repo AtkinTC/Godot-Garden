@@ -150,9 +150,9 @@ _global_script_classes=[{
 "path": "res://Scripts/Steering/SeekSteeringComponent2D.gd"
 }, {
 "base": "SteeringComponent2D",
-"class": &"SeperationSteeringComponent2D",
+"class": &"SeparationSteeringComponent2D",
 "language": &"GDScript",
-"path": "res://Scripts/Steering/SeperationSteeringComponent2D.gd"
+"path": "res://Scripts/Steering/SeparationSteeringComponent2D.gd"
 }, {
 "base": "Node2D",
 "class": &"SteeringComponent2D",
@@ -215,9 +215,9 @@ _global_script_classes=[{
 "path": "res://Scripts/Util/Utils.gd"
 }, {
 "base": "SteeringComponent2D",
-"class": &"WallSeperationSteeringComponent2D",
+"class": &"WallSeparationSteeringComponent2D",
 "language": &"GDScript",
-"path": "res://Scripts/Steering/WallSeperationSteeringComponent2D.gd"
+"path": "res://Scripts/Steering/WallSeparationSteeringComponent2D.gd"
 }, {
 "base": "SteeringComponent2D",
 "class": &"WanderSteeringComponent2D",
@@ -268,7 +268,7 @@ _global_script_class_icons={
 "RectNode2D": "",
 "SaveFileResource": "",
 "SeekSteeringComponent2D": "",
-"SeperationSteeringComponent2D": "",
+"SeparationSteeringComponent2D": "",
 "SteeringComponent2D": "",
 "Structure": "",
 "StructureComponenet": "",
@@ -281,7 +281,7 @@ _global_script_class_icons={
 "TooltipHost": "",
 "TooltipPanel": "",
 "Utils": "",
-"WallSeperationSteeringComponent2D": "",
+"WallSeparationSteeringComponent2D": "",
 "WanderSteeringComponent2D": "",
 "WaveCollapse": "",
 "WaveCollapseV2": "",
