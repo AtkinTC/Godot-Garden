@@ -67,7 +67,13 @@ func get_width_adjusted_nav_position(_real_position : Vector2, _real_width : int
 	var adj_position = _real_position - Vector2(_real_width, _real_width)/2
 	return adj_position
 
-func get_goal_nav_direction(_start_pos: Vector2, _real_width : int = 0) -> Vector2:
+func get_goal_nav_direction(_start_pos: Vector2, _real_width : int = 0, weighted := false) -> Vector2:
+	if(weighted):
+		return get_goal_nav_direction_weighted(_start_pos, _real_width)
+	else:
+		return get_goal_nav_direction_unweighted(_start_pos, _real_width)
+
+func get_goal_nav_direction_unweighted(_start_pos: Vector2, _real_width : int = 0) -> Vector2:
 	var nav_width = get_nav_width(_real_width)
 	if(nav_width > tile_nav_map.get_effective_max_width()):
 		return Vector2.ZERO
@@ -77,6 +83,54 @@ func get_goal_nav_direction(_start_pos: Vector2, _real_width : int = 0) -> Vecto
 	var start_cell = tile_map.world_to_map(adj_start_pos)
 	var dir := goal_flow_maps[nav_width-1].get_flow_direction(start_cell)
 	return dir
+
+func get_goal_nav_direction_weighted(_start_pos: Vector2, _real_width : int = 0) -> Vector2:
+	var nav_width = get_nav_width(_real_width)
+	if(nav_width > tile_nav_map.get_effective_max_width()):
+		return Vector2.ZERO
+	var adj_start_pos = _start_pos
+	if(nav_width > 1):
+		adj_start_pos = get_width_adjusted_nav_position(_start_pos, _real_width)
+	var start_cell = tile_map.world_to_map(adj_start_pos)
+	var offset := get_cell_weighted_offset(_start_pos)
+	var offset_s : Vector2 = sign(offset)
+	
+	var flow_map := goal_flow_maps[nav_width-1]
+	
+	var div : float = 1.0
+	var summed_dir : Vector2 = flow_map.get_flow_direction(start_cell)
+	if(!is_equal_approx(offset.x, 0.0)):
+		var dir : Vector2= flow_map.get_flow_direction(start_cell + Vector2i(offset_s.x, 0))
+		if(!is_equal_approx(dir.length_squared(), 0.0)):
+			var multi : float = abs(offset.x)
+			summed_dir += dir * multi
+			div += multi
+	if(!is_equal_approx(offset.y, 0.0)):
+		var dir : Vector2 = flow_map.get_flow_direction(start_cell + Vector2i(0,offset_s.y))
+		if(!is_equal_approx(dir.length_squared(), 0.0)):
+			var multi : float = abs(offset.y)
+			summed_dir += dir * multi
+			div += multi
+	if(!is_equal_approx(offset.x, 0.0) && !is_equal_approx(offset.y, 0.0)):
+		var dir : Vector2 = flow_map.get_flow_direction(start_cell + Vector2i(offset_s.x, offset_s.y))
+		if(!is_equal_approx(dir.length_squared(), 0.0)):
+			var multi : float = abs(offset.x) * abs(offset.y)
+			summed_dir += dir * multi
+			div += multi
+		
+	return summed_dir / div
+
+func get_cell_weighted_offset(_pos: Vector2) -> Vector2:
+	var offset := Vector2.ZERO
+	var cell : Vector2i = tile_map.world_to_map(_pos)
+	var center = tile_map.map_to_world(cell)
+	var diff := _pos - center
+	
+	var tile_size := tile_map.get_tile_size()
+	var r_x : float = pow(diff.x*2/tile_size.x, 2) * sign(diff.x)
+	var r_y : float = pow(diff.y*2/tile_size.y, 2) * sign(diff.y)
+	
+	return Vector2(r_x, r_y)
 
 func get_targeted_nav_direction(start_pos: Vector2, target_pos: Vector2) -> Vector2:
 	var start_cell = tile_map.world_to_map(start_pos)

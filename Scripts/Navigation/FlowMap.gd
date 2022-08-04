@@ -43,35 +43,6 @@ func get_flow_direction(cell : Vector2i) -> Vector2:
 		return Vector2.ZERO
 	return flow_map.get_from_v(cell).normalized()
 
-#func get_weighted_flow_direction(start_pos: Vector2, target_pos: Vector2) -> Vector2:
-#	var startv: Vector2 = world_to_map(start_pos)
-#	var targetv: Vector2 = world_to_map(target_pos)
-#
-#	var flow_dir: Vector2 = Vector2.ZERO
-#
-#	var flow_map_2d: Array2D = flow_maps.get(targetv)
-#	var main_flow: Vector2 = flow_map_2d.get_from_v(startv)
-#	var cell_mid := (startv + Vector2(0.5,0.5)) * (tile_map.cell_size as Vector2)
-#	var from_center_v := (start_pos - cell_mid) / ((tile_map.cell_size as Vector2)/2)
-#
-#	var cutoff = 0.333
-#	if(abs(from_center_v.x) > cutoff):
-#		var x_coord = ceil(abs(from_center_v.x)) * sign(from_center_v.x)
-#		if(startv.x + x_coord >= 0 && startv.x + x_coord < flow_map_2d.width):
-#			var flow: Vector2 = flow_map_2d.get_from(startv.x + x_coord, startv.y)
-#			if(flow.length_squared() > 0 && main_flow - flow != Vector2.ZERO):
-#				flow_dir += flow * (abs(from_center_v.x) - cutoff)/cutoff
-#
-#	if(abs(from_center_v.y) > cutoff):
-#		var y_coord = ceil(abs(from_center_v.y)) * sign(from_center_v.y)
-#		if(startv.y + y_coord >= 0 && startv.y + y_coord < flow_map_2d.height):
-#			var flow: Vector2 = flow_map_2d.get_from(startv.x, startv.y + y_coord)
-#			if(flow.length_squared() > 0 && main_flow - flow != Vector2.ZERO):
-#				flow_dir += flow * (abs(from_center_v.y) - cutoff)/cutoff
-#
-#	flow_dir += main_flow
-#	return flow_dir.normalized()
-
 func is_complete():
 	return open_set.is_empty()
 
