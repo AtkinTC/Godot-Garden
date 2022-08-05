@@ -3,8 +3,6 @@ extends Node2D
 
 signal selected_cell(cell : Vector2i)
 
-@onready var map : TileMapCust = $WorldTileMap
-
 var highlighted : bool = false
 var highlighted_cell : Vector2i
 
@@ -19,38 +17,71 @@ var p1 := Vector2.ZERO
 var p2 := Vector2.ZERO
 var int_cells : Array[Vector2i] = []
 
-@onready var spawn_area : RectNode2D = $SpawnArea
-@onready var goal_area : RectNode2D = $GoalArea
-
 @export var font : Font
 
+@export var level_scene : PackedScene
+
+@onready var cam : Camera2D = $Camera
+
+var level : Level
+var spawn_area : RectNode2D
+var goal_area : RectNode2D
+var map : TileMapCust
+
+var world_ready : bool = false
+
 func _ready():
-	#get_viewport().warp_mouse(Vector2(640,320))
+	level = get_node("Level")
+	
+	if(level_scene != null):
+		if(level != null):
+			level.queue_free()
+		level = level_scene.instantiate()
+		level.ready.connect(_on_ready)
+		add_child(level)
+		move_child(level, 0)
+	else:
+		_on_ready()
+
+func _on_ready():
+	map = level.get_tile_map()
+	spawn_area = level.get_spawn_area()
+	goal_area = level.get_goal_area()
+	
+	level.show_behind_parent = true
 	map.show_behind_parent = true
 	
+	var center : Vector2 = get_world_center()
+	cam.set_position(center)
+	
 	self.set_as_top_level(true)
-	var goal_cells := rect_to_map_cells(goal_area.get_rect())
+	var goal_cells : Array[Vector2i] = []
+	if(goal_area):
+		goal_cells = rect_to_map_cells(goal_area.get_rect())
 	nav_controller = NavigationController.new(map, goal_cells)
 	
-	var spawn_rect : Rect2i
-	if(spawn_area != null):
-		spawn_rect = spawn_area.get_rect()
-	else:
-		spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
+	world_ready = true
 	
-	var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
-	var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
-	for i in range(400):
-		var params = {}
-		params["nav_controller"] = nav_controller
-		params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
-		params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
-		
-		if(randf() < 0.95):
-			enemies_node.create_enemy(enemy_scene1, params)
+	if(spawn_area):
+		var spawn_rect : Rect2i
+		if(spawn_area != null):
+			spawn_rect = spawn_area.get_rect()
 		else:
-			enemies_node.create_enemy(enemy_scene2, params)
-		await(get_tree().create_timer(0.05).timeout)
+			spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
+		
+		var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
+		var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
+		for i in range(10):
+			var params = {}
+			params["nav_controller"] = nav_controller
+			params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
+			params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
+			
+			if(randf() < 0.95):
+				enemies_node.create_enemy(enemy_scene1, params)
+			else:
+				enemies_node.create_enemy(enemy_scene2, params)
+			await(get_tree().create_timer(0.05).timeout)
 
 func _process(_delta):
 	pass
@@ -60,6 +91,9 @@ func get_world_center() -> Vector2:
 	return map_to_world(center)
 
 func _physics_process(delta: float) -> void:
+	if(!world_ready):
+		return
+		
 	target_pos = get_global_mouse_position()
 	var objective_cellv := world_to_map(target_pos)
 
@@ -77,17 +111,6 @@ func _unhandled_input(event : InputEvent):
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
 		print(str("tile_def = ", map.get_tile_identifier_for_cell(target_cell)))
-		
-#		if(switch == 1):
-#			p1 = target_cell as Vector2 + Vector2(0.5, 0.5)
-#			int_cells = []
-#			switch = 2
-#		elif(switch == 2):
-#			p2 = target_cell as Vector2 + Vector2(0.5, 0.5)
-#			switch = 1
-#			int_cells = Utils.greedy_line_raster(p1.floor(), p2.floor())
-#			print(str("from: ", p1.floor(), " to: ", p2.floor()))
-#			print(int_cells)
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -127,16 +150,8 @@ func get_tile_size() -> Vector2i:
 	return map.get_tile_size()
 
 func _draw() -> void:
+	if(!world_ready):
+		return
+		
 	nav_controller.draw_goal_flow(self, 1)
-	nav_controller.draw_cell_widths(self, font)
-	
-	for cell in int_cells:
-		var p_tl = map_to_world(cell) - (map.get_tile_size() as Vector2)/2
-		var p_bl = p_tl + (map.get_tile_size() as Vector2) * Vector2(0, 1)
-		var p_br = p_tl + (map.get_tile_size() as Vector2) * Vector2(1, 1)
-		var p_tr = p_tl + (map.get_tile_size() as Vector2) * Vector2(1, 0)
-		draw_polyline([p_tl, p_tr, p_tr, p_br, p_br, p_bl, p_bl, p_tl], Color.BLACK)
-	
-	if(switch == 1 && p1 != p2):
-		draw_line(p1*(map.get_tile_size() as Vector2), p2*(map.get_tile_size() as Vector2), Color.RED, 3)
-	pass
+	#nav_controller.draw_cell_widths(self, font)

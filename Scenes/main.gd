@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var world : World = $World
-@onready var cam : Camera2D = $Camera
+
 
 func _init():
 	GardenManager.initialize()
@@ -14,9 +14,6 @@ func _ready():
 		GardenManager.setup_from_plots_array(current_save_file.world_plots)
 	else:
 		setup_test_data()
-	
-	var center : Vector2 = world.get_world_center()
-	cam.set_position(center)
 	
 	#get_tree().create_timer(10).timeout.connect(_autosave)
 

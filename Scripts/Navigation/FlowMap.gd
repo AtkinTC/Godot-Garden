@@ -151,5 +151,7 @@ func draw(node: Node2D, cell_size: Vector2i):
 				var endv: Vector2  = startv + flow * 16.0
 				lines_1.append_array([startv, endv])
 				lines_2.append_array([endv - (endv-startv).normalized() * 5, endv])
-	node.draw_multiline(lines_1, Color.BLUE, 3.0)
-	node.draw_multiline(lines_2, Color.RED, 3.0)
+	if(lines_1.size() >= 2):
+		node.draw_multiline(lines_1, Color.BLUE, 3.0)
+	if(lines_2.size() >= 2):
+		node.draw_multiline(lines_2, Color.RED, 3.0)

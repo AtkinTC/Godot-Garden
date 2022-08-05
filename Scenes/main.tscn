@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bca7nophpqfhi"]
+[gd_scene load_steps=9 format=3 uid="uid://bca7nophpqfhi"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scripts/FPSLabel.gd" id="2_vu22e"]
-[ext_resource type="PackedScene" uid="uid://c0eby5170widg" path="res://Scenes/World/test_world_long_path.tscn" id="3_vj6ul"]
+[ext_resource type="Script" path="res://Scenes/World/World.gd" id="4_6f46h"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_sbgaj"]
+[ext_resource type="FontData" uid="uid://cr63swgjcfq5p" path="res://Assets/Fonts/Kenney Pixel Square.ttf" id="5_6hqjy"]
+[ext_resource type="Script" path="res://Scripts/Character/EnemiesNode.gd" id="6_gi4ww"]
+[ext_resource type="PackedScene" uid="uid://d2bci0hi8q8jr" path="res://Scenes/Levels/test_level_001.tscn" id="6_n3qb3"]
+
+[sub_resource type="Font" id="Font_85eqt"]
+data/0 = ExtResource("5_6hqjy")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_83mxw")
@@ -24,9 +30,15 @@ offset_bottom = 23.0
 horizontal_alignment = 1
 script = ExtResource("2_vu22e")
 
-[node name="World" parent="." instance=ExtResource("3_vj6ul")]
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("4_6f46h")
+font = SubResource("Font_85eqt")
+level_scene = ExtResource("6_n3qb3")
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="EnemiesNode" type="Node2D" parent="World"]
+script = ExtResource("6_gi4ww")
+
+[node name="Camera" type="Camera2D" parent="World"]
 current = true
 script = ExtResource("4_sbgaj")
 acceleration = 0.1
