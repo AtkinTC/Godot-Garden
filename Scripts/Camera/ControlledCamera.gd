@@ -1,5 +1,5 @@
+class_name ControlledCamera2D
 extends Camera2D
-class_name CustCamera2D
 
 @export var left_action : String = "ui_left"
 @export var right_action : String = "ui_right"
@@ -9,14 +9,14 @@ class_name CustCamera2D
 @export var zoom_out_action : String= "zoom_out"
 
 @export var max_speed := 500.0
-@export_range(0.0, 1.0) var acceleration := 1.0
+@export_range(0.0, 1.0) var acceleration := 0.1
 @export_range(0.0, 1.0) var deceleration := 0.1
 
 var move_direction := Vector2.ZERO
 var move_speed = Vector2.ZERO
 
-@export_range(0.0, 10.0) var min_zoom : float = 0.5
-@export_range(0.0, 10.0) var max_zoom : float = 2.0
+@export_range(0.0, 10.0) var min_zoom : float = 0.25
+@export_range(0.0, 10.0) var max_zoom : float = 3.0
 @export_range(0.0, 10.0) var zoom_level : float = 1.0
 
 @export_range(0.0, 10.0) var max_zoom_speed := 0.025

@@ -8,66 +8,47 @@ var highlighted_cell : Vector2i
 
 var nav_controller : NavigationController
 
-@onready var enemies_node: EnemiesNode = get_node("EnemiesNode")
-
 var target_pos := Vector2.ZERO
-
-var switch : int = 1
-var p1 := Vector2.ZERO
-var p2 := Vector2.ZERO
-var int_cells : Array[Vector2i] = []
 
 @export var font : Font
 
-@export var level_scene : PackedScene
-
-@onready var cam : Camera2D = $Camera
-
-var level : Level
-var spawn_area : RectNode2D
-var goal_area : RectNode2D
-var map : TileMapCust
-
-var world_ready : bool = false
+@onready var camera : Camera2D = $Camera
+@onready var player : Player = $Player
+@onready var spawn_areas : Array[RectNode2D] = []
+@onready var goal_areas : Array[RectNode2D] = []
+@onready var tile_map : TileMapCust = get_node_or_null("TileMap")
+@onready var enemies_node: EnemiesNode = get_node_or_null("EnemiesNode")
 
 func _ready():
-	level = get_node("Level")
+	tile_map.show_behind_parent = true
 	
-	if(level_scene != null):
-		if(level != null):
-			level.queue_free()
-		level = level_scene.instantiate()
-		level.ready.connect(_on_ready)
-		add_child(level)
-		move_child(level, 0)
-	else:
-		_on_ready()
-
-func _on_ready():
-	map = level.get_tile_map()
-	spawn_area = level.get_spawn_area()
-	goal_area = level.get_goal_area()
+	var spawn_areas_node = get_node_or_null("SpawnAreas")
+	if(spawn_areas_node):
+		for child in spawn_areas_node.get_children():
+			if(child is RectNode2D):
+				spawn_areas.append(child)
 	
-	level.show_behind_parent = true
-	map.show_behind_parent = true
+	var goal_areas_node = get_node_or_null("GoalAreas")
+	if(goal_areas_node):
+		for child in goal_areas_node.get_children():
+			if(child is RectNode2D):
+				goal_areas.append(child)
 	
 	var center : Vector2 = get_world_center()
-	cam.set_position(center)
+	if(camera):
+		camera.set_position(center)
+	
+	if(player):
+		player.set_position(center)
 	
 	self.set_as_top_level(true)
 	var goal_cells : Array[Vector2i] = []
-	if(goal_area):
-		goal_cells = rect_to_map_cells(goal_area.get_rect())
-	nav_controller = NavigationController.new(map, goal_cells)
+	for goal_area in goal_areas:
+		goal_cells.append_array(rect_to_map_cells(goal_area.get_rect()))
+	nav_controller = NavigationController.new(tile_map, goal_cells)
 	
-	world_ready = true
-	
-	if(spawn_area):
-		var spawn_rect : Rect2i
-		if(spawn_area != null):
-			spawn_rect = spawn_area.get_rect()
-		else:
-			spawn_rect = Rect2i(Vector2i(896, 448), Vector2i(128, 128))
+	if(spawn_areas.size() > 0):
+		var spawn_rect : Rect2i = spawn_areas[0].get_rect()
 		
 		var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
 		var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
@@ -87,13 +68,10 @@ func _process(_delta):
 	pass
 
 func get_world_center() -> Vector2:
-	var center := map.get_used_rect().get_center()
+	var center := tile_map.get_used_rect().get_center()
 	return map_to_world(center)
 
 func _physics_process(delta: float) -> void:
-	if(!world_ready):
-		return
-		
 	target_pos = get_global_mouse_position()
 	var objective_cellv := world_to_map(target_pos)
 
@@ -110,15 +88,15 @@ func _unhandled_input(event : InputEvent):
 		print("-----------------")
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
-		print(str("tile_def = ", map.get_tile_identifier_for_cell(target_cell)))
+		print(str("tile_def = ", tile_map.get_tile_identifier_for_cell(target_cell)))
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
-	return map.map_to_world(map_coord)
+	return tile_map.map_to_world(map_coord)
 
 # convert local world coordinate to map cell
 func world_to_map(world_coord : Vector2) -> Vector2i:
-	return map.world_to_map(world_coord)
+	return tile_map.world_to_map(world_coord)
 
 func rect_to_map_cells(rect : Rect2) -> Array[Vector2i]:
 	var p1 : Vector2i = world_to_map(rect.position)
@@ -147,11 +125,8 @@ func screen_to_map(global_coord : Vector2) -> Vector2i:
 	return world_to_map(screen_to_world(global_coord))
 
 func get_tile_size() -> Vector2i:
-	return map.get_tile_size()
+	return tile_map.get_tile_size()
 
 func _draw() -> void:
-	if(!world_ready):
-		return
-		
 	nav_controller.draw_goal_flow(self, 1)
 	#nav_controller.draw_cell_widths(self, font)

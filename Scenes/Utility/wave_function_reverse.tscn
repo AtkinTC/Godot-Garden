@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b05hilek1n4q6"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Scripts/TileMap/WaveFunctionReverse.gd" id="1_nmxif"]
 [ext_resource type="Script" path="res://Scenes/World/World.gd" id="1_utbu7"]
 [ext_resource type="TileSet" uid="uid://bhhoks17ap40p" path="res://Assets/Tiles/square/32x32/square_32x32.tres" id="1_vyaw8"]
-[ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_4rx3r"]
+[ext_resource type="Script" path="res://Scripts/Camera/ControlledCamera.gd" id="3_4rx3r"]
 [ext_resource type="Script" path="res://Scripts/TileMap/TileMapCust.gd" id="4_a2fg5"]
 
 [node name="Main" type="Node2D"]

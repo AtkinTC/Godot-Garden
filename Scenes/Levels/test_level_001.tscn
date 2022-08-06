@@ -1,14 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2bci0hi8q8jr"]
+[gd_scene load_steps=5 format=3 uid="uid://464nu2tsd23h"]
 
-[ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_hk33a"]
+[ext_resource type="PackedScene" uid="uid://xdokqqdejrfw" path="res://Scenes/Levels/base_level.tscn" id="1_mr320"]
 [ext_resource type="TileSet" uid="uid://iemudeqjrnqh" path="res://Resources/TileSets/base_32x32.tres" id="2_nn3ab"]
 [ext_resource type="Script" path="res://Scripts/TileMap/TileMapCust.gd" id="3_62bd0"]
 [ext_resource type="Script" path="res://Scripts/Util/RectNode2D.gd" id="4_f63qy"]
 
-[node name="Level" type="Node2D"]
-script = ExtResource("1_hk33a")
+[node name="Level" instance=ExtResource("1_mr320")]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="World" index="0"]
 texture_filter = 1
 tile_set = ExtResource("2_nn3ab")
 format = 2
@@ -17,18 +16,18 @@ layer_0/tile_data = PackedInt32Array(262148, 65537, 0, 262147, 65537, 0, 262146,
 script = ExtResource("3_62bd0")
 custom_data_layer_names = ["nav_cost"]
 
-[node name="SpawnArea" type="Node2D" parent="."]
-position = Vector2(80, 96)
-script = ExtResource("4_f63qy")
-size = Vector2(96, 128)
-fill_color = Color(0, 0, 1, 0.33)
-color = Color(0, 0, 1, 1)
-offset = Vector2(-48, -64)
-
-[node name="GoalArea" type="Node2D" parent="."]
+[node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)
 script = ExtResource("4_f63qy")
 size = Vector2(64, 64)
 fill_color = Color(1, 0, 0, 0.329412)
 color = Color(1, 0, 0, 1)
 offset = Vector2(-16, -16)
+
+[node name="SpawnArea" type="Node2D" parent="World/SpawnAreas" index="0"]
+position = Vector2(80, 96)
+script = ExtResource("4_f63qy")
+size = Vector2(96, 128)
+fill_color = Color(0, 0, 1, 0.33)
+color = Color(0, 0, 1, 1)
+offset = Vector2(-48, -64)

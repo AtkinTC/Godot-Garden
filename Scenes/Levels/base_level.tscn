@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://xdokqqdejrfw"]
+
+[ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_hk33a"]
+[ext_resource type="Script" path="res://Scenes/World/World.gd" id="2_5f7ut"]
+[ext_resource type="FontData" uid="uid://cr63swgjcfq5p" path="res://Assets/Fonts/Kenney Pixel Square.ttf" id="3_6yp15"]
+[ext_resource type="Script" path="res://Scripts/Character/EnemiesNode.gd" id="7_wadv3"]
+[ext_resource type="Script" path="res://Scripts/Camera/ControlledCamera.gd" id="8_7dmnx"]
+
+[sub_resource type="Font" id="Font_8xhbc"]
+data/0 = ExtResource("3_6yp15")
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_hk33a")
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("2_5f7ut")
+font = SubResource("Font_8xhbc")
+
+[node name="EnemiesNode" type="Node2D" parent="World"]
+script = ExtResource("7_wadv3")
+
+[node name="GoalAreas" type="Node2D" parent="World"]
+
+[node name="SpawnAreas" type="Node2D" parent="World"]
+
+[node name="ControlledCamera2D" type="Camera2D" parent="World"]
+position = Vector2(640, 360)
+current = true
+script = ExtResource("8_7dmnx")
