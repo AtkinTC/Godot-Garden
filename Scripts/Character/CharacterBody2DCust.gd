@@ -59,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	move_vector.limit_length(max_speed)
 	set_velocity(move_vector + get_knockback())
 	move_and_slide()
+	move_vector = velocity
 	
 	if(!move_vector.is_equal_approx(Vector2.ZERO) && !knockback_state):
 		set_facing_direction(move_vector.normalized())

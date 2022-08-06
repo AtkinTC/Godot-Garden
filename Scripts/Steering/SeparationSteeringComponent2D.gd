@@ -60,14 +60,17 @@ func calculate_steering_force():
 		var collider: Node = (result as Dictionary).get("collider")
 		if(collider is CollisionObject2D):
 			var distance = position.distance_to(collider.position)
+			var r2r_distance = distance - body_radius
 			var target_distance = body_radius + buffer
 			if(collider.has_method("get_body_radius")):
 				target_distance += collider.get_body_radius()
+				r2r_distance -= collider.get_body_radius()
 			var mag := 0.0
 			if(distance <= 0):
 				mag = 1.0
 			elif(distance < target_distance):
-				mag = (target_distance - distance)/(target_distance)
+				#mag = (target_distance - distance)/(target_distance)
+				mag = 1/max(r2r_distance,1)
 			steering_force += (position - collider.position).normalized() * mag
 	
 	steering_force = steering_force.limit_length(1.0) * max_force

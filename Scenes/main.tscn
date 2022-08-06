@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scripts/FPSLabel.gd" id="2_vu22e"]
-[ext_resource type="PackedScene" uid="uid://bfb3sxwq54j23" path="res://Scenes/Levels/test_level_long_path.tscn" id="4_8b6k6"]
+[ext_resource type="PackedScene" uid="uid://464nu2tsd23h" path="res://Scenes/Levels/test_level_001.tscn" id="4_cgr44"]
 [ext_resource type="Script" path="res://Scripts/Level/LevelLoader.gd" id="10_84xt3"]
 
 [node name="Main" type="Node2D"]
@@ -26,4 +26,4 @@ script = ExtResource("2_vu22e")
 
 [node name="LevelLoader" type="Node2D" parent="."]
 script = ExtResource("10_84xt3")
-level_scene = ExtResource("4_8b6k6")
+level_scene = ExtResource("4_cgr44")

@@ -52,7 +52,7 @@ func _ready():
 		
 		var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
 		var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
-		for i in range(10):
+		for i in range(500):
 			var params = {}
 			params["nav_controller"] = nav_controller
 			params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
