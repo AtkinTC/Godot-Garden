@@ -72,11 +72,18 @@ func process_next_open_cell():
 	process_cell_standard(cell)
 
 func process_cell_standard(cell : Vector2i):
+	#consider all cells covered by the nav width for cell cost
+	var nav_cost_multi : float = 0.0
+	for x in range(cell.x, cell.x+nav_width):
+		for y in range(cell.y, cell.y+nav_width):
+			nav_cost_multi += tile_nav_map.get_cell_nav_value(Vector2i(x,y))
+	nav_cost_multi /= nav_width * nav_width
+	
 	# cardinal directions
 	for direction in CARD_DIR:
 		var n_cell: Vector2i = cell + direction
 		if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
-			var distance: int = d_map[cell] + CARD_DIST * tile_nav_map.get_cell_nav_value(cell)
+			var distance: int = d_map[cell] + CARD_DIST * nav_cost_multi
 			if(!d_map.has(n_cell) || distance <= d_map[n_cell]):
 				d_map[n_cell] = distance
 				# record the direction vector from neighbor cell to the current cell
@@ -92,7 +99,7 @@ func process_cell_standard(cell : Vector2i):
 				var n_card_1 := Vector2i(n_cell.x, cell.y)
 				var n_card_2 := Vector2i(cell.x, n_cell.y)
 				if(tile_nav_map.is_cell_navigable(n_card_1, nav_width) && tile_nav_map.is_cell_navigable(n_card_2, nav_width)):
-					var distance: int = d_map[cell] + DIAG_DIST * tile_nav_map.get_cell_nav_value(cell)
+					var distance: int = d_map[cell] + DIAG_DIST * nav_cost_multi
 					if(!d_map.has(n_cell) || distance < d_map[n_cell]):
 						d_map[n_cell] = distance
 						# record the direction vector from neighbor cell to the current cell
