@@ -62,16 +62,16 @@ _data = {
 "walk": SubResource("Animation_whwrc")
 }
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("roation_sourc_node", "visuals_source_node")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("rotation_source_node", "visuals_source_node")]
 collision_layer = 2
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_nfs0u")
-roation_sourc_node = NodePath("RotationNode")
+rotation_source_node = NodePath("RotationNode")
 visuals_source_node = NodePath("RotationNode/VisualsNode")
 max_speed = 25.0
 retarget_cooldown = 100
-body_radius = 16.0
+body_radius = 16
 
 [node name="SeekSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("2_u45d0")

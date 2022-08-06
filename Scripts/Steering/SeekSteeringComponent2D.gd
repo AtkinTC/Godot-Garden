@@ -21,12 +21,12 @@ func _ready() -> void:
 		running = false
 
 func calculate_steering_force():
-	var position : Vector2 = parent.get_position()
+	var current_position : Vector2 = parent.get_position()
 	var target_position : Vector2 = parent.get_seek_target_position()
 	var max_speed : float = parent.get_max_speed()
 	var velocity : Vector2 = parent.get_velocity()
 	
-	var desired_velocity := (target_position - position).limit_length(max_speed)
+	var desired_velocity := (target_position - current_position).limit_length(max_speed)
 	steering_force = (desired_velocity - velocity).limit_length(max_force)
 
 func draw():

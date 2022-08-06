@@ -36,7 +36,7 @@ func _ready() -> void:
 	direction_vectors = CARD_DIRECTIONS + DIAG_DIRECTIONS
 
 func calculate_steering_force():
-	var position : Vector2 = parent.get_position()
+	var current_position : Vector2 = parent.get_position()
 	var world2D : World2D = parent.get_world_2d()
 	
 	steering_force = Vector2.ZERO
@@ -45,12 +45,12 @@ func calculate_steering_force():
 		var dir: Vector2 = direction_vectors[i]
 		var params := PhysicsRayQueryParameters2D.new()
 		params.collision_mask = wall_collision_mask
-		params.from = position
-		params.to = position + dir * (buffer + body_radius)
+		params.from = current_position
+		params.to = current_position + dir * (buffer + body_radius)
 		var result = space_state.intersect_ray(params)
 		if(result is Dictionary && result.size() > 0):
 			var collision_position : Vector2 = result["position"]
-			var distance = (position - collision_position).length()
+			var distance = (current_position - collision_position).length()
 			var target_distance = body_radius + buffer
 			var mag := 0.0
 			if(distance <= 0):

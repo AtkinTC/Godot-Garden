@@ -40,7 +40,7 @@ func _ready() -> void:
 			body_radius = parent.get_body_radius()
 
 func calculate_steering_force():
-	var position : Vector2 = parent.get_position()
+	var current_position : Vector2 = parent.get_position()
 	var collision_mask : int = parent.get_collision_layer()
 	var transform2D : Transform2D = parent.get_transform()
 	var space_state : PhysicsDirectSpaceState2D = parent.get_world_2d().get_direct_space_state()
@@ -59,7 +59,7 @@ func calculate_steering_force():
 	for result in results:
 		var collider: Node = (result as Dictionary).get("collider")
 		if(collider is CollisionObject2D):
-			var distance = position.distance_to(collider.position)
+			var distance = current_position.distance_to(collider.position)
 			var r2r_distance = distance - body_radius
 			var target_distance = body_radius + buffer
 			if(collider.has_method("get_body_radius")):
@@ -71,7 +71,7 @@ func calculate_steering_force():
 			elif(distance < target_distance):
 				#mag = (target_distance - distance)/(target_distance)
 				mag = 1/max(r2r_distance,1)
-			steering_force += (position - collider.position).normalized() * mag
+			steering_force += (current_position - collider.position).normalized() * mag
 	
 	steering_force = steering_force.limit_length(1.0) * max_force
 

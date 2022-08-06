@@ -1,7 +1,7 @@
 class_name CharacterBody2DCust
 extends CharacterBody2D
 
-@export var roation_sourc_node: Node2D
+@export var rotation_source_node: Node2D
 @export var visuals_source_node: Node2D
 
 var steering_force := Vector2.ZERO
@@ -23,7 +23,7 @@ var setup_params : Dictionary = {}
 var last_retarget : int = 0
 
 #TODO: investigate way to base body radius off real collision shape
-@export var body_radius : float = 0
+@export var body_radius : int = 0
 
 func set_setup_params(_params : Dictionary):
 	setup_params = _params
@@ -37,13 +37,11 @@ func get_setup_params() -> Dictionary:
 func _ready() -> void:
 	if(hurtbox is Hurtbox):
 		hurtbox.connect_hit(_on_Hurtbox_took_hit)
-	
 	attach_steering_components()
 
-
-func _process(delta: float) -> void:
-	if(roation_sourc_node):
-		roation_sourc_node.set_rotation(facing_direction.angle())
+func _process(_delta: float) -> void:
+	if(rotation_source_node):
+		rotation_source_node.set_rotation(facing_direction.angle())
 	update()
 
 func _physics_process(delta: float) -> void:
@@ -92,7 +90,6 @@ func update_seek_target():
 		seek_target_position = position
 		return
 	
-	#var flow_vector := nav_controller.get_targeted_nav_direction(position, target_position)
 	var flow_vector := nav_controller.get_goal_nav_direction(position, body_radius*2)
 	seek_target_position = position + flow_vector * max_speed
 	return
@@ -110,8 +107,8 @@ func update_seek_target():
 #		var flow_vector := nav_controller.get_nav_direction(position, target_position)
 #		seek_target_position = position + flow_vector * max_speed
 #		return
-	
-	seek_target_position = target_position
+#	
+#	seek_target_position = target_position
 
 ############
 # STEERING #
@@ -125,11 +122,10 @@ func attach_steering_components():
 		if(child is SteeringComponent2D):
 			steering_components[child.get_steering_type()] = child
 
-func calculate_steering_force(delta: float) -> void:	
+func calculate_steering_force(_delta: float) -> void:	
 	# sum up different steering components
 	var automatic_steering := Vector2.ZERO
 	var manual_steering := Vector2.ZERO
-	var other_steering := Vector2.ZERO
 	for steering_component in steering_components.values():
 		if(steering_component.is_automatic()):
 			automatic_steering += steering_component.steer()
@@ -203,15 +199,15 @@ func get_seek_target_position() -> Vector2:
 func get_max_speed() -> float:
 	return max_speed
 
-func get_body_radius() -> float:
+func get_body_radius() -> int:
 	return body_radius
 
-func _on_Hurtbox_took_hit(source: Hurtbox, hit_data: Dictionary):
-	if(hit_data.has("damage")):
+func _on_Hurtbox_took_hit(_source: Hurtbox, _hit_data: Dictionary):
+	if(_hit_data.has("damage")):
 		pass
 	
-#	if(hit_data.has("knockback")):
-#		var knockback_data: Dictionary = hit_data["knockback"]
+#	if(_hit_data.has("knockback")):
+#		var knockback_data: Dictionary = _hit_data["knockback"]
 #		var impulse = knockback_data.get("impulse")
 #		var direction = knockback_data.get("direction")
 #		set_knockback(impulse, direction)

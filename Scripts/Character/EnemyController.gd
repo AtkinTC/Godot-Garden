@@ -22,7 +22,7 @@ func _ready() -> void:
 var last_animation_change_time : int = 0
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var v = get_body_velocity()
 	var s = v.length()
 	

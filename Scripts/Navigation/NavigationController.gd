@@ -1,6 +1,6 @@
 class_name NavigationController
 
-const NAV_WIDTH_BUFFER := 6
+const NAV_WIDTH_BUFFER : int = 6
 
 var tile_map: TileMapCust
 var goal_cells : Array[Vector2i] = []
@@ -33,8 +33,13 @@ func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 	if(maps_to_process_count == 0):
 		return
 	
-	var partial_cells_limit : int = max(cells_limit/maps_to_process_count, 1) if cells_limit > 0 else 0
-	var partial_time_limit : int = max(time_limit/maps_to_process_count, 1) if time_limit > 0 else 0
+	
+	var partial_cells_limit : int = 0
+	if(cells_limit > 0):
+		partial_cells_limit = max(float(cells_limit)/maps_to_process_count, 1)
+	var partial_time_limit : int = 0
+	if(time_limit > 0):
+		partial_time_limit = max(float(time_limit)/maps_to_process_count, 1)
 	
 	#if(!goal_flow_map.is_complete()):
 	#	goal_flow_map.process_segmented(partial_cells_limit, partial_time_limit)
@@ -53,7 +58,7 @@ func get_nav_width(_real_width : int = 0) -> int:
 		return 1
 	var adj_width = _real_width + NAV_WIDTH_BUFFER
 	var tile_size := tile_map.get_tile_size()
-	var nav_width : int = ceil(max(float(adj_width)/float(tile_size.x), float(adj_width)/float(tile_size.y)))
+	var nav_width := int(ceil(max(float(adj_width)/float(tile_size.x), float(adj_width)/float(tile_size.y))))
 	return nav_width
 
 func get_width_adjusted_nav_position(_real_position : Vector2, _real_width : int):
@@ -93,14 +98,14 @@ func get_goal_nav_direction_weighted(_start_pos: Vector2, _real_width : int = 0)
 		adj_start_pos = get_width_adjusted_nav_position(_start_pos, _real_width)
 	var start_cell = tile_map.world_to_map(adj_start_pos)
 	var offset := get_cell_weighted_offset(_start_pos)
-	var offset_s : Vector2 = sign(offset)
+	var offset_s : Vector2i = sign(offset)
 	
 	var flow_map := goal_flow_maps[nav_width-1]
 	
 	var div : float = 1.0
 	var summed_dir : Vector2 = flow_map.get_flow_direction(start_cell)
 	if(!is_equal_approx(offset.x, 0.0)):
-		var dir : Vector2= flow_map.get_flow_direction(start_cell + Vector2i(offset_s.x, 0))
+		var dir : Vector2 = flow_map.get_flow_direction(start_cell + Vector2i(offset_s.x, 0))
 		if(!is_equal_approx(dir.length_squared(), 0.0)):
 			var multi : float = abs(offset.x)
 			summed_dir += dir * multi
@@ -121,7 +126,6 @@ func get_goal_nav_direction_weighted(_start_pos: Vector2, _real_width : int = 0)
 	return summed_dir / div
 
 func get_cell_weighted_offset(_pos: Vector2) -> Vector2:
-	var offset := Vector2.ZERO
 	var cell : Vector2i = tile_map.world_to_map(_pos)
 	var center = tile_map.map_to_world(cell)
 	var diff := _pos - center

@@ -17,10 +17,6 @@ func _ready() -> void:
 	for child in get_children():
 		child.queue_free()
 
-# trigger the creation of a WorldUnitNode when a new WorldUnitVO is created
-func _on_world_unit_created(id : int):
-	pass
-
 # instantiate new
 func create_enemy(enemy_scene : PackedScene, params : Dictionary = {}) -> int:
 	var new_id : int = max(params.get("id", 0), next_char_id)

@@ -12,8 +12,6 @@ var target_pos := Vector2.ZERO
 
 @export var font : Font
 
-@onready var camera : Camera2D = $Camera
-@onready var player : Player = $Player
 @onready var spawn_areas : Array[RectNode2D] = []
 @onready var goal_areas : Array[RectNode2D] = []
 @onready var tile_map : TileMapCust = get_node_or_null("TileMap")
@@ -33,13 +31,6 @@ func _ready():
 		for child in goal_areas_node.get_children():
 			if(child is RectNode2D):
 				goal_areas.append(child)
-	
-	var center : Vector2 = get_world_center()
-	if(camera):
-		camera.set_position(center)
-	
-	if(player):
-		player.set_position(center)
 	
 	self.set_as_top_level(true)
 	var goal_cells : Array[Vector2i] = []
@@ -71,16 +62,9 @@ func get_world_center() -> Vector2:
 	var center := tile_map.get_used_rect().get_center()
 	return map_to_world(center)
 
-func _physics_process(delta: float) -> void:
-	target_pos = get_global_mouse_position()
-	var objective_cellv := world_to_map(target_pos)
-
+func _physics_process(_delta: float) -> void:
 	nav_controller.process_maps_segmented(0, 1)
 	update()
-	
-	for enemy in enemies_node.get_enemies():
-		if(enemy.has_method("set_target_position")):
-			enemy.set_target_position(target_pos)
 
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
