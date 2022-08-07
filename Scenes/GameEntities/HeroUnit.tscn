@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bergm2uxfxnk7"]
+
+[ext_resource type="Script" path="res://Scripts/HeroUnits/HeroUnit.gd" id="1_p2o3p"]
+[ext_resource type="Script" path="res://Scripts/HeroUnits/TargetDetectionCircle.gd" id="2_obe4a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bcc24"]
+resource_local_to_scene = true
+
+[node name="HeroUnit" type="Node2D"]
+position = Vector2(304, 208)
+script = ExtResource("1_p2o3p")
+
+[node name="RotationNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="VisualsNode" type="Node2D" parent="RotationNode"]
+unique_name_in_owner = true
+
+[node name="Polygon2D" type="Polygon2D" parent="RotationNode/VisualsNode"]
+polygon = PackedVector2Array(0, 8, 8, 0, 0, -8, -8, 0)
+
+[node name="Polygon2D2" type="Polygon2D" parent="RotationNode/VisualsNode"]
+color = Color(1, 0, 0.0196078, 1)
+polygon = PackedVector2Array(0, 0, 8, 2, 16, 0, 8, -2)
+
+[node name="TargetDetectionCircle" type="Area2D" parent="RotationNode"]
+unique_name_in_owner = true
+visible = false
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("2_obe4a")
+detection_range = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotationNode/TargetDetectionCircle"]
+shape = SubResource("CircleShape2D_bcc24")

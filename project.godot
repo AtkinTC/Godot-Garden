@@ -209,6 +209,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/VO/SupplyVO.gd"
 }, {
+"base": "Area2D",
+"class": &"TargetDetectionCircle",
+"language": &"GDScript",
+"path": "res://Scripts/HeroUnits/TargetDetectionCircle.gd"
+}, {
 "base": "Resource",
 "class": &"TileDefinition",
 "language": &"GDScript",
@@ -305,6 +310,7 @@ _global_script_class_icons={
 "StructureDAO": "",
 "SupplyData": "",
 "SupplyVO": "",
+"TargetDetectionCircle": "",
 "TileDefinition": "",
 "TileMapCust": "",
 "TileNavMap": "",

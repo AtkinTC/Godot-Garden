@@ -65,6 +65,8 @@ func calculate_steering_force():
 			if(collider.has_method("get_body_radius")):
 				target_distance += collider.get_body_radius()
 				r2r_distance -= collider.get_body_radius()
+				if(collider.get_body_radius() < body_radius):
+					continue
 			var mag := 0.0
 			if(distance <= 0):
 				mag = 1.0
