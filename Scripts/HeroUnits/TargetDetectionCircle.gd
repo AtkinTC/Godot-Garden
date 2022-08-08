@@ -1,5 +1,9 @@
-class_name TargetDetectionCircle
+# TargetDetectionCircle extends Area2D
+#	monitors targets entering/exiting area
+#	with utility functions to access/organize those targets
 
+@tool
+class_name TargetDetectionCircle
 extends Area2D
 
 signal targets_changed()
@@ -8,7 +12,7 @@ signal targets_changed()
 @export var exclude_groups : Array[String] = []
 @export var detection_range : float = 50: set = set_detection_range
 
-@onready var collision_node : CollisionShape2D = get_node("CollisionShape2D")
+@onready var collision_node : CollisionShape2D
 @onready var detection_circle : CircleShape2D
 
 var target_ids : Array[int] = []
@@ -17,6 +21,13 @@ var target_ids : Array[int] = []
 func _ready() -> void:
 	self.body_entered.connect(_on_body_entered)
 	self.body_exited.connect(_on_body_exited)
+	
+	set_collision_layer(0)
+	set_monitoring(true)
+	set_monitorable(false)
+	
+	collision_node = CollisionShape2D.new()
+	add_child(collision_node)
 	
 	detection_circle = CircleShape2D.new()
 	detection_circle.set_radius(detection_range)
@@ -53,6 +64,8 @@ func remove_target(body: Node2D) -> bool:
 	return true
 
 func is_valid_target(body: Node2D) -> bool:
+	if(body == null):
+		return false
 	return target_ids.has(body.get_instance_id())
 
 func update_targets() -> void:
@@ -124,3 +137,7 @@ func get_closest_target_to_point(local_point : Vector2, preferred_limit : float 
 			closest_body = body
 	
 	return closest_body_pref if (closest_body_pref != null) else closest_body
+
+# block configuration warnings for this node
+func _get_configuration_warning():
+	return ""

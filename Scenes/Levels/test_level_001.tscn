@@ -18,6 +18,9 @@ layer_0/tile_data = PackedInt32Array(262148, 65537, 0, 262147, 65537, 0, 262146,
 script = ExtResource("3_62bd0")
 custom_data_layer_names = ["nav_cost"]
 
+[node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
+position = Vector2(304, 272)
+
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)
 script = ExtResource("4_f63qy")
@@ -33,11 +36,3 @@ size = Vector2(96, 128)
 fill_color = Color(0, 0, 1, 0.33)
 color = Color(0, 0, 1, 1)
 offset = Vector2(-48, -64)
-
-[node name="HeroUnit" parent="World" index="5" instance=ExtResource("5_d0gii")]
-position = Vector2(496, 240)
-debug_draw = true
-
-[node name="HeroUnit2" parent="World" index="6" instance=ExtResource("5_d0gii")]
-position = Vector2(272, 272)
-debug_draw = true

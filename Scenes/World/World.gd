@@ -53,7 +53,7 @@ func _ready():
 				enemies_node.create_enemy(enemy_scene1, params)
 			else:
 				enemies_node.create_enemy(enemy_scene2, params)
-			await(get_tree().create_timer(0.05).timeout)
+			await(get_tree().create_timer(0.5).timeout)
 
 func _process(_delta):
 	pass
@@ -66,6 +66,8 @@ func _physics_process(_delta: float) -> void:
 	nav_controller.process_maps_segmented(0, 1)
 	update()
 
+var hold_p : Vector2
+
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var target_cell := screen_to_map(event.position)
@@ -73,6 +75,24 @@ func _unhandled_input(event : InputEvent):
 		print(str("event.position =", event.position))
 		print(str("target_cell =", target_cell))
 		print(str("tile_def = ", tile_map.get_tile_identifier_for_cell(target_cell)))
+		
+		hold_p = screen_to_world(event.position)
+	
+	if(event.is_action_released("mouse_left")):
+		var p = screen_to_world(event.position)
+		var d = (p - hold_p).length()
+		var r = (p - hold_p).angle()
+		var effect_scene_path := "res://Scenes/Effects/BaseProjectile.tscn"
+		var mask : int = PhysicsUtil.get_physics_layer_mask_from_names(["enemy"])
+		var effect_attributes := {
+			"source" : null,
+			"collision_mask" : mask,
+			"speed" : d,
+			"rotation" : r,
+			"position" : p
+		}
+		
+		SignalBus.spawn_effect.emit(effect_scene_path, effect_attributes)
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -111,6 +131,6 @@ func screen_to_map(global_coord : Vector2) -> Vector2i:
 func get_tile_size() -> Vector2i:
 	return tile_map.get_tile_size()
 
-func _draw() -> void:
-	nav_controller.draw_goal_flow(self, 1)
+#func _draw() -> void:
+	#nav_controller.draw_goal_flow(self, 1)
 	#nav_controller.draw_cell_widths(self, font)

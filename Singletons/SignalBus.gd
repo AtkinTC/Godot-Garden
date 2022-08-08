@@ -1,4 +1,7 @@
+# SignalBus Singleton
+# globally accessable signals to allow signal connections between nodes with minimal coupling
+
 extends Node
 
-signal locked_status_changed(category, key)
-signal purchase_status_changed(category, key)
+# signal used to trigger the creation of a new effect scene
+signal spawn_effect(effect_scene_path : String, effect_attributes : Dictionary)

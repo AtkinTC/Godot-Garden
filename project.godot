@@ -60,6 +60,16 @@ _global_script_classes=[{
 "path": "res://Scripts/DataValidator.gd"
 }, {
 "base": "Node2D",
+"class": &"Effect",
+"language": &"GDScript",
+"path": "res://Scripts/Effects/Effect.gd"
+}, {
+"base": "Node",
+"class": &"EffectsController",
+"language": &"GDScript",
+"path": "res://Scripts/Effects/EffectsController.gd"
+}, {
+"base": "Node2D",
 "class": &"EnemiesNode",
 "language": &"GDScript",
 "path": "res://Scripts/Character/EnemiesNode.gd"
@@ -88,6 +98,11 @@ _global_script_classes=[{
 "class": &"FlowMapNavigation",
 "language": &"GDScript",
 "path": "res://Scripts/Navigation/FlowMapNavigation.gd"
+}, {
+"base": "Node2D",
+"class": &"HeroUnit",
+"language": &"GDScript",
+"path": "res://Scripts/HeroUnits/HeroUnit.gd"
 }, {
 "base": "TileMapCust",
 "class": &"HighlightsTileMap",
@@ -158,6 +173,11 @@ _global_script_classes=[{
 "class": &"PlotsBaseTileMap",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/PlotsBaseTileMap.gd"
+}, {
+"base": "Effect",
+"class": &"Projectile",
+"language": &"GDScript",
+"path": "res://Scripts/Effects/Projectile.gd"
 }, {
 "base": "Node2D",
 "class": &"RectNode2D",
@@ -280,12 +300,15 @@ _global_script_class_icons={
 "Constants": "",
 "ControlledCamera2D": "",
 "DataValidator": "",
+"Effect": "",
+"EffectsController": "",
 "EnemiesNode": "",
 "EnemyController": "",
 "EnhancementData": "",
 "ExplorationVO": "",
 "FlowMap": "",
 "FlowMapNavigation": "",
+"HeroUnit": "",
 "HighlightsTileMap": "",
 "Hurtbox": "",
 "IconsTileMap": "",
@@ -300,6 +323,7 @@ _global_script_class_icons={
 "PlayerCameraTransform": "",
 "PlotVO": "",
 "PlotsBaseTileMap": "",
+"Projectile": "",
 "RectNode2D": "",
 "SaveFileResource": "",
 "SeekSteeringComponent2D": "",
@@ -337,6 +361,7 @@ GardenManager="*res://Singletons/GardenManager.gd"
 SaveController="*res://Scripts/Save/SaveController.gd"
 PhysicsUtil="*res://Singletons/PhysicsUtil.gd"
 ResourceRef="*res://Singletons/ResourceRef.gd"
+SignalBus="*res://Singletons/SignalBus.gd"
 
 [display]
 
