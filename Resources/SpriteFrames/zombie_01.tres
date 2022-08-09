@@ -2,21 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://cbsquh0jaordq" path="res://Assets/Sprites/Characters/zombie_16x16.png" id="1_uvcfh"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h43mh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_djhpg"]
 atlas = ExtResource("1_uvcfh")
 region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_badfi"]
-atlas = ExtResource("1_uvcfh")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j6a66"]
-atlas = ExtResource("1_uvcfh")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x7bme"]
-atlas = ExtResource("1_uvcfh")
-region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fukce"]
 atlas = ExtResource("1_uvcfh")
@@ -42,15 +30,27 @@ region = Rect2(64, 16, 16, 16)
 atlas = ExtResource("1_uvcfh")
 region = Rect2(80, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_djhpg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h43mh"]
 atlas = ExtResource("1_uvcfh")
 region = Rect2(0, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_badfi"]
+atlas = ExtResource("1_uvcfh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6a66"]
+atlas = ExtResource("1_uvcfh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7bme"]
+atlas = ExtResource("1_uvcfh")
+region = Rect2(48, 0, 16, 16)
+
 [resource]
 animations = [{
-"frames": [SubResource("AtlasTexture_h43mh"), SubResource("AtlasTexture_badfi"), SubResource("AtlasTexture_j6a66"), SubResource("AtlasTexture_x7bme")],
+"frames": [SubResource("AtlasTexture_djhpg")],
 "loop": true,
-"name": &"walk",
+"name": &"idle",
 "speed": 5.0
 }, {
 "frames": [SubResource("AtlasTexture_fukce"), SubResource("AtlasTexture_lwvfc"), SubResource("AtlasTexture_g706n"), SubResource("AtlasTexture_3r445"), SubResource("AtlasTexture_6skk6"), SubResource("AtlasTexture_cmmt4")],
@@ -58,8 +58,8 @@ animations = [{
 "name": &"run",
 "speed": 8.0
 }, {
-"frames": [SubResource("AtlasTexture_djhpg")],
+"frames": [SubResource("AtlasTexture_h43mh"), SubResource("AtlasTexture_badfi"), SubResource("AtlasTexture_j6a66"), SubResource("AtlasTexture_x7bme")],
 "loop": true,
-"name": &"idle",
+"name": &"walk",
 "speed": 5.0
 }]

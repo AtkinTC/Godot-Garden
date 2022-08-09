@@ -20,6 +20,7 @@ custom_data_layer_names = ["nav_cost"]
 
 [node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
 position = Vector2(304, 272)
+debug_draw = true
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)

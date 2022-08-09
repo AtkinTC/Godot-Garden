@@ -109,7 +109,7 @@ func draw_cell_widths(node: Node2D, font : Font):
 			var w := get_cell_width(cell)
 			if(w > 0):
 				var c := str(w)
-				node.draw_char(font, (cell+Vector2i(0,1))*tile_map.get_tile_size() + Vector2i(4,-4), c, c, 8)
+				node.draw_char(font, (cell+Vector2i(0,1))*tile_map.get_tile_size() + Vector2i(4,-4), c, 8)
 
 func get_effective_max_width() -> int:
 	return effective_max_width
