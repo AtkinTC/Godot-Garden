@@ -38,6 +38,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if(position.distance_squared_to(position_init) > max_range_sqr):
 		queue_free()
+		return
 	
 	var space_state : PhysicsDirectSpaceState2D = get_world_2d().get_direct_space_state()
 	
@@ -51,8 +52,18 @@ func _physics_process(_delta: float) -> void:
 	
 	var collision : Dictionary = space_state.intersect_ray(ray_query)
 	
-	if(collision.size() > 0):
+	var collider : Node = collision.get("collider", null)
+	if(collider != null):
+		if(collider.has_method("_on_attack_hit")):
+			var attack_data = {
+				AttackConsts.POSITION : collision.position,
+				AttackConsts.NORMAL : collision.normal,
+				AttackConsts.ANGLE : global_rotation,
+				AttackConsts.FORCE : 50
+			}
+			collider._on_attack_hit(attack_data)
 		queue_free()
+		return
 	
 	position += Vector2.from_angle(global_rotation) * speed * _delta
 	

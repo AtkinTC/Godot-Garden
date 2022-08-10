@@ -41,19 +41,19 @@ func _ready():
 	if(spawn_areas.size() > 0):
 		var spawn_rect : Rect2i = spawn_areas[0].get_rect()
 		
-		var enemy_scene1 : PackedScene = preload("res://Scenes/test_enemy.tscn")
-		var enemy_scene2 : PackedScene = preload("res://Scenes/test_enemy2.tscn")
+		var enemy_scene1 : PackedScene = preload("res://Scenes/GameEntities/Enemies/test_zombie.tscn")
+		var enemy_scene2 : PackedScene = preload("res://Scenes/GameEntities/Enemies/test_zombie_big.tscn")
 		for i in range(500):
 			var params = {}
 			params["nav_controller"] = nav_controller
 			params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
-			params["facing_direction"] = Vector2.from_angle(randf_range(0, TAU))
+			params["facing_rotation"] = randf_range(0, TAU)
 			
-			if(randf() < 0.95):
+			if(randf() <= 0.95):
 				enemies_node.create_enemy(enemy_scene1, params)
 			else:
 				enemies_node.create_enemy(enemy_scene2, params)
-			await(get_tree().create_timer(0.5).timeout)
+			await(get_tree().create_timer(0.2).timeout)
 
 func _process(_delta):
 	pass
@@ -131,6 +131,7 @@ func screen_to_map(global_coord : Vector2) -> Vector2i:
 func get_tile_size() -> Vector2i:
 	return tile_map.get_tile_size()
 
-#func _draw() -> void:
+func _draw() -> void:
 	#nav_controller.draw_goal_flow(self, 1)
 	#nav_controller.draw_cell_widths(self, font)
+	pass

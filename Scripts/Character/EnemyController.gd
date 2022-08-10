@@ -1,7 +1,7 @@
 class_name EnemyController
 extends Node2D
 
-@onready var parent_body : CharacterBody2DCust
+@onready var parent_body : EnemyBody2D
 
 var nav_controller : NavigationController
 
@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 		
 		if(s < 1):
 			desired_animation = "idle"
-		elif(s < 20):
+		elif(s < 15):
 			desired_animation = "walk"
 		else:
 			desired_animation = "run"

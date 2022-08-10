@@ -37,7 +37,7 @@ var free_aim_radius : float = 0 # radius around aim point for true aiming, limit
 var free_aim_point_offset : Vector2 = Vector2.ZERO # true aim point offset constrained by free_aim_radius
 
 # attacking
-var reshot_duration : float = 2
+var reshot_duration : float = 1
 var reshot_time_remaining : float = 0
 var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
 var projectile_speed : float = 200
@@ -128,10 +128,10 @@ func predict_aim_target() -> Vector2:
 func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	# determine new body facing direction
 	var target_rad := local_aim_target.angle()
-	target_rad = unwrap_angle(target_rad)
+	target_rad = Utils.unwrap_angle(target_rad)
 	
 	var new_rad := facing_rad
-	new_rad = unwrap_angle(new_rad)
+	new_rad = Utils.unwrap_angle(new_rad)
 
 	if(target_rad - new_rad > PI):
 		target_rad -= TAU
@@ -200,16 +200,6 @@ func create_projectile():
 		"position" : global_position
 	}
 	SignalBus.spawn_effect.emit(projectile_scene_path, effect_attributes)
-
-# unwrap_angle(angle : float)
-# utility method to convert an angle (in radians) to be in the range (0, TAU)
-func unwrap_angle(angle : float):
-	if(angle >= 0):
-		var temp_angle = fmod(angle, TAU)
-		return temp_angle
-	else:
-		var temp_angle = fmod(-angle, TAU)
-		return TAU - temp_angle
 
 # tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type: TransitionType, ease_type: EaseType)
 func tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type := Tween.TRANS_QUINT, ease_type := Tween.EASE_OUT):

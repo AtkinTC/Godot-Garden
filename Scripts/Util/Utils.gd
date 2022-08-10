@@ -19,6 +19,17 @@ static func format_comma_seperated(number : String) -> String:
 		
 	return pre
 
+# unwrap_angle(angle : float)
+# utility method to convert an angle (in radians) to be in the range (0, TAU)
+static func unwrap_angle(angle : float):
+	if(angle >= TAU):
+		var temp_angle = fmod(angle, TAU)
+		return temp_angle
+	elif(angle < 0):
+		var temp_angle = fmod(-angle, TAU)
+		return TAU - temp_angle
+	return angle
+
 # calculate a list of points that would make up a rasterized line from point c0 to point c1
 # greedy raster finds more than just the minimal thin line, including any points that would be touched by the line
 # intended for use in line of sight calculations in a grid space such as a tilemap

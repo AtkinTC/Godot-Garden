@@ -10,8 +10,8 @@ func _ready() -> void:
 	if(!parent.has_method("get_position")):
 		print_debug("parent did not have required method get_position")
 		running = false
-	if(!parent.has_method("get_seek_target_position")):
-		print_debug("parent did not have required method get_seek_target_position")
+	if(!parent.has_method("get_seek_vector")):
+		print_debug("parent did not have required method get_seek_vector")
 		running = false
 	if(!parent.has_method("get_max_speed")):
 		print_debug("parent did not have required method get_max_speed")
@@ -21,12 +21,11 @@ func _ready() -> void:
 		running = false
 
 func calculate_steering_force():
-	var current_position : Vector2 = parent.get_position()
-	var target_position : Vector2 = parent.get_seek_target_position()
+	var seek_vector : Vector2 = parent.get_seek_vector()
 	var max_speed : float = parent.get_max_speed()
 	var velocity : Vector2 = parent.get_velocity()
 	
-	var desired_velocity := (target_position - current_position).limit_length(max_speed)
+	var desired_velocity := seek_vector.limit_length(max_speed)
 	steering_force = (desired_velocity - velocity).limit_length(max_force)
 
 func draw():

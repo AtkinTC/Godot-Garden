@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
+"base": "CharacterBody2D",
+"class": &"AgentBody2D",
+"language": &"GDScript",
+"path": "res://Scripts/Character/AgentBody2D.gd"
+}, {
 "base": "Resource",
 "class": &"AreaVO",
 "language": &"GDScript",
@@ -24,6 +29,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Util/Array2D.gd"
 }, {
+"base": "RefCounted",
+"class": &"AttackConsts",
+"language": &"GDScript",
+"path": "res://Scripts/Constants/AttackConsts.gd"
+}, {
 "base": "Resource",
 "class": &"CellDefinition",
 "language": &"GDScript",
@@ -33,11 +43,6 @@ _global_script_classes=[{
 "class": &"CellDefinitionSet",
 "language": &"GDScript",
 "path": "res://Scripts/TileMap/CellDefinitionSet.gd"
-}, {
-"base": "CharacterBody2D",
-"class": &"CharacterBody2DCust",
-"language": &"GDScript",
-"path": "res://Scripts/Character/CharacterBody2DCust.gd"
 }, {
 "base": "RefCounted",
 "class": &"Const",
@@ -73,6 +78,11 @@ _global_script_classes=[{
 "class": &"EnemiesNode",
 "language": &"GDScript",
 "path": "res://Scripts/Character/EnemiesNode.gd"
+}, {
+"base": "AgentBody2D",
+"class": &"EnemyBody2D",
+"language": &"GDScript",
+"path": "res://Scripts/Character/EnemyBody2D.gd"
 }, {
 "base": "Node2D",
 "class": &"EnemyController",
@@ -291,11 +301,12 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionData": "",
+"AgentBody2D": "",
 "AreaVO": "",
 "Array2D": "",
+"AttackConsts": "",
 "CellDefinition": "",
 "CellDefinitionSet": "",
-"CharacterBody2DCust": "",
 "Const": "",
 "Constants": "",
 "ControlledCamera2D": "",
@@ -303,6 +314,7 @@ _global_script_class_icons={
 "Effect": "",
 "EffectsController": "",
 "EnemiesNode": "",
+"EnemyBody2D": "",
 "EnemyController": "",
 "EnhancementData": "",
 "ExplorationVO": "",
