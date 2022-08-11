@@ -20,13 +20,13 @@ var target_pos := Vector2.ZERO
 func _ready():
 	tile_map.show_behind_parent = true
 	
-	var spawn_areas_node = get_node_or_null("SpawnAreas")
+	var spawn_areas_node = get_node_or_null("%SpawnAreas")
 	if(spawn_areas_node):
 		for child in spawn_areas_node.get_children():
 			if(child is RectNode2D):
 				spawn_areas.append(child)
 	
-	var goal_areas_node = get_node_or_null("GoalAreas")
+	var goal_areas_node = get_node_or_null("%GoalAreas")
 	if(goal_areas_node):
 		for child in goal_areas_node.get_children():
 			if(child is RectNode2D):
@@ -53,7 +53,7 @@ func _ready():
 				enemies_node.create_enemy(enemy_scene1, params)
 			else:
 				enemies_node.create_enemy(enemy_scene2, params)
-			await(get_tree().create_timer(0.2).timeout)
+			await(get_tree().create_timer(0.25).timeout)
 
 func _process(_delta):
 	pass

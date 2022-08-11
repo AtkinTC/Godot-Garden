@@ -14,6 +14,9 @@ script = ExtResource("1_hk33a")
 script = ExtResource("2_5f7ut")
 font = ExtResource("3_scv41")
 
+[node name="CorpseEffectsLayer" type="Node2D" parent="World"]
+unique_name_in_owner = true
+
 [node name="EnemiesNode" type="Node2D" parent="World"]
 script = ExtResource("7_wadv3")
 
@@ -23,8 +26,10 @@ script = ExtResource("7_wadv3")
 script = ExtResource("5_3mwj8")
 
 [node name="GoalAreas" type="Node2D" parent="World"]
+unique_name_in_owner = true
 
 [node name="SpawnAreas" type="Node2D" parent="World"]
+unique_name_in_owner = true
 
 [node name="ControlledCamera2D" type="Camera2D" parent="World"]
 position = Vector2(640, 360)

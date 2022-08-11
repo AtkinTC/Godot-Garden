@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwa7b8vp4f3bk"]
+
+[ext_resource type="Script" path="res://Scripts/Effects/CorpseEffect.gd" id="1_qajgc"]
+[ext_resource type="Texture2D" uid="uid://b8eolv3lmq44t" path="res://Assets/Sprites/Characters/zombie_fall.png" id="2_wi6li"]
+
+[node name="ZombieCorpse" type="Node2D"]
+script = ExtResource("1_qajgc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_wi6li")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(192, 0, 32, 16)

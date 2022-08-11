@@ -7,6 +7,8 @@ extends Node
 
 var packed_scenes := {}
 
+@onready var corpse_effect_layer : Node2D = get_node_or_null("%CorpseEffectsLayer")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalBus.spawn_effect.connect(_on_spawn_effect)
@@ -23,7 +25,11 @@ func _on_spawn_effect(effect_scene_path : String, effect_attributes : Dictionary
 	var effect : Effect = effect_scene.instantiate()
 	effect.setup_from_attribute_dictionary(effect_attributes)
 	effect.tree_exiting.connect(_on_effect_tree_exiting.bind(effect.get_instance_id()))
-	add_child(effect)
+	
+	if(effect is CorpseEffect && corpse_effect_layer):
+		corpse_effect_layer.add_child(effect)
+	else:
+		add_child(effect)
 
 func _on_effect_tree_exiting(instance_id : int):
 	#print("effect exiting tree " + str(instance_id))

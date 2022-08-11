@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://y3vbpc6geww6"]
+[gd_scene load_steps=13 format=3 uid="uid://cumlugaqnbxce"]
 
 [ext_resource type="Script" path="res://Scripts/Character/Enemy.gd" id="1_t5mso"]
-[ext_resource type="PackedScene" uid="uid://cfeum0jn7sbo4" path="res://Scenes/Effects/death/ZombieDeath.tscn" id="2_acxx5"]
+[ext_resource type="PackedScene" uid="uid://dwa7b8vp4f3bk" path="res://Scenes/Effects/Corpses/zombie_corpse.tscn" id="2_7d0to"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeparationSteeringComponent2D.gd" id="3_2a005"]
 [ext_resource type="Script" path="res://Scripts/Steering/WallSeparationSteeringComponent2D.gd" id="4_0ahwi"]
@@ -24,6 +24,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [&"idle"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RotationNode/VisualsNode/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_g8d50"]
 resource_name = "run"
@@ -38,6 +50,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"run"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RotationNode/VisualsNode/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_whwrc"]
@@ -54,9 +78,49 @@ tracks/0/keys = {
 "update": 1,
 "values": [&"walk"]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RotationNode/VisualsNode/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1rwuo"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RotationNode/VisualsNode/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s6bao"]
 _data = {
+"death": SubResource("Animation_1rwuo"),
 "idle": SubResource("Animation_tpsu3"),
 "run": SubResource("Animation_g8d50"),
 "walk": SubResource("Animation_whwrc")
@@ -70,7 +134,7 @@ script = ExtResource("1_t5mso")
 max_speed = 30.0
 body_radius = 8
 retarget_cooldown = 0.25
-death_effect_scene = ExtResource("2_acxx5")
+post_death_effects = [ExtResource("2_7d0to")]
 
 [node name="SeekSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("2_u45d0")
@@ -106,11 +170,14 @@ unique_name_in_owner = true
 [node name="Sprite" type="AnimatedSprite2D" parent="RotationNode/VisualsNode"]
 texture_filter = 1
 frames = ExtResource("6_t5wi7")
-animation = &"idle"
+animation = &"death"
+frame = 6
 playing = true
+offset = Vector2(8, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_s6bao")
 }

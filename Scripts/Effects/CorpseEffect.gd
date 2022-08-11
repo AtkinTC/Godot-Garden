@@ -1,4 +1,4 @@
-class_name DeathAnimationEffect
+class_name CorpseEffect
 extends Effect
 
 @export var duration : float = 5
@@ -7,11 +7,8 @@ var lifetime : float = 0
 
 func setup_from_attribute_dictionary(_attribute_dict: Dictionary):
 	super.setup_from_attribute_dictionary(_attribute_dict)
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
+	duration = _attribute_dict.get("duration", duration)
+	fadeout_duration = _attribute_dict.get("fadeout_duration", fadeout_duration)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:

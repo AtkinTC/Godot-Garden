@@ -18,12 +18,6 @@ layer_0/tile_data = PackedInt32Array(262148, 65537, 1, 262147, 65537, 1, 262146,
 script = ExtResource("3_62bd0")
 custom_data_layer_names = ["nav_cost"]
 
-[node name="EnemiesNode" parent="World" index="1"]
-z_index = 5
-
-[node name="HeroesNode" parent="World" index="2"]
-z_index = 6
-
 [node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
 position = Vector2(304, 304)
 
@@ -50,9 +44,6 @@ position = Vector2(336, 336)
 
 [node name="HeroUnit9" parent="World/HeroesNode" index="8" instance=ExtResource("5_d0gii")]
 position = Vector2(336, 272)
-
-[node name="EffectsController" parent="World" index="3"]
-z_index = 10
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)
