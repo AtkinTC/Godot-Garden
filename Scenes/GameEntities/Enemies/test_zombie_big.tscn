@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://w1v54ukyo4wp"]
+[gd_scene load_steps=11 format=3 uid="uid://ou1784p50mac"]
 
-[ext_resource type="Script" path="res://Scripts/Character/EnemyBody2D.gd" id="1_ujsw6"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeparationSteeringComponent2D.gd" id="3_q57lm"]
 [ext_resource type="Script" path="res://Scripts/Steering/WallSeparationSteeringComponent2D.gd" id="4_3wu50"]
 [ext_resource type="SpriteFrames" uid="uid://de4xaebdkky01" path="res://Resources/SpriteFrames/zombie_01.tres" id="6_t5wi7"]
-[ext_resource type="Script" path="res://Scripts/Character/EnemyController.gd" id="7_yf40b"]
+[ext_resource type="Script" path="res://Scripts/Character/Enemy.gd" id="6_xmhlr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
 radius = 18.0
@@ -62,15 +61,16 @@ _data = {
 "walk": SubResource("Animation_whwrc")
 }
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("rotation_source_node", "visuals_source_node")]
+[node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 4
 motion_mode = 1
-script = ExtResource("1_ujsw6")
+script = ExtResource("6_xmhlr")
 mass = 2.0
+max_speed = 25.0
 body_radius = 16
-rotation_source_node = NodePath("RotationNode")
-visuals_source_node = NodePath("RotationNode/VisualsNode")
+retarget_cooldown = 0.25
+health_max = 2
 
 [node name="SeekSteeringComponent2D" type="Node2D" parent="."]
 script = ExtResource("2_u45d0")
@@ -95,8 +95,10 @@ visible = false
 shape = SubResource("CircleShape2D_mgevr")
 
 [node name="RotationNode" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="VisualsNode" type="Node2D" parent="RotationNode"]
+unique_name_in_owner = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="RotationNode/VisualsNode"]
 texture_filter = 1
@@ -106,12 +108,8 @@ animation = &"idle"
 speed_scale = 0.5
 playing = true
 
-[node name="EnemyController" type="Node2D" parent="." node_paths=PackedStringArray("animation_player")]
-script = ExtResource("7_yf40b")
-animation_player = NodePath("AnimationPlayer")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyController"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_s6bao")
 }

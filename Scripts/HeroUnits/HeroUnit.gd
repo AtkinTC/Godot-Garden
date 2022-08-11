@@ -41,6 +41,8 @@ var reshot_duration : float = 1
 var reshot_time_remaining : float = 0
 var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
 var projectile_speed : float = 200
+var projectile_max_range : float = 150
+var projectile_damage : float = 1
 
 func _ready() -> void:
 	body_rotation_speed = deg2rad(body_rotation_speed_deg)
@@ -58,6 +60,9 @@ func _process(_delta: float) -> void:
 	update()
 
 func _physics_process(_delta: float) -> void:
+	if(target_node == null || !target_node is Node):
+		target_node = null
+	
 	var new_state = state
 	if(state == STATE.IDLE):
 #		if(target_node == null || !target_detection_area.is_valid_target(target_node)):
@@ -116,6 +121,9 @@ func retarget_if_needed(_delta: float):
 # returns the local predicted aim target
 #	makes prediction based off of target distance, target velocity, and projectile speed
 func predict_aim_target() -> Vector2:
+	if(target_node == null):
+		return Vector2.ZERO
+	
 	var local_aim_target = target_node.get_global_position() - global_position
 	if(!target_node.has_method("get_velocity")):
 		return local_aim_target
@@ -195,7 +203,8 @@ func create_projectile():
 		"source" : self,
 		"collision_mask" : target_mask,
 		"speed" : projectile_speed,
-		"max_range" : max_aim_range + free_aim_radius,
+		"max_range" : projectile_max_range + free_aim_radius,
+		"damage" : projectile_damage,
 		"rotation" : facing_rad,
 		"position" : global_position
 	}

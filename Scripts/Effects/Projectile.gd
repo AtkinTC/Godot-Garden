@@ -13,23 +13,22 @@ var collision_mask : int = 0
 var speed : float = 100
 var max_range : float = 0
 var max_range_sqr : float = 0
+var damage : float = 0
 
 func setup_from_attribute_dictionary(_attribute_dict: Dictionary):
 	super.setup_from_attribute_dictionary(_attribute_dict)
 	
 	source = _attribute_dict.get("source", null)
-	collision_mask = _attribute_dict.get("collision_mask", 0)
-	speed = _attribute_dict.get("speed", 100)
+	collision_mask = _attribute_dict.get("collision_mask", collision_mask)
+	speed = _attribute_dict.get("speed", speed)
+	damage = _attribute_dict.get("damage", damage)
 	
 	max_range = _attribute_dict.get("max_range", MAX_RANGE)
 	if(max_range <= 0 || max_range > MAX_RANGE):
 		max_range = MAX_RANGE
 	max_range_sqr = max_range * max_range
 	
-	position = _attribute_dict.get("position", Vector2.ZERO)
 	position_init = position
-	
-	rotation = _attribute_dict.get("rotation", 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -54,14 +53,14 @@ func _physics_process(_delta: float) -> void:
 	
 	var collider : Node = collision.get("collider", null)
 	if(collider != null):
-		if(collider.has_method("_on_attack_hit")):
+		if(collider.has_method("_on_attack_collision")):
 			var attack_data = {
 				AttackConsts.POSITION : collision.position,
 				AttackConsts.NORMAL : collision.normal,
 				AttackConsts.ANGLE : global_rotation,
 				AttackConsts.FORCE : 50
 			}
-			collider._on_attack_hit(attack_data)
+			collider._on_attack_collision(attack_data)
 		queue_free()
 		return
 	

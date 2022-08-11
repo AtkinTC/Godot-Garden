@@ -1,8 +1,8 @@
 class_name EnemyBody2D
 extends AgentBody2D
 
-@export var rotation_source_node: Node2D
-@export var visuals_source_node: Node2D
+@onready var rotation_source_node: Node2D = get_node_or_null("%RotationNode")
+@onready var visuals_source_node: Node2D = get_node_or_null("%VisualsNode")
 
 var target_position := Vector2.ZERO
 var seek_vector := Vector2.ZERO
@@ -26,6 +26,7 @@ func get_setup_params() -> Dictionary:
 	return setup_params
 
 func _ready() -> void:
+	super._ready()
 	attach_steering_components()
 
 func _process(_delta: float) -> void:
@@ -140,12 +141,5 @@ func set_seek_vector(_seek_vector : Vector2):
 func get_seek_vector() -> Vector2:
 	return seek_vector
 
-func _on_attack_hit(_attack_data: Dictionary):
-	var hit_position = _attack_data.get(AttackConsts.POSITION)
-	var hit_angle = _attack_data.get(AttackConsts.ANGLE)
-	var hit_force = _attack_data.get(AttackConsts.FORCE)
-	
-	apply_impulse(Vector2.from_angle(hit_angle) * hit_force, TYPE.EXTERNAL)
-	set_force(Vector2.ZERO, TYPE.MANUAL)
-	set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
-	apply_hitstun(1)
+func _on_attack_collision(_attack_data: Dictionary):
+	pass

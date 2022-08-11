@@ -33,6 +33,9 @@ var rotation_speed_external : float = 0
 var rotation_speed : float = 0
 var facing_rotation : float = 0
 
+func _ready() -> void:
+	pass
+
 func _physics_process(delta: float) -> void:
 	# apply forces
 	rotation_speed_manual += (rotation_force_manual * delta + rotation_impulse_manual) / mass
