@@ -1,65 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://ou1784p50mac"]
+[gd_scene load_steps=8 format=3 uid="uid://do07utj0fnefb"]
 
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeparationSteeringComponent2D.gd" id="3_q57lm"]
 [ext_resource type="Script" path="res://Scripts/Steering/WallSeparationSteeringComponent2D.gd" id="4_3wu50"]
-[ext_resource type="SpriteFrames" uid="uid://de4xaebdkky01" path="res://Resources/SpriteFrames/zombie_01.tres" id="6_t5wi7"]
+[ext_resource type="Texture2D" uid="uid://cbsquh0jaordq" path="res://Assets/Sprites/Characters/zombie_16x16.png" id="5_5rd7o"]
+[ext_resource type="AnimationLibrary" uid="uid://dtf1t45xt2ady" path="res://Resources/AnimationLibrary/zombie_animations.tres" id="6_q3n3r"]
 [ext_resource type="Script" path="res://Scripts/Character/Enemy.gd" id="6_xmhlr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mgevr"]
 radius = 18.0
-
-[sub_resource type="Animation" id="Animation_tpsu3"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-
-[sub_resource type="Animation" id="Animation_g8d50"]
-resource_name = "run"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"run"]
-}
-
-[sub_resource type="Animation" id="Animation_whwrc"]
-resource_name = "walk"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RotationNode/VisualsNode/Sprite:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"walk"]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_s6bao"]
-_data = {
-"idle": SubResource("Animation_tpsu3"),
-"run": SubResource("Animation_g8d50"),
-"walk": SubResource("Animation_whwrc")
-}
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
@@ -100,16 +49,17 @@ unique_name_in_owner = true
 [node name="VisualsNode" type="Node2D" parent="RotationNode"]
 unique_name_in_owner = true
 
-[node name="Sprite" type="AnimatedSprite2D" parent="RotationNode/VisualsNode"]
+[node name="Sprite" type="Sprite2D" parent="RotationNode/VisualsNode"]
 texture_filter = 1
 scale = Vector2(2, 2)
-frames = ExtResource("6_t5wi7")
-animation = &"idle"
-speed_scale = 0.5
-playing = true
+texture = ExtResource("5_5rd7o")
+hframes = 7
+vframes = 6
+frame = 21
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+autoplay = "idle"
 libraries = {
-"": SubResource("AnimationLibrary_s6bao")
+"": ExtResource("6_q3n3r")
 }

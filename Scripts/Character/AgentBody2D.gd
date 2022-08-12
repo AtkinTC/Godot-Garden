@@ -75,6 +75,13 @@ func _physics_process(delta: float) -> void:
 func get_max_speed() -> float:
 	return max_speed
 
+func get_force(force_type := TYPE.MANUAL) -> Vector2:
+	if(force_type == TYPE.MANUAL):
+		return force_manual
+	if(force_type == TYPE.EXTERNAL):
+		return force_external
+	return Vector2.ZERO
+
 func set_force(_force: Vector2, force_type := TYPE.MANUAL) -> void:
 	if(force_type == TYPE.MANUAL):
 		force_manual = _force
@@ -86,6 +93,13 @@ func apply_force(_force: Vector2, force_type := TYPE.MANUAL) -> void:
 		force_manual += _force
 	if(force_type == TYPE.EXTERNAL):
 		force_external += _force
+
+func get_impulse(force_type := TYPE.MANUAL) -> Vector2:
+	if(force_type == TYPE.MANUAL):
+		return impulse_manual
+	if(force_type == TYPE.EXTERNAL):
+		return impulse_external
+	return Vector2.ZERO
 
 func set_impulse(_impulse: Vector2, impulse_type := TYPE.MANUAL) -> void:
 	if(impulse_type == TYPE.MANUAL):

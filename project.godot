@@ -69,6 +69,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/DataValidator.gd"
 }, {
+"base": "CorpseEffect",
+"class": &"DirectionalCorpseEffect",
+"language": &"GDScript",
+"path": "res://Scripts/Effects/DirectionalCorpseEffect.gd"
+}, {
 "base": "Node2D",
 "class": &"Effect",
 "language": &"GDScript",
@@ -317,6 +322,7 @@ _global_script_class_icons={
 "ControlledCamera2D": "",
 "CorpseEffect": "",
 "DataValidator": "",
+"DirectionalCorpseEffect": "",
 "Effect": "",
 "EffectsController": "",
 "EnemiesNode": "",

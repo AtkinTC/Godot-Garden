@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8eolv3lmq44t"
-path="res://.godot/imported/zombie_fall.png-a9094a117de3382716ab283d2de57247.ctex"
+uid="uid://biidqa1ih0ucc"
+path="res://.godot/imported/zombie_16x16.png-0ee6c8896d3713de966058260c3f1bd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/zombie_fall.png"
-dest_files=["res://.godot/imported/zombie_fall.png-a9094a117de3382716ab283d2de57247.ctex"]
+source_file="res://zombie_16x16.png"
+dest_files=["res://.godot/imported/zombie_16x16.png-0ee6c8896d3713de966058260c3f1bd0.ctex"]
 
 [params]
 
