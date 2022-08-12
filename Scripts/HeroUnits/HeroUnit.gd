@@ -198,7 +198,6 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	free_aim_point_offset = new_free_aim_point_offset
 
 func create_projectile():
-	var mask : int = PhysicsUtil.get_physics_layer_mask_from_names(["enemy"])
 	var effect_attributes := {
 		"source" : self,
 		"collision_mask" : target_mask,

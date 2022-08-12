@@ -125,7 +125,7 @@ func complete_death():
 		SignalBus.spawn_effect.emit(effect_scene.get_path(), effect_attributes)
 	
 	#TODO: fix corpse effect spawn in, this timer is a bandaid to avoid flickering when corpse is spawned
-	await(get_tree().create_timer(0.05).timeout)
+	await(get_tree().create_timer(0.1).timeout)
 	queue_free()
 
 func set_nav_controller(_nav_controller : NavigationController) -> void:

@@ -57,7 +57,6 @@ texture_filter = 1
 texture = ExtResource("6_6ouhy")
 hframes = 7
 vframes = 6
-frame = 35
 region_rect = Rect2(0, 0, 48, 48)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

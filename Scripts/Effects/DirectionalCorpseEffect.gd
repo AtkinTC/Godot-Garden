@@ -33,5 +33,5 @@ func _ready() -> void:
 	animation_player.animation_finished.connect(_on_animation_finished)
 	animation_player.play(closest_key)
 
-func _on_animation_finished(anim_name : String):
+func _on_animation_finished(_anim_name : String):
 	animation_player.queue_free()

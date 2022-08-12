@@ -9,13 +9,8 @@ var packed_scenes := {}
 
 @onready var corpse_effect_layer : Node2D = get_node_or_null("%CorpseEffectsLayer")
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalBus.spawn_effect.connect(_on_spawn_effect)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _on_spawn_effect(effect_scene_path : String, effect_attributes : Dictionary):
 	var effect_scene : PackedScene = packed_scenes.get(effect_scene_path)
@@ -31,6 +26,6 @@ func _on_spawn_effect(effect_scene_path : String, effect_attributes : Dictionary
 	else:
 		add_child(effect)
 
-func _on_effect_tree_exiting(instance_id : int):
-	#print("effect exiting tree " + str(instance_id))
+func _on_effect_tree_exiting(_instance_id : int):
+	#print("effect exiting tree " + str(_instance_id))
 	pass

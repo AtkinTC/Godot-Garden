@@ -33,6 +33,5 @@ static func get_physics_layer_mask(bits: Array[int]) -> int:
 
 # same as get_physics_layer_mask, but built from provided layer names
 func get_physics_layer_mask_from_names(layer_names: Array[String]) -> int:
-	var mask: int = 0
 	var bits : Array[int] = layer_names.map(get_physics_layer_bit)
 	return(get_physics_layer_mask(bits))

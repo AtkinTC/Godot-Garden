@@ -62,7 +62,7 @@ static func greedy_line_raster(c0 : Vector2i, c1 : Vector2i) -> Array[Vector2i]:
 		cells.append(c0)
 		cells.append(c0 + Vector2i(0, mod_y))
 		for x in range(c0.x+mod_x, c1.x, mod_x):
-			var cx = Vector2i(x, s*(x - c0.x) + c0.y)
+			var cx := Vector2i(x, int(s*(x - c0.x) + c0.y))
 			cells.append(cx - Vector2i(0, mod_y))
 			cells.append(cx)
 			cells.append(cx + Vector2i(0, mod_y))
@@ -74,10 +74,10 @@ static func greedy_line_raster(c0 : Vector2i, c1 : Vector2i) -> Array[Vector2i]:
 		# x-dominant slope : calculate once per x
 		for x in range(c0.x, c1.x + mod_x, mod_x):
 			var y1_f : float = s*(x-0.5 - c0.x) + c0.y
-			var y1 : int = round(y1_f)
-			var y : int = round(s*(x - c0.x) + c0.y)
+			var y1 : int = round(y1_f) as int
+			var y : int = round(s*(x - c0.x) + c0.y) as int
 			var y2_f : float = s*(x+0.5 - c0.x) + c0.y
-			var y2 : int = round(y2_f)
+			var y2 : int = round(y2_f) as int
 			
 			if(y1 != y):
 				cells.append(Vector2i(x, y1))
@@ -99,16 +99,15 @@ static func greedy_line_raster(c0 : Vector2i, c1 : Vector2i) -> Array[Vector2i]:
 		var s_i = 1.0/s
 		for y in range(c0.y, c1.y + mod_y, mod_y):
 			var x1_f : float = s_i*(y-0.5 - c0.y) + c0.x
-			var x1 : int = round(x1_f)
-			var x : int = round(s_i*(y - c0.y) + c0.x)
+			var x1 : int = round(x1_f) as int
+			var x : int = round(s_i*(y - c0.y) + c0.x) as int
 			var x2_f : float = s_i*(y+0.5 - c0.y) + c0.x
-			var x2 : int = round(x2_f)
+			var x2 : int = round(x2_f) as int
 			
 			if(x1 != x):
 				cells.append(Vector2i(x1, y))
 			elif(is_equal_approx(abs(x1_f - x1), 0.5)):
 				var adj_x : int = (1 if x1_f > x else -1)
-				var v := Vector2i(x1 + adj_x, x)
 				cells.append(Vector2i(x1 + adj_x, y))
 			
 			cells.append(Vector2i(x, y))
@@ -117,7 +116,6 @@ static func greedy_line_raster(c0 : Vector2i, c1 : Vector2i) -> Array[Vector2i]:
 				cells.append(Vector2i(x2, y))
 			elif(is_equal_approx(abs(x2_f - x1), 0.5)):
 				var adj_x : int = (1 if x2_f > x else -1)
-				var v := Vector2i(x1 + adj_x, y)
 				cells.append(Vector2i(x2 + adj_x, y))
 		return cells
 
