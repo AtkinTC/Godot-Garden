@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://xp8ccxn80h81"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ContextMenu/ContextMenuButton.gd" id="1_xu302"]
+
+[node name="ContextMenuButton" type="Button"]
+offset_right = 71.0
+offset_bottom = 31.0
+text = "Action 1"
+script = ExtResource("1_xu302")

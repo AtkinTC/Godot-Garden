@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b41wrd3cqpi7k"]
+[gd_scene load_steps=5 format=3 uid="uid://b3n64t0hpk1ca"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_83mxw"]
 [ext_resource type="Script" path="res://Scripts/FPSLabel.gd" id="2_vu22e"]

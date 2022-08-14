@@ -18,6 +18,8 @@ var target_pos := Vector2.ZERO
 @onready var enemies_node: EnemiesNode = get_node_or_null("EnemiesNode")
 
 func _ready():
+	ResourceRef.set_current_game_world(self)
+	
 	tile_map.show_behind_parent = true
 	
 	var spawn_areas_node = get_node_or_null("%SpawnAreas")
@@ -49,7 +51,7 @@ func _ready():
 			params["facing_rotation"] = randf_range(0, TAU)
 			
 			enemies_node.create_enemy(enemy_scene1, params)
-			await(get_tree().create_timer(0.5).timeout)
+			await(get_tree().create_timer(1).timeout)
 
 func _process(_delta):
 	pass
@@ -62,33 +64,14 @@ func _physics_process(_delta: float) -> void:
 	nav_controller.process_maps_segmented(0, 1)
 	update()
 
-var hold_p : Vector2
-
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var target_cell := screen_to_map(event.position)
 		print("-----------------")
-		print(str("event.position =", event.position))
-		print(str("target_cell =", target_cell))
-		print(str("tile_def = ", tile_map.get_tile_identifier_for_cell(target_cell)))
-		
-		hold_p = screen_to_world(event.position)
-	
-	if(event.is_action_released("mouse_left")):
-		var p = screen_to_world(event.position)
-		var d = (p - hold_p).length()
-		var r = (p - hold_p).angle()
-		var effect_scene_path := "res://Scenes/Effects/BaseProjectile.tscn"
-		var mask : int = PhysicsUtil.get_physics_layer_mask_from_names(["enemy"])
-		var effect_attributes := {
-			"source" : null,
-			"collision_mask" : mask,
-			"speed" : d,
-			"rotation" : r,
-			"position" : p
-		}
-		
-		SignalBus.spawn_effect.emit(effect_scene_path, effect_attributes)
+		print(str("screen =", event.position))
+		print(str("screen_to_world =", screen_to_world(event.position)))
+		print(str("world_to_screen =", world_to_screen(screen_to_world(event.position))))
+		#print(str("tile_def = ", tile_map.get_tile_identifier_for_cell(target_cell)))
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -114,11 +97,25 @@ func global_to_world(global_coord : Vector2) -> Vector2:
 
 # convert screen coordinate to local world coordinate
 # calculated with camera position and zoom
-func screen_to_world(world_coord : Vector2) -> Vector2:
+func screen_to_world(screen_coord : Vector2) -> Vector2:
 	var viewport : Viewport = get_viewport()
 	var camera : Camera2D = viewport.get_camera_2d()
-	var coord := get_viewport().canvas_transform.affine_inverse().basis_xform(world_coord - (viewport.get_size() as Vector2)/2) + camera.get_position()
-	return coord
+	var world_coord = screen_coord
+	world_coord -= (viewport.get_size() as Vector2)/2
+	world_coord = get_viewport().canvas_transform.affine_inverse().basis_xform(world_coord)
+	world_coord += camera.get_position()
+	
+	#var coord := get_viewport().canvas_transform.affine_inverse().basis_xform(screen_coord - (viewport.get_size() as Vector2)/2) + camera.get_position()
+	return world_coord
+
+func world_to_screen(world_coord : Vector2) -> Vector2:
+	var viewport : Viewport = get_viewport()
+	var camera : Camera2D = viewport.get_camera_2d()
+	var screen_coord : Vector2 = world_coord
+	screen_coord -= camera.get_position()
+	screen_coord = get_viewport().canvas_transform.basis_xform(screen_coord)
+	screen_coord += (viewport.get_size() as Vector2)/2
+	return screen_coord
 
 # convert screen coordinate to map cell
 func screen_to_map(global_coord : Vector2) -> Vector2i:
