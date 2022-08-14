@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl820pbl3ovbl"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ContextMenu/ContextMenu.gd" id="1_kv2b2"]
+[ext_resource type="PackedScene" uid="uid://xp8ccxn80h81" path="res://Scenes/UI/ContextMenu/ContextMenuButton.tscn" id="2_fnves"]
+
+[node name="ContextMenu" type="Node2D"]
+position = Vector2(68, 0)
+script = ExtResource("1_kv2b2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+offset_right = 45.0
+offset_bottom = 26.0
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+offset_right = 71.0
+offset_bottom = 61.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_right = 71.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+offset_right = 71.0
+offset_bottom = 26.0
+text = "Menu
+"
+
+[node name="MenuItems" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+offset_top = 30.0
+offset_right = 71.0
+offset_bottom = 61.0
+
+[node name="ContextMenuButton" parent="MarginContainer/VBoxContainer/MenuItems" instance=ExtResource("2_fnves")]

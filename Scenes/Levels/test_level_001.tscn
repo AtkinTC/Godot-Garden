@@ -4,7 +4,7 @@
 [ext_resource type="TileSet" uid="uid://iemudeqjrnqh" path="res://Resources/TileSets/base_32x32.tres" id="2_nn3ab"]
 [ext_resource type="Script" path="res://Scripts/TileMap/TileMapCust.gd" id="3_62bd0"]
 [ext_resource type="Script" path="res://Scripts/Util/RectNode2D.gd" id="4_f63qy"]
-[ext_resource type="PackedScene" uid="uid://bergm2uxfxnk7" path="res://Scenes/GameEntities/HeroUnit.tscn" id="5_d0gii"]
+[ext_resource type="PackedScene" uid="uid://ceqfnk2p4t8bl" path="res://Scenes/GameEntities/HeroUnit.tscn" id="5_d0gii"]
 
 [node name="Level" instance=ExtResource("1_mr320")]
 
@@ -20,30 +20,6 @@ custom_data_layer_names = ["nav_cost"]
 
 [node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
 position = Vector2(304, 304)
-
-[node name="HeroUnit2" parent="World/HeroesNode" index="1" instance=ExtResource("5_d0gii")]
-position = Vector2(304, 336)
-
-[node name="HeroUnit3" parent="World/HeroesNode" index="2" instance=ExtResource("5_d0gii")]
-position = Vector2(304, 272)
-
-[node name="HeroUnit4" parent="World/HeroesNode" index="3" instance=ExtResource("5_d0gii")]
-position = Vector2(272, 304)
-
-[node name="HeroUnit5" parent="World/HeroesNode" index="4" instance=ExtResource("5_d0gii")]
-position = Vector2(272, 336)
-
-[node name="HeroUnit6" parent="World/HeroesNode" index="5" instance=ExtResource("5_d0gii")]
-position = Vector2(272, 272)
-
-[node name="HeroUnit7" parent="World/HeroesNode" index="6" instance=ExtResource("5_d0gii")]
-position = Vector2(336, 304)
-
-[node name="HeroUnit8" parent="World/HeroesNode" index="7" instance=ExtResource("5_d0gii")]
-position = Vector2(336, 336)
-
-[node name="HeroUnit9" parent="World/HeroesNode" index="8" instance=ExtResource("5_d0gii")]
-position = Vector2(336, 272)
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)
