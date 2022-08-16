@@ -33,7 +33,6 @@ func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 	if(maps_to_process_count == 0):
 		return
 	
-	
 	var partial_cells_limit : int = 0
 	if(cells_limit > 0):
 		partial_cells_limit = max(float(cells_limit)/maps_to_process_count, 1)
@@ -41,8 +40,6 @@ func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 	if(time_limit > 0):
 		partial_time_limit = max(float(time_limit)/maps_to_process_count, 1)
 	
-	#if(!goal_flow_map.is_complete()):
-	#	goal_flow_map.process_segmented(partial_cells_limit, partial_time_limit)
 	
 	for map in goal_flow_maps:
 		if(!map.is_complete()):
@@ -145,6 +142,68 @@ func get_targeted_nav_direction(start_pos: Vector2, target_pos: Vector2) -> Vect
 		
 	var dir := multi_flow_map.get_flow_direction(start_cell, target_cell)
 	return dir
+
+const CARD_DIR = [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+const DIAG_DIR = [Vector2i(1,1), Vector2i(-1,1), Vector2i(-1,-1), Vector2i(1,-1)]
+
+const CARD_DIST = 10
+const DIAG_DIST = 14
+
+func get_nav_cells_in_range(start_pos: Vector2, nav_range: int, real_width : int = 0) -> Array[Vector2i]:
+	var nav_width = get_nav_width(real_width)
+	if(nav_width > tile_nav_map.get_effective_max_width()):
+		return []
+	if(nav_range <= 0):
+		return []
+	var start_cell = tile_map.world_to_map(start_pos)
+	if(!tile_nav_map.is_cell_navigable(start_cell, nav_width)):
+		return []
+		
+	var nav_cells : Array[Vector2i] = []
+	var open_set : Array[Vector2i] = [start_cell]
+	var d_map : Dictionary = {start_cell: 0}
+	
+	var adj_nav_range = nav_range * CARD_DIST
+	
+	while(!open_set.is_empty()):
+		var cell : Vector2i = open_set.pop_front()
+		
+		# cardinal directions
+		var card_dist: int = d_map[cell] + CARD_DIST
+		if(card_dist <= adj_nav_range):
+			for direction in CARD_DIR:
+				var n_cell: Vector2i = cell + direction
+				if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
+					if(!d_map.has(n_cell) || card_dist <= d_map[n_cell]):
+						d_map[n_cell] = card_dist
+						if(!open_set.has(n_cell)):
+							open_set.append(n_cell)
+
+		# diagonal directions
+		var diag_dist: int = d_map[cell] + DIAG_DIST
+		if(diag_dist <= adj_nav_range):
+			for direction in DIAG_DIR:
+					var n_cell : Vector2i = cell + direction
+					if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
+						# two cardinal neighbors both need to be open to consider diagonal
+						var n_card_1 := Vector2i(n_cell.x, cell.y)
+						var n_card_2 := Vector2i(cell.x, n_cell.y)
+						if(tile_nav_map.is_cell_navigable(n_card_1, nav_width) && tile_nav_map.is_cell_navigable(n_card_2, nav_width)):
+							if(!d_map.has(n_cell) || diag_dist < d_map[n_cell]):
+								d_map[n_cell] = diag_dist
+								if(!open_set.has(n_cell)):
+									open_set.append(n_cell)
+	
+	nav_cells = d_map.keys()
+	nav_cells.erase(start_cell)
+	
+	return nav_cells
+
+func get_tile_size() -> Vector2i:
+	return tile_map.get_tile_size()
+
+func world_to_map(pos : Vector2) -> Vector2i:
+	return tile_map.world_to_map(pos)
 
 func draw_goal_flow(node: Node2D, nav_width : int = 1):
 	if(nav_width - 1 < goal_flow_maps.size()):

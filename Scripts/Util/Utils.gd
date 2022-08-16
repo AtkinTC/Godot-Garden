@@ -121,3 +121,90 @@ static func greedy_line_raster(c0 : Vector2i, c1 : Vector2i) -> Array[Vector2i]:
 
 	print_debug("ERROR: unexpected path in method")
 	return [c0, c1]
+
+# converts a cell coordinate into a 1-by-1 polygon
+static func cell_to_poly(cell : Vector2i):
+	return [cell, Vector2i(cell.x+1, cell.y), cell + Vector2i.ONE, Vector2i(cell.x, cell.y+1)]
+
+# returns a list of polygons representing the borders of the space covered by the supplied cells
+#	The operation may result in multiple outer polygons (boundary) and multiple inner polygons (holes) produced
+#	which could be distinguished by calling is_polygon_clockwise().
+#		outer polygon : counter-clockwise
+#		inner polygon : clockwuse
+static func merge_cells(cells : Array[Vector2i]) -> Array:
+	if(cells.size() == 0):
+		return []
+	if(cells.size() == 1):
+		return cell_to_poly(cells[0])
+	
+	var remaining_set : Array[Vector2i] = cells.duplicate()
+
+	var outer_polys := []
+	var inner_polys = []
+	
+	while(!remaining_set.is_empty()):
+		var open_set : Array[Vector2i] = [remaining_set.pop_front()]
+		var poly : Array[Vector2] = []
+		while(!open_set.is_empty()):
+			var cell : Vector2i = open_set.pop_front()
+			
+			if(poly.is_empty()):
+				poly = cell_to_poly(cell)
+			else:
+				var cell_poly := cell_to_poly(cell)
+				
+				# merge with existing inner polygons to see if they can be reduced
+				var new_inner_polys = []
+				for inner in inner_polys:
+					# clipping will try and reduce the inner space by the new cell polygon
+					# if there is a reduction, the result could be an empty array, a single smaller space, or multiple smaller paces
+					var clips := Geometry2D.clip_polygons(inner, cell_poly)
+					for clip in clips:
+						# clipping a positive from a negative space, so flip all the resulting orientations
+						if(!Geometry2D.is_polygon_clockwise(clip)):
+							clip.reverse()
+							new_inner_polys.append(clip)
+				inner_polys = new_inner_polys
+				
+				var results := Geometry2D.merge_polygons(poly, cell_poly)
+				for result in results:
+					if(Geometry2D.is_polygon_clockwise(result)):
+						inner_polys.append(result)
+					else:
+						poly = Array(result)
+			
+			for d in [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]:
+				var n_cell = d + cell
+				if(remaining_set.has(n_cell) &&  !open_set.has(n_cell)):
+					open_set.append(n_cell)
+					remaining_set.erase(n_cell)
+		outer_polys.append(poly)
+	return outer_polys + inner_polys
+
+#############
+## DRAWING ##
+#############
+
+static func canvas_draw_line(canvas_item: RID, p1: Vector2, p2: Vector2, c: Color, w := 1.0, aa := false) -> void:
+	RenderingServer.canvas_item_add_line(canvas_item, p1, p2, c, w, aa)
+
+static func canvas_draw_rect(canvas_item: RID, r: Rect2, c : Color, f := false, w := 1.0, aa := false) -> void:
+	if(f):
+		RenderingServer.canvas_item_add_rect(canvas_item, r, c)
+	else:
+		var points : PackedVector2Array = [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y), r.position]
+		var colors : PackedColorArray = [c]
+		RenderingServer.canvas_item_add_polyline(canvas_item, points, colors, w, aa)
+
+static func canvas_draw_polygon(canvas_item: RID, p: PackedVector2Array, c : Color, f := false, w := 1.0, aa := false):
+	if(f):
+		RenderingServer.canvas_item_add_polygon(canvas_item, p, [c])
+	else:
+		p = polygon_to_polyline(p)
+		RenderingServer.canvas_item_add_polyline(canvas_item, p, [c], w, aa)
+
+static func polygon_to_polyline(polygon : PackedVector2Array) -> PackedVector2Array:
+	var polyline : PackedVector2Array = polygon.duplicate()
+	if(polyline[0] != polyline[polyline.size()-1]):
+		polyline.append(polyline[0])
+	return polyline

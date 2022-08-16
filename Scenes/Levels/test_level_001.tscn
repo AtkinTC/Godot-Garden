@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://diqtw4s4ktfr8"]
 
-[ext_resource type="PackedScene" uid="uid://c7c6slgt4p10w" path="res://Scenes/Levels/base_level.tscn" id="1_mr320"]
+[ext_resource type="PackedScene" uid="uid://wpmcoojwf101" path="res://Scenes/Levels/base_level.tscn" id="1_mr320"]
 [ext_resource type="TileSet" uid="uid://iemudeqjrnqh" path="res://Resources/TileSets/base_32x32.tres" id="2_nn3ab"]
 [ext_resource type="Script" path="res://Scripts/TileMap/TileMapCust.gd" id="3_62bd0"]
 [ext_resource type="Script" path="res://Scripts/Util/RectNode2D.gd" id="4_f63qy"]
@@ -19,7 +19,10 @@ script = ExtResource("3_62bd0")
 custom_data_layer_names = ["nav_cost"]
 
 [node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
-position = Vector2(304, 304)
+position = Vector2(592, 304)
+
+[node name="HeroUnit2" parent="World/HeroesNode" index="1" instance=ExtResource("5_d0gii")]
+position = Vector2(624, 304)
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)

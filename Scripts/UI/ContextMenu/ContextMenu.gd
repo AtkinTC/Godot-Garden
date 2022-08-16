@@ -11,7 +11,7 @@ var selection_hover_id : int = -1
 
 var in_menu : bool = false
 
-var actions : Array[ActionDefinition] = []
+var actions : Array[Dictionary] = []
 var buttons : Dictionary = {}
 
 var select_duration : float = 1
@@ -76,7 +76,7 @@ func update_position() -> void:
 	update()
 
 # get the list of context actions for the current target
-func retrieve_context_actions() -> Array[ActionDefinition]:
+func retrieve_context_actions() -> Array[Dictionary]:
 	if(context_target_id < 0):
 		return []
 	
@@ -84,11 +84,11 @@ func retrieve_context_actions() -> Array[ActionDefinition]:
 	if(target == null || !target.has_method("get_context_actions")):
 		return []
 	
-	return target.get_context_actions() as Array[ActionDefinition]
+	return target.get_context_actions() as Array[Dictionary]
 
 # update the contents of the menu
 func update_menu_items_display() -> void:
-	var new_actions : Array[ActionDefinition] = retrieve_context_actions()
+	var new_actions : Array[Dictionary] = retrieve_context_actions()
 	
 	var update := false
 	

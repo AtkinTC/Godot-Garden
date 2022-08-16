@@ -67,11 +67,11 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var target_cell := screen_to_map(event.position)
-		print("-----------------")
-		print(str("screen =", event.position))
-		print(str("screen_to_world =", screen_to_world(event.position)))
-		print(str("world_to_screen =", world_to_screen(screen_to_world(event.position))))
-		#print(str("tile_def = ", tile_map.get_tile_identifier_for_cell(target_cell)))
+		var world_pos := screen_to_world(event.position)
+#		print("-----------------")
+#		print(str("screen =", event.position))
+#		print(str("screen_to_world =", world_pos))
+#		print(str("world_to_screen =", world_to_screen(screen_to_world(event.position))))
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:
@@ -123,6 +123,9 @@ func screen_to_map(global_coord : Vector2) -> Vector2i:
 
 func get_tile_size() -> Vector2i:
 	return tile_map.get_tile_size()
+
+func get_navigation_controller() -> NavigationController:
+	return nav_controller
 
 func _draw() -> void:
 	#nav_controller.draw_goal_flow(self, 1)

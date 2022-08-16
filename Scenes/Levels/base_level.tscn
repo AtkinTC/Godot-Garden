@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7c6slgt4p10w"]
+[gd_scene load_steps=10 format=3 uid="uid://wpmcoojwf101"]
 
 [ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_hk33a"]
 [ext_resource type="Script" path="res://Scenes/World/World.gd" id="2_5f7ut"]
+[ext_resource type="Script" path="res://Scripts/UI/LevelUIController.gd" id="2_ikrtk"]
 [ext_resource type="PackedScene" uid="uid://bl820pbl3ovbl" path="res://Scenes/UI/ContextMenu/ContextMenu.tscn" id="2_jxwtx"]
 [ext_resource type="FontFile" uid="uid://dxlt2hh0505l0" path="res://Assets/Fonts/Kenney Pixel Square.ttf" id="3_scv41"]
 [ext_resource type="Script" path="res://Scripts/Effects/EffectsController.gd" id="5_3mwj8"]
+[ext_resource type="Script" path="res://Scripts/Character/HeroesNode.gd" id="7_8c7xr"]
 [ext_resource type="Script" path="res://Scripts/Character/EnemiesNode.gd" id="7_wadv3"]
 [ext_resource type="Script" path="res://Scripts/Camera/ControlledCamera.gd" id="8_7dmnx"]
 
@@ -13,7 +15,10 @@ script = ExtResource("1_hk33a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ContextMenu" parent="CanvasLayer" instance=ExtResource("2_jxwtx")]
+[node name="LevelUIController" type="Control" parent="CanvasLayer"]
+script = ExtResource("2_ikrtk")
+
+[node name="ContextMenu" parent="CanvasLayer/LevelUIController" instance=ExtResource("2_jxwtx")]
 visible = false
 position = Vector2(0, 0)
 
@@ -30,6 +35,7 @@ script = ExtResource("7_wadv3")
 
 [node name="HeroesNode" type="Node2D" parent="World"]
 z_index = 10
+script = ExtResource("7_8c7xr")
 
 [node name="EffectsController" type="Node2D" parent="World"]
 z_index = 20

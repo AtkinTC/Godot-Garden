@@ -1,11 +1,11 @@
 # HeroUnit extends Node2D
-# 	semi-autonamous hero units
+# 	semi-autonomous hero units
 #	engages in combat with enemy units and takes orders from the player
 
 class_name HeroUnit
 extends Node2D
 
-enum STATE {NULL, IDLE, AIMING, RESHOT}
+enum STATE {NULL, IDLE, AIMING, RESHOT, MOVING}
 
 var state = STATE.NULL
 
@@ -14,6 +14,8 @@ var state = STATE.NULL
 @onready var rotation_source_node: Node2D = get_node_or_null("%RotationNode")
 @onready var visuals_source_node: Node2D = get_node_or_null("%VisualsNode")
 @onready var target_detection_area: TargetDetectionCircle = get_node("%TargetDetectionCircle")
+
+var heroes_node : HeroesNode
 
 # targeting
 @export_range(0, 5000) var detection_range : int = 150 # the range at which the unit becomes "aware" of targets
@@ -44,7 +46,16 @@ var projectile_speed : float = 200
 var projectile_max_range : float = 150
 var projectile_damage : float = 1
 
+#navigation
+var nav_controller : NavigationController
+var move_distance : int = 5
+var move_target_cell : Vector2i
+
 func _ready() -> void:
+	var parent = get_parent()
+	if(parent is HeroesNode):
+		heroes_node = parent
+	
 	body_rotation_speed = deg2rad(body_rotation_speed_deg)
 	free_aim_angle = deg2rad(free_aim_angle_deg)
 	
@@ -55,6 +66,15 @@ func _ready() -> void:
 	target_detection_area.set_collision_mask(target_mask)
 	
 	state = STATE.IDLE
+	
+	call_deferred("post_ready")
+
+# deferred ready function for additional setup that relies on other nodes being ready
+func post_ready() -> void:
+	if(nav_controller == null):
+		var world : World = ResourceRef.get_current_game_world()
+		if(world != null):
+			nav_controller = world.get_navigation_controller()
 
 func _process(_delta: float) -> void:
 	update()
@@ -65,22 +85,14 @@ func _physics_process(_delta: float) -> void:
 	
 	var new_state = state
 	if(state == STATE.IDLE):
-#		if(target_node == null || !target_detection_area.is_valid_target(target_node)):
-#			#TODO : add some small delay to retargeting instead of running it every frame
-#			target_node = target_detection_area.get_closest_target_to_point(aim_point_center, max_aim_range)
 		retarget_if_needed(_delta)
 		
 		if(target_node != null):
 			new_state = STATE.AIMING
 	if(state == STATE.AIMING || state == STATE.RESHOT):
-#		if(target_node == null || !target_detection_area.is_valid_target(target_node)):
-#			#TODO : add some small delay to retargeting instead of running it every frame
-#			target_node = target_detection_area.get_closest_target_to_point(aim_point_center, max_aim_range)
 		retarget_if_needed(_delta)
 		
 		if(target_node):
-			#TODO : check if target is still (inside max_aim_range + free_aim_radius)
-			#		if target is outside range for some small length of time, then try to retarget
 			rotate_and_aim(predict_aim_target(), _delta)
 		else:
 			aim_point_center = Vector2.ZERO
@@ -220,6 +232,31 @@ func tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans
 		return final
 	else:
 		return Tween.interpolate_value(initial, final - initial, delta, duration, trans_type, ease_type)
+
+func get_map_cell() -> Vector2i:
+	return nav_controller.world_to_map(global_position)
+
+func get_navigation_controller() -> NavigationController:
+	return nav_controller
+
+func get_reserved_cells() -> Array[Vector2i]:
+	if(state == STATE.MOVING):
+		return [move_target_cell]
+	else:
+		return [get_map_cell()]
+
+func get_possible_move_targets() -> Array[Vector2i]:
+	if(nav_controller == null):
+		return []
+	
+	var move_targets = nav_controller.get_nav_cells_in_range(self.position, move_distance)
+	
+	if(heroes_node):
+		var reserved_cells : Array[Vector2i] = heroes_node.get_reserved_cells()
+		for cell in reserved_cells:
+			move_targets.erase(cell)
+	
+	return move_targets
 
 func _on_targets_change():
 	pass

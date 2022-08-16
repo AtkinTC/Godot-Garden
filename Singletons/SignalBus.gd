@@ -10,3 +10,5 @@ signal node_selected(inst_id : int)
 signal node_deselected(inst_id : int)
 signal node_mouse_entered(inst_id : int)
 signal node_mouse_exited(inst_id : int)
+
+signal trigger_ui_action(action_definition : Dictionary)

@@ -24,16 +24,18 @@ func set_selected(_selected : bool) -> void:
 	update()
 
 # returns the list of context actions that will be used to create this node's context manu
-func get_context_actions() -> Array[ActionDefinition]:
-	var actions : Array[ActionDefinition] = []
+func get_context_actions() -> Array[Dictionary]:
+	var actions : Array[Dictionary] = []
 	
-	var action := ActionDefinition.new()
-	action.key = "test1"
-	action.display_name = "test 1"
-	action.callback = callback_test_1
+	var action := {}
+	action.key = "move"
+	action.display_name = "Move"
+	action.source = get_parent()
+	action.source_type = "HeroUnit"
+	action.callback = func(): SignalBus.trigger_ui_action.emit(action)
 	actions.append(action)
 	
-	action = ActionDefinition.new()
+	action = {}
 	action.key = "test2"
 	action.display_name = "test 2"
 	action.callback = callback_test_2

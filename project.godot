@@ -14,11 +14,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
-"base": "Resource",
-"class": &"ActionDefinition",
-"language": &"GDScript",
-"path": "res://Scenes/UI/ContextMenu/ActionDefinition.gd"
-}, {
 "base": "CharacterBody2D",
 "class": &"AgentBody2D",
 "language": &"GDScript",
@@ -139,6 +134,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/HeroUnits/HeroUnit.gd"
 }, {
+"base": "Node2D",
+"class": &"HeroesNode",
+"language": &"GDScript",
+"path": "res://Scripts/Character/HeroesNode.gd"
+}, {
 "base": "Area2D",
 "class": &"Hurtbox",
 "language": &"GDScript",
@@ -158,6 +158,11 @@ _global_script_classes=[{
 "class": &"LevelLoader",
 "language": &"GDScript",
 "path": "res://Scripts/Level/LevelLoader.gd"
+}, {
+"base": "Control",
+"class": &"LevelUIController",
+"language": &"GDScript",
+"path": "res://Scripts/UI/LevelUIController.gd"
 }, {
 "base": "RefCounted",
 "class": &"MultiFlowMap",
@@ -316,7 +321,6 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "ActionData": "",
-"ActionDefinition": "",
 "AgentBody2D": "",
 "AreaVO": "",
 "Array2D": "",
@@ -341,10 +345,12 @@ _global_script_class_icons={
 "FlowMap": "",
 "FlowMapNavigation": "",
 "HeroUnit": "",
+"HeroesNode": "",
 "Hurtbox": "",
 "InputHandler": "",
 "Level": "",
 "LevelLoader": "",
+"LevelUIController": "",
 "MultiFlowMap": "",
 "MultiFlowMapNavigation": "",
 "NavigationController": "",
