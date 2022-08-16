@@ -14,6 +14,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Data/ActionData.gd"
 }, {
+"base": "Resource",
+"class": &"ActionDefinition",
+"language": &"GDScript",
+"path": "res://Scenes/UI/ContextMenu/ActionDefinition.gd"
+}, {
 "base": "CharacterBody2D",
 "class": &"AgentBody2D",
 "language": &"GDScript",
@@ -53,11 +58,6 @@ _global_script_classes=[{
 "class": &"Constants",
 "language": &"GDScript",
 "path": "res://Scripts/Constants.gd"
-}, {
-"base": "Node2D",
-"class": &"ContextMenu",
-"language": &"GDScript",
-"path": "res://Scripts/UI/ContextMenu/ContextMenu.gd"
 }, {
 "base": "Button",
 "class": &"ContextMenuButton",
@@ -219,11 +219,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Steering/SeekSteeringComponent2D.gd"
 }, {
-"base": "Area2D",
-"class": &"SelectionControlNode",
-"language": &"GDScript",
-"path": "res://Scripts/UI/SelectionControlNode.gd"
-}, {
 "base": "SteeringComponent2D",
 "class": &"SeparationSteeringComponent2D",
 "language": &"GDScript",
@@ -313,14 +308,10 @@ _global_script_classes=[{
 "class": &"WaveCollapseV2",
 "language": &"GDScript",
 "path": "res://Scripts/WaveCollapseV2.gd"
-}, {
-"base": "Node2D",
-"class": &"World",
-"language": &"GDScript",
-"path": "res://Scenes/World/World.gd"
 }]
 _global_script_class_icons={
 "ActionData": "",
+"ActionDefinition": "",
 "AgentBody2D": "",
 "AreaVO": "",
 "Array2D": "",
@@ -329,7 +320,6 @@ _global_script_class_icons={
 "CellDefinitionSet": "",
 "Const": "",
 "Constants": "",
-"ContextMenu": "",
 "ContextMenuButton": "",
 "ControlledCamera2D": "",
 "CorpseEffect": "",
@@ -362,7 +352,6 @@ _global_script_class_icons={
 "RectNode2D": "",
 "SaveFileResource": "",
 "SeekSteeringComponent2D": "",
-"SelectionControlNode": "",
 "SeparationSteeringComponent2D": "",
 "SteeringComponent2D": "",
 "Structure": "",
@@ -380,8 +369,7 @@ _global_script_class_icons={
 "WallSeparationSteeringComponent2D": "",
 "WanderSteeringComponent2D": "",
 "WaveCollapse": "",
-"WaveCollapseV2": "",
-"World": ""
+"WaveCollapseV2": ""
 }
 
 [application]
