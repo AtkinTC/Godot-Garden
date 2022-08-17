@@ -92,7 +92,7 @@ func process_move():
 			current_action["path"] = path
 	else:
 		current_action["highlight_cell"] = null
-		current_action["path"] = null
+		current_action["path"] = []
 	
 func handle_input_move(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):

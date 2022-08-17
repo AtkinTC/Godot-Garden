@@ -22,7 +22,7 @@ var heroes_node : HeroesNode
 
 # targeting
 @export_range(0, 5000) var detection_range : int = 200 # the range at which the unit becomes "aware" of targets
-@export_range(0, 5000) var body_rotation_speed_deg : float = 24 # body facing rotation speed : degrees per second
+@export_range(0, 5000) var body_rotation_speed_deg : float = 90 # body facing rotation speed : degrees per second
 var body_rotation_speed : float # body facing rotation speed : radians per second
 var target_node : Node2D
 @export var target_layer_names : Array[String] = []
@@ -48,6 +48,8 @@ var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
 var projectile_speed : float = 200
 var projectile_max_range : float = 250
 var projectile_damage : float = 1
+var projectile_collision_layers : Array[String] = ["enemy", "wall"]
+@onready var projectile_collision_mask := PhysicsUtil.get_physics_layer_mask_from_names(projectile_collision_layers)
 
 #navigation
 var nav_controller : NavigationController
@@ -241,7 +243,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 func create_projectile():
 	var effect_attributes := {
 		"source" : self,
-		"collision_mask" : target_mask,
+		"collision_mask" : projectile_collision_mask,
 		"speed" : projectile_speed,
 		"max_range" : projectile_max_range + free_aim_radius,
 		"damage" : projectile_damage,
