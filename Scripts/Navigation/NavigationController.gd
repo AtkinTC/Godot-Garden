@@ -1,6 +1,6 @@
 class_name NavigationController
 
-const NAV_WIDTH_BUFFER : int = 6
+const NAV_WIDTH_BUFFER : int = 0
 
 var tile_map: TileMapCust
 var goal_cells : Array[Vector2i] = []
@@ -10,6 +10,8 @@ var tile_nav_map : TileNavMap
 var goal_flow_maps : Array[FlowMap]
 var multi_flow_map : MultiFlowMap
 
+var a_star_maps : Array[AStarMap]
+
 var incomplete_flow_targets : Array[Vector2i]
 
 func _init(_tile_map : TileMap, _goal_cells : Array[Vector2i]):
@@ -18,10 +20,12 @@ func _init(_tile_map : TileMap, _goal_cells : Array[Vector2i]):
 	#goal_flow_map = FlowMap.new(tile_nav_map, _goal_cells)
 	multi_flow_map = MultiFlowMap.new(tile_nav_map)
 	
-	goal_flow_maps = []
 	var max_nav_width := tile_nav_map.get_effective_max_width()
+	goal_flow_maps = []
+	a_star_maps = []
 	for width in range(1, max_nav_width+1):
 		goal_flow_maps.append(FlowMap.new(tile_nav_map, _goal_cells, width))
+		a_star_maps.append(AStarMap.new(tile_nav_map,  width))
 
 func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 	var maps_to_process_count := incomplete_flow_targets.size()
@@ -62,7 +66,7 @@ func get_width_adjusted_nav_position(_real_position : Vector2, _real_width : int
 	if(_real_width <= 0):
 		return _real_position
 	var tile_size := tile_map.get_tile_size()
-	if(_real_width < tile_size.x && _real_width < tile_size.y):
+	if(_real_width <= tile_size.x && _real_width <= tile_size.y):
 		return _real_position
 	
 	# navigation uses top right cell for multi-cell units
@@ -74,6 +78,34 @@ func get_goal_nav_direction(_start_pos: Vector2, _real_width : int = 0, weighted
 		return get_goal_nav_direction_weighted(_start_pos, _real_width)
 	else:
 		return get_goal_nav_direction_unweighted(_start_pos, _real_width)
+
+func get_nav_path(_start_pos: Vector2, _end_pos: Vector2, _real_width : int = 0) -> Array[Vector2]:
+	var nav_width = get_nav_width(_real_width)
+	var adj_start_pos = _start_pos
+	var adj_end_pos = _end_pos
+	if(nav_width > 1):
+		adj_start_pos = get_width_adjusted_nav_position(_start_pos, _real_width)
+		adj_end_pos = get_width_adjusted_nav_position(_end_pos, _real_width)
+	var start_cell := tile_map.world_to_map(adj_start_pos)
+	var end_cell := tile_map.world_to_map(adj_end_pos)
+	
+	var cells := get_nav_path_cells(start_cell, end_cell, nav_width)
+	var path : Array[Vector2] = cells.map(func(cell):
+		var p : Vector2 = cell * tile_map.get_tile_size()
+		if(nav_width == 1):
+			p += Vector2(tile_map.get_tile_size())/2.0
+		else:
+			p += Vector2(_real_width, _real_width)/2
+		return p)
+	
+	return path
+
+func get_nav_path_cells(_start_cell: Vector2i, _end_cell: Vector2i, _nav_width : int = 1) -> Array[Vector2i]:
+	if(_nav_width > tile_nav_map.get_effective_max_width()):
+		return []
+	if(_nav_width >= a_star_maps.size()):
+		return []
+	return a_star_maps[_nav_width-1].get_path_cells(_start_cell, _end_cell)
 
 func get_goal_nav_direction_unweighted(_start_pos: Vector2, _real_width : int = 0) -> Vector2:
 	var nav_width = get_nav_width(_real_width)

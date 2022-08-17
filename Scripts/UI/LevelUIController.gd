@@ -82,44 +82,64 @@ func start_move_state(action_def : Dictionary):
 
 func process_move():
 	var mouse_p: Vector2 = get_global_mouse_position()
-	var mouse_c: Vector2i = world.screen_to_map(mouse_p)
-	if(mouse_c in current_action.target_cells):
-		current_action["highlight_cell"] = mouse_c
+	var mouse_w: Vector2 = world.screen_to_world(mouse_p)
+	var mouse_c: Vector2i = world.world_to_map(mouse_w)
+	if(mouse_c in current_action["target_cells"]):
+		if(!current_action.has("current_action") || mouse_c != current_action["highlight_cell"]):
+			current_action["highlight_cell"] = mouse_c
+			var hero : HeroUnit = current_action["source"]
+			var path := hero.get_nav_path(mouse_w)
+			current_action["path"] = path
 	else:
 		current_action["highlight_cell"] = null
-		
+		current_action["path"] = null
+	
 func handle_input_move(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var screen_pos: Vector2 = event.position
 		var map_cell : Vector2i = world.screen_to_map(screen_pos)
-		if(map_cell in current_action.target_cells):
-			print("valid move target")
-			#TODO: send move command to hero unit
-		else:
-			print("invalid move target")
-			state = STATE.NONE
+		if(map_cell in current_action["target_cells"]):
+			var hero : HeroUnit = current_action["source"]
+			hero.initiate_move(world.screen_to_world(screen_pos))
+		state = STATE.NONE
 #		get_viewport().set_input_as_handled()
 	
 func _draw():
 	match state:
 		STATE.MOVE:
-			var nav_controller : NavigationController = current_action.nav_controller
+			var nav_controller : NavigationController = current_action["nav_controller"]
 			var tile_size := nav_controller.tile_map.get_tile_size()
 			
+			# draw fill the movable area
 			var area_fill_color = Color.BLUE
 			area_fill_color.a = 0.15
-			
-			for cell in current_action.target_cells:
+			for cell in current_action["target_cells"]:
 				var c : Vector2 = cell * tile_size
 				var rect := Rect2(c, tile_size)
 				Utils.canvas_draw_rect(draw_surface, rect, area_fill_color, true)
 			
-			for poly in current_action.outer_polygons:
-				Utils.canvas_draw_polygon(draw_surface, poly, Color.BLUE, false, 4.0)
-			for poly in current_action.inner_polygons:
-				Utils.canvas_draw_polygon(draw_surface, poly, Color.GREEN, false, 4.0)
+			# draw borders of the movable area
+			for poly in current_action["outer_polygons"]:
+				Utils.canvas_draw_polygon(draw_surface, poly, Color.BLUE, false, 3.0, true)
+			for poly in current_action["inner_polygons"]:
+				Utils.canvas_draw_polygon(draw_surface, poly, Color.BLUE, false, 3.0, true)
 			
-			var highlight_cell = current_action.highlight_cell
+			# draw move path
+			var path : Array[Vector2] = current_action.get("path", [])
+			if(path.size() >= 2):
+				for i in path.size():
+					if(i == 0 || i == path.size()-1):
+						Utils.canvas_draw_circle(draw_surface, path[i], 4, Color.RED)
+					else:
+						var d1 = path[i] - path[i-1]
+						var d2 = path[i+1] - path[i]
+						if(!d1.is_equal_approx(d2)):
+							Utils.canvas_draw_circle(draw_surface, path[i], 4, Color.RED)
+					if(i > 0):
+						Utils.canvas_draw_line(draw_surface, path[i], path[i-1], Color.RED)
+			
+			# draw cursor highlighted cell
+			var highlight_cell = current_action["highlight_cell"]
 			if(highlight_cell is Vector2i):
 				var c : Vector2 = highlight_cell * tile_size
 				var rect := Rect2(c, tile_size)
@@ -128,4 +148,4 @@ func _draw():
 				var line_color = Color.RED
 				line_color.a = 0.66
 				Utils.canvas_draw_rect(draw_surface, rect, fill_color, true)
-				Utils.canvas_draw_rect(draw_surface, rect, line_color, false, 2.0)
+				Utils.canvas_draw_rect(draw_surface, rect, line_color, false, 2.0, true)

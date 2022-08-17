@@ -9,6 +9,9 @@ enum STATE {NULL, IDLE, AIMING, RESHOT, MOVING}
 
 var state = STATE.NULL
 
+var next_state = STATE.NULL
+var queued_state = STATE.NULL
+
 @export var debug_draw : bool = false
 
 @onready var rotation_source_node: Node2D = get_node_or_null("%RotationNode")
@@ -18,7 +21,7 @@ var state = STATE.NULL
 var heroes_node : HeroesNode
 
 # targeting
-@export_range(0, 5000) var detection_range : int = 150 # the range at which the unit becomes "aware" of targets
+@export_range(0, 5000) var detection_range : int = 200 # the range at which the unit becomes "aware" of targets
 @export_range(0, 5000) var body_rotation_speed_deg : float = 24 # body facing rotation speed : degrees per second
 var body_rotation_speed : float # body facing rotation speed : radians per second
 var target_node : Node2D
@@ -29,7 +32,7 @@ var retarget_wait_duration : float = 1
 var retarget_wait_time_remaining : float = 0
 
 # aiming
-@export_range(0, 5000) var max_aim_range : int = 100 # max aim range
+@export_range(0, 5000) var max_aim_range : int = 150 # max aim range
 @export_range(0, 1000) var aim_draw_speed : float = 20 # aim distance speed : pixels per second
 @export_range(0, 180) var free_aim_angle_deg : float = 12 # max angle away from the facing direction for aiming, in degrees
 var free_aim_angle : float # max angle away from the facing direction for aiming, in radians
@@ -39,17 +42,19 @@ var free_aim_radius : float = 0 # radius around aim point for true aiming, limit
 var free_aim_point_offset : Vector2 = Vector2.ZERO # true aim point offset constrained by free_aim_radius
 
 # attacking
-var reshot_duration : float = 1
+var reshot_duration : float = 2.5
 var reshot_time_remaining : float = 0
 var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
 var projectile_speed : float = 200
-var projectile_max_range : float = 150
+var projectile_max_range : float = 250
 var projectile_damage : float = 1
 
 #navigation
 var nav_controller : NavigationController
-var move_distance : int = 5
-var move_target_cell : Vector2i
+var move_distance : int = 8
+var move_speed : float = 60
+var move_target : Vector2
+var move_path : Array[Vector2] = []
 
 func _ready() -> void:
 	var parent = get_parent()
@@ -80,15 +85,37 @@ func _process(_delta: float) -> void:
 	update()
 
 func _physics_process(_delta: float) -> void:
-	if(target_node == null || !target_node is Node):
-		target_node = null
+	if(queued_state != STATE.NULL):
+		#TODO: check if state change is valid
+		next_state = queued_state
+		queued_state = STATE.NULL
 	
-	var new_state = state
+	if(next_state != STATE.NULL):
+		state = next_state
+	
 	if(state == STATE.IDLE):
 		retarget_if_needed(_delta)
 		
 		if(target_node != null):
-			new_state = STATE.AIMING
+			next_state = STATE.AIMING
+	
+	if(state == STATE.MOVING):
+		if(move_path == null || move_path.size() <= 0):
+			move_path = get_nav_path(move_target)
+		
+		if(move_path != null && move_path.size() > 0):
+			if((move_path[0] - position).length() <= (move_speed * _delta)):
+				position = move_path[0]
+				move_path.pop_front()
+			else:
+				facing_rad = (move_path[0] - position).angle()
+				position += (move_path[0] - position).normalized() * move_speed * _delta
+				
+		
+		if(move_path.size() <= 0):
+			move_path = []
+			next_state = STATE.IDLE
+	
 	if(state == STATE.AIMING || state == STATE.RESHOT):
 		retarget_if_needed(_delta)
 		
@@ -101,18 +128,17 @@ func _physics_process(_delta: float) -> void:
 		if(target_node && predict_aim_target().is_equal_approx(aim_point_center + free_aim_point_offset)):
 			create_projectile()
 			reshot_time_remaining = reshot_duration
-			new_state = STATE.RESHOT
+			next_state = STATE.RESHOT
 		elif(target_node == null):
-			new_state = STATE.IDLE
+			next_state = STATE.IDLE
+	
 	if(state == STATE.RESHOT):
 		if(reshot_time_remaining <= 0):
 			if(target_node == null):
-				new_state = STATE.IDLE
+				next_state = STATE.IDLE
 			else:
-				new_state = STATE.AIMING
+				next_state = STATE.AIMING
 		reshot_time_remaining -= _delta
-	
-	state = new_state
 	
 	if(rotation_source_node):
 		rotation_source_node.set_rotation(facing_rad)
@@ -122,13 +148,16 @@ func _physics_process(_delta: float) -> void:
 #		b) time passed since last retarget has reached retarget_wait_duration
 func retarget_if_needed(_delta: float):
 	retarget_wait_time_remaining -= _delta
+	if(target_node == null || !target_node is Node):
+		target_node = null
 	if(target_node != null && !target_detection_area.is_valid_target(target_node)):
 		target_node = null
 	if(target_node != null):
 		if((target_node.get_global_position() - global_position).length_squared() <= (max_aim_range * max_aim_range)):
 			retarget_wait_time_remaining = retarget_wait_duration
-	if(retarget_wait_time_remaining <= 0):
+	if(target_node == null || retarget_wait_time_remaining <= 0):
 		target_node = target_detection_area.get_closest_target_to_point(aim_point_center, max_aim_range)
+		retarget_wait_time_remaining = retarget_wait_duration
 
 # returns the local predicted aim target
 #	makes prediction based off of target distance, target velocity, and projectile speed
@@ -161,7 +190,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	if(is_equal_approx(new_rad, target_rad)):
 		new_rad = target_rad
 	else:
-		new_rad = tween_to(new_rad, target_rad, body_rotation_speed, _delta)
+		new_rad = Utils.tween_to(new_rad, target_rad, body_rotation_speed, _delta)
 	
 	# determine new aiming point, based on facing direction and final desired aim target
 	var new_aim_point_center := aim_point_center
@@ -171,7 +200,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 		# simple case, body has completed rotation just change aim distance
 		var aim_distance = aim_point_center.length()
 		var target_distance = local_aim_target.length()
-		aim_distance = tween_to(aim_distance, target_distance, aim_draw_speed, _delta)
+		aim_distance = Utils.tween_to(aim_distance, target_distance, aim_draw_speed, _delta)
 		new_aim_point_center = Vector2.from_angle(new_rad) * aim_distance
 	else:
 		# following a ~straight line towards final value based on body rotation
@@ -184,7 +213,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 		
 		var aim_distance = aim_point_center.length()
 		var target_distance = r
-		aim_distance = tween_to(aim_distance, target_distance, aim_draw_speed, _delta)
+		aim_distance = Utils.tween_to(aim_distance, target_distance, aim_draw_speed, _delta)
 		new_aim_point_center = Vector2.from_angle(new_rad) * aim_distance
 	new_aim_point_center = new_aim_point_center.limit_length(max_aim_range)
 	
@@ -221,17 +250,9 @@ func create_projectile():
 	}
 	SignalBus.spawn_effect.emit(projectile_scene_path, effect_attributes)
 
-# tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type: TransitionType, ease_type: EaseType)
-func tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type := Tween.TRANS_QUINT, ease_type := Tween.EASE_OUT):
-	var duration : float = 0
-	if(initial is Vector2 || initial is Vector2i):
-		duration = (final - initial).length() / rate
-	else:
-		duration = abs(final - initial) / rate
-	if(duration < delta):
-		return final
-	else:
-		return Tween.interpolate_value(initial, final - initial, delta, duration, trans_type, ease_type)
+func initiate_move(_move_target: Vector2):
+	queued_state = STATE.MOVING
+	move_target = _move_target
 
 func get_map_cell() -> Vector2i:
 	return nav_controller.world_to_map(global_position)
@@ -241,7 +262,7 @@ func get_navigation_controller() -> NavigationController:
 
 func get_reserved_cells() -> Array[Vector2i]:
 	if(state == STATE.MOVING):
-		return [move_target_cell]
+		return [nav_controller.world_to_map(move_target)]
 	else:
 		return [get_map_cell()]
 
@@ -257,6 +278,9 @@ func get_possible_move_targets() -> Array[Vector2i]:
 			move_targets.erase(cell)
 	
 	return move_targets
+
+func get_nav_path(target_pos : Vector2) -> Array[Vector2]:
+	return nav_controller.get_nav_path(global_position, target_pos, 8)
 
 func _on_targets_change():
 	pass

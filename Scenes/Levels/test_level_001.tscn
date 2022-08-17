@@ -19,10 +19,10 @@ script = ExtResource("3_62bd0")
 custom_data_layer_names = ["nav_cost"]
 
 [node name="HeroUnit" parent="World/HeroesNode" index="0" instance=ExtResource("5_d0gii")]
-position = Vector2(592, 304)
+position = Vector2(208, 336)
 
 [node name="HeroUnit2" parent="World/HeroesNode" index="1" instance=ExtResource("5_d0gii")]
-position = Vector2(624, 304)
+position = Vector2(240, 336)
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)

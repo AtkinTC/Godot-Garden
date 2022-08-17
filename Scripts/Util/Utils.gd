@@ -181,12 +181,27 @@ static func merge_cells(cells : Array[Vector2i]) -> Array:
 		outer_polys.append(poly)
 	return outer_polys + inner_polys
 
+# tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type: TransitionType, ease_type: EaseType)
+static func tween_to(initial: Variant, final: Variant, rate: float, delta: float, trans_type := Tween.TRANS_QUINT, ease_type := Tween.EASE_OUT):
+	var duration : float = 0
+	if(initial is Vector2 || initial is Vector2i):
+		duration = (final - initial).length() / rate
+	else:
+		duration = abs(final - initial) / rate
+	if(duration < delta):
+		return final
+	else:
+		return Tween.interpolate_value(initial, final - initial, delta, duration, trans_type, ease_type)
+
 #############
 ## DRAWING ##
 #############
 
 static func canvas_draw_line(canvas_item: RID, p1: Vector2, p2: Vector2, c: Color, w := 1.0, aa := false) -> void:
 	RenderingServer.canvas_item_add_line(canvas_item, p1, p2, c, w, aa)
+
+static func canvas_draw_circle(canvas_item: RID, p: Vector2, r: float, c: Color) -> void:
+	RenderingServer.canvas_item_add_circle(canvas_item, p, r, c)
 
 static func canvas_draw_rect(canvas_item: RID, r: Rect2, c : Color, f := false, w := 1.0, aa := false) -> void:
 	if(f):
