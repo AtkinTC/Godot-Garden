@@ -56,11 +56,10 @@ func id_to_cell(id: int):
 	if(id < 0):
 		return Vector2i(-1,-1)
 	
-	var w : int = tile_nav_map.tiles.width
 	var h : int = tile_nav_map.tiles.height
 	
 	var x : int = id % h
-	var y : int = (id - x)/h
+	var y : int = float(id - x)/h as int
 	
 	if(x >= 2 || y >= h):
 		return Vector2i(-1,-1)

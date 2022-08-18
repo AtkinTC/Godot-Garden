@@ -1,6 +1,6 @@
 [gd_resource type="AnimationLibrary" load_steps=8 format=3 uid="uid://dtf1t45xt2ady"]
 
-[sub_resource type="Animation" id="Animation_cfik7"]
+[sub_resource type="Animation" id="Animation_u87be"]
 resource_name = "death_back"
 length = 1.4
 step = 0.2
@@ -29,7 +29,7 @@ tracks/1/keys = {
 "values": [21, 22, 23, 24, 25, 26, 27]
 }
 
-[sub_resource type="Animation" id="Animation_w0i7m"]
+[sub_resource type="Animation" id="Animation_x2mf6"]
 resource_name = "death_front"
 length = 1.4
 step = 0.2
@@ -58,7 +58,7 @@ tracks/1/keys = {
 "values": [14, 15, 16, 17, 18, 19, 20]
 }
 
-[sub_resource type="Animation" id="Animation_skbkl"]
+[sub_resource type="Animation" id="Animation_8s4rx"]
 resource_name = "death_left"
 length = 1.4
 step = 0.2
@@ -87,7 +87,7 @@ tracks/1/keys = {
 "values": [35, 36, 37, 38, 39, 40, 41]
 }
 
-[sub_resource type="Animation" id="Animation_8nxxg"]
+[sub_resource type="Animation" id="Animation_6b20p"]
 resource_name = "death_right"
 length = 1.4
 step = 0.2
@@ -116,7 +116,7 @@ tracks/1/keys = {
 "values": [28, 29, 30, 31, 32, 33, 34]
 }
 
-[sub_resource type="Animation" id="Animation_tpsu3"]
+[sub_resource type="Animation" id="Animation_rl4mi"]
 resource_name = "idle"
 step = 0.2
 tracks/0/type = "value"
@@ -144,7 +144,7 @@ tracks/1/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_03vjm"]
+[sub_resource type="Animation" id="Animation_8au6w"]
 resource_name = "run"
 length = 1.2
 loop_mode = 1
@@ -174,7 +174,7 @@ tracks/1/keys = {
 "values": [7, 8, 9, 10, 11, 12]
 }
 
-[sub_resource type="Animation" id="Animation_5vbka"]
+[sub_resource type="Animation" id="Animation_uc8cr"]
 resource_name = "walk"
 length = 0.8
 loop_mode = 1
@@ -206,11 +206,11 @@ tracks/1/keys = {
 
 [resource]
 _data = {
-"death_back": SubResource("Animation_cfik7"),
-"death_front": SubResource("Animation_w0i7m"),
-"death_left": SubResource("Animation_skbkl"),
-"death_right": SubResource("Animation_8nxxg"),
-"idle": SubResource("Animation_tpsu3"),
-"run": SubResource("Animation_03vjm"),
-"walk": SubResource("Animation_5vbka")
+"death_back": SubResource("Animation_u87be"),
+"death_front": SubResource("Animation_x2mf6"),
+"death_left": SubResource("Animation_8s4rx"),
+"death_right": SubResource("Animation_6b20p"),
+"idle": SubResource("Animation_rl4mi"),
+"run": SubResource("Animation_8au6w"),
+"walk": SubResource("Animation_uc8cr")
 }

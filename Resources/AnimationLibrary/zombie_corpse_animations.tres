@@ -1,6 +1,6 @@
 [gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://wns6m3jkkdtd"]
 
-[sub_resource type="Animation" id="Animation_siwy4"]
+[sub_resource type="Animation" id="Animation_ww8s0"]
 resource_name = "back"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -39,7 +39,7 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_u4ero"]
+[sub_resource type="Animation" id="Animation_hwmvx"]
 resource_name = "default"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_13012"]
+[sub_resource type="Animation" id="Animation_f70wq"]
 resource_name = "front"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -93,7 +93,7 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_ddme0"]
+[sub_resource type="Animation" id="Animation_3u4in"]
 resource_name = "left"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -132,7 +132,7 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_pl8ib"]
+[sub_resource type="Animation" id="Animation_vu7ao"]
 resource_name = "right"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -173,9 +173,9 @@ tracks/2/keys = {
 
 [resource]
 _data = {
-"back": SubResource("Animation_siwy4"),
-"default": SubResource("Animation_u4ero"),
-"front": SubResource("Animation_13012"),
-"left": SubResource("Animation_ddme0"),
-"right": SubResource("Animation_pl8ib")
+"back": SubResource("Animation_ww8s0"),
+"default": SubResource("Animation_hwmvx"),
+"front": SubResource("Animation_f70wq"),
+"left": SubResource("Animation_3u4in"),
+"right": SubResource("Animation_vu7ao")
 }

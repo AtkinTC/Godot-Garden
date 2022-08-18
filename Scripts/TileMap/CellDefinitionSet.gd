@@ -22,7 +22,7 @@ func save() -> bool:
 		return false
 	
 	var path : String = res_save_directory + resource_name + res_suffix
-	var result = ResourceSaver.save(path, self)
+	var result = ResourceSaver.save(self, path)
 	
 	if(result != 0):
 		print_debug("Failed to save with error : " + str(result) + " : " + str(error_string(result)))

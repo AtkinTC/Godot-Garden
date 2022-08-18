@@ -52,7 +52,7 @@ func add_target(body: Node2D) -> bool:
 	for group in exclude_groups:
 		if(body.is_in_group(group)):
 			# explicitly excluded
-			exclude == true
+			exclude = true
 			break
 	if(exclude):
 		return false

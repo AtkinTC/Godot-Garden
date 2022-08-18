@@ -31,7 +31,7 @@ func save_current_save_file():
 	current_game_save.save_date_time = Time.get_datetime_dict_from_system()
 	var profile_name: String = current_game_save.save_name
 	var file_name: String = demo_save_filename_pre+profile_name+demo_save_filename_post
-	ResourceSaver.save(demo_save_directory+file_name, current_game_save)
+	ResourceSaver.save(current_game_save, demo_save_directory+file_name)
 	print_debug("save_game complete for file : " + demo_save_directory+file_name)
 
 # load a game save from a file

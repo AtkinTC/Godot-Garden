@@ -90,17 +90,17 @@ func retrieve_context_actions() -> Array[Dictionary]:
 func update_menu_items_display() -> void:
 	var new_actions : Array[Dictionary] = retrieve_context_actions()
 	
-	var update := false
+	var updated := false
 	
 	if(new_actions.size() != actions.size()):
-		update = true
+		updated = true
 	else:
 		for i in range(new_actions.size()):
 			if(new_actions[i].key != actions[i].key):
-				update = true
+				updated = true
 				break
 	
-	if(!update):
+	if(!updated):
 		return
 	
 	actions = new_actions
