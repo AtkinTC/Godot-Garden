@@ -1,8 +1,6 @@
 class_name TileMapCust
 extends TileMap
 
-@export var custom_data_layer_names : Array[String] = []
-
 var layers_by_name : Dictionary
 
 var tile_defs : Dictionary
@@ -33,15 +31,10 @@ func initialize():
 				var tile_data : TileData = source.get_tile_data(tile_id, alt_id)
 				
 				var custom_data := {}
-				for key in custom_data_layer_names:
-					var custom_data_layer_data = tile_data.get_custom_data(key)
-					custom_data[key] = custom_data_layer_data
-				
-#				var custom_data := {}
-#				for i_data in tile_set.get_custom_data_layers_count():
-#					var custom_data_layer_name = tile_data.get_custom_data_name(i_data)
-#					var custom_data_layer_data = tile_data.get_custom_data_by_layer_id(i_data)
-#					custom_data[custom_data_layer_name] = custom_data_layer_data
+				for i_data in tile_set.get_custom_data_layers_count():
+					var custom_data_layer_name = tile_set.get_custom_data_layer_name(i_data)
+					var custom_data_layer_data = tile_data.get_custom_data(custom_data_layer_name)
+					custom_data[custom_data_layer_name] = custom_data_layer_data
 				
 				var tile_def := TileDefinition.new(source_id, tile_id, alt_id, custom_data)
 				
