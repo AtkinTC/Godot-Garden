@@ -3,10 +3,10 @@ class_name NavigationController
 const NAV_WIDTH_BUFFER : int = 0
 
 var tile_map: TileMapCust
+var border_map: TileMapCust
 var goal_cells : Array[Vector2i] = []
 
 var tile_nav_map : TileNavMap
-#var goal_flow_map : FlowMap
 var goal_flow_maps : Array[FlowMap]
 var multi_flow_map : MultiFlowMap
 
@@ -14,10 +14,10 @@ var a_star_maps : Array[AStarMap]
 
 var incomplete_flow_targets : Array[Vector2i]
 
-func _init(_tile_map : TileMap, _goal_cells : Array[Vector2i]):
+func _init(_tile_map : TileMapCust, _border_map : TileMapCust, _goal_cells : Array[Vector2i]):
 	tile_map = _tile_map
-	tile_nav_map = TileNavMap.new(_tile_map)
-	#goal_flow_map = FlowMap.new(tile_nav_map, _goal_cells)
+	border_map = _border_map
+	tile_nav_map = TileNavMap.new(_tile_map, _border_map)
 	multi_flow_map = MultiFlowMap.new(tile_nav_map)
 	
 	var max_nav_width := tile_nav_map.get_effective_max_width()
@@ -29,7 +29,6 @@ func _init(_tile_map : TileMap, _goal_cells : Array[Vector2i]):
 
 func process_maps_segmented(cells_limit: int = 0, time_limit: int = 0):
 	var maps_to_process_count := incomplete_flow_targets.size()
-	#if(!goal_flow_map.is_complete()):
 	for map in goal_flow_maps:
 		if(!map.is_complete()):
 			maps_to_process_count += 1
@@ -205,7 +204,7 @@ func get_nav_cells_in_range(start_pos: Vector2, nav_range: int, real_width : int
 		if(card_dist <= adj_nav_range):
 			for direction in CARD_DIR:
 				var n_cell: Vector2i = cell + direction
-				if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
+				if(tile_nav_map.are_cells_connected(cell, n_cell, nav_width)):
 					if(!d_map.has(n_cell) || card_dist <= d_map[n_cell]):
 						d_map[n_cell] = card_dist
 						if(!open_set.has(n_cell)):
@@ -216,11 +215,8 @@ func get_nav_cells_in_range(start_pos: Vector2, nav_range: int, real_width : int
 		if(diag_dist <= adj_nav_range):
 			for direction in DIAG_DIR:
 					var n_cell : Vector2i = cell + direction
-					if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
-						# two cardinal neighbors both need to be open to consider diagonal
-						var n_card_1 := Vector2i(n_cell.x, cell.y)
-						var n_card_2 := Vector2i(cell.x, n_cell.y)
-						if(tile_nav_map.is_cell_navigable(n_card_1, nav_width) && tile_nav_map.is_cell_navigable(n_card_2, nav_width)):
+					# are_cells_connected() already checks cardinal neighbors of diagonal cells
+					if(tile_nav_map.are_cells_connected(cell, n_cell, nav_width)):
 							if(!d_map.has(n_cell) || diag_dist < d_map[n_cell]):
 								d_map[n_cell] = diag_dist
 								if(!open_set.has(n_cell)):

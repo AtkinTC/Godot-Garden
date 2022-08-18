@@ -12,37 +12,24 @@ func _init(_tile_nav_map : TileNavMap, _nav_width : int = 1):
 	a_star = AStar2D.new()
 	
 	# add navigable points to a_star
-	for x in tile_nav_map.tiles.width:
-		for y in tile_nav_map.tiles.height:
+	for x in tile_nav_map.tiles.width+1:
+		for y in tile_nav_map.tiles.height+1:
 			var cell = Vector2i(x, y)
 			if(tile_nav_map.is_cell_navigable(cell, nav_width)):
 				a_star.add_point(cell_to_id(cell), cell)
 	
 	# connect points in a_star
-	for x in tile_nav_map.tiles.width:
-		for y in tile_nav_map.tiles.height:
+	for x in tile_nav_map.tiles.width+1:
+		for y in tile_nav_map.tiles.height+1:
 			var cell := Vector2i(x, y)
 			var id := cell_to_id(cell)
+			
 			if(a_star.has_point(id)):
-				var id_l := cell_to_id(cell + Vector2i(-1, 0))
-				var has_l = a_star.has_point(id_l)
-				var id_r := cell_to_id(cell + Vector2i(1, 0))
-				var has_r = a_star.has_point(id_r)
-				var id_u := cell_to_id(cell + Vector2i(0, -1))
-				var has_u = a_star.has_point(id_u)
-				
-				if(has_l):
-					a_star.connect_points(id, id_l)
-				if(has_l && has_u):
-					var id_ul := cell_to_id(cell + Vector2i(-1, -1))
-					if(a_star.has_point(id_ul)):
-						a_star.connect_points(id, id_ul)
-				if(has_u):
-					a_star.connect_points(id, id_u)
-				if(has_u && has_r):
-					var id_ur := cell_to_id(cell + Vector2i(1, -1))
-					if(a_star.has_point(id_ur)):
-						a_star.connect_points(id, id_ur)
+				for d in [Vector2i(-1, 0), Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1)]:
+					var cell_d = cell+d
+					if(tile_nav_map.are_cells_connected(cell, cell_d, nav_width)):
+						var id_d = cell_to_id(cell_d)
+						a_star.connect_points(id, id_d)
 
 func get_path(from : Vector2i, to : Vector2i) -> Array[Vector2]:
 	return a_star.get_point_path(cell_to_id(from), cell_to_id(to)) as Array[Vector2]

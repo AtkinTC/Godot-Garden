@@ -15,12 +15,14 @@ var target_pos := Vector2.ZERO
 @onready var spawn_areas : Array[RectNode2D] = []
 @onready var goal_areas : Array[RectNode2D] = []
 @onready var tile_map : TileMapCust = get_node_or_null("TileMap")
+@onready var border_map : TileMapCust = get_node_or_null("BordersMap")
 @onready var enemies_node: EnemiesNode = get_node_or_null("EnemiesNode")
 
 func _ready():
 	ResourceRef.set_current_game_world(self)
 	
 	tile_map.show_behind_parent = true
+	border_map.show_behind_parent = true
 	
 	var spawn_areas_node = get_node_or_null("%SpawnAreas")
 	if(spawn_areas_node):
@@ -38,7 +40,7 @@ func _ready():
 	var goal_cells : Array[Vector2i] = []
 	for goal_area in goal_areas:
 		goal_cells.append_array(rect_to_map_cells(goal_area.get_rect()))
-	nav_controller = NavigationController.new(tile_map, goal_cells)
+	nav_controller = NavigationController.new(tile_map, border_map, goal_cells)
 	
 	if(spawn_areas.size() > 0):
 		var spawn_rect : Rect2i = spawn_areas[0].get_rect()
@@ -68,10 +70,14 @@ func _unhandled_input(event : InputEvent):
 	if(event.is_action_pressed("mouse_left")):
 		var target_cell := screen_to_map(event.position)
 		var world_pos := screen_to_world(event.position)
-#		print("-----------------")
-#		print(str("screen =", event.position))
-#		print(str("screen_to_world =", world_pos))
-#		print(str("world_to_screen =", world_to_screen(screen_to_world(event.position))))
+		
+		var borders_pos : Vector2i = border_map.world_to_map(world_pos - border_map.position)
+		
+		print("-----------------")
+		print(str("screen =", event.position))
+		print(str("screen_to_world =", world_pos))
+		print(str("target_cell =", target_cell))
+		print(str("border_cell =", borders_pos))
 
 # convert map cell to local world coordinate
 func map_to_world(map_coord : Vector2i) -> Vector2:

@@ -82,7 +82,7 @@ func process_cell_standard(cell : Vector2i):
 	# cardinal directions
 	for direction in CARD_DIR:
 		var n_cell: Vector2i = cell + direction
-		if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
+		if(tile_nav_map.are_cells_connected(cell, n_cell, nav_width)):
 			var distance: int = d_map[cell] + CARD_DIST * nav_cost_multi
 			if(!d_map.has(n_cell) || distance <= d_map[n_cell]):
 				d_map[n_cell] = distance
@@ -94,18 +94,15 @@ func process_cell_standard(cell : Vector2i):
 	# diagonal directions
 	for direction in DIAG_DIR:
 			var n_cell : Vector2i = cell + direction
-			if(tile_nav_map.is_cell_navigable(n_cell, nav_width)):
-				# two cardinal neighbors both need to be open to consider diagonal
-				var n_card_1 := Vector2i(n_cell.x, cell.y)
-				var n_card_2 := Vector2i(cell.x, n_cell.y)
-				if(tile_nav_map.is_cell_navigable(n_card_1, nav_width) && tile_nav_map.is_cell_navigable(n_card_2, nav_width)):
-					var distance: int = d_map[cell] + DIAG_DIST * nav_cost_multi
-					if(!d_map.has(n_cell) || distance < d_map[n_cell]):
-						d_map[n_cell] = distance
-						# record the direction vector from neighbor cell to the current cell
-						flow_map.set_to_v(n_cell, ((cell-n_cell) as Vector2).normalized())
-						if(!open_set.has(n_cell)):
-							open_set.append(n_cell)
+			# are_cells_connected() already checks cardinal neighbors of diagonal cells
+			if(tile_nav_map.are_cells_connected(cell, n_cell, nav_width)):
+				var distance: int = d_map[cell] + DIAG_DIST * nav_cost_multi
+				if(!d_map.has(n_cell) || distance < d_map[n_cell]):
+					d_map[n_cell] = distance
+					# record the direction vector from neighbor cell to the current cell
+					flow_map.set_to_v(n_cell, ((cell-n_cell) as Vector2).normalized())
+					if(!open_set.has(n_cell)):
+						open_set.append(n_cell)
 
 #func process_cell_advanced(cell):
 #	var target_cell : Vector2i = ((cell as Vector2) + flow_map.get_from_v(cell)) as Vector2i
