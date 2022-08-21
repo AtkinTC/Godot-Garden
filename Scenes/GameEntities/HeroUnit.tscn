@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ceqfnk2p4t8bl"]
+[gd_scene load_steps=7 format=3 uid="uid://ceqfnk2p4t8bl"]
 
 [ext_resource type="Script" path="res://Scripts/HeroUnits/HeroUnit.gd" id="1_p2o3p"]
+[ext_resource type="Texture2D" uid="uid://cusj5oyqkkkt8" path="res://Assets/Sprites/Characters/soldier_16x16.png" id="2_5nmwd"]
 [ext_resource type="Script" path="res://Scripts/HeroUnits/TargetDetectionCircle.gd" id="2_obe4a"]
 [ext_resource type="Script" path="res://Scripts/UI/SelectionControlNode.gd" id="3_lh2hx"]
+[ext_resource type="AnimationLibrary" uid="uid://dy6hm0t1qvcld" path="res://Resources/AnimationLibrary/soldier_animations.tres" id="5_jtbqe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tj23h"]
 radius = 16.0
@@ -15,11 +17,20 @@ target_layer_names = ["enemy"]
 unique_name_in_owner = true
 
 [node name="Polygon2D" type="Polygon2D" parent="VisualsNode"]
+visible = false
 polygon = PackedVector2Array(0, 8, 8, 0, 0, -8, -8, 0)
 
 [node name="Polygon2D2" type="Polygon2D" parent="VisualsNode"]
+visible = false
 color = Color(1, 0, 0.0196078, 1)
 polygon = PackedVector2Array(0, 0, 8, 2, 16, 0, 8, -2)
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualsNode"]
+texture_filter = 1
+texture = ExtResource("2_5nmwd")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 32, 32, 16)
 
 [node name="FixedRotationNode" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -43,3 +54,15 @@ script = ExtResource("3_lh2hx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectionControlNode"]
 visible = false
 shape = SubResource("CircleShape2D_tj23h")
+
+[node name="ProjectileSpawnPoint" type="Position2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(12, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+root_node = NodePath("../VisualsNode/Sprite2D")
+autoplay = "aim"
+libraries = {
+"": ExtResource("5_jtbqe")
+}

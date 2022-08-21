@@ -5,7 +5,7 @@
 class_name HeroUnit
 extends Node2D
 
-enum STATE {NULL, IDLE, AIMING, RESHOT, MOVING}
+enum STATE {NULL, IDLE, AIMING, SHOOTING, RELOADING, MOVING}
 
 var state = STATE.NULL
 
@@ -17,6 +17,8 @@ var queued_state = STATE.NULL
 @onready var fixed_rotation_node: Node2D = get_node_or_null("%FixedRotationNode")
 @onready var visuals_source_node: Node2D = get_node_or_null("%VisualsNode")
 @onready var target_detection_area: TargetDetectionCircle = get_node("%TargetDetectionCircle")
+
+@onready var animation_player : AnimationPlayer = get_node("%AnimationPlayer")
 
 var heroes_node : HeroesNode
 
@@ -41,8 +43,9 @@ var free_aim_radius : float = 0 # radius around aim point for true aiming, limit
 var free_aim_point_offset : Vector2 = Vector2.ZERO # true aim point offset constrained by free_aim_radius
 
 # attacking
-var reshot_duration : float = 2.5
-var reshot_time_remaining : float = 0
+@onready var proj_spawn_point : Node2D = get_node("%ProjectileSpawnPoint")
+var clip_size : int = 5
+var remaining_shots : int = clip_size
 var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
 var projectile_speed : float = 200
 var projectile_max_range : float = 250
@@ -71,6 +74,8 @@ func _ready() -> void:
 	target_detection_area.targets_changed.connect(_on_targets_change)
 	target_detection_area.set_collision_mask(target_mask)
 	
+	animation_player.animation_finished.connect(_on_animation_finished)
+	
 	state = STATE.IDLE
 	
 	call_deferred("post_ready")
@@ -96,13 +101,21 @@ func _physics_process(_delta: float) -> void:
 	if(next_state != STATE.NULL):
 		state = next_state
 	
+	var animation_name : String = "idle"
+	
+	# IDLE
 	if(state == STATE.IDLE):
+		animation_name = "aim"
+		
 		retarget_if_needed(_delta)
 		
 		if(target_node != null):
 			next_state = STATE.AIMING
 	
+	# MOVING
 	if(state == STATE.MOVING):
+		animation_name = "walking"
+		
 		if(move_path == null || move_path.size() <= 0):
 			move_path = get_nav_path(move_target)
 		
@@ -113,13 +126,15 @@ func _physics_process(_delta: float) -> void:
 			else:
 				rotation = (move_path[0] - position).angle()
 				position += (move_path[0] - position).normalized() * move_speed * _delta
-				
 		
 		if(move_path.size() <= 0):
 			move_path = []
 			next_state = STATE.IDLE
 	
-	if(state == STATE.AIMING || state == STATE.RESHOT):
+	# AIMING
+	if(state == STATE.AIMING):
+		animation_name = "aim"
+		
 		retarget_if_needed(_delta)
 		
 		if(target_node):
@@ -127,21 +142,24 @@ func _physics_process(_delta: float) -> void:
 		else:
 			aim_point_center = Vector2.ZERO
 		
-	if(state == STATE.AIMING):
 		if(target_node && predict_aim_target().is_equal_approx(aim_point_center + free_aim_point_offset)):
 			create_projectile()
-			reshot_time_remaining = reshot_duration
-			next_state = STATE.RESHOT
+			remaining_shots -= 1
+			animation_name = "shoot"
+			next_state = STATE.SHOOTING
 		elif(target_node == null):
 			next_state = STATE.IDLE
 	
-	if(state == STATE.RESHOT):
-		if(reshot_time_remaining <= 0):
-			if(target_node == null):
-				next_state = STATE.IDLE
-			else:
-				next_state = STATE.AIMING
-		reshot_time_remaining -= _delta
+	#SHOOTING
+	if(state == STATE.SHOOTING):
+		animation_name = "shoot"
+	
+	#RELOADING
+	if(state == STATE.RELOADING):
+		animation_name = "reload"
+	
+	if(animation_player.has_animation(animation_name) && animation_player.get_current_animation() != animation_name):
+		animation_player.play(animation_name)
 
 # updates the target_node if both:
 #		a) current target_node null or not within max_aim_range
@@ -245,7 +263,7 @@ func create_projectile():
 		"max_range" : projectile_max_range + free_aim_radius,
 		"damage" : projectile_damage,
 		"rotation" : rotation,
-		"position" : global_position
+		"position" : proj_spawn_point.global_position
 	}
 	SignalBus.spawn_effect.emit(projectile_scene_path, effect_attributes)
 
@@ -284,31 +302,44 @@ func get_nav_path(target_pos : Vector2) -> Array[Vector2]:
 func _on_targets_change():
 	pass
 
+func _on_animation_finished(anim_name: StringName):
+	if(state == STATE.SHOOTING):
+		if(remaining_shots <= 0):
+			next_state = STATE.RELOADING
+		else:
+			next_state = STATE.AIMING
+	if(state == STATE.RELOADING):
+		remaining_shots = clip_size
+		next_state = STATE.AIMING
+
 func _draw():
 	if(!debug_draw):
 		return
 	
 	# draw detection range circle
-	draw_arc(Vector2.ZERO, detection_range, 0, TAU, 16, Color.RED)
+	draw_arc(Vector2.ZERO, detection_range, 0, TAU, 32, Color.RED)
 	
-	if(state == STATE.AIMING || state == STATE.RESHOT):
+	if(state == STATE.AIMING || state == STATE.SHOOTING):
 		# draw aim range circle
-		draw_arc(Vector2.ZERO, max_aim_range, 0, TAU, 16, Color.RED)
+		draw_arc(Vector2.ZERO, max_aim_range, 0, TAU, 32, Color.RED)
 		
 		if(target_node != null):
 			# draw current target enemy point
-			draw_circle(target_node.get_global_position() - global_position, 4, Color.BLUE)
+			var adj_target_pos := (target_node.get_global_position() - global_position).rotated(-rotation)
+			draw_circle(adj_target_pos, 2, Color.BLUE)
 		
 		if(!aim_point_center.is_equal_approx(Vector2.ZERO)):
+			var adj_aim_point_center := aim_point_center.rotated(-rotation)
+			
 			# draw current aim point
-			draw_line(Vector2.ZERO, aim_point_center, Color.RED, 1.0)
-			draw_circle(aim_point_center, 4, Color.RED)
+			draw_line(Vector2.ZERO, adj_aim_point_center, Color.RED, 1.0)
+			draw_circle(adj_aim_point_center, 2, Color.RED)
 			
 			# draw current free aim point and area
-			draw_circle(aim_point_center + free_aim_point_offset, 4, Color.GREEN)
-			draw_arc(aim_point_center, free_aim_radius, 0, TAU, 16, Color.GREEN)
+			draw_circle(adj_aim_point_center + free_aim_point_offset.rotated(-rotation), 2, Color.GREEN)
+			draw_arc(adj_aim_point_center, free_aim_radius, 0, TAU, 16, Color.GREEN)
 			if(!aim_point_center.is_equal_approx(Vector2.ZERO) && free_aim_radius > 0):
-				var c_dist = aim_point_center.length()
-				var c_angle = aim_point_center.angle()
+				var c_dist = adj_aim_point_center.length()
+				var c_angle = adj_aim_point_center.angle()
 				draw_line(Vector2.ZERO, Vector2.from_angle(c_angle + free_aim_angle) * c_dist, Color.GREEN, 1.0)
 				draw_line(Vector2.ZERO, Vector2.from_angle(c_angle - free_aim_angle) * c_dist, Color.GREEN, 1.0)
