@@ -50,7 +50,7 @@ func _ready():
 			var params = {}
 			params["nav_controller"] = nav_controller
 			params["position"] = spawn_rect.position + Vector2i(randi()%spawn_rect.size.x, randi()%spawn_rect.size.y)
-			params["facing_rotation"] = randf_range(0, TAU)
+			params["rotation"] = randf_range(0, TAU)
 			
 			enemies_node.create_enemy(enemy_scene1, params)
 			await(get_tree().create_timer(1).timeout)

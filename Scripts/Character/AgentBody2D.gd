@@ -31,7 +31,6 @@ var rotation_speed_manual : float = 0
 var rotation_speed_external : float = 0
 
 var rotation_speed : float = 0
-var facing_rotation : float = 0
 
 func _ready() -> void:
 	pass
@@ -55,8 +54,8 @@ func _physics_process(delta: float) -> void:
 	impulse_external = Vector2.ZERO
 	
 	# apply rotation
-	facing_rotation += rotation_speed * delta
-	facing_rotation = Utils.unwrap_angle(facing_rotation)
+	rotation += rotation_speed * delta
+	rotation = Utils.unwrap_angle(rotation)
 	
 	# apply velocity
 	move_and_slide()
@@ -119,11 +118,11 @@ func set_velocity_type(_velocity: Vector2, velocity_type := TYPE.MANUAL):
 	if(velocity_type == TYPE.EXTERNAL):
 		velocity_manual += _velocity
 
-func set_facing_direction(_facing_direction: Vector2) -> void:
-	facing_rotation = _facing_direction.angle()
+func set_rotation_vector(_rotation_vector: Vector2) -> void:
+	rotation = _rotation_vector.angle()
 
-func get_facing_direction() -> Vector2:
-	return Vector2.from_angle(facing_rotation)
+func get_rotation_vector() -> Vector2:
+	return Vector2.from_angle(rotation)
 
 func get_body_radius() -> int:
 	return body_radius

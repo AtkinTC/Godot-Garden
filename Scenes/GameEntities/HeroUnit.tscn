@@ -11,20 +11,20 @@ radius = 16.0
 script = ExtResource("1_p2o3p")
 target_layer_names = ["enemy"]
 
-[node name="RotationNode" type="Node2D" parent="."]
+[node name="VisualsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="VisualsNode" type="Node2D" parent="RotationNode"]
-unique_name_in_owner = true
-
-[node name="Polygon2D" type="Polygon2D" parent="RotationNode/VisualsNode"]
+[node name="Polygon2D" type="Polygon2D" parent="VisualsNode"]
 polygon = PackedVector2Array(0, 8, 8, 0, 0, -8, -8, 0)
 
-[node name="Polygon2D2" type="Polygon2D" parent="RotationNode/VisualsNode"]
+[node name="Polygon2D2" type="Polygon2D" parent="VisualsNode"]
 color = Color(1, 0, 0.0196078, 1)
 polygon = PackedVector2Array(0, 0, 8, 2, 16, 0, 8, -2)
 
-[node name="TargetDetectionCircle" type="Area2D" parent="RotationNode"]
+[node name="FixedRotationNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="TargetDetectionCircle" type="Area2D" parent="."]
 unique_name_in_owner = true
 visible = false
 collision_layer = 0

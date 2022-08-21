@@ -66,13 +66,13 @@ func begin_death():
 	set_z_index(-1)
 	
 	var external_force_angle : float = (get_force(TYPE.EXTERNAL) + get_impulse(TYPE.EXTERNAL)).angle()
-	death_angle = Utils.unwrap_angle(facing_rotation - external_force_angle)
+	death_angle = Utils.unwrap_angle(rotation - external_force_angle)
 	
 	# spawn pre-death effects
 	for effect_scene in pre_death_effects:
 		var effect_attributes := {
 			"source" : self,
-			"rotation" : facing_rotation,
+			"rotation" : rotation,
 			"position" : global_position,
 			"effect_angle" : death_angle
 		}
@@ -118,7 +118,7 @@ func complete_death():
 	for effect_scene in post_death_effects:
 		var effect_attributes := {
 			"source" : self,
-			"rotation" : facing_rotation,
+			"rotation" : rotation,
 			"position" : global_position,
 			"effect_angle" : death_angle
 		}

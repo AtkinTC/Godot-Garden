@@ -46,18 +46,18 @@ automatic = false
 visible = false
 shape = SubResource("CircleShape2D_mgevr")
 
-[node name="RotationNode" type="Node2D" parent="."]
+[node name="VisualsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="VisualsNode" type="Node2D" parent="RotationNode"]
-unique_name_in_owner = true
-
-[node name="Sprite" type="Sprite2D" parent="RotationNode/VisualsNode"]
+[node name="Sprite" type="Sprite2D" parent="VisualsNode"]
 texture_filter = 1
 texture = ExtResource("6_6ouhy")
 hframes = 7
 vframes = 6
 region_rect = Rect2(0, 0, 48, 48)
+
+[node name="FixedRotationNode" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

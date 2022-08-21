@@ -14,7 +14,7 @@ var queued_state = STATE.NULL
 
 @export var debug_draw : bool = false
 
-@onready var rotation_source_node: Node2D = get_node_or_null("%RotationNode")
+@onready var fixed_rotation_node: Node2D = get_node_or_null("%FixedRotationNode")
 @onready var visuals_source_node: Node2D = get_node_or_null("%VisualsNode")
 @onready var target_detection_area: TargetDetectionCircle = get_node("%TargetDetectionCircle")
 
@@ -36,7 +36,6 @@ var retarget_wait_time_remaining : float = 0
 @export_range(0, 1000) var aim_draw_speed : float = 20 # aim distance speed : pixels per second
 @export_range(0, 180) var free_aim_angle_deg : float = 12 # max angle away from the facing direction for aiming, in degrees
 var free_aim_angle : float # max angle away from the facing direction for aiming, in radians
-var facing_rad : float = Vector2.RIGHT.angle() # unit body facing direction
 var aim_point_center : Vector2 = Vector2.ZERO # aim point locked to unit facing direction
 var free_aim_radius : float = 0 # radius around aim point for true aiming, limited by free_aim_angle
 var free_aim_point_offset : Vector2 = Vector2.ZERO # true aim point offset constrained by free_aim_radius
@@ -84,6 +83,8 @@ func post_ready() -> void:
 			nav_controller = world.get_navigation_controller()
 
 func _process(_delta: float) -> void:
+	if(fixed_rotation_node):
+		fixed_rotation_node.set_global_rotation(0)
 	update()
 
 func _physics_process(_delta: float) -> void:
@@ -110,7 +111,7 @@ func _physics_process(_delta: float) -> void:
 				position = move_path[0]
 				move_path.pop_front()
 			else:
-				facing_rad = (move_path[0] - position).angle()
+				rotation = (move_path[0] - position).angle()
 				position += (move_path[0] - position).normalized() * move_speed * _delta
 				
 		
@@ -141,9 +142,6 @@ func _physics_process(_delta: float) -> void:
 			else:
 				next_state = STATE.AIMING
 		reshot_time_remaining -= _delta
-	
-	if(rotation_source_node):
-		rotation_source_node.set_rotation(facing_rad)
 
 # updates the target_node if both:
 #		a) current target_node null or not within max_aim_range
@@ -181,8 +179,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	var target_rad := local_aim_target.angle()
 	target_rad = Utils.unwrap_angle(target_rad)
 	
-	var new_rad := facing_rad
-	new_rad = Utils.unwrap_angle(new_rad)
+	var new_rad := Utils.unwrap_angle(rotation)
 
 	if(target_rad - new_rad > PI):
 		target_rad -= TAU
@@ -235,7 +232,7 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	else:
 		new_free_aim_point_offset = new_aim_point_center
 	
-	facing_rad = new_rad
+	rotation = new_rad
 	aim_point_center = new_aim_point_center
 	free_aim_radius = new_free_aim_radius
 	free_aim_point_offset = new_free_aim_point_offset
@@ -247,7 +244,7 @@ func create_projectile():
 		"speed" : projectile_speed,
 		"max_range" : projectile_max_range + free_aim_radius,
 		"damage" : projectile_damage,
-		"rotation" : facing_rad,
+		"rotation" : rotation,
 		"position" : global_position
 	}
 	SignalBus.spawn_effect.emit(projectile_scene_path, effect_attributes)

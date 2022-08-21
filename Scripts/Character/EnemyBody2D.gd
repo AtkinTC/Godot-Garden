@@ -1,8 +1,8 @@
 class_name EnemyBody2D
 extends AgentBody2D
 
-@onready var rotation_source_node: Node2D = get_node_or_null("%RotationNode")
-@onready var visuals_source_node: Node2D = get_node_or_null("%VisualsNode")
+@onready var fixed_rotation_node: Node2D = get_node_or_null("%FixedRotationNode")
+@onready var visuals_node: Node2D = get_node_or_null("%VisualsNode")
 
 var target_position := Vector2.ZERO
 var seek_vector := Vector2.ZERO
@@ -20,7 +20,7 @@ func set_setup_params(_params : Dictionary):
 	setup_params = _params
 	position = _params.get("position", position)
 	nav_controller = _params.get("nav_controller", nav_controller)
-	facing_rotation = _params.get("facing_rotation", facing_rotation)
+	rotation = _params.get("rotation", rotation)
 
 func get_setup_params() -> Dictionary:
 	return setup_params
@@ -30,8 +30,8 @@ func _ready() -> void:
 	attach_steering_components()
 
 func _process(_delta: float) -> void:
-	if(rotation_source_node):
-		rotation_source_node.set_rotation(facing_rotation)
+	if(fixed_rotation_node):
+		fixed_rotation_node.set_global_rotation(0)
 	update()
 
 func _physics_process(delta: float) -> void:
@@ -46,8 +46,8 @@ func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
 	if(!is_zero_approx(velocity_manual.length_squared())):
-		facing_rotation = velocity_manual.angle()
-		rotation_speed_manual = (velocity_manual.angle()-facing_rotation)
+		rotation = velocity_manual.angle()
+		rotation_speed_manual = (velocity_manual.angle() - rotation)
 	
 	if(hitstun_remaining >= 0):
 		hitstun_remaining -= delta

@@ -21,7 +21,7 @@ static func format_comma_seperated(number : String) -> String:
 
 # unwrap_angle(angle : float)
 # utility method to convert an angle (in radians) to be in the range (0, TAU)
-static func unwrap_angle(angle : float):
+static func unwrap_angle(angle : float) -> float:
 	if(angle >= TAU):
 		var temp_angle = fmod(angle, TAU)
 		return temp_angle
