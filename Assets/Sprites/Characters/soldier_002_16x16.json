@@ -1,0 +1,271 @@
+{ "frames": {
+   "soldier_002_16x16 #run 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #run 1.ase": {
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #run 2.ase": {
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #run 3.ase": {
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #run 4.ase": {
+    "frame": { "x": 128, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #run 5.ase": {
+    "frame": { "x": 160, "y": 0, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 0.ase": {
+    "frame": { "x": 0, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 1.ase": {
+    "frame": { "x": 32, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 2.ase": {
+    "frame": { "x": 64, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 3.ase": {
+    "frame": { "x": 96, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 4.ase": {
+    "frame": { "x": 128, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #walk 5.ase": {
+    "frame": { "x": 160, "y": 16, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #aim.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   "soldier_002_16x16 #shoot 0.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   "soldier_002_16x16 #shoot 1.ase": {
+    "frame": { "x": 0, "y": 48, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   "soldier_002_16x16 #shoot 2.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   "soldier_002_16x16 #shoot 3.ase": {
+    "frame": { "x": 32, "y": 48, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #shoot 4.ase": {
+    "frame": { "x": 64, "y": 48, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #shoot 5.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 0.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 1.ase": {
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 2.ase": {
+    "frame": { "x": 32, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 3.ase": {
+    "frame": { "x": 64, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 4.ase": {
+    "frame": { "x": 32, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 5.ase": {
+    "frame": { "x": 64, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 6.ase": {
+    "frame": { "x": 32, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 7.ase": {
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 8.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 9.ase": {
+    "frame": { "x": 32, "y": 48, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 10.ase": {
+    "frame": { "x": 64, "y": 48, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   },
+   "soldier_002_16x16 #reload 11.ase": {
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 16, "y": 16, "w": 32, "h": 16 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 200
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3-beta20-x64",
+  "image": "soldier_002_16x16.png",
+  "format": "RGBA8888",
+  "size": { "w": 192, "h": 80 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "run", "from": 0, "to": 5, "direction": "forward", "color": "#000000ff" },
+   { "name": "walk", "from": 6, "to": 11, "direction": "forward", "color": "#000000ff" },
+   { "name": "aim", "from": 12, "to": 12, "direction": "forward", "color": "#000000ff" },
+   { "name": "shoot", "from": 13, "to": 18, "direction": "forward", "color": "#000000ff" },
+   { "name": "reload", "from": 19, "to": 30, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

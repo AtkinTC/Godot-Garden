@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ceqfnk2p4t8bl"]
+[gd_scene load_steps=7 format=3 uid="uid://cvb8m31a6eqfc"]
 
 [ext_resource type="Script" path="res://Scripts/HeroUnits/HeroUnit.gd" id="1_p2o3p"]
-[ext_resource type="Texture2D" uid="uid://cusj5oyqkkkt8" path="res://Assets/Sprites/Characters/soldier_16x16.png" id="2_5nmwd"]
+[ext_resource type="Texture2D" uid="uid://b7l2snhbffick" path="res://Assets/Sprites/Characters/soldier_001_16x16.png" id="2_ivhfx"]
 [ext_resource type="Script" path="res://Scripts/HeroUnits/TargetDetectionCircle.gd" id="2_obe4a"]
 [ext_resource type="Script" path="res://Scripts/UI/SelectionControlNode.gd" id="3_lh2hx"]
-[ext_resource type="AnimationLibrary" uid="uid://dy6hm0t1qvcld" path="res://Resources/AnimationLibrary/soldier_animations.tres" id="5_jtbqe"]
+[ext_resource type="AnimationLibrary" uid="uid://dy6hm0t1qvcld" path="res://Resources/AnimationLibrary/soldier_001_animations.tres" id="5_l3jxy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tj23h"]
 radius = 16.0
@@ -27,7 +27,7 @@ polygon = PackedVector2Array(0, 0, 8, 2, 16, 0, 8, -2)
 
 [node name="Sprite2D" type="Sprite2D" parent="VisualsNode"]
 texture_filter = 1
-texture = ExtResource("2_5nmwd")
+texture = ExtResource("2_ivhfx")
 offset = Vector2(8, 0)
 region_enabled = true
 region_rect = Rect2(0, 32, 32, 16)
@@ -64,5 +64,5 @@ unique_name_in_owner = true
 root_node = NodePath("../VisualsNode/Sprite2D")
 autoplay = "aim"
 libraries = {
-"": ExtResource("5_jtbqe")
+"": ExtResource("5_l3jxy")
 }
