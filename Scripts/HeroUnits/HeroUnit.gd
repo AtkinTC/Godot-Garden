@@ -20,6 +20,8 @@ var queued_state = STATE.NULL
 
 @onready var animation_player : AnimationPlayer = get_node("%AnimationPlayer")
 
+@onready var gun : GunBase = get_node_or_null("%Gun")
+
 var heroes_node : HeroesNode
 
 # targeting
@@ -37,23 +39,10 @@ var retarget_wait_time_remaining : float = 0
 @export_range(0, 5000) var max_aim_range : int = 150 # max aim range
 @export_range(0, 1000) var aim_draw_speed : float = 20 # aim distance speed : pixels per second
 @export_range(0, 180) var free_aim_angle_deg : float = 12 # max angle away from the facing direction for aiming, in degrees
-@onready var free_aim_angle : float = deg2rad(body_rotation_speed_deg) # max angle away from the facing direction for aiming, in radians
+@onready var free_aim_angle : float = deg2rad(free_aim_angle_deg) # max angle away from the facing direction for aiming, in radians
 var aim_point_center : Vector2 = Vector2.ZERO # aim point locked to unit facing direction
 var free_aim_radius : float = 0 # radius around aim point for true aiming, limited by free_aim_angle
 var free_aim_point_offset : Vector2 = Vector2.ZERO # true aim point offset constrained by free_aim_radius
-
-# attacking
-@onready var proj_spawn_point : Node2D = get_node("%ProjectileSpawnPoint")
-var clip_size : int = 5
-var remaining_shots : int = clip_size
-var projectile_scene_path : String = "res://Scenes/Effects/BaseProjectile.tscn"
-var projectile_speed : float = 200
-var projectile_max_range : float = 250
-var projectile_damage : float = 1
-var scatter_angle_deg : float = 10
-@onready var scatter_angle : float = deg2rad(scatter_angle_deg)
-var projectile_collision_layers : Array[String] = ["enemy", "wall"]
-@onready var projectile_collision_mask := PhysicsUtil.get_physics_layer_mask_from_names(projectile_collision_layers)
 
 #navigation
 var nav_controller : NavigationController
@@ -106,6 +95,7 @@ func _physics_process(_delta: float) -> void:
 	if(state == STATE.IDLE):
 		animation_name = "aim"
 		
+		reset_aim()
 		retarget_if_needed(_delta)
 		
 		if(target_node != null):
@@ -114,6 +104,8 @@ func _physics_process(_delta: float) -> void:
 	# MOVING
 	if(state == STATE.MOVING):
 		animation_name = "walk"
+		
+		reset_aim()
 		
 		if(move_path == null || move_path.size() <= 0):
 			move_path = get_nav_path(move_target)
@@ -142,8 +134,7 @@ func _physics_process(_delta: float) -> void:
 			aim_point_center = Vector2.ZERO
 		
 		if(target_node && predict_aim_target().is_equal_approx(aim_point_center + free_aim_point_offset)):
-			create_projectile()
-			remaining_shots -= 1
+			shoot_gun()
 			animation_name = "shoot"
 			next_state = STATE.SHOOTING
 		elif(target_node == null):
@@ -156,6 +147,8 @@ func _physics_process(_delta: float) -> void:
 	#RELOADING
 	if(state == STATE.RELOADING):
 		animation_name = "reload"
+		
+		reset_aim()
 	
 	if(animation_player.has_animation(animation_name) && animation_player.get_current_animation() != animation_name):
 		animation_player.play(animation_name)
@@ -183,13 +176,21 @@ func predict_aim_target() -> Vector2:
 		return Vector2.ZERO
 	
 	var local_aim_target = target_node.get_global_position() - global_position
+	if(not gun is GunBase || is_zero_approx(gun.get_projectile_speed())):
+		return local_aim_target
+	
 	if(!target_node.has_method("get_velocity")):
 		return local_aim_target
 	var v : Vector2 = target_node.get_velocity()
 	var d : float = local_aim_target.length()
-	var t : float = d/projectile_speed
+	var t : float = d/gun.get_projectile_speed()
 	var predicted_aim_target = local_aim_target + v * t
 	return(predicted_aim_target)
+
+func reset_aim():
+	aim_point_center = Vector2.ZERO
+	free_aim_radius = 0
+	free_aim_point_offset = Vector2.ZERO
 
 func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	# determine new body facing direction
@@ -254,17 +255,9 @@ func rotate_and_aim(local_aim_target: Vector2, _delta: float):
 	free_aim_radius = new_free_aim_radius
 	free_aim_point_offset = new_free_aim_point_offset
 
-func create_projectile():
-	var effect_attributes := {
-		"source" : self,
-		"collision_mask" : projectile_collision_mask,
-		"speed" : projectile_speed,
-		"max_range" : projectile_max_range + free_aim_radius,
-		"damage" : projectile_damage,
-		"rotation" : rotation + randf_range(-scatter_angle, scatter_angle),
-		"position" : proj_spawn_point.global_position
-	}
-	SignalBus.spawn_effect.emit(projectile_scene_path, effect_attributes)
+func shoot_gun():
+	if(gun is GunBase):
+		gun.shoot(self)
 
 func initiate_move(_move_target: Vector2):
 	queued_state = STATE.MOVING
@@ -303,12 +296,12 @@ func _on_targets_change():
 
 func _on_animation_finished(_anim_name: StringName):
 	if(state == STATE.SHOOTING):
-		if(remaining_shots <= 0):
+		if(gun is GunBase && gun.needs_reload()):
 			next_state = STATE.RELOADING
 		else:
 			next_state = STATE.AIMING
 	if(state == STATE.RELOADING):
-		remaining_shots = clip_size
+		gun.complete_reload()
 		next_state = STATE.AIMING
 
 func _draw():

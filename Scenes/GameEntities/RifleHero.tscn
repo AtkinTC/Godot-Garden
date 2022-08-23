@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://70obt3xovif5"]
+
+[ext_resource type="PackedScene" uid="uid://cy8w6r5rp636b" path="res://Scenes/GameEntities/BaseHeroUnit.tscn" id="1_vpudg"]
+[ext_resource type="Texture2D" uid="uid://b7l2snhbffick" path="res://Assets/Sprites/Characters/soldier_001_16x16.png" id="2_ft6wi"]
+[ext_resource type="AnimationLibrary" uid="uid://cyfrsxc5w8m7p" path="res://Resources/AnimationLibrary/soldier_rifle_animations.tres" id="3_6yp3b"]
+[ext_resource type="Script" path="res://Scripts/HeroUnits/Guns/Rifle.gd" id="3_78gvn"]
+
+[node name="RifleHero" instance=ExtResource("1_vpudg")]
+
+[node name="Sprite2D" parent="VisualsNode" index="0"]
+texture = ExtResource("2_ft6wi")
+offset = Vector2(8, 0)
+region_rect = Rect2(0, 32, 32, 16)
+
+[node name="TargetDetectionCircle" parent="." index="2"]
+detection_range = 200.0
+
+[node name="SelectionControlNode" parent="." index="3"]
+visible = true
+
+[node name="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": ExtResource("3_6yp3b")
+}
+
+[node name="Gun" parent="." index="5"]
+script = ExtResource("3_78gvn")
+
+[node name="ProjectileSpawnPoint" type="Position2D" parent="Gun" index="0"]
+unique_name_in_owner = true
+position = Vector2(12, 3)

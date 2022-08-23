@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj54w7ky8aqn0"]
+
+[ext_resource type="PackedScene" uid="uid://cy8w6r5rp636b" path="res://Scenes/GameEntities/BaseHeroUnit.tscn" id="1_vpudg"]
+[ext_resource type="Texture2D" uid="uid://be1n663afeh6v" path="res://Assets/Sprites/Characters/soldier_002_16x16.png" id="2_h8hlf"]
+[ext_resource type="AnimationLibrary" uid="uid://bj345opj6bjeg" path="res://Resources/AnimationLibrary/soldier_shotgun_animations.tres" id="3_rhx1o"]
+[ext_resource type="Script" path="res://Scripts/HeroUnits/Guns/Shotgun.gd" id="4_3uv0u"]
+
+[node name="ShotgunHero" instance=ExtResource("1_vpudg")]
+
+[node name="Sprite2D" parent="VisualsNode" index="0"]
+texture = ExtResource("2_h8hlf")
+offset = Vector2(8, 0)
+region_rect = Rect2(0, 32, 32, 16)
+
+[node name="TargetDetectionCircle" parent="." index="2"]
+detection_range = 200.0
+
+[node name="SelectionControlNode" parent="." index="3"]
+visible = true
+
+[node name="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": ExtResource("3_rhx1o")
+}
+
+[node name="Gun" parent="." index="5"]
+script = ExtResource("4_3uv0u")
+
+[node name="ProjectileSpawnPoint" type="Position2D" parent="Gun" index="0"]
+unique_name_in_owner = true
+position = Vector2(10, 3)

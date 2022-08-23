@@ -16,7 +16,7 @@ var collision_node : CollisionShape2D
 var detection_circle : CircleShape2D
 
 var blocker_layers : Array[String] = ["wall"]
-@onready var blocker_mask := PhysicsUtil.get_physics_layer_mask_from_names(blocker_layers)
+var blocker_mask : int = 0
 
 var target_ids : Array[int] = []
 
@@ -28,6 +28,9 @@ func _ready() -> void:
 	set_collision_layer(0)
 	set_monitoring(true)
 	set_monitorable(false)
+	
+	if not Engine.is_editor_hint():
+		blocker_mask = PhysicsUtil.get_physics_layer_mask_from_names(blocker_layers)
 	
 	collision_node = CollisionShape2D.new()
 	add_child(collision_node)

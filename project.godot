@@ -150,6 +150,11 @@ _global_script_classes=[{
 "path": "res://Scripts/Navigation/FlowMapNavigation.gd"
 }, {
 "base": "Node2D",
+"class": &"GunBase",
+"language": &"GDScript",
+"path": "res://Scripts/HeroUnits/Guns/GunBase.gd"
+}, {
+"base": "Node2D",
 "class": &"HeroUnit",
 "language": &"GDScript",
 "path": "res://Scripts/HeroUnits/HeroUnit.gd"
@@ -229,6 +234,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Util/RectNode2D.gd"
 }, {
+"base": "GunBase",
+"class": &"Rifle",
+"language": &"GDScript",
+"path": "res://Scripts/HeroUnits/Guns/Rifle.gd"
+}, {
 "base": "Resource",
 "class": &"SaveFileResource",
 "language": &"GDScript",
@@ -248,6 +258,11 @@ _global_script_classes=[{
 "class": &"SeparationSteeringComponent2D",
 "language": &"GDScript",
 "path": "res://Scripts/Steering/SeparationSteeringComponent2D.gd"
+}, {
+"base": "GunBase",
+"class": &"Shotgun",
+"language": &"GDScript",
+"path": "res://Scripts/HeroUnits/Guns/Shotgun.gd"
 }, {
 "base": "Node2D",
 "class": &"SteeringComponent2D",
@@ -368,6 +383,7 @@ _global_script_class_icons={
 "ExplorationVO": "",
 "FlowMap": "",
 "FlowMapNavigation": "",
+"GunBase": "",
 "HeroUnit": "",
 "HeroesNode": "",
 "Hurtbox": "",
@@ -384,10 +400,12 @@ _global_script_class_icons={
 "PlotVO": "",
 "Projectile": "",
 "RectNode2D": "",
+"Rifle": "",
 "SaveFileResource": "",
 "SeekSteeringComponent2D": "",
 "SelectionControlNode": "",
 "SeparationSteeringComponent2D": "",
+"Shotgun": "",
 "SteeringComponent2D": "",
 "Structure": "",
 "StructureComponenet": "",
@@ -500,3 +518,4 @@ key_2={
 [rendering]
 
 vulkan/rendering/back_end=1
+textures/canvas_textures/default_texture_filter=0
