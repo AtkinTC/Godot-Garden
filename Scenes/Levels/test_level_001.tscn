@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://diqtw4s4ktfr8"]
+[gd_scene load_steps=9 format=3 uid="uid://diqtw4s4ktfr8"]
 
 [ext_resource type="PackedScene" uid="uid://wpmcoojwf101" path="res://Scenes/Levels/base_level.tscn" id="1_mr320"]
 [ext_resource type="TileSet" uid="uid://iemudeqjrnqh" path="res://Resources/TileSets/base_32x32.tres" id="2_nn3ab"]
@@ -7,6 +7,7 @@
 [ext_resource type="TileSet" uid="uid://dmys16pol2afs" path="res://Resources/TileSets/borders_32x32.tres" id="4_roppk"]
 [ext_resource type="PackedScene" uid="uid://70obt3xovif5" path="res://Scenes/GameEntities/RifleHero.tscn" id="5_dwk5r"]
 [ext_resource type="PackedScene" uid="uid://bj54w7ky8aqn0" path="res://Scenes/GameEntities/ShotgunHero.tscn" id="6_2psdu"]
+[ext_resource type="PackedScene" uid="uid://q88xex5wlsfk" path="res://Scenes/GameEntities/SMGHero.tscn" id="7_kfi18"]
 
 [node name="Level" instance=ExtResource("1_mr320")]
 
@@ -38,6 +39,9 @@ position = Vector2(176, 432)
 
 [node name="ShotgunHero" parent="World/HeroesNode" index="1" instance=ExtResource("6_2psdu")]
 position = Vector2(208, 432)
+
+[node name="RifleHero2" parent="World/HeroesNode" index="2" instance=ExtResource("7_kfi18")]
+position = Vector2(240, 432)
 
 [node name="GoalArea" type="Node2D" parent="World/GoalAreas" index="0"]
 position = Vector2(1136, 496)

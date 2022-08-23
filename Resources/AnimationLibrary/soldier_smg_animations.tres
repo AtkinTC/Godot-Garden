@@ -1,6 +1,6 @@
-[gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://cyfrsxc5w8m7p"]
+[gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://btmek1un5qr25"]
 
-[sub_resource type="Animation" id="Animation_ecx01"]
+[sub_resource type="Animation" id="Animation_5up4w"]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -27,8 +27,8 @@ tracks/1/keys = {
 "values": [Vector2(8, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_2616n"]
-length = 2.0
+[sub_resource type="Animation" id="Animation_8wq16"]
+length = 3.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -36,10 +36,10 @@ tracks/0/path = NodePath(".:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Rect2(0, 32, 32, 16), Rect2(0, 64, 32, 16), Rect2(32, 64, 32, 16), Rect2(64, 64, 32, 16), Rect2(32, 64, 32, 16), Rect2(96, 64, 32, 16), Rect2(32, 48, 32, 16), Rect2(64, 48, 32, 16), Rect2(32, 48, 32, 16), Rect2(0, 32, 32, 16)]
+"values": [Rect2(0, 32, 32, 16), Rect2(0, 64, 32, 16), Rect2(32, 64, 32, 16), Rect2(64, 64, 32, 16), Rect2(96, 64, 32, 16), Rect2(128, 64, 32, 16), Rect2(160, 64, 32, 16), Rect2(128, 64, 32, 16), Rect2(160, 64, 32, 16), Rect2(192, 64, 32, 16), Rect2(64, 64, 32, 16), Rect2(32, 64, 32, 16), Rect2(0, 64, 32, 16), Rect2(224, 64, 32, 16), Rect2(0, 64, 32, 16), Rect2(0, 32, 32, 16)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -48,13 +48,13 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0)]
+"values": [Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_i78b7"]
+[sub_resource type="Animation" id="Animation_swdly"]
 length = 1.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -81,8 +81,8 @@ tracks/1/keys = {
 "values": [Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_lieju"]
-length = 0.9
+[sub_resource type="Animation" id="Animation_mm5xt"]
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -90,10 +90,10 @@ tracks/0/path = NodePath(".:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Rect2(0, 32, 32, 16), Rect2(0, 48, 32, 16), Rect2(32, 48, 32, 16), Rect2(64, 48, 32, 16), Rect2(32, 48, 32, 16), Rect2(0, 32, 32, 16)]
+"values": [Rect2(0, 48, 32, 16), Rect2(0, 32, 32, 16)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -102,13 +102,13 @@ tracks/1/path = NodePath(".:offset")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0), Vector2(8, 0)]
+"values": [Vector2(8, 0), Vector2(8, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_uabvt"]
+[sub_resource type="Animation" id="Animation_l0ddu"]
 length = 1.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -137,9 +137,9 @@ tracks/1/keys = {
 
 [resource]
 _data = {
-"aim": SubResource("Animation_ecx01"),
-"reload": SubResource("Animation_2616n"),
-"run": SubResource("Animation_i78b7"),
-"shoot": SubResource("Animation_lieju"),
-"walk": SubResource("Animation_uabvt")
+"aim": SubResource("Animation_5up4w"),
+"reload": SubResource("Animation_8wq16"),
+"run": SubResource("Animation_swdly"),
+"shoot": SubResource("Animation_mm5xt"),
+"walk": SubResource("Animation_l0ddu")
 }
