@@ -14,20 +14,10 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Navigation/AStarMap.gd"
 }, {
-"base": "RefCounted",
-"class": &"ActionData",
-"language": &"GDScript",
-"path": "res://Scripts/Data/ActionData.gd"
-}, {
 "base": "CharacterBody2D",
 "class": &"AgentBody2D",
 "language": &"GDScript",
 "path": "res://Scripts/Character/AgentBody2D.gd"
-}, {
-"base": "Resource",
-"class": &"AreaVO",
-"language": &"GDScript",
-"path": "res://Scripts/Area/AreaVO.gd"
 }, {
 "base": "RefCounted",
 "class": &"Array2D",
@@ -60,11 +50,6 @@ _global_script_classes=[{
 "path": "res://Scripts/TileMap/CellDefinitionSet.gd"
 }, {
 "base": "RefCounted",
-"class": &"Const",
-"language": &"GDScript",
-"path": "res://Scripts/Data/Const.gd"
-}, {
-"base": "RefCounted",
 "class": &"Constants",
 "language": &"GDScript",
 "path": "res://Scripts/Constants.gd"
@@ -88,11 +73,6 @@ _global_script_classes=[{
 "class": &"CorpseEffect",
 "language": &"GDScript",
 "path": "res://Scripts/Effects/CorpseEffect.gd"
-}, {
-"base": "RefCounted",
-"class": &"DataValidator",
-"language": &"GDScript",
-"path": "res://Scripts/DataValidator.gd"
 }, {
 "base": "CorpseEffect",
 "class": &"DirectionalCorpseEffect",
@@ -128,16 +108,6 @@ _global_script_classes=[{
 "class": &"EnemyBody2D",
 "language": &"GDScript",
 "path": "res://Scripts/Character/EnemyBody2D.gd"
-}, {
-"base": "RefCounted",
-"class": &"EnhancementData",
-"language": &"GDScript",
-"path": "res://Scripts/Data/EnhancementData.gd"
-}, {
-"base": "Resource",
-"class": &"ExplorationVO",
-"language": &"GDScript",
-"path": "res://Scripts/Exploration/ExplorationVO.gd"
 }, {
 "base": "RefCounted",
 "class": &"FlowMap",
@@ -204,11 +174,6 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/Navigation/NavigationController.gd"
 }, {
-"base": "RefCounted",
-"class": &"ObjectData",
-"language": &"GDScript",
-"path": "res://Scripts/Data/ObjectData.gd"
-}, {
 "base": "CharacterBody2D",
 "class": &"Player",
 "language": &"GDScript",
@@ -218,11 +183,6 @@ _global_script_classes=[{
 "class": &"PlayerCameraTransform",
 "language": &"GDScript",
 "path": "res://Scripts/Character/Player/PlayerCameraTransform.gd"
-}, {
-"base": "Resource",
-"class": &"PlotVO",
-"language": &"GDScript",
-"path": "res://Scripts/Plot/PlotVO.gd"
 }, {
 "base": "Effect",
 "class": &"Projectile",
@@ -273,31 +233,6 @@ _global_script_classes=[{
 "class": &"SteeringComponent2D",
 "language": &"GDScript",
 "path": "res://Scripts/Steering/SteeringComponent2D.gd"
-}, {
-"base": "Object",
-"class": &"Structure",
-"language": &"GDScript",
-"path": "res://Scripts/Structure/Structure.gd"
-}, {
-"base": "Object",
-"class": &"StructureComponenet",
-"language": &"GDScript",
-"path": "res://Scripts/Structure/StructureComponent.gd"
-}, {
-"base": "RefCounted",
-"class": &"StructureDAO",
-"language": &"GDScript",
-"path": "res://Scripts/Structure/StructureDAO.gd"
-}, {
-"base": "RefCounted",
-"class": &"SupplyData",
-"language": &"GDScript",
-"path": "res://Scripts/Data/SupplyData.gd"
-}, {
-"base": "Resource",
-"class": &"SupplyVO",
-"language": &"GDScript",
-"path": "res://Scripts/VO/SupplyVO.gd"
 }, {
 "base": "Area2D",
 "class": &"TargetDetectionCircle",
@@ -361,22 +296,18 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "AStarMap": "",
-"ActionData": "",
 "AgentBody2D": "",
-"AreaVO": "",
 "Array2D": "",
 "AsepriteImportData": "",
 "AsepriteImporter": "",
 "AttackConsts": "",
 "CellDefinition": "",
 "CellDefinitionSet": "",
-"Const": "",
 "Constants": "",
 "ContextMenu": "",
 "ContextMenuButton": "",
 "ControlledCamera2D": "",
 "CorpseEffect": "",
-"DataValidator": "",
 "DirectionalCorpseEffect": "",
 "EditorTheme": "",
 "Effect": "",
@@ -384,8 +315,6 @@ _global_script_class_icons={
 "EnemiesNode": "",
 "Enemy": "",
 "EnemyBody2D": "",
-"EnhancementData": "",
-"ExplorationVO": "",
 "FlowMap": "",
 "FlowMapNavigation": "",
 "GunBase": "",
@@ -399,10 +328,8 @@ _global_script_class_icons={
 "MultiFlowMap": "",
 "MultiFlowMapNavigation": "",
 "NavigationController": "",
-"ObjectData": "",
 "Player": "",
 "PlayerCameraTransform": "",
-"PlotVO": "",
 "Projectile": "",
 "RectNode2D": "",
 "Rifle": "",
@@ -413,11 +340,6 @@ _global_script_class_icons={
 "SeparationSteeringComponent2D": "",
 "Shotgun": "",
 "SteeringComponent2D": "",
-"Structure": "",
-"StructureComponenet": "",
-"StructureDAO": "",
-"SupplyData": "",
-"SupplyVO": "",
 "TargetDetectionCircle": "",
 "TileDefinition": "",
 "TileMapCust": "",
@@ -441,11 +363,10 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GardenManager="*res://Singletons/GardenManager.gd"
 SaveController="*res://Scripts/Save/SaveController.gd"
 PhysicsUtil="*res://Singletons/PhysicsUtil.gd"
-ResourceRef="*res://Singletons/ResourceRef.gd"
 SignalBus="*res://Singletons/SignalBus.gd"
+ResourceRef="*res://Singletons/ResourceRef.gd"
 
 [display]
 
