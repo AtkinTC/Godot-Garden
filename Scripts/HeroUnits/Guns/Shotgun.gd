@@ -20,6 +20,7 @@ func shoot(source : Node2D) -> void:
 		"speed" : projectile_speed,
 		"max_range" : projectile_max_range,
 		"damage" : projectile_damage,
+		"force" : 30,
 		"position" : proj_spawn_point.global_position if (proj_spawn_point is Node2D) else global_position
 	}
 	for i in 3:

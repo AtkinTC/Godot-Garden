@@ -11,7 +11,7 @@ enum STATE {NULL, DEFAULT, DEAD}
 
 var state = STATE.NULL
 
-@export var health_max : int = 1
+@export var health_max : int = 2
 @onready var health : float = health_max
 
 @export var pre_death_effects : Array[PackedScene]
@@ -137,10 +137,13 @@ func get_nav_controller() -> NavigationController:
 func _on_attack_collision(_attack_data: Dictionary):
 	var hit_angle = _attack_data.get(AttackConsts.ANGLE)
 	var hit_force = _attack_data.get(AttackConsts.FORCE)
+	var hit_damage = _attack_data.get(AttackConsts.DAMAGE)
 	
-	apply_impulse(Vector2.from_angle(hit_angle) * hit_force, TYPE.EXTERNAL)
-	set_force(Vector2.ZERO, TYPE.MANUAL)
-	set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
-	apply_hitstun(1)
+	if(hit_damage is float):
+		health -= hit_damage
 	
-	health -= 1
+	if(hit_angle != null && hit_force != null):
+		apply_impulse(Vector2.from_angle(hit_angle) * hit_force, TYPE.EXTERNAL)
+		set_force(Vector2.ZERO, TYPE.MANUAL)
+		set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
+		apply_hitstun(1)

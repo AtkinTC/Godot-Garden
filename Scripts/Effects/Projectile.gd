@@ -14,6 +14,7 @@ var speed : float = 100
 var max_range : float = 0
 var max_range_sqr : float = 0
 var damage : float = 0
+var force : float = 0
 
 func setup_from_attribute_dictionary(_attribute_dict: Dictionary):
 	super.setup_from_attribute_dictionary(_attribute_dict)
@@ -22,6 +23,7 @@ func setup_from_attribute_dictionary(_attribute_dict: Dictionary):
 	collision_mask = _attribute_dict.get("collision_mask", collision_mask)
 	speed = _attribute_dict.get("speed", speed)
 	damage = _attribute_dict.get("damage", damage)
+	force = _attribute_dict.get("force", force)
 	
 	max_range = _attribute_dict.get("max_range", MAX_RANGE)
 	if(max_range <= 0 || max_range > MAX_RANGE):
@@ -58,7 +60,8 @@ func _physics_process(_delta: float) -> void:
 				AttackConsts.POSITION : collision.position,
 				AttackConsts.NORMAL : collision.normal,
 				AttackConsts.ANGLE : global_rotation,
-				AttackConsts.FORCE : 50
+				AttackConsts.FORCE : force,
+				AttackConsts.DAMAGE : damage
 			}
 			collider._on_attack_collision(attack_data)
 		queue_free()
