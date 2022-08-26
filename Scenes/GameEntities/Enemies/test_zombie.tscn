@@ -52,9 +52,8 @@ unique_name_in_owner = true
 [node name="Sprite" type="Sprite2D" parent="VisualsNode"]
 texture_filter = 1
 texture = ExtResource("6_6ouhy")
-hframes = 7
-vframes = 6
-region_rect = Rect2(0, 0, 48, 48)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="FixedRotationNode" type="Node2D" parent="."]
 unique_name_in_owner = true

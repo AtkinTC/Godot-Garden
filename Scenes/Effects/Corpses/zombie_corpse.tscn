@@ -11,9 +11,9 @@ script = ExtResource("1_tf416")
 visible = false
 texture_filter = 1
 texture = ExtResource("2_3cx81")
-hframes = 7
-vframes = 6
-region_rect = Rect2(192, 0, 32, 16)
+offset = Vector2(0, 8)
+region_enabled = true
+region_rect = Rect2(64, 160, 16, 32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

@@ -10,17 +10,17 @@ func setup_from_attribute_dictionary(_attribute_dict: Dictionary):
 
 func _ready() -> void:
 	var angles = {}
-	if(animation_player.has_animation("front")):
-		angles["front"] = 0
-	if(animation_player.has_animation("left")):
-		angles["left"] = PI/2
-	if(animation_player.has_animation("back")):
-		angles["back"] = PI
-	if(animation_player.has_animation("right")):
-		angles["right"] = 3*(PI/2)
+	if(animation_player.has_animation("corpse_forward")):
+		angles["corpse_forward"] = 0
+	if(animation_player.has_animation("corpse_left")):
+		angles["corpse_left"] = PI/2
+	if(animation_player.has_animation("corpse_backward")):
+		angles["corpse_backward"] = PI
+	if(animation_player.has_animation("corpse_right")):
+		angles["corpse_right"] = 3*(PI/2)
 	
 	var min_angle : float = 9999
-	var closest_key = "front"
+	var closest_key = "corpse_forward"
 	for key in angles.keys():
 		var angle = angles[key]
 		var dif = abs(angle - death_angle)

@@ -1,9 +1,9 @@
 class_name Enemy
 extends EnemyBody2D
 
-const DEATH_ANIM_KEY = "death"
-const DEATH_F_ANIM_KEY = DEATH_ANIM_KEY + "_front"
-const DEATH_B_ANIM_KEY = DEATH_ANIM_KEY + "_back"
+const DEATH_ANIM_KEY = "fall"
+const DEATH_F_ANIM_KEY = DEATH_ANIM_KEY + "_forward"
+const DEATH_B_ANIM_KEY = DEATH_ANIM_KEY + "_backward"
 const DEATH_R_ANIM_KEY = DEATH_ANIM_KEY + "_right"
 const DEATH_L_ANIM_KEY = DEATH_ANIM_KEY + "_left"
 
@@ -42,9 +42,9 @@ func _process(_delta: float) -> void:
 			if(s < 1):
 				desired_animation = "idle"
 			elif(s < 15):
-				desired_animation = "walk"
+				desired_animation = "walking"
 			else:
-				desired_animation = "run"
+				desired_animation = "running"
 			
 			if(animation_player.has_animation(desired_animation) && animation_player.get_current_animation() != desired_animation):
 				animation_player.play(desired_animation)
