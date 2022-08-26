@@ -4,6 +4,32 @@ extends AgentBody2D
 @onready var fixed_rotation_node: Node2D = get_node_or_null("%FixedRotationNode")
 @onready var visuals_node: Node2D = get_node_or_null("%VisualsNode")
 
+const DEATH_ANIM_KEY = "fall"
+const DEATH_F_ANIM_KEY = DEATH_ANIM_KEY + "_forward"
+const DEATH_B_ANIM_KEY = DEATH_ANIM_KEY + "_backward"
+const DEATH_R_ANIM_KEY = DEATH_ANIM_KEY + "_right"
+const DEATH_L_ANIM_KEY = DEATH_ANIM_KEY + "_left"
+
+const STAGGER_ANIM_KEY = "stagger"
+const STAGGER_F_ANIM_KEY = STAGGER_ANIM_KEY + "_forward"
+const STAGGER_B_ANIM_KEY = STAGGER_ANIM_KEY + "_backward"
+const STAGGER_R_ANIM_KEY = STAGGER_ANIM_KEY + "_right"
+const STAGGER_L_ANIM_KEY = STAGGER_ANIM_KEY + "_left"
+
+enum STATE {NULL, DEFAULT, STAGGER, DEAD}
+
+var state = STATE.NULL
+
+@export var health_max : int = 2
+@onready var health : float = health_max
+
+@export var pre_death_effects : Array[PackedScene]
+@export var post_death_effects : Array[PackedScene]
+
+var seek_target_position : Vector2
+
+@onready var animation_player : AnimationPlayer = get_node("%AnimationPlayer")
+
 var target_position := Vector2.ZERO
 var seek_vector := Vector2.ZERO
 
@@ -15,6 +41,8 @@ var hitstun_remaining : float = 0
 
 @export var retarget_cooldown : float = 0
 var retarget_time : float = 0
+
+var last_animation_change_time : int = 0
 
 func set_setup_params(_params : Dictionary):
 	setup_params = _params
@@ -28,29 +56,148 @@ func get_setup_params() -> Dictionary:
 func _ready() -> void:
 	super._ready()
 	attach_steering_components()
+	animation_player.animation_finished.connect(_on_animation_finished)
+	state = STATE.DEFAULT
 
 func _process(_delta: float) -> void:
+	if(state != STATE.DEAD && state != STATE.STAGGER):
+		var v = velocity
+		var s = v.length()
+		
+		if(last_animation_change_time == 0 || Time.get_ticks_msec() - last_animation_change_time > 500):
+			var desired_animation : String = "idle"
+			
+			if(s < 1):
+				desired_animation = "idle"
+			elif(s < 15):
+				desired_animation = "walking"
+			else:
+				desired_animation = "running"
+			
+			if(animation_player.has_animation(desired_animation) && animation_player.get_current_animation() != desired_animation):
+				animation_player.play(desired_animation)
+				last_animation_change_time = Time.get_ticks_msec()
+				
 	if(fixed_rotation_node):
 		fixed_rotation_node.set_global_rotation(0)
 	update()
 
 func _physics_process(delta: float) -> void:
-	if(retarget_cooldown <= 0 || retarget_time <= 0):
-		retarget_time = retarget_cooldown
-		update_seek_target()
-	if(retarget_time > 0):
-		retarget_time -= delta
+	if(health <= 0 && state != STATE.DEAD):
+		if(state != STATE.DEAD):
+			begin_state_death()
 	
-	calculate_steering_force(delta)
+	if(state != STATE.DEAD && state != STATE.STAGGER && hitstun_remaining > 0):
+		begin_state_stagger()
 	
+	if(state == STATE.DEAD):
+		set_force(Vector2.ZERO, TYPE.MANUAL)
+	
+	if(state == STATE.STAGGER):
+		set_force(Vector2.ZERO, TYPE.MANUAL)
+		
+		if(hitstun_remaining >= 0):
+			hitstun_remaining -= delta
+		else:
+			state = STATE.DEFAULT
+	
+	if(state != STATE.DEAD):
+		if(retarget_cooldown <= 0 || retarget_time <= 0):
+			retarget_time = retarget_cooldown
+			update_seek_target()
+		if(retarget_time > 0):
+			retarget_time -= delta
+		
+		calculate_steering_force(delta)
+		
 	super._physics_process(delta)
 	
-	if(!is_zero_approx(velocity_manual.length_squared())):
-		rotation = velocity_manual.angle()
-		rotation_speed_manual = (velocity_manual.angle() - rotation)
+	if(state != STATE.DEAD):
+		if(!is_zero_approx(velocity_manual.length_squared())):
+			rotation = velocity_manual.angle()
+			rotation_speed_manual = (velocity_manual.angle() - rotation)
 	
-	if(hitstun_remaining >= 0):
-		hitstun_remaining -= delta
+
+func begin_state_stagger():
+	state = STATE.STAGGER
+	var external_force_angle : float = (get_force(TYPE.EXTERNAL) + get_impulse(TYPE.EXTERNAL)).angle()
+	var stagger_angle = Utils.unwrap_angle(rotation - external_force_angle)
+	
+	var animation_key = choose_animation_direction(stagger_angle, STAGGER_F_ANIM_KEY, STAGGER_L_ANIM_KEY, STAGGER_B_ANIM_KEY, STAGGER_R_ANIM_KEY)
+	
+	if(animation_player.has_animation(animation_key)):
+		animation_player.play(animation_key)
+	
+var death_angle : float = 0
+
+func begin_state_death():
+	# disable_collisions
+	state = STATE.DEAD
+	set_collision_layer(0)
+	set_z_index(-1)
+	
+	var external_force_angle : float = (get_force(TYPE.EXTERNAL) + get_impulse(TYPE.EXTERNAL)).angle()
+	death_angle = Utils.unwrap_angle(rotation - external_force_angle)
+	
+	# spawn pre-death effects
+	for effect_scene in pre_death_effects:
+		var effect_attributes := {
+			"source" : self,
+			"rotation" : rotation,
+			"position" : global_position,
+			"effect_angle" : death_angle
+		}
+		SignalBus.spawn_effect.emit(effect_scene.get_path(), effect_attributes)
+	
+	var death_animation = choose_animation_direction(death_angle, DEATH_F_ANIM_KEY, DEATH_L_ANIM_KEY, DEATH_B_ANIM_KEY, DEATH_R_ANIM_KEY)
+	
+#	var death_animation = DEATH_ANIM_KEY
+#	var death_angles = {}
+#	if(animation_player.has_animation(DEATH_F_ANIM_KEY)):
+#		death_angles[DEATH_F_ANIM_KEY] = 0
+#	if(animation_player.has_animation(DEATH_L_ANIM_KEY)):
+#		death_angles[DEATH_L_ANIM_KEY] = PI/2
+#	if(animation_player.has_animation(DEATH_B_ANIM_KEY)):
+#		death_angles[DEATH_B_ANIM_KEY] = PI
+#	if(animation_player.has_animation(DEATH_R_ANIM_KEY)):
+#		death_angles[DEATH_R_ANIM_KEY] = 3*(PI/2)
+#
+#	if(death_angles.size() > 0):
+#		var min_angle : float = 9999
+#		for key in death_angles.keys():
+#			var angle = death_angles[key]
+#			var dif = abs(angle - death_angle)
+#			if(dif > PI):
+#				dif = TAU - dif
+#			if(dif < min_angle):
+#				min_angle = dif
+#				death_animation = key
+	
+	if(animation_player.has_animation(death_animation)):
+		# trigger death animation
+		# animation_player.get_animation(death_animation).set_loop_mode(Animation.LOOP_NONE)
+		animation_player.play(death_animation)
+	else:
+		end_state_death()
+
+func _on_animation_finished(anim_name: StringName):
+	if(String(anim_name).begins_with(DEATH_ANIM_KEY)):
+		end_state_death()
+
+func end_state_death():
+	# spawn post-death effects
+	for effect_scene in post_death_effects:
+		var effect_attributes := {
+			"source" : self,
+			"rotation" : rotation,
+			"position" : global_position,
+			"effect_angle" : death_angle
+		}
+		SignalBus.spawn_effect.emit(effect_scene.get_path(), effect_attributes)
+	
+	#TODO: fix corpse effect spawn in, this timer is a bandaid to avoid flickering when corpse is spawned
+	await(get_tree().create_timer(0.1).timeout)
+	queue_free()
 
 func _draw() -> void:
 	#draw_line(Vector2.ZERO, (practical_target_position - position).normalized() * max_speed, Color.blue, 2)
@@ -141,5 +288,50 @@ func set_seek_vector(_seek_vector : Vector2):
 func get_seek_vector() -> Vector2:
 	return seek_vector
 
+func set_nav_controller(_nav_controller : NavigationController) -> void:
+	nav_controller = _nav_controller
+
+func get_nav_controller() -> NavigationController:
+	return nav_controller
+
 func _on_attack_collision(_attack_data: Dictionary):
-	pass
+	var hit_angle = _attack_data.get(AttackConsts.ANGLE)
+	var hit_force = _attack_data.get(AttackConsts.FORCE)
+	var hit_damage = _attack_data.get(AttackConsts.DAMAGE)
+	
+	if(hit_damage is float):
+		health -= hit_damage
+	
+	if(hit_angle != null && hit_force != null):
+		apply_impulse(Vector2.from_angle(hit_angle) * hit_force, TYPE.EXTERNAL)
+		set_force(Vector2.ZERO, TYPE.MANUAL)
+		set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
+		apply_hitstun(0.5)
+
+func choose_animation_direction(
+	angle : float, anim_f : String, anim_l : String, anim_b : String, anim_r : String, anim_def : String = "") -> String:
+	var animation_key : String = anim_def
+	if(animation_key == null || animation_key == ""):
+		animation_key = anim_f
+	var animation_angles = {}
+	if(animation_player.has_animation(anim_f)):
+		animation_angles[anim_f] = 0
+	if(animation_player.has_animation(anim_l)):
+		animation_angles[anim_l] = PI/2
+	if(animation_player.has_animation(anim_b)):
+		animation_angles[anim_b] = PI
+	if(animation_player.has_animation(anim_r)):
+		animation_angles[anim_r] = 3*(PI/2)
+	
+	if(animation_angles.size() > 0):
+		var min_angle : float = 9999
+		for key in animation_angles.keys():
+			var animation_angle = animation_angles[key]
+			var dif = abs(animation_angle - angle)
+			if(dif > PI):
+				dif = TAU - dif
+			if(dif < min_angle):
+				min_angle = dif
+				animation_key = key
+	
+	return animation_key

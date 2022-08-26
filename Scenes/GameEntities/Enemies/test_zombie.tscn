@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://5g7boj2yrhrf"]
 
-[ext_resource type="Script" path="res://Scripts/Character/Enemy.gd" id="1_t5mso"]
+[ext_resource type="Script" path="res://Scripts/Character/EnemyBody2D.gd" id="1_ic220"]
 [ext_resource type="PackedScene" uid="uid://dwa7b8vp4f3bk" path="res://Scenes/Effects/Corpses/zombie_corpse.tscn" id="2_7d0to"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeekSteeringComponent2D.gd" id="2_u45d0"]
 [ext_resource type="Script" path="res://Scripts/Steering/SeparationSteeringComponent2D.gd" id="3_2a005"]
@@ -15,9 +15,9 @@ radius = 8.0
 collision_layer = 2
 collision_mask = 4
 motion_mode = 1
-script = ExtResource("1_t5mso")
+script = ExtResource("1_ic220")
 post_death_effects = [ExtResource("2_7d0to")]
-retarget_cooldown = 0.25
+retarget_cooldown = 0.1
 max_speed = 30.0
 body_radius = 8
 
