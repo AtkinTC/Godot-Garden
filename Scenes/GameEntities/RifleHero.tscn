@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://70obt3xovif5"]
 
 [ext_resource type="PackedScene" uid="uid://cy8w6r5rp636b" path="res://Scenes/GameEntities/BaseHeroUnit.tscn" id="1_vpudg"]
-[ext_resource type="Texture2D" uid="uid://b7l2snhbffick" path="res://Assets/Sprites/Characters/soldier_001_16x16.png" id="2_ft6wi"]
+[ext_resource type="Texture2D" uid="uid://cxxco3lx8viln" path="res://Assets/Sprites/Characters/soldier_rifle_16x16.png" id="2_81mv8"]
 [ext_resource type="AnimationLibrary" uid="uid://cyfrsxc5w8m7p" path="res://Resources/AnimationLibrary/soldier_rifle_animations.tres" id="3_6yp3b"]
 [ext_resource type="Script" path="res://Scripts/HeroUnits/Guns/Rifle.gd" id="3_78gvn"]
 
 [node name="RifleHero" instance=ExtResource("1_vpudg")]
 
 [node name="Sprite2D" parent="VisualsNode" index="0"]
-texture = ExtResource("2_ft6wi")
+texture = ExtResource("2_81mv8")
 offset = Vector2(8, 0)
 region_rect = Rect2(0, 32, 32, 16)
 

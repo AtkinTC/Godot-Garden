@@ -64,6 +64,7 @@ func _physics_process(_delta: float) -> void:
 				AttackConsts.DAMAGE : damage
 			}
 			collider._on_attack_collision(attack_data)
+			position = collision.position
 		queue_free()
 		return
 	
