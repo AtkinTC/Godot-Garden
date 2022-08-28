@@ -46,7 +46,7 @@ func calculate_steering_force():
 	var space_state : PhysicsDirectSpaceState2D = parent.get_world_2d().get_direct_space_state()
 	
 	var shape = CircleShape2D.new()
-	shape.radius = buffer + body_radius
+	shape.radius = (buffer + body_radius+10)
 	
 	var query = PhysicsShapeQueryParameters2D.new()
 	query.shape_rid = shape.get_rid()
@@ -70,12 +70,12 @@ func calculate_steering_force():
 			var mag := 0.0
 			if(distance <= 0):
 				mag = 1.0
-			elif(distance < target_distance):
+			else:
 				#mag = (target_distance - distance)/(target_distance)
-				mag = 1/max(r2r_distance,1)
+				mag = 1/max(r2r_distance,0.05)
 			steering_force += (current_position - collider.position).normalized() * mag
 	
-	steering_force = steering_force.limit_length(1.0) * max_force
+	steering_force = steering_force
 
 func draw():
 	if(running && !is_equal_approx(steering_magnitude, 0)):

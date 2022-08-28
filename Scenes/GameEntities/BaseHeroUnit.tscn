@@ -8,7 +8,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_tj23h"]
 radius = 16.0
 
-[node name="HeroUnit" type="Node2D"]
+[node name="HeroUnit" type="Node2D" groups=["aggro_targets"]]
 script = ExtResource("1_p2o3p")
 target_layer_names = ["enemy"]
 

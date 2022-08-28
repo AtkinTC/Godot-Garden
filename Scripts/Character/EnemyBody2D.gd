@@ -16,9 +16,18 @@ const STAGGER_B_ANIM_KEY = STAGGER_ANIM_KEY + "_backward"
 const STAGGER_R_ANIM_KEY = STAGGER_ANIM_KEY + "_right"
 const STAGGER_L_ANIM_KEY = STAGGER_ANIM_KEY + "_left"
 
-enum STATE {NULL, DEFAULT, STAGGER, DEAD}
+enum STATE {NULL, DEFAULT, ATTACK, STAGGER, DEAD}
+enum GOAL_STATE {NULL, IDLE, GOAL, AGGRO}
 
-var state = STATE.NULL
+var state := STATE.NULL
+var goal_state := GOAL_STATE.IDLE
+
+var aggro_range : float = 100.0
+var aggro_check_cooldown : float = 1.0
+var aggro_check_cooldown_remaining : float = 0
+var aggro_target : Node2D = null
+
+var attack_range : float = 20
 
 @export var health_max : int = 2
 @onready var health : float = health_max
@@ -60,7 +69,7 @@ func _ready() -> void:
 	state = STATE.DEFAULT
 
 func _process(_delta: float) -> void:
-	if(state != STATE.DEAD && state != STATE.STAGGER):
+	if(state == STATE.DEFAULT):
 		var v = velocity
 		var s = v.length()
 		
@@ -87,8 +96,34 @@ func _physics_process(delta: float) -> void:
 		if(state != STATE.DEAD):
 			begin_state_death()
 	
+	if(goal_state == GOAL_STATE.IDLE):
+		if(nav_controller.has_goals()):
+			goal_state = GOAL_STATE.GOAL
+	
 	if(state != STATE.DEAD && state != STATE.STAGGER && hitstun_remaining > 0):
 		begin_state_stagger()
+	
+	if(state == STATE.DEFAULT):
+		if(goal_state == GOAL_STATE.AGGRO && aggro_target == null):
+			aggro_check_cooldown_remaining = 0
+			
+		if(aggro_check_cooldown_remaining <= 0):
+			aggro_check_cooldown_remaining = aggro_check_cooldown
+			aggro_target = check_for_aggro_target()
+			if(aggro_target != null):
+				goal_state = GOAL_STATE.AGGRO
+			if(aggro_target == null && goal_state == GOAL_STATE.AGGRO):
+				goal_state = GOAL_STATE.IDLE
+		else:
+			aggro_check_cooldown_remaining -= delta	
+	
+	if(state == STATE.DEFAULT && goal_state == GOAL_STATE.AGGRO):
+		if(position.distance_squared_to(aggro_target.position) <= attack_range * attack_range):
+			begin_state_attack()
+	
+	if(state == STATE.ATTACK):
+		rotation = position.direction_to(aggro_target.position).angle()
+		set_force(Vector2.ZERO, TYPE.MANUAL)
 	
 	if(state == STATE.DEAD):
 		set_force(Vector2.ZERO, TYPE.MANUAL)
@@ -101,10 +136,15 @@ func _physics_process(delta: float) -> void:
 		else:
 			state = STATE.DEFAULT
 	
-	if(state != STATE.DEAD):
+	if(state == STATE.DEFAULT):
 		if(retarget_cooldown <= 0 || retarget_time <= 0):
 			retarget_time = retarget_cooldown
-			update_seek_target()
+			if(goal_state == GOAL_STATE.AGGRO):
+				update_seek_aggro_target()
+			if(goal_state == GOAL_STATE.GOAL):
+				update_seek_target()
+			if(goal_state == GOAL_STATE.IDLE):
+				seek_vector = Vector2.ZERO
 		if(retarget_time > 0):
 			retarget_time -= delta
 		
@@ -112,14 +152,23 @@ func _physics_process(delta: float) -> void:
 		
 	super._physics_process(delta)
 	
-	if(state != STATE.DEAD):
+	if(state == STATE.DEFAULT):
 		if(!is_zero_approx(velocity_manual.length_squared())):
 			rotation = velocity_manual.angle()
 			rotation_speed_manual = (velocity_manual.angle() - rotation)
-	
+
+func begin_state_attack():
+	state = STATE.ATTACK
+	set_force(Vector2.ZERO, TYPE.MANUAL)
+	set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
+	var animation_key = "attack"
+	if(animation_player.has_animation(animation_key)):
+		animation_player.play(animation_key)
 
 func begin_state_stagger():
 	state = STATE.STAGGER
+	set_force(Vector2.ZERO, TYPE.MANUAL)
+	set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
 	var external_force_angle : float = (get_force(TYPE.EXTERNAL) + get_impulse(TYPE.EXTERNAL)).angle()
 	var stagger_angle = Utils.unwrap_angle(rotation - external_force_angle)
 	
@@ -136,6 +185,9 @@ func begin_state_death():
 	set_collision_layer(0)
 	set_z_index(-1)
 	
+	set_force(Vector2.ZERO, TYPE.MANUAL)
+	set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
+	
 	var external_force_angle : float = (get_force(TYPE.EXTERNAL) + get_impulse(TYPE.EXTERNAL)).angle()
 	death_angle = Utils.unwrap_angle(rotation - external_force_angle)
 	
@@ -151,38 +203,17 @@ func begin_state_death():
 	
 	var death_animation = choose_animation_direction(death_angle, DEATH_F_ANIM_KEY, DEATH_L_ANIM_KEY, DEATH_B_ANIM_KEY, DEATH_R_ANIM_KEY)
 	
-#	var death_animation = DEATH_ANIM_KEY
-#	var death_angles = {}
-#	if(animation_player.has_animation(DEATH_F_ANIM_KEY)):
-#		death_angles[DEATH_F_ANIM_KEY] = 0
-#	if(animation_player.has_animation(DEATH_L_ANIM_KEY)):
-#		death_angles[DEATH_L_ANIM_KEY] = PI/2
-#	if(animation_player.has_animation(DEATH_B_ANIM_KEY)):
-#		death_angles[DEATH_B_ANIM_KEY] = PI
-#	if(animation_player.has_animation(DEATH_R_ANIM_KEY)):
-#		death_angles[DEATH_R_ANIM_KEY] = 3*(PI/2)
-#
-#	if(death_angles.size() > 0):
-#		var min_angle : float = 9999
-#		for key in death_angles.keys():
-#			var angle = death_angles[key]
-#			var dif = abs(angle - death_angle)
-#			if(dif > PI):
-#				dif = TAU - dif
-#			if(dif < min_angle):
-#				min_angle = dif
-#				death_animation = key
-	
 	if(animation_player.has_animation(death_animation)):
 		# trigger death animation
-		# animation_player.get_animation(death_animation).set_loop_mode(Animation.LOOP_NONE)
 		animation_player.play(death_animation)
 	else:
 		end_state_death()
 
 func _on_animation_finished(anim_name: StringName):
-	if(String(anim_name).begins_with(DEATH_ANIM_KEY)):
+	if(state == STATE.DEAD && String(anim_name).begins_with(DEATH_ANIM_KEY)):
 		end_state_death()
+	if(state == STATE.ATTACK && anim_name == StringName("attack")):
+		state = STATE.DEFAULT
 
 func end_state_death():
 	# spawn post-death effects
@@ -210,6 +241,10 @@ func _draw() -> void:
 	
 	#for steering_component in steering_components:
 	#	steering_component.draw()
+	
+	#if(goal_state == GOAL_STATE.AGGRO):
+	#	draw_arc(Vector2.ZERO, 8, 0, TAU, 8, Color.RED)
+	
 	pass
 
 #############
@@ -242,6 +277,52 @@ func update_seek_target():
 #		return
 #	
 #	seek_target_position = target_position
+
+func update_seek_aggro_target():
+	if(aggro_target == null || position.distance_squared_to(aggro_target.position) <= attack_range * attack_range):
+		seek_vector = Vector2.ZERO
+		return
+	
+	var path = nav_controller.get_nav_path(position, aggro_target.position, body_radius*2)
+	if(path == null):
+		seek_vector = Vector2.ZERO
+		return
+	
+	if(path.size() <= 2):
+		seek_vector = aggro_target.position - position
+		return
+	
+	seek_vector = path[1] - path[0]
+	return
+
+func check_for_aggro_target() -> Node2D:	
+	var closest_dist_sqr : float = aggro_range * aggro_range
+	var closest_target : Node2D = null
+	
+	var physics_layer_bit := PhysicsUtil.get_physics_layer_bit("wall")
+	var wall_collision_mask = PhysicsUtil.get_physics_layer_mask([physics_layer_bit])
+	var ray_params := PhysicsRayQueryParameters2D.new()
+	ray_params.collision_mask = wall_collision_mask
+	ray_params.from = position
+	
+	for target in get_tree().get_nodes_in_group("aggro_targets"):
+		var dist_sqr = position.distance_squared_to(target.position)
+		if(dist_sqr > closest_dist_sqr):
+			#target out of range
+			continue
+			
+		ray_params.to = target.position
+		var ray_results = get_world_2d().direct_space_state.intersect_ray(ray_params)
+		
+		if(ray_results is Dictionary && ray_results.size() > 0):
+			#target blocked by wall
+			continue
+		
+		closest_target = target
+		closest_dist_sqr = dist_sqr
+		
+	return closest_target
+		
 
 ############
 # STEERING #
@@ -304,8 +385,6 @@ func _on_attack_collision(_attack_data: Dictionary):
 	
 	if(hit_angle != null && hit_force != null):
 		apply_impulse(Vector2.from_angle(hit_angle) * hit_force, TYPE.EXTERNAL)
-		set_force(Vector2.ZERO, TYPE.MANUAL)
-		set_velocity_type(Vector2.ZERO, TYPE.MANUAL)
 		apply_hitstun(0.5)
 
 func choose_animation_direction(

@@ -19,6 +19,7 @@ func _init(_tile_map : TileMapCust, _border_map : TileMapCust, _goal_cells : Arr
 	border_map = _border_map
 	tile_nav_map = TileNavMap.new(_tile_map, _border_map)
 	multi_flow_map = MultiFlowMap.new(tile_nav_map)
+	goal_cells = _goal_cells
 	
 	var max_nav_width := tile_nav_map.get_effective_max_width()
 	goal_flow_maps = []
@@ -226,6 +227,9 @@ func get_nav_cells_in_range(start_pos: Vector2, nav_range: int, real_width : int
 	nav_cells.erase(start_cell)
 	
 	return nav_cells
+
+func has_goals() -> bool:
+	return goal_cells != null && goal_cells.size() > 0
 
 func get_tile_size() -> Vector2i:
 	return tile_map.get_tile_size()

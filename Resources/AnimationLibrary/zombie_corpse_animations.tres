@@ -1,19 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://wns6m3jkkdtd"]
-
-[sub_resource type="Animation" id="Animation_hwmvx"]
-resource_name = "default"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
+[gd_resource type="AnimationLibrary" load_steps=7 format=3 uid="uid://wns6m3jkkdtd"]
 
 [sub_resource type="Animation" id="Animation_ww8s0"]
 resource_name = "back"
@@ -52,7 +37,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(112, 128, 32, 16)]
+"values": [Rect2(112, 112, 32, 16)]
 }
 
 [sub_resource type="Animation" id="Animation_f70wq"]
@@ -92,7 +77,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(112, 96, 32, 16)]
+"values": [Rect2(112, 80, 32, 16)]
 }
 
 [sub_resource type="Animation" id="Animation_3u4in"]
@@ -132,7 +117,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(64, 208, 16, 32)]
+"values": [Rect2(64, 192, 16, 32)]
 }
 
 [sub_resource type="Animation" id="Animation_vu7ao"]
@@ -172,11 +157,67 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(64, 160, 16, 32)]
+"values": [Rect2(64, 144, 16, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_hwmvx"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yadoq"]
+resource_name = "RESET"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:offset")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:region_rect")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(112, 112, 32, 16)]
 }
 
 [resource]
 _data = {
+"RESET": SubResource("Animation_yadoq"),
 "corpse_backward": SubResource("Animation_ww8s0"),
 "corpse_forward": SubResource("Animation_f70wq"),
 "corpse_left": SubResource("Animation_3u4in"),
