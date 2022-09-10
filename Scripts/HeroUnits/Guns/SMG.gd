@@ -11,7 +11,7 @@ func _init() -> void:
 	scatter_angle_deg  = 10
 	scatter_angle = deg2rad(scatter_angle_deg)
 	projectile_collision_layers = ["enemy", "wall"]
-	
+
 func shoot(source : Node2D) -> void:
 	remaining_shots -= 1
 	var effect_attributes := {

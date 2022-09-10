@@ -1,16 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://70obt3xovif5"]
+[gd_scene load_steps=7 format=3 uid="uid://70obt3xovif5"]
 
 [ext_resource type="PackedScene" uid="uid://cy8w6r5rp636b" path="res://Scenes/GameEntities/BaseHeroUnit.tscn" id="1_vpudg"]
 [ext_resource type="Texture2D" uid="uid://cxxco3lx8viln" path="res://Assets/Sprites/Characters/soldier_rifle_16x16.png" id="2_81mv8"]
 [ext_resource type="AnimationLibrary" uid="uid://cyfrsxc5w8m7p" path="res://Resources/AnimationLibrary/soldier_rifle_animations.tres" id="3_6yp3b"]
 [ext_resource type="Script" path="res://Scripts/HeroUnits/Guns/Rifle.gd" id="3_78gvn"]
+[ext_resource type="Texture2D" uid="uid://df2a4pfixnd38" path="res://Assets/Sprites/casing_001.png" id="5_l5j28"]
+
+[sub_resource type="ParticlesMaterial" id="ParticlesMaterial_5d1v7"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 5, 0)
+spread = 20.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 100.0
+damping_max = 100.0
+angle_min = -45.0
+angle_max = 45.0
 
 [node name="RifleHero" instance=ExtResource("1_vpudg")]
 
 [node name="Sprite2D" parent="VisualsNode" index="0"]
 texture = ExtResource("2_81mv8")
 offset = Vector2(8, 0)
-region_rect = Rect2(0, 32, 32, 16)
+region_rect = Rect2(96, 48, 32, 16)
 
 [node name="TargetDetectionCircle" parent="." index="2"]
 detection_range = 200.0
@@ -29,3 +44,13 @@ script = ExtResource("3_78gvn")
 [node name="ProjectileSpawnPoint" type="Position2D" parent="Gun" index="0"]
 unique_name_in_owner = true
 position = Vector2(12, 3)
+
+[node name="ShellEmitter" type="GPUParticles2D" parent="Gun" index="1"]
+unique_name_in_owner = true
+position = Vector2(0, 4)
+emitting = false
+amount = 1
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticlesMaterial_5d1v7")
+texture = ExtResource("5_l5j28")

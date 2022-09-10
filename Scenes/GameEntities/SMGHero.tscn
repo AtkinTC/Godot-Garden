@@ -1,9 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://q88xex5wlsfk"]
+[gd_scene load_steps=7 format=3 uid="uid://q88xex5wlsfk"]
 
 [ext_resource type="PackedScene" uid="uid://cy8w6r5rp636b" path="res://Scenes/GameEntities/BaseHeroUnit.tscn" id="1_vpudg"]
 [ext_resource type="Texture2D" uid="uid://cmynxpaolloxx" path="res://Assets/Sprites/Characters/soldier_smg_16x16.png" id="2_5n8wr"]
 [ext_resource type="AnimationLibrary" uid="uid://btmek1un5qr25" path="res://Resources/AnimationLibrary/soldier_smg_animations.tres" id="3_om4bc"]
 [ext_resource type="Script" path="res://Scripts/HeroUnits/Guns/SMG.gd" id="4_yy8s1"]
+[ext_resource type="Texture2D" uid="uid://df2a4pfixnd38" path="res://Assets/Sprites/casing_001.png" id="5_lbfak"]
+
+[sub_resource type="ParticlesMaterial" id="ParticlesMaterial_5y5dp"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 5, 0)
+spread = 20.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 60.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 100.0
+damping_max = 100.0
+angle_min = -45.0
+angle_max = 45.0
 
 [node name="SMGHero" instance=ExtResource("1_vpudg")]
 
@@ -29,3 +44,13 @@ script = ExtResource("4_yy8s1")
 [node name="ProjectileSpawnPoint" type="Position2D" parent="Gun" index="0"]
 unique_name_in_owner = true
 position = Vector2(9, 3)
+
+[node name="ShellEmitter" type="GPUParticles2D" parent="Gun" index="1"]
+unique_name_in_owner = true
+position = Vector2(2, 4)
+emitting = false
+amount = 1
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticlesMaterial_5y5dp")
+texture = ExtResource("5_lbfak")
